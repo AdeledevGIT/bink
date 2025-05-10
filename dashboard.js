@@ -1022,7 +1022,7 @@ function setupEventListeners() {
     hiddenTextarea.style.left = '-9999px';
     document.body.appendChild(hiddenTextarea);
 
-    // Function to copy text to clipboard that works on mobile
+    // Enhanced function to copy text to clipboard that works on mobile
     function copyTextToClipboard(text) {
         return new Promise((resolve, reject) => {
             // Try the modern Clipboard API first
@@ -1032,69 +1032,76 @@ function setupEventListeners() {
                     .catch(error => {
                         console.warn('Clipboard API failed, trying fallback method', error);
                         // Fallback for mobile devices
-                        try {
-                            // Set the textarea value to the text we want to copy
-                            hiddenTextarea.value = text;
-                            // Make the textarea visible and selectable
-                            hiddenTextarea.style.position = 'fixed';
-                            hiddenTextarea.style.top = '0';
-                            hiddenTextarea.style.left = '0';
-                            hiddenTextarea.style.opacity = '0';
-                            hiddenTextarea.style.zIndex = '-1';
-
-                            // Select the text
-                            hiddenTextarea.focus();
-                            hiddenTextarea.select();
-
-                            // Execute the copy command
-                            const successful = document.execCommand('copy');
-
-                            // Reset the textarea position
-                            hiddenTextarea.style.position = 'fixed';
-                            hiddenTextarea.style.top = '-9999px';
-
-                            if (successful) {
-                                resolve();
-                            } else {
-                                reject(new Error('execCommand copy failed'));
-                            }
-                        } catch (err) {
-                            reject(err);
-                        }
+                        tryFallbackCopy(text, resolve, reject);
                     });
             } else {
                 // Fallback for browsers that don't support Clipboard API
-                try {
-                    // Set the textarea value to the text we want to copy
-                    hiddenTextarea.value = text;
-                    // Make the textarea visible and selectable
-                    hiddenTextarea.style.position = 'fixed';
-                    hiddenTextarea.style.top = '0';
-                    hiddenTextarea.style.left = '0';
-                    hiddenTextarea.style.opacity = '0';
-                    hiddenTextarea.style.zIndex = '-1';
-
-                    // Select the text
-                    hiddenTextarea.focus();
-                    hiddenTextarea.select();
-
-                    // Execute the copy command
-                    const successful = document.execCommand('copy');
-
-                    // Reset the textarea position
-                    hiddenTextarea.style.position = 'fixed';
-                    hiddenTextarea.style.top = '-9999px';
-
-                    if (successful) {
-                        resolve();
-                    } else {
-                        reject(new Error('execCommand copy failed'));
-                    }
-                } catch (err) {
-                    reject(err);
-                }
+                tryFallbackCopy(text, resolve, reject);
             }
         });
+    }
+
+    // Separate fallback function for better readability
+    function tryFallbackCopy(text, resolve, reject) {
+        try {
+            // Make sure the textarea is properly set up for mobile
+            hiddenTextarea.value = text;
+            hiddenTextarea.style.position = 'fixed';
+            hiddenTextarea.style.top = '0';
+            hiddenTextarea.style.left = '0';
+            hiddenTextarea.style.width = '100%';
+            hiddenTextarea.style.height = '100px';
+            hiddenTextarea.style.opacity = '0';
+            hiddenTextarea.style.zIndex = '9999'; // Higher z-index to ensure it's on top
+            hiddenTextarea.style.userSelect = 'text'; // Ensure text is selectable
+            hiddenTextarea.style.webkitUserSelect = 'text';
+            hiddenTextarea.style.MozUserSelect = 'text';
+            hiddenTextarea.style.msUserSelect = 'text';
+            hiddenTextarea.readOnly = false; // Ensure it's not read-only
+
+            // For iOS devices
+            hiddenTextarea.contentEditable = true;
+            hiddenTextarea.readOnly = false;
+
+            // Make sure it's in the viewport
+            document.body.appendChild(hiddenTextarea);
+
+            // Select the text - crucial for mobile
+            hiddenTextarea.focus();
+            hiddenTextarea.select();
+
+            // For iOS
+            const range = document.createRange();
+            range.selectNodeContents(hiddenTextarea);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            hiddenTextarea.setSelectionRange(0, text.length);
+
+            // Execute the copy command
+            const successful = document.execCommand('copy');
+
+            // Reset the textarea position
+            hiddenTextarea.style.position = 'fixed';
+            hiddenTextarea.style.top = '-9999px';
+            hiddenTextarea.blur();
+
+            if (successful) {
+                resolve();
+            } else {
+                // If execCommand fails, try a different approach for mobile
+                // Show a message to the user with the link to manually copy
+                const manualCopyMessage = `Copy this link manually: ${text}`;
+                console.log(manualCopyMessage);
+                alert(manualCopyMessage);
+                resolve(); // Resolve anyway to prevent UI from getting stuck
+            }
+        } catch (err) {
+            console.error('Fallback copy failed:', err);
+            // Show the text for manual copying as a last resort
+            alert(`Please copy this link manually: ${text}`);
+            resolve(); // Resolve anyway to prevent UI from getting stuck
+        }
     }
 
     // Copy bio link
@@ -1122,20 +1129,12 @@ function setupEventListeners() {
                         copyBioLinkBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Bio Link';
                     }, 2000);
 
-                    // Alert is less user-friendly, use a toast or notification instead
-                    const notification = document.createElement('div');
-                    notification.className = 'notification success';
-                    notification.innerHTML = '<i class="fas fa-check-circle"></i> Bio link copied to clipboard!';
-                    document.body.appendChild(notification);
-
-                    // Remove notification after 3 seconds
-                    setTimeout(() => {
-                        notification.remove();
-                    }, 3000);
+                    // Use the improved notification system
+                    showNotification('success', 'Bio link copied to clipboard!');
                 })
                 .catch(err => {
                     console.error('Could not copy text: ', err);
-                    alert('Could not copy text. Please try again.');
+                    showNotification('error', 'Could not copy text. Please try again.');
                 });
         } catch (error) {
             console.error('Error getting user data:', error);
@@ -1152,25 +1151,17 @@ function setupEventListeners() {
                         copyBioLinkBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Bio Link';
                     }, 2000);
 
-                    // Alert is less user-friendly, use a toast or notification instead
-                    const notification = document.createElement('div');
-                    notification.className = 'notification success';
-                    notification.innerHTML = '<i class="fas fa-check-circle"></i> Bio link copied to clipboard!';
-                    document.body.appendChild(notification);
-
-                    // Remove notification after 3 seconds
-                    setTimeout(() => {
-                        notification.remove();
-                    }, 3000);
+                    // Use the improved notification system
+                    showNotification('success', 'Bio link copied to clipboard!');
                 })
                 .catch(err => {
                     console.error('Could not copy fallback text: ', err);
-                    alert('Could not copy text. Please try again.');
+                    showNotification('error', 'Could not copy text. Please try again.');
                 });
         }
     });
 
-    // Preview bio page
+    // Preview bio page - enhanced for mobile
     previewBioBtn.addEventListener('click', async () => {
         try {
             // Get the user's data to access username
@@ -1186,14 +1177,51 @@ function setupEventListeners() {
             const bioUrl = new URL(`bio.html?u=${userData.username}`, window.location.href).href;
             console.log("Opening URL:", bioUrl); // Debug log
 
-            // Open the URL in a new tab
-            window.open(bioUrl, '_blank');
+            // Show loading indicator on the button
+            const originalButtonText = previewBioBtn.innerHTML;
+            previewBioBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+
+            // Use setTimeout to ensure the button state change is visible
+            setTimeout(() => {
+                try {
+                    // Try to open in a new tab - this might be blocked on some mobile browsers
+                    const newWindow = window.open(bioUrl, '_blank');
+
+                    // Check if popup was blocked
+                    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+                        console.warn('Popup blocked or not supported on this device');
+                        // Fallback: navigate directly if popup is blocked (common on mobile)
+                        // But first, show a confirmation to the user
+                        if (confirm('Preview will open in the current tab. Continue?')) {
+                            // Save current page to history before navigating away
+                            window.location.href = bioUrl;
+                        }
+                    }
+                } catch (openError) {
+                    console.error('Error opening window:', openError);
+                    // Fallback: offer to navigate directly
+                    if (confirm('Cannot open in new tab. Open in current tab instead?')) {
+                        window.location.href = bioUrl;
+                    }
+                } finally {
+                    // Reset button state
+                    previewBioBtn.innerHTML = originalButtonText;
+                }
+            }, 300); // Short delay for visual feedback
+
         } catch (error) {
             console.error('Error getting user data:', error);
             // Fallback to ID-based URL
             const fallbackUrl = new URL(`bio.html?id=${currentUser.uid}`, window.location.href).href;
             console.log("Fallback preview URL:", fallbackUrl); // Debug log
-            window.open(fallbackUrl, '_blank');
+
+            // Show a confirmation dialog before navigating
+            if (confirm('Preview will open in the current tab. Continue?')) {
+                window.location.href = fallbackUrl;
+            } else {
+                // Reset button if user cancels
+                previewBioBtn.innerHTML = '<i class="fas fa-eye"></i> Preview';
+            }
         }
     });
 
@@ -1429,6 +1457,39 @@ if (profileForm) {
 }
 
 // Sidebar functionality is now in sidebar.js
+
+// Show notification function for better mobile experience
+function showNotification(type, message) {
+    const container = document.getElementById('notification-container');
+    if (!container) return;
+
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+
+    // Set icon based on type
+    let icon = 'info-circle';
+    if (type === 'success') icon = 'check-circle';
+    if (type === 'error') icon = 'exclamation-circle';
+
+    notification.innerHTML = `<i class="fas fa-${icon}"></i> ${message}`;
+
+    // Add to container
+    container.appendChild(notification);
+
+    // Trigger animation
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+
+    // Remove after delay
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300); // Wait for fade out animation
+    }, 3000);
+}
 
 // Initialize dashboard when the page loads
 initDashboard();
