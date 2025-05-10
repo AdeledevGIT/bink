@@ -8,17 +8,47 @@
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    background-color: var(--card-background);
+    background-color: transparent; /* Changed to transparent */
     position: relative;
 }
 
 .hero-video {
     width: 100%;
     display: block;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    object-fit: contain; /* Changed to contain to preserve aspect ratio */
+    border-radius: 20px; /* Full rounded corners on all sides */
+    object-fit: contain; /* Preserve aspect ratio */
     height: 600px; /* Taller height for portrait orientation */
+    background-color: transparent; /* Ensure video background is transparent */
+}
+
+/* Play button overlay */
+.video-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background-color: rgba(59, 130, 246, 0.8); /* Primary color with transparency */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0; /* Hidden by default, will be shown via JavaScript */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.video-play-button i {
+    color: white;
+    font-size: 30px;
+    margin-left: 5px; /* Slight offset for play icon */
+}
+
+.video-play-button:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    background-color: var(--primary-color);
 }
 
 .video-caption {
