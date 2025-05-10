@@ -67,8 +67,13 @@
                         autoplay
                         muted
                         loop
-                        playsinline>
+                        playsinline
+                        preload="auto">
                     </video>
+                    <!-- Add a play button overlay that disappears when video plays -->
+                    <div class="video-play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
                     <div class="video-caption">
                         <h3>See BINK in Action</h3>
                     </div>
@@ -433,5 +438,6 @@
 
     <script src="landing.js"></script>
     <script src="promo-handler.js"></script>
+    <script src="video-handler.js"></script>
 </body>
 </html>
