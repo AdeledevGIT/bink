@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Promotions - BINK Admin</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .promotion-card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .promotion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .promotion-header h3 {
+            margin: 0;
+            font-size: 1.4rem;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .promotion-toggle {
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-label {
+            margin-right: 10px;
+            font-weight: 600;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        .color-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 10px;
+            border: 2px solid var(--border-color);
+        }
+
+        .preview-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .preview-title {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: var(--text-color);
+        }
+
+        .preview-card {
+            position: relative;
+            background-color: var(--secondary-color);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .preview-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-bottom-left-radius: 10px;
+        }
+
+        .preview-content {
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .preview-price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .preview-description {
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .save-button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .save-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="admin-dashboard.html">
+                <img src="logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <span id="admin-badge" class="admin-badge"><i class="fas fa-shield-alt"></i> Admin</span>
+            <button id="logout-button" class="logout-button">Log Out</button>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- Admin Sidebar -->
+        <div class="dashboard-sidebar" id="sidebar">
+            <div class="user-profile">
+                <div class="user-avatar" id="userAvatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div class="user-name" id="userName">Admin User</div>
+                <div class="user-email" id="userEmail">admin@bink.com</div>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="admin-dashboard.html" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-tachometer-alt"></i></span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="admin-users.html" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-users"></i></span>
+                        <span>Manage Users</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="admin-token-requests.html" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-coins"></i></span>
+                        <span>Token Requests</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="admin-creator-applications.html" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-user-check"></i></span>
+                        <span>Creator Applications</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="admin-promotions.html" class="nav-link active">
+                        <span class="nav-icon"><i class="fas fa-bullhorn"></i></span>
+                        <span>Promotions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="admin-settings.html" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-cog"></i></span>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="logoutLink">
+                        <span class="nav-icon"><i class="fas fa-sign-out-alt"></i></span>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="dashboard-main">
+            <div class="welcome-message-container">
+                <h2>Manage Promotions</h2>
+                <p>Configure promotional offers and special deals for your users.</p>
+            </div>
+
+            <div class="promotion-card">
+                <div class="promotion-header">
+                    <h3>Lifetime Premium Promotion</h3>
+                    <div class="promotion-toggle">
+                        <span class="toggle-label">Enable</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="lifetime-promo-toggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lifetime-promo-type">Promotion Type</label>
+                    <select id="lifetime-promo-type" class="form-control">
+                        <option value="discount">Discount</option>
+                        <option value="launch">Launch Special</option>
+                        <option value="holiday">Holiday Special</option>
+                        <option value="limited">Limited Time</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="lifetime-promo-message">Promotion Badge Text</label>
+                    <input type="text" id="lifetime-promo-message" class="form-control" placeholder="e.g., Limited Time Offer">
+                </div>
+
+                <div class="form-group">
+                    <label for="lifetime-promo-description">Promotion Description</label>
+                    <input type="text" id="lifetime-promo-description" class="form-control" placeholder="e.g., Special launch price - Get lifetime access!">
+                </div>
+
+                <div class="form-group">
+                    <label for="lifetime-promo-duration">Promotion Duration</label>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <select id="lifetime-promo-duration-type" class="form-control" style="width: 150px;">
+                            <option value="days">Days</option>
+                            <option value="date">Until Date</option>
+                            <option value="unlimited">Unlimited</option>
+                        </select>
+                        <div id="days-duration-container">
+                            <input type="number" id="lifetime-promo-days" class="form-control" min="1" value="30" style="width: 100px;">
+                            <span>days</span>
+                        </div>
+                        <div id="date-duration-container" style="display: none;">
+                            <input type="date" id="lifetime-promo-end-date" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lifetime-promo-color">Badge Color</label>
+                    <div style="display: flex; align-items: center;">
+                        <input type="color" id="lifetime-promo-color" value="#FF6B6B" style="margin-right: 10px;">
+                        <span id="color-hex">#FF6B6B</span>
+                        <div class="color-preview" id="color-preview" style="background-color: #FF6B6B;"></div>
+                    </div>
+                </div>
+
+                <div class="preview-section">
+                    <h4 class="preview-title">Preview</h4>
+                    <div class="preview-card">
+                        <div class="preview-badge" id="preview-badge" style="background-color: #FF6B6B;">Limited Time Offer</div>
+                        <div class="preview-content">
+                            <div class="preview-price">₦60,000</div>
+                            <div>Premium Lifetime</div>
+                            <div class="preview-description" id="preview-description">Special launch price - Get lifetime access!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="save-promotions" class="save-button">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+    <script src="firebase-config.js"></script>
+    <script src="admin-promotions.js"></script>
+</body>
+</html>

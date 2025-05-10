@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - BINK</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Main layout */
+        .dashboard-container {
+            padding: 2rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        /* Menu toggle button */
+        .menu-toggle-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-right: 1rem;
+            display: none;
+        }
+
+        /* Sidebar styles */
+        .dashboard-sidebar {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            height: fit-content;
+            transition: all 0.3s ease;
+        }
+
+        /* Sidebar collapsed state */
+        .sidebar-collapsed .dashboard-container {
+            grid-template-columns: 0 1fr;
+        }
+
+        .sidebar-collapsed .dashboard-sidebar {
+            transform: translateX(-100%);
+            position: fixed;
+            z-index: 100;
+            height: 100%;
+            overflow-y: auto;
+            top: 0;
+            left: 0;
+            border-radius: 0;
+            width: 250px;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .menu-toggle-btn {
+                display: block;
+            }
+
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-sidebar {
+                position: fixed;
+                z-index: 100;
+                height: 100%;
+                overflow-y: auto;
+                top: 0;
+                left: 0;
+                transform: translateX(-100%);
+                border-radius: 0;
+                width: 250px;
+            }
+
+            .sidebar-active .dashboard-sidebar {
+                transform: translateX(0);
+            }
+
+            /* Add overlay when sidebar is active on mobile */
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 99;
+            }
+
+            .sidebar-active .sidebar-overlay {
+                display: block;
+            }
+        }
+
+        .user-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .user-email {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Plan badge styles are now imported from sidebar.css */
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--secondary-color);
+        }
+
+        .nav-link.active {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main content styles */
+        .dashboard-main {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-title {
+            font-size: 1.75rem;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        /* Stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 640px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            padding: 1.25rem;
+            border-radius: var(--border-radius);
+            background-color: var(--secondary-color);
+            box-shadow: var(--card-shadow);
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .stat-title {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+        }
+
+        .stat-change.positive {
+            color: var(--success-text);
+        }
+
+        .stat-change.negative {
+            color: var(--error-text);
+        }
+
+        /* Content tabs */
+        .content-tabs {
+            margin-top: 2rem;
+        }
+
+        .content-tab {
+            margin-bottom: 2rem;
+        }
+
+        .content-tab h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .links-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .link-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            transition: var(--transition-speed) var(--transition-timing);
+            overflow: hidden;
+        }
+
+        .link-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .link-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .link-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .link-details {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .link-details h3 {
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .link-url {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            max-width: 180px; /* Reduced from 300px to 60% (180px) */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+
+        .link-stats {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .link-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .link-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-speed) var(--transition-timing);
+        }
+
+        .btn-icon:hover {
+            background-color: #3d4a5f;
+        }
+
+        .btn-icon.edit:hover {
+            background-color: var(--primary-color);
+        }
+
+        .btn-icon.delete:hover {
+            background-color: var(--error-border);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 500px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: var(--text-color);
+        }
+
+        .social-select {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            background-color: var(--secondary-color);
+            cursor: pointer;
+            transition: var(--transition-speed) var(--transition-timing);
+        }
+
+        .social-option:hover {
+            background-color: #3d4a5f;
+        }
+
+        .social-option.selected {
+            background-color: var(--primary-color);
+        }
+
+        .social-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .chart-container {
+            height: 300px;
+            margin-bottom: 2rem;
+        }
+
+        /* Premium badge styles removed - using plan-badge styles defined above */
+
+        .flex {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .gap-2 {
+            gap: 0.5rem;
+        }
+
+        .gap-4 {
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover-color);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .mt-4 {
+            margin-top: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* Template styles removed */
+
+        /* Profile styles */
+        .profile-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        .profile-image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--primary-color);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-image-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .text-muted {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-prefix {
+            background-color: var(--secondary-color);
+            color: var(--text-muted);
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            border: 1px solid var(--border-color);
+            border-right: none;
+        }
+
+        .input-group .form-control {
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        /* Platform-specific colors for social media buttons */
+        .social-option[data-platform="facebook"] .social-icon {
+            background-color: #1877f2;
+        }
+
+        .social-option[data-platform="twitter"] .social-icon {
+            background-color: #1da1f2;
+        }
+
+        .social-option[data-platform="instagram"] .social-icon {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        .social-option[data-platform="youtube"] .social-icon {
+            background-color: #ff0000;
+        }
+
+        .social-option[data-platform="linkedin"] .social-icon {
+            background-color: #0077b5;
+        }
+
+        .social-option[data-platform="tiktok"] .social-icon {
+            background-color: #000000;
+        }
+
+        .social-option[data-platform="whatsapp"] .social-icon {
+            background-color: #25d366;
+        }
+
+        .social-option[data-platform="telegram"] .social-icon {
+            background-color: #0088cc;
+        }
+
+        .social-option[data-platform="pinterest"] .social-icon {
+            background-color: #e60023;
+        }
+
+        .social-option[data-platform="snapchat"] .social-icon {
+            background-color: #fffc00;
+            color: #000;
+        }
+
+        @media (max-width: 1024px) {
+            .templates-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-image-container {
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .social-select {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .link-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .link-stats {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .link-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .templates-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <button id="menu-toggle" class="menu-toggle-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a href="dashboard.html">
+                <img src="logo.png" alt="BINK Logo"> <!-- Adjust path if needed -->
+            </a>
+        </div>
+        <div class="header-user-info">
+            <span id="welcome-message">Welcome!</span>
+            <!-- Tokens+ and logout buttons removed as requested -->
+        </div>
+    </header>
+
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <div class="dashboard-sidebar" id="sidebar">
+            <div class="user-profile">
+                <div class="user-avatar" id="userAvatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-name" id="userName">User Name</div>
+                <div class="user-email" id="userEmail">user@example.com</div>
+                <div id="planBadge" class="plan-badge">
+                    <i class="fas fa-user"></i>
+                    <span>Free Plan</span>
+                </div>
+                <div id="tokenBalanceSidebar" class="token-balance-sidebar">
+                    <i class="fas fa-coins"></i>
+                    <span id="sidebarTokenCount">0</span> tokens
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" id="dashboardLink">
+                        <span class="nav-icon"><i class="fas fa-home"></i></span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="bio-editor.html" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-edit"></i></span>
+                        <span>Edit Bio</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="profile.html" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-user-circle"></i></span>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="analytics.html" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-chart-bar"></i></span>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="tokens.html" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-coins"></i></span>
+                        <span>Tokens</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="pricing.html" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-tag"></i></span>
+                        <span>Pricing</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="logoutLink">
+                        <span class="nav-icon"><i class="fas fa-sign-out-alt"></i></span>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="dashboard-main">
+            <!-- Dashboard title removed -->
+
+            <!-- Stats Overview -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-title">Total Clicks</div>
+                    <div class="stat-value" id="totalClicks">0</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span id="clicksChange">0%</span> vs last week
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">Active Links</div>
+                    <div class="stat-value" id="activeLinks">0</div>
+                    <div class="stat-change" id="linksChange">
+                        <i class="fas fa-minus"></i>
+                        <span>0%</span> vs last week
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">Most Popular Link</div>
+                    <div class="stat-value" id="popularLink">-</div>
+                    <div class="stat-change" id="popularLinkClicks">
+                        <i class="fas fa-chart-line"></i>
+                        <span>0</span> clicks
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">Bio Page Views</div>
+                    <div class="stat-value" id="pageViews">0</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span id="viewsChange">0%</span> vs last week
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Tabs -->
+            <div class="content-tabs">
+                <div class="content-tab active" id="linksTab">
+                    <div class="links-header">
+                        <h2>Your Links</h2>
+                        <div class="flex gap-2">
+                            <a href="bio-editor.html" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Add New Link
+                            </a>
+                            <button class="btn btn-outline" id="copyBioLinkBtn">
+                                <i class="fas fa-copy"></i> Copy Bio Link
+                            </button>
+                            <button class="btn btn-outline" id="previewBioBtn">
+                                <i class="fas fa-eye"></i> Preview
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Templates tab removed -->
+            </div>
+
+            <div id="linksList" class="links-list">
+                <!-- Links will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Link Modal -->
+    <div class="modal" id="addLinkModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Link</h2>
+                <button class="close-modal" id="closeLinkModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Select Platform</label>
+                    <div class="social-select" id="socialPlatforms">
+                        <div class="social-option" data-platform="website">
+                            <div class="social-icon"><i class="fas fa-globe"></i></div>
+                            <span>Website</span>
+                        </div>
+                        <div class="social-option" data-platform="instagram">
+                            <div class="social-icon"><i class="fab fa-instagram"></i></div>
+                            <span>Instagram</span>
+                        </div>
+                        <div class="social-option" data-platform="twitter">
+                            <div class="social-icon"><i class="fab fa-twitter"></i></div>
+                            <span>Twitter</span>
+                        </div>
+                        <div class="social-option" data-platform="facebook">
+                            <div class="social-icon"><i class="fab fa-facebook"></i></div>
+                            <span>Facebook</span>
+                        </div>
+                        <div class="social-option" data-platform="youtube">
+                            <div class="social-icon"><i class="fab fa-youtube"></i></div>
+                            <span>YouTube</span>
+                        </div>
+                        <div class="social-option" data-platform="tiktok">
+                            <div class="social-icon"><i class="fab fa-tiktok"></i></div>
+                            <span>TikTok</span>
+                        </div>
+                        <div class="social-option" data-platform="linkedin">
+                            <div class="social-icon"><i class="fab fa-linkedin"></i></div>
+                            <span>LinkedIn</span>
+                        </div>
+                        <div class="social-option" data-platform="whatsapp">
+                            <div class="social-icon"><i class="fab fa-whatsapp"></i></div>
+                            <span>WhatsApp</span>
+                        </div>
+                        <div class="social-option" data-platform="telegram">
+                            <div class="social-icon"><i class="fab fa-telegram"></i></div>
+                            <span>Telegram</span>
+                        </div>
+                        <div class="social-option" data-platform="pinterest">
+                            <div class="social-icon"><i class="fab fa-pinterest"></i></div>
+                            <span>Pinterest</span>
+                        </div>
+                        <div class="social-option" data-platform="snapchat">
+                            <div class="social-icon"><i class="fab fa-snapchat"></i></div>
+                            <span>Snapchat</span>
+                        </div>
+                        <div class="social-option" data-platform="other">
+                            <div class="social-icon"><i class="fas fa-plus"></i></div>
+                            <span>Other</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="addLinkForm">
+                    <div class="form-group">
+                        <label for="linkTitle">Link Title</label>
+                        <input type="text" id="linkTitle" class="form-control" placeholder="Enter link title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="linkUrl">URL</label>
+                        <input type="url" id="linkUrl" class="form-control" placeholder="https://example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="linkDescription">Description (Optional)</label>
+                        <textarea id="linkDescription" class="form-control" rows="2" placeholder="Brief description of this link"></textarea>
+                    </div>
+
+                    <input type="hidden" id="linkPlatform" value="">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelLinkBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveLinkBtn">Add Link</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Link Modal -->
+    <div class="modal" id="editLinkModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Link</h2>
+                <button class="close-modal" id="closeEditModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editLinkForm">
+                    <div class="form-group">
+                        <label for="editLinkTitle">Link Title</label>
+                        <input type="text" id="editLinkTitle" class="form-control" placeholder="Enter link title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editLinkUrl">URL</label>
+                        <input type="url" id="editLinkUrl" class="form-control" placeholder="https://example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editLinkDescription">Description (Optional)</label>
+                        <textarea id="editLinkDescription" class="form-control" rows="2" placeholder="Brief description of this link"></textarea>
+                    </div>
+
+                    <input type="hidden" id="editLinkId" value="">
+                    <input type="hidden" id="editLinkPlatform" value="">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelEditBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveEditBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+    <script src="firebase-config.js"></script> <!-- Your Firebase config -->
+    <script src="sidebar.js"></script> <!-- Sidebar functionality -->
+    <script src="dashboard.js"></script> <!-- Dashboard specific logic -->
+</body>
+</html>

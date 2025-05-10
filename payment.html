@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - BINK</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="payment.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <!-- Dashboard and logout buttons removed as requested -->
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <main class="dashboard-main">
+            <div class="welcome-message-container" style="margin-bottom: 40px;">
+                <h2>Complete Your Purchase</h2>
+                <p>You're just one step away from upgrading your BINK experience.</p>
+            </div>
+
+            <div class="payment-container">
+                <div class="payment-summary">
+                    <h3>Order Summary</h3>
+                    <div class="order-details">
+                        <div class="order-item">
+                            <span class="item-name">BINK Premium Plan</span>
+                            <span class="item-price">₦2,500</span>
+                        </div>
+                        <div class="order-item">
+                            <span class="item-name">Subscription Period</span>
+                            <span class="item-value">1 Month</span>
+                        </div>
+                        <div class="order-item">
+                            <span class="item-name">Billing Cycle</span>
+                            <span class="item-value">Monthly</span>
+                        </div>
+                        <div class="order-total">
+                            <span class="total-label">Total</span>
+                            <span class="total-price">₦2,500</span>
+                        </div>
+                    </div>
+                    <div class="order-features">
+                        <h4>What You'll Get</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Unlimited links</li>
+                            <li><i class="fas fa-check"></i> Advanced analytics</li>
+                            <li><i class="fas fa-check"></i> Custom bio page</li>
+                            <li><i class="fas fa-check"></i> No BINK branding</li>
+                            <li><i class="fas fa-check"></i> Priority support</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="payment-methods">
+                    <h3>Payment Method</h3>
+                    <div class="payment-tabs">
+                        <button class="payment-tab active" data-tab="card">Credit/Debit Card</button>
+                        <button class="payment-tab" data-tab="bank">Bank Transfer</button>
+                        <button class="payment-tab" data-tab="mobile">Mobile Money</button>
+                    </div>
+
+                    <div class="payment-tab-content active" id="card-tab">
+                        <form id="card-payment-form" class="payment-form">
+                            <div class="form-group">
+                                <label for="card-name">Cardholder Name</label>
+                                <input type="text" id="card-name" name="card-name" required placeholder="As it appears on your card">
+                            </div>
+                            <div class="form-group">
+                                <label for="card-number">Card Number</label>
+                                <div class="card-input-container">
+                                    <input type="text" id="card-number" name="card-number" required placeholder="1234 5678 9012 3456" maxlength="19">
+                                    <div class="card-icons">
+                                        <i class="fab fa-cc-visa"></i>
+                                        <i class="fab fa-cc-mastercard"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="card-expiry">Expiry Date</label>
+                                    <input type="text" id="card-expiry" name="card-expiry" required placeholder="MM/YY" maxlength="5">
+                                </div>
+                                <div class="form-group">
+                                    <label for="card-cvv">CVV</label>
+                                    <input type="text" id="card-cvv" name="card-cvv" required placeholder="123" maxlength="3">
+                                </div>
+                            </div>
+                            <button type="submit" id="card-submit-button" class="payment-button">Pay ₦2,500</button>
+                        </form>
+                    </div>
+
+                    <div class="payment-tab-content" id="bank-tab">
+                        <div class="bank-transfer-info">
+                            <p>Please make a transfer to the following bank account:</p>
+                            <div class="bank-details">
+                                <div class="bank-detail-item">
+                                    <span class="detail-label">Bank Name:</span>
+                                    <span class="detail-value">First Bank of Nigeria</span>
+                                </div>
+                                <div class="bank-detail-item">
+                                    <span class="detail-label">Account Name:</span>
+                                    <span class="detail-value">BINK Technologies Ltd</span>
+                                </div>
+                                <div class="bank-detail-item">
+                                    <span class="detail-label">Account Number:</span>
+                                    <span class="detail-value">1234567890</span>
+                                    <button class="copy-button" data-copy="1234567890">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                                <div class="bank-detail-item">
+                                    <span class="detail-label">Amount:</span>
+                                    <span class="detail-value">₦2,500</span>
+                                </div>
+                                <div class="bank-detail-item">
+                                    <span class="detail-label">Reference:</span>
+                                    <span class="detail-value" id="payment-reference">BINK-123456</span>
+                                    <button class="copy-button" data-copy-ref="true">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="transfer-confirmation">
+                                <p>After making the transfer, please click the button below to confirm:</p>
+                                <form id="bank-confirmation-form">
+                                    <div class="form-group">
+                                        <label for="transfer-date">Transfer Date</label>
+                                        <input type="date" id="transfer-date" name="transfer-date" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="payment-proof">Payment Proof (Screenshot or PDF)</label>
+                                        <input type="file" id="payment-proof" name="payment-proof" accept="image/*,application/pdf" required>
+                                        <div class="file-preview" id="file-preview"></div>
+                                        <p class="file-hint">Upload a screenshot or PDF of your payment receipt</p>
+                                    </div>
+                                    <button type="submit" id="bank-submit-button" class="payment-button">Confirm Transfer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-tab-content" id="mobile-tab">
+                        <div class="mobile-money-options">
+                            <p>Choose your mobile money provider:</p>
+                            <div class="provider-options">
+                                <button class="provider-option" data-provider="mtn">
+                                    <img src="https://via.placeholder.com/50" alt="MTN">
+                                    <span>MTN Mobile Money</span>
+                                </button>
+                                <button class="provider-option" data-provider="airtel">
+                                    <img src="https://via.placeholder.com/50" alt="Airtel">
+                                    <span>Airtel Money</span>
+                                </button>
+                                <button class="provider-option" data-provider="glo">
+                                    <img src="https://via.placeholder.com/50" alt="Glo">
+                                    <span>Glo Mobile Money</span>
+                                </button>
+                            </div>
+                            <form id="mobile-payment-form" class="payment-form" style="display: none;">
+                                <div class="form-group">
+                                    <label for="mobile-number">Mobile Number</label>
+                                    <input type="tel" id="mobile-number" name="mobile-number" required placeholder="e.g., 08012345678">
+                                </div>
+                                <p class="mobile-instructions">You will receive a prompt on your phone to complete the payment.</p>
+                                <button type="submit" id="mobile-submit-button" class="payment-button">Pay with <span id="provider-name">Mobile Money</span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-security">
+                <div class="security-info">
+                    <i class="fas fa-lock"></i>
+                    <p>Your payment information is secure. We use industry-standard encryption to protect your data.</p>
+                </div>
+                <div class="payment-help">
+                    <p>Need help? <a href="mailto:support@bink.com">Contact our support team</a></p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <!-- Firebase Storage - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+
+    <script src="firebase-config.js"></script>
+    <script src="paystack-config.js"></script>
+    <script src="paystack-handler.js"></script>
+    <script src="payment.js"></script>
+</body>
+</html>

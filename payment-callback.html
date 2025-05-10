@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Processing - BINK</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="payment.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .payment-processing {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            text-align: center;
+        }
+
+        .payment-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .payment-status {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .payment-message {
+            margin-bottom: 25px;
+            color: var(--text-muted);
+        }
+
+        .payment-details {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: var(--secondary-color);
+            border-radius: var(--border-radius);
+            text-align: left;
+        }
+
+        .payment-detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .payment-detail-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(59, 130, 246, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .success-icon {
+            color: #10B981;
+        }
+
+        .error-icon {
+            color: #EF4444;
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <!-- Dashboard and logout buttons removed as requested -->
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <main class="dashboard-main">
+            <div class="payment-processing">
+                <div id="loading-state">
+                    <div class="loading-spinner"></div>
+                    <div class="payment-status">Processing Your Payment</div>
+                    <div class="payment-message">Please wait while we verify your payment...</div>
+                </div>
+
+                <div id="success-state" style="display: none;">
+                    <div class="payment-icon success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="payment-status">Payment Successful!</div>
+                    <div class="payment-message" id="success-message">Your payment has been processed successfully.</div>
+
+                    <div class="payment-details" id="payment-details">
+                        <!-- Payment details will be inserted here -->
+                    </div>
+
+                    <a href="dashboard.html" class="cta-button">Go to Dashboard</a>
+                </div>
+
+                <div id="error-state" style="display: none;">
+                    <div class="payment-icon error-icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="payment-status">Payment Failed</div>
+                    <div class="payment-message" id="error-message">There was an issue processing your payment.</div>
+
+                    <div class="payment-actions">
+                        <a href="payment.html" class="cta-button">Try Again</a>
+                        <a href="dashboard.html" class="secondary-button">Go to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+    <script src="firebase-config.js"></script>
+    <script src="paystack-config.js"></script>
+    <script src="paystack-handler.js"></script>
+    <script>
+        // Global variables
+        let currentUser = null;
+        let db = null;
+        let auth = null;
+
+        // Initialize Firebase
+        function initFirebase() {
+            // Firebase should be initialized in firebase-config.js
+            if (firebase) {
+                db = firebase.firestore();
+                auth = firebase.auth();
+
+                // Check authentication
+                auth.onAuthStateChanged((user) => {
+                    if (user) {
+                        currentUser = user;
+                        processPaymentCallback();
+                    } else {
+                        // Redirect to login if not authenticated
+                        window.location.href = 'login.html';
+                    }
+                });
+            } else {
+                showError('Firebase not initialized');
+            }
+        }
+
+        // Process payment callback
+        function processPaymentCallback() {
+            // Get reference from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const reference = urlParams.get('reference');
+            const trxref = urlParams.get('trxref');
+
+            // Use either reference or trxref
+            const paymentReference = reference || trxref;
+
+            if (!paymentReference) {
+                showError('No payment reference found');
+                return;
+            }
+
+            // Process the payment callback
+            window.BINK.paystackHandler.handlePaymentCallback(paymentReference)
+                .then((result) => {
+                    showSuccess(result);
+                })
+                .catch((error) => {
+                    console.error('Error processing payment:', error);
+                    showError(error.message);
+                });
+        }
+
+        // Show success state
+        function showSuccess(result) {
+            // Hide loading state
+            document.getElementById('loading-state').style.display = 'none';
+
+            // Show success state
+            document.getElementById('success-state').style.display = 'block';
+
+            // Update success message based on payment type
+            const successMessage = document.getElementById('success-message');
+            const paymentDetails = document.getElementById('payment-details');
+
+            if (result.type === 'token') {
+                successMessage.textContent = `Your token purchase was successful! ${result.tokenAmount} tokens have been added to your account.`;
+
+                // Add bonus token message if applicable
+                if (result.bonusTokens > 0) {
+                    successMessage.textContent += ` You also received ${result.bonusTokens} bonus tokens as a first-time purchaser!`;
+                }
+
+                // Add payment details
+                paymentDetails.innerHTML = `
+                    <div class="payment-detail-item">
+                        <span class="detail-label">Tokens Purchased:</span>
+                        <span class="detail-value">${result.tokenAmount}</span>
+                    </div>
+                    ${result.bonusTokens > 0 ? `
+                    <div class="payment-detail-item">
+                        <span class="detail-label">Bonus Tokens:</span>
+                        <span class="detail-value">${result.bonusTokens}</span>
+                    </div>
+                    ` : ''}
+                    <div class="payment-detail-item">
+                        <span class="detail-label">Total Token Balance:</span>
+                        <span class="detail-value">${result.totalTokens}</span>
+                    </div>
+                `;
+            } else {
+                // Subscription payment
+                const planName = result.plan.charAt(0).toUpperCase() + result.plan.slice(1);
+                const durationText = getDurationText(result.duration);
+
+                successMessage.textContent = `Your ${planName} subscription has been activated successfully!`;
+
+                // Add payment details
+                paymentDetails.innerHTML = `
+                    <div class="payment-detail-item">
+                        <span class="detail-label">Plan:</span>
+                        <span class="detail-value">${planName}</span>
+                    </div>
+                    <div class="payment-detail-item">
+                        <span class="detail-label">Duration:</span>
+                        <span class="detail-value">${durationText}</span>
+                    </div>
+                    <div class="payment-detail-item">
+                        <span class="detail-label">Expires:</span>
+                        <span class="detail-value">${formatDate(result.expirationDate)}</span>
+                    </div>
+                `;
+            }
+        }
+
+        // Show error state
+        function showError(message) {
+            // Hide loading state
+            document.getElementById('loading-state').style.display = 'none';
+
+            // Show error state
+            document.getElementById('error-state').style.display = 'block';
+
+            // Update error message
+            document.getElementById('error-message').textContent = message || 'There was an issue processing your payment.';
+        }
+
+        // Get duration text
+        function getDurationText(duration) {
+            switch (duration) {
+                case 'monthly': return '1 Month';
+                case 'yearly': return '1 Year';
+                case 'quarterly': return '3 Months';
+                case 'lifetime': return 'Lifetime';
+                default: return duration;
+            }
+        }
+
+        // Format date
+        function formatDate(date) {
+            return new Date(date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initFirebase);
+    </script>
+</body>
+</html>

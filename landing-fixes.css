@@ -1,0 +1,89 @@
+/* Custom fixes for the landing page */
+
+/* Hero video styling */
+.hero-video-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    background-color: var(--card-background);
+    position: relative;
+}
+
+.hero-video {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+    pointer-events: none; /* Prevents user interaction */
+    object-fit: cover; /* Ensures video fills container nicely */
+}
+
+.video-caption {
+    padding: 15px;
+    text-align: center;
+    background-color: var(--card-background);
+}
+
+.video-caption h3 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1.2rem;
+}
+
+/* CTA buttons in hero and footer */
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* One-time offer / promo styling */
+.promo-inactive {
+    display: none; /* Hidden by default, will be shown via JavaScript when promo is inactive */
+    text-align: center;
+}
+
+.promo-inactive p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+/* Mobile responsive fixes */
+@media (max-width: 992px) {
+    .hero-content {
+        max-width: 100%;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Make hero section stack on mobile */
+    .hero-section {
+        flex-direction: column;
+        padding: 100px 20px 40px;
+        text-align: center;
+    }
+
+    .hero-content {
+        margin-bottom: 40px;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+
+    /* Adjust template items for mobile */
+    .template-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}

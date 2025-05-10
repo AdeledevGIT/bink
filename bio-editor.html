@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Bio Page - BINK</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bio-editor.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <a href="tokens.html" class="token-balance-display">
+                <i class="fas fa-coins"></i> <span id="header-token-count">0</span> tokens <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <main class="dashboard-main">
+            <div class="bio-editor-header">
+                <h2>Customize Your Bio Page</h2>
+                <p>Create and customize your bio page to share with your audience</p>
+            </div>
+
+            <!-- Templates Carousel Section -->
+            <div class="dashboard-section templates-section">
+                <h3>Choose a Template</h3>
+                <div class="templates-carousel">
+                    <div class="templates-scroll">
+                        <!-- NeonCard -->
+                        <div class="template-card">
+                            <div id="neoncard-label"></div>
+                            <iframe src="templates/neoncard-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Neon Card</div>
+                                <button class="template-select-btn" data-template="neoncard">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Glassmorphism -->
+                        <div class="template-card">
+                            <div id="glassmorphism-label"></div>
+                            <iframe src="templates/glassmorphism-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Glassmorphism</div>
+                                <button class="template-select-btn" data-template="glassmorphism">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Classic (optional) -->
+                        <div class="template-card">
+                            <div id="classic-label"></div>
+                            <iframe src="templates/classic-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Classic</div>
+                                <button class="template-select-btn" data-template="classic">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Purple Card -->
+                        <div class="template-card">
+                            <div id="purplecard-label"></div>
+                            <iframe src="templates/purplecard-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Purple Card</div>
+                                <button class="template-select-btn" data-template="purplecard">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Landing Profile -->
+                        <div class="template-card">
+                            <div id="landingprofile-label"></div>
+                            <iframe src="templates/landingprofile-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Landing Profile</div>
+                                <button class="template-select-btn" data-template="landingprofile">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Black Landing -->
+                        <div class="template-card">
+                            <div id="blacklanding-label"></div>
+                            <iframe src="templates/blacklanding-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Black Landing</div>
+                                <button class="template-select-btn" data-template="blacklanding">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Gradient Flow -->
+                        <div class="template-card">
+                            <div id="gradientflow-label"></div>
+                            <iframe src="templates/gradientflow-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Gradient Flow</div>
+                                <button class="template-select-btn" data-template="gradientflow">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Dark Elegance -->
+                        <div class="template-card">
+                            <div id="darkelegance-label"></div>
+                            <iframe src="templates/darkelegance-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Dark Elegance</div>
+                                <button class="template-select-btn" data-template="darkelegance">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Neon Glow -->
+                        <div class="template-card">
+                            <div id="neonglow-label"></div>
+                            <iframe src="templates/neonglow-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Neon Glow</div>
+                                <button class="template-select-btn" data-template="neonglow">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Minimal Zen -->
+                        <div class="template-card">
+                            <div id="minimalzen-label"></div>
+                            <iframe src="templates/minimalzen-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Minimal Zen</div>
+                                <button class="template-select-btn" data-template="minimalzen">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Tech Wave -->
+                        <div class="template-card">
+                            <div id="techwave-label"></div>
+                            <iframe src="templates/techwave-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Tech Wave</div>
+                                <button class="template-select-btn" data-template="techwave">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Split Screen -->
+                        <div class="template-card">
+                            <div id="splitscreen-label"></div>
+                            <iframe src="templates/splitscreen-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Split Screen</div>
+                                <button class="template-select-btn" data-template="splitscreen">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Magazine -->
+                        <div class="template-card">
+                            <div id="magazine-label"></div>
+                            <iframe src="templates/magazine-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Magazine</div>
+                                <button class="template-select-btn" data-template="magazine">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Retro Wave -->
+                        <div class="template-card">
+                            <div id="retrowave-label"></div>
+                            <iframe src="templates/retrowave-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Retro Wave</div>
+                                <button class="template-select-btn" data-template="retrowave">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Nature -->
+                        <div class="template-card">
+                            <div id="nature-label"></div>
+                            <iframe src="templates/nature-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Nature</div>
+                                <button class="template-select-btn" data-template="nature">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Portfolio -->
+                        <div class="template-card">
+                            <div id="portfolio-label"></div>
+                            <iframe src="templates/portfolio-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Portfolio</div>
+                                <button class="template-select-btn" data-template="portfolio">Preview</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-control prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-control next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bio-editor-layout">
+                <!-- Left Column -->
+                <div class="bio-editor-column">
+                    <div class="dashboard-section">
+                        <h3>Profile Information</h3>
+                        <p id="profile-message" class="auth-success" style="display: none;"></p>
+                        <p id="profile-error" class="auth-error" style="display: none;"></p>
+                        <form id="profile-form" class="profile-form">
+                            <!-- Profile Picture Upload Section - Moved to top -->
+                            <div class="profile-image-container">
+                                <div class="profile-pic-preview" id="profilePicPreview">
+                                    <img src="profile.png" alt="Profile" id="profilePicImage">
+                                </div>
+                                <input type="file" id="profilePicUpload" accept="image/*" style="display: none;">
+                            </div>
+                            <p class="text-center profile-pic-hint">Click on the image to change your profile picture</p>
+
+                            <div class="form-group">
+                                <label for="username">Your Unique Link</label>
+                                <div class="unique-link-display">
+                                    <span class="link-prefix">bink.com/u/</span>
+                                    <span id="username-display" class="username-value">username</span>
+                                    <div class="link-actions">
+                                        <button type="button" id="copy-link-button" class="copy-button" title="Copy Link">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button type="button" id="save-link-button" class="save-button" title="Save to Dashboard">
+                                            <i class="fas fa-bookmark"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="displayName">Display Name</label>
+                                <input type="text" id="displayName" name="displayName" placeholder="Your Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="bio">Bio</label>
+                                <textarea id="bio" name="bio" placeholder="Tell visitors about yourself..."></textarea>
+                            </div>
+                            <!-- Hidden field to store the profile picture URL -->
+                            <input type="hidden" id="profilePicUrl" name="profilePicUrl">
+
+                            <button type="submit" id="save-profile-button" class="auth-button">Save Profile</button>
+                        </form>
+                    </div>
+
+                    <div class="dashboard-section">
+                        <h3>Manage Links</h3>
+                        <div id="links-container" class="links-editor-container">
+                            <!-- Links will be loaded here -->
+                            <div class="links-placeholder">Loading your links...</div>
+                        </div>
+                        <button id="add-link-button" class="add-button">
+                            <i class="fas fa-plus"></i> Add New Link
+                        </button>
+                    </div>
+
+                    <div class="dashboard-section">
+                        <h3>Social Media Icons</h3>
+                        <div id="social-links-form" class="social-links-form">
+                            <!-- Social media inputs will be generated here -->
+                        </div>
+                        <button type="button" id="save-social-links-button" class="auth-button">Save Social Links</button>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="bio-editor-column">
+                    <div class="dashboard-section">
+                        <div class="preview-header">
+                            <h3>Preview Your Bio Page</h3>
+                            <button id="use-template-button" class="auth-button primary-button">
+                                <i class="fas fa-check"></i> Use This Template
+                            </button>
+                        </div>
+                        <div class="preview-container">
+                            <div class="preview-frame-container">
+                                <iframe id="preview-frame" src="about:blank" title="Bio Page Preview"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Link Editor Modal -->
+    <div id="link-editor-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="modal-title">Add New Link</h3>
+            <form id="link-form">
+                <input type="hidden" id="link-id" name="link-id">
+                <div class="form-group">
+                    <label for="link-title">Link Title</label>
+                    <input type="text" id="link-title" name="link-title" required placeholder="e.g., My Website">
+                </div>
+                <div class="form-group">
+                    <label for="link-url">URL</label>
+                    <input type="url" id="link-url" name="link-url" required placeholder="https://example.com">
+                </div>
+                <div class="form-group">
+                    <label for="link-platform">Platform</label>
+                    <select id="link-platform" name="link-platform">
+                        <option value="other">Other</option>
+                        <option value="website">Website</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="twitter">Twitter</option>
+                        <option value="facebook">Facebook</option>
+                        <option value="youtube">YouTube</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="linkedin">LinkedIn</option>
+                        <option value="github">GitHub</option>
+                        <option value="pinterest">Pinterest</option>
+                        <option value="snapchat">Snapchat</option>
+                        <option value="reddit">Reddit</option>
+                        <option value="twitch">Twitch</option>
+                        <option value="discord">Discord</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="telegram">Telegram</option>
+                        <option value="medium">Medium</option>
+                        <option value="spotify">Spotify</option>
+                        <option value="soundcloud">SoundCloud</option>
+                        <option value="behance">Behance</option>
+                        <option value="dribbble">Dribbble</option>
+                        <option value="email">Email</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="save-link-button" class="auth-button">Save Link</button>
+                    <button type="button" id="delete-link-button" class="delete-button" style="display: none;">Delete Link</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Premium Template Modal -->
+    <div id="premium-template-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-premium-modal">&times;</span>
+            <h3>Premium Template</h3>
+            <p>This is a premium template that requires tokens to use.</p>
+            <div id="premium-template-info">
+                <div class="template-price-info">
+                    <p><strong>Template:</strong> <span id="premium-template-name">Template Name</span></p>
+                    <p><strong>Price:</strong> <span id="premium-template-price">100</span> tokens</p>
+                    <p><strong>Your balance:</strong> <span id="premium-template-balance">0</span> tokens</p>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button id="use-tokens-btn" class="auth-button">Use Tokens</button>
+                <button id="buy-tokens-btn" class="auth-button secondary-button">Buy Tokens</button>
+                <button id="close-premium-modal-btn" class="auth-button secondary-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <!-- Firebase Storage - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+
+    <script src="firebase-config.js"></script>
+    <script src="templates/templates.js"></script>
+    <script src="sidebar.js"></script>
+    <script src="bio-editor.js"></script>
+</body>
+</html>
