@@ -3,7 +3,7 @@
 /* Hero video styling */
 .hero-video-container {
     width: 100%;
-    max-width: 350px; /* Narrower container for portrait video */
+    max-width: 600px;
     margin: 0 auto;
     border-radius: 20px;
     overflow: hidden;
@@ -15,18 +15,15 @@
 .hero-video {
     width: 100%;
     display: block;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    object-fit: contain; /* Changed to contain to preserve aspect ratio */
-    height: 600px; /* Taller height for portrait orientation */
+    border-radius: 12px;
+    pointer-events: none; /* Prevents user interaction */
+    object-fit: cover; /* Ensures video fills container nicely */
 }
 
 .video-caption {
     padding: 15px;
     text-align: center;
     background-color: var(--card-background);
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
 }
 
 .video-caption h3 {
@@ -84,12 +81,9 @@
         align-items: center;
     }
 
-    /* Adjust video height for mobile */
-    .hero-video {
-        height: 450px; /* Still tall enough for portrait on mobile */
-    }
-
-    .hero-video-container {
-        max-width: 280px; /* Slightly narrower on mobile */
+    /* Adjust template items for mobile */
+    .template-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
     }
 }
