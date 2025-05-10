@@ -717,6 +717,109 @@
             .templates-grid {
                 grid-template-columns: 1fr;
             }
+
+            /* Improved mobile styling for bio link buttons */
+            .links-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .links-header .flex {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+            .links-header .btn {
+                width: 100%;
+                padding: 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 14px;
+            }
+
+            /* Make the Add New Link button full width */
+            .links-header .btn-primary {
+                grid-column: span 2;
+            }
+
+            /* Increase touch target size for buttons */
+            .btn-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+
+            /* Add visual feedback for touch */
+            .btn:active, .btn-icon:active {
+                transform: scale(0.95);
+            }
+        }
+
+        /* Mobile notification system */
+        .notification-container {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .notification {
+            background-color: var(--card-background);
+            color: var(--text-color);
+            border-radius: var(--border-radius);
+            padding: 12px 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 90%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: auto;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .notification.success {
+            border-left: 4px solid var(--success-border);
+        }
+
+        .notification.error {
+            border-left: 4px solid var(--error-border);
+        }
+
+        .notification.info {
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .notification i {
+            font-size: 18px;
+        }
+
+        .notification.success i {
+            color: var(--success-border);
+        }
+
+        .notification.error i {
+            color: var(--error-border);
+        }
+
+        .notification.info i {
+            color: var(--primary-color);
         }
     </style>
 </head>
@@ -737,6 +840,7 @@
     </header>
 
     <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    <div id="notification-container" class="notification-container"></div>
     <div class="dashboard-container">
         <!-- Sidebar Navigation -->
         <div class="dashboard-sidebar" id="sidebar">
