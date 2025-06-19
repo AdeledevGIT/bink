@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Check - BINK Admin</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1><i class="fas fa-crown"></i> Subscription Management</h1>
+            <p>Check and manage expired subscriptions</p>
+        </div>
+
+        <div class="admin-content">
+            <div class="admin-card">
+                <h2>Manual Subscription Check</h2>
+                <p>Click the button below to manually check for expired subscriptions and automatically downgrade them to free tier.</p>
+                
+                <div class="action-section">
+                    <button id="checkSubscriptionsBtn" class="btn btn-primary">
+                        <i class="fas fa-sync-alt"></i>
+                        Check Expired Subscriptions
+                    </button>
+                </div>
+
+                <div id="resultSection" class="result-section" style="display: none;">
+                    <h3>Check Results</h3>
+                    <div id="resultContent"></div>
+                </div>
+
+                <div id="logSection" class="log-section" style="display: none;">
+                    <h3>Detailed Log</h3>
+                    <pre id="logContent"></pre>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <h2>Automatic Scheduling</h2>
+                <p>To set up automatic subscription checking, you can use external cron services to call the API endpoint:</p>
+                
+                <div class="code-block">
+                    <code>GET /api/check-expired-subscriptions</code>
+                </div>
+
+                <p>Recommended schedule: Every 6 hours or daily</p>
+                
+                <h3>External Cron Services</h3>
+                <ul>
+                    <li><strong>cron-job.org</strong> - Free cron service</li>
+                    <li><strong>EasyCron</strong> - Reliable cron service</li>
+                    <li><strong>Vercel Cron</strong> - Built-in Vercel cron (Pro plan)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .admin-header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .admin-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .admin-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #e1e5e9;
+        }
+
+        .admin-card h2 {
+            color: #333;
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+
+        .admin-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .action-section {
+            margin: 20px 0;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .result-section, .log-section {
+            margin-top: 20px;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e1e5e9;
+        }
+
+        .result-section h3, .log-section h3 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .code-block {
+            background: #f1f3f4;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            margin: 12px 0;
+        }
+
+        .code-block code {
+            color: #d73a49;
+            font-weight: 600;
+        }
+
+        #logContent {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 16px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .success {
+            color: #059669;
+            background: #ecfdf5;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #a7f3d0;
+        }
+
+        .error {
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #fca5a5;
+        }
+
+        .loading {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff40;
+            border-top: 2px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #666;
+        }
+    </style>
+
+    <script>
+        document.getElementById('checkSubscriptionsBtn').addEventListener('click', async function() {
+            const btn = this;
+            const resultSection = document.getElementById('resultSection');
+            const resultContent = document.getElementById('resultContent');
+            const logSection = document.getElementById('logSection');
+            const logContent = document.getElementById('logContent');
+
+            // Show loading state
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner"></div> Checking Subscriptions...';
+            
+            // Hide previous results
+            resultSection.style.display = 'none';
+            logSection.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/check-expired-subscriptions', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    resultContent.innerHTML = `
+                        <div class="success">
+                            <strong>✅ Check Completed Successfully</strong><br>
+                            Processed: ${data.data.processedCount} users<br>
+                            Expired: ${data.data.expiredCount} subscriptions<br>
+                            Errors: ${data.data.errorCount}<br>
+                            Time: ${new Date(data.data.timestamp).toLocaleString()}
+                        </div>
+                    `;
+                } else {
+                    resultContent.innerHTML = `
+                        <div class="error">
+                            <strong>❌ Check Failed</strong><br>
+                            Error: ${data.message || data.error}
+                        </div>
+                    `;
+                }
+
+                resultSection.style.display = 'block';
+
+                // Show detailed log if available
+                if (data.data && data.data.log) {
+                    logContent.textContent = JSON.stringify(data.data, null, 2);
+                    logSection.style.display = 'block';
+                }
+
+            } catch (error) {
+                console.error('Error checking subscriptions:', error);
+                resultContent.innerHTML = `
+                    <div class="error">
+                        <strong>❌ Request Failed</strong><br>
+                        Error: ${error.message}
+                    </div>
+                `;
+                resultSection.style.display = 'block';
+            } finally {
+                // Reset button
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-sync-alt"></i> Check Expired Subscriptions';
+            }
+        });
+    </script>
+</body>
+</html>

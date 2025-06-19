@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BINK Tokens - Buy Premium Template Tokens</title>
+    <link rel="icon" href="./logo.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .token-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .token-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .token-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .token-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .token-card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .token-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .token-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+        }
+
+        .token-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .token-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .token-features {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .token-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .token-feature i {
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        .token-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .token-btn:hover {
+            background-color: var(--primary-hover-color);
+        }
+
+        .token-info {
+            background-color: var(--secondary-color);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .token-info h2 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .token-info p {
+            margin-bottom: 1rem;
+        }
+
+        .token-info ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .token-info li {
+            margin-bottom: 0.5rem;
+        }
+
+        .template-card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .template-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .template-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .template-card p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .token-balance-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .token-balance {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .token-balance i {
+            color: gold;
+        }
+
+        .token-count {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .earn-tokens-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: #10B981; /* Green color */
+            color: white;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .earn-tokens-btn:hover {
+            background-color: #059669; /* Darker green */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .earn-tokens-btn i {
+            font-size: 1.1rem;
+        }
+
+        .premium-note {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: rgba(59, 130, 246, 0.15);
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .premium-note i {
+            color: gold;
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .premium-note strong {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <button id="menu-toggle" class="menu-toggle-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a href="dashboard.html">
+                <img src="./logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <!-- Welcome message and logout button removed as requested -->
+        </div>
+    </header>
+
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    <div class="dashboard-container">
+        <!-- Sidebar will be loaded by sidebar.js -->
+
+        <!-- Main Content Area -->
+        <div class="dashboard-main">
+            <div class="token-header">
+                <h1>BINK Template Tokens</h1>
+                <p>Purchase tokens to unlock premium templates for your bio page. Premium and Creator plan subscribers have unlimited access to all templates.</p>
+            </div>
+
+            <div class="token-balance-container">
+                <div class="token-balance">
+                    <i class="fas fa-coins"></i>
+                    <span>Your Token Balance: <span id="tokenCount" class="token-count">0</span></span>
+                </div>
+                <a href="tasks.html" class="earn-tokens-btn">
+                    <i class="fas fa-tasks"></i> Earn Free Tokens
+                </a>
+            </div>
+
+            <div id="premiumUserNote" class="premium-note" style="display: none;">
+                <i class="fas fa-crown"></i>
+                <span><strong>Premium User Benefit:</strong> As a Premium/Creator subscriber, you already have unlimited access to all templates without needing to purchase tokens! You can use any template directly from the Bio Editor.</span>
+            </div>
+
+            <div class="token-grid">
+                <div class="token-card">
+                    <div class="token-amount">800</div>
+                    <div class="token-price">₦500</div>
+                    <div class="token-features">
+                        <div class="token-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Use multiple premium templates</span>
+                        </div>
+                        <div class="token-feature">
+                            <i class="fas fa-check"></i>
+                            <span>+200 bonus tokens on first purchase</span>
+                        </div>
+                        <div class="token-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Valid for 30 days</span>
+                        </div>
+                    </div>
+                    <button class="token-btn" data-amount="800" data-price="500">Buy 800 Tokens</button>
+                </div>
+
+                <div class="token-card">
+                    <div class="token-amount">1600</div>
+                    <div class="token-price">₦900</div>
+                    <div class="token-features">
+                        <div class="token-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Use multiple premium templates</span>
+                        </div>
+                        <div class="token-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Save 10% per token</span>
+                        </div>
+                        <div class="token-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Valid for 60 days</span>
+                        </div>
+                    </div>
+                    <button class="token-btn" data-amount="1600" data-price="900">Buy 1600 Tokens</button>
+                </div>
+
+                <div class="token-card">
+                    <div class="token-amount">2500</div>
+                    <div class="token-price">₦1,300</div>
+                    <div class="token-features">
+                        <div class="token-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Use multiple premium templates</span>
+                        </div>
+                        <div class="token-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Save 15% per token</span>
+                        </div>
+                        <div class="token-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Valid for 90 days</span>
+                        </div>
+                    </div>
+                    <button class="token-btn" data-amount="2500" data-price="1300">Buy 2500 Tokens</button>
+                </div>
+
+                <div class="token-card">
+                    <div class="token-amount">5000</div>
+                    <div class="token-price">₦2,500</div>
+                    <div class="token-features">
+                        <div class="token-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Use multiple premium templates</span>
+                        </div>
+                        <div class="token-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Save 20% per token</span>
+                        </div>
+                        <div class="token-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Valid for 120 days</span>
+                        </div>
+                    </div>
+                    <button class="token-btn" data-amount="5000" data-price="2500">Buy 5000 Tokens</button>
+                </div>
+            </div>
+
+            <div class="token-info">
+                <h2>How Tokens Work</h2>
+                <p><strong>For Free Users:</strong> Tokens allow you to use premium templates without subscribing to a premium plan:</p>
+                <ul>
+                    <li>Each premium template costs a specific number of tokens to unlock</li>
+                    <li>Once you use tokens on a template, you can use that template indefinitely</li>
+                    <li>Tokens expire after their validity period</li>
+                    <li>You can purchase different token packages based on your needs</li>
+                </ul>
+                <p><strong>For Premium/Creator Users:</strong> You already have unlimited access to all templates without needing to purchase tokens!</p>
+                <p>Consider upgrading to a Premium or Creator plan for unlimited access to all templates and additional features!</p>
+            </div>
+
+            <div class="token-info">
+                <h2>Available Premium Templates</h2>
+                <p>Here are the premium templates you can unlock with tokens:</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <div class="template-card">
+                        <h3>Purple Card</h3>
+                        <p>Rounded, modern, purple card style</p>
+                        <p><strong>Price: 150 Tokens</strong></p>
+                    </div>
+                    <div class="template-card">
+                        <h3>Landing Profile</h3>
+                        <p>Banner, profile at top left, username in front</p>
+                        <p><strong>Price: 120 Tokens</strong></p>
+                    </div>
+                    <div class="template-card">
+                        <h3>Black Landing</h3>
+                        <p>Dark landing page, username inline, centered about section</p>
+                        <p><strong>Price: 180 Tokens</strong></p>
+                    </div>
+                    <div class="template-card">
+                        <h3>Gradient Flow</h3>
+                        <p>A modern template with flowing gradient backgrounds</p>
+                        <p><strong>Price: 120 Tokens</strong></p>
+                    </div>
+                    <div class="template-card">
+                        <h3>Dark Elegance</h3>
+                        <p>A sophisticated dark template with gold accents</p>
+                        <p><strong>Price: 180 Tokens</strong></p>
+                    </div>
+                    <div class="template-card">
+                        <h3>Neon Glow</h3>
+                        <p>A vibrant template with neon glow effects</p>
+                        <p><strong>Price: 200 Tokens</strong></p>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem;">Go to the <a href="bio-editor.html">Bio Editor</a> to preview and use these templates.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal removed as per request -->
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+    <script src="firebase-config.js"></script> <!-- Your Firebase config -->
+    <script src="sidebar.js"></script> <!-- Sidebar functionality -->
+    <script src="tokens.js"></script> <!-- Tokens specific logic -->
+</body>
+</html>

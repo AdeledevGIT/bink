@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Articles - BINK</title>
+    <meta name="description" content="Detailed help articles for BINK bio link platform. Learn how to use all features and get the most out of your bio page.">
+    <link rel="icon" href="./logo.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="landing.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Articles specific styles */
+        .articles-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .articles-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .articles-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .articles-header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .articles-search {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            position: relative;
+        }
+
+        .articles-search input {
+            width: 100%;
+            padding: 15px 20px;
+            padding-left: 50px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .articles-search i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .articles-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-category-btn {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .article-category-btn:hover,
+        .article-category-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .article-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .article-card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .article-icon {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .article-icon i {
+            font-size: 3rem;
+            color: white;
+        }
+
+        .article-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+        }
+
+        .article-content p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .article-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .article-link:hover {
+            color: var(--accent-color);
+        }
+
+        .article-link i {
+            margin-left: 5px;
+            font-size: 0.8rem;
+        }
+
+        .article-detail {
+            display: none;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .article-detail.active {
+            display: block;
+        }
+
+        .article-detail-header {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .article-detail-header h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .article-detail-header .article-category {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-detail-header .back-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 8px 15px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .article-detail-header .back-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .article-detail-header .back-btn i {
+            margin-right: 5px;
+        }
+
+        .article-detail-content {
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        .article-detail-content h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--text-color);
+        }
+
+        .article-detail-content p {
+            margin-bottom: 1rem;
+        }
+
+        .article-detail-content ul,
+        .article-detail-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-detail-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-detail-content img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            margin: 1.5rem 0;
+        }
+
+        .article-detail-content .tip {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .article-detail-content .warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .article-detail-footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .article-detail-footer .helpful {
+            display: flex;
+            align-items: center;
+        }
+
+        .article-detail-footer .helpful span {
+            margin-right: 1rem;
+        }
+
+        .article-detail-footer .helpful button {
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 8px 15px;
+            margin-right: 0.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .article-detail-footer .helpful button:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .article-detail-footer .share a {
+            color: var(--text-muted);
+            margin-left: 1rem;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .article-detail-footer .share a:hover {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .article-detail-header .back-btn {
+                position: static;
+                margin-bottom: 1rem;
+                display: inline-flex;
+            }
+
+            .article-detail-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <span id="welcome-message">Welcome!</span>
+        </div>
+    </header>
+
+    <div class="articles-container">
+        <div class="articles-header">
+            <h1>BINK Help Articles</h1>
+            <p>Detailed guides to help you make the most of your BINK experience.</p>
+        </div>
+
+        <div class="articles-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="article-search" placeholder="Search for help articles...">
+        </div>
+
+        <div class="articles-categories">
+            <button class="article-category-btn active" data-category="all">All Articles</button>
+            <button class="article-category-btn" data-category="account">Account Management</button>
+            <button class="article-category-btn" data-category="links">Bio Link Management</button>
+            <button class="article-category-btn" data-category="templates">Templates</button>
+            <button class="article-category-btn" data-category="tokens">Tokens & Payments</button>
+            <button class="article-category-btn" data-category="analytics">Analytics</button>
+            <button class="article-category-btn" data-category="security">Security & Privacy</button>
+        </div>
+
+        <div id="article-list" class="article-list">
+            <!-- Article cards will be loaded here by JavaScript -->
+        </div>
+
+        <div id="article-detail" class="article-detail">
+            <!-- Article detail will be loaded here by JavaScript -->
+        </div>
+    </div>
+
+    <footer class="landing-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="dashboard.html">
+                    <img src="./logo.png" alt="BINK Logo">
+                </a>
+                <p>Your Bio Link Platform</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>BINK</h4>
+                    <ul>
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="index.html#pricing">Pricing</a></li>
+                        <li><a href="index.html#testimonials">Testimonials</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact-support.html">Contact Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BINK. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="articles.js"></script>
+</body>
+</html>

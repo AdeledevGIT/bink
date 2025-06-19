@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - BINK</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="landing.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Documentation specific styles */
+        .documentation-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .documentation-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .documentation-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .documentation-header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .documentation-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 40px;
+        }
+
+        .documentation-nav {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .documentation-nav h3 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .documentation-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .documentation-nav li {
+            margin-bottom: 10px;
+        }
+
+        .documentation-nav a {
+            display: block;
+            padding: 8px 10px;
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .documentation-nav a:hover, .documentation-nav a.active {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--primary-color);
+        }
+
+        .documentation-content {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .documentation-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .documentation-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .documentation-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .documentation-section h3 {
+            font-size: 1.4rem;
+            margin: 25px 0 15px;
+            color: var(--accent-color);
+        }
+
+        .documentation-section p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .documentation-section ul, .documentation-section ol {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .documentation-section li {
+            margin-bottom: 8px;
+        }
+
+        .documentation-section code {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .documentation-section .note {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .documentation-section .warning {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .documentation-section img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background-color: var(--secondary-color);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .documentation-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .documentation-nav {
+                position: static;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="landing-header">
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="./logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="login.html">Log In</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <a href="login.html" class="login-button">Log In</a>
+            <a href="signup.html" class="signup-button">Sign Up</a>
+        </div>
+        <button class="mobile-menu-button">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <div class="mobile-menu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="index.html#pricing">Pricing</a></li>
+            <li><a href="login.html">Log In</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+        </ul>
+    </div>
+
+    <div class="documentation-container">
+        <div class="documentation-header">
+            <h1>BINK Documentation</h1>
+            <p>Everything you need to know about using the BINK platform</p>
+        </div>
+
+        <div class="documentation-layout">
+            <div class="documentation-nav">
+                <h3>Contents</h3>
+                <ul>
+                    <li><a href="#introduction">Introduction</a></li>
+                    <li><a href="#getting-started">Getting Started</a></li>
+                    <li><a href="#bio-editor">Bio Editor</a></li>
+                    <li><a href="#templates">Templates</a></li>
+                    <li><a href="#token-system">Token System</a></li>
+                    <li><a href="#analytics">Analytics</a></li>
+                    <li><a href="#pricing">Pricing & Plans</a></li>
+                    <li><a href="#payment">Payment Options</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="documentation-content">
+                <section id="introduction" class="documentation-section">
+                    <h2>Introduction to BINK</h2>
+                    <p>BINK is a comprehensive bio link platform designed to help creators, influencers, and businesses share all their important links in one place. With BINK, you can create a customized page that showcases your content, social media profiles, products, and more.</p>
+
+                    <p>Our platform offers a range of features to help you create a professional and engaging bio page:</p>
+
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>Link Management</h4>
+                            <p>Add, edit, and organize your links with ease. Track clicks and engagement.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>Beautiful Templates</h4>
+                            <p>Choose from a variety of free and premium templates to customize your page.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>Detailed Analytics</h4>
+                            <p>Track visitor behavior, geographic locations, and engagement metrics.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>Token System</h4>
+                            <p>Purchase tokens to unlock premium templates without a subscription.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="getting-started" class="documentation-section">
+                    <h2>Getting Started</h2>
+                    <h3>Creating Your Account</h3>
+                    <p>To get started with BINK, you'll need to create an account:</p>
+                    <ol>
+                        <li>Visit the <a href="signup.html">Sign Up</a> page</li>
+                        <li>Enter your email address and create a password</li>
+                        <li>Choose a unique username for your BINK page</li>
+                        <li>Complete your profile by adding a profile picture and bio</li>
+                    </ol>
+
+                    <h3>Dashboard Overview</h3>
+                    <p>After signing in, you'll be taken to your dashboard. Here you can:</p>
+                    <ul>
+                        <li>View your page statistics (views, clicks, engagement)</li>
+                        <li>Access your bio page editor</li>
+                        <li>Manage your links</li>
+                        <li>View and purchase tokens</li>
+                        <li>Access analytics</li>
+                        <li>Update your profile settings</li>
+                    </ul>
+
+                    <h3>Your BINK URL</h3>
+                    <p>Once you've created your account, you'll get a unique BINK URL in the format:</p>
+                    <code>bio.html?u=yourusername</code>
+                    <p>This is the link you'll share on your social media profiles and other platforms. When someone visits this link, they'll see your customized bio page with all your links.</p>
+
+                    <h3>Adding Your First Links</h3>
+                    <p>To add links to your bio page:</p>
+                    <ol>
+                        <li>Go to the "Edit Bio" page from your dashboard</li>
+                        <li>Click the "Add New Link" button</li>
+                        <li>Enter a title and URL for your link</li>
+                        <li>Add an optional description</li>
+                        <li>Select a platform icon (optional)</li>
+                        <li>Click "Save" to add the link to your page</li>
+                    </ol>
+
+                    <div class="note">
+                        <p><strong>Note:</strong> Free users can add up to 5 links to their bio page. To add more links, you'll need to upgrade to a Premium plan.</p>
+                    </div>
+                </section>
+
+                <section id="bio-editor" class="documentation-section">
+                    <h2>Bio Editor</h2>
+                    <p>The Bio Editor is where you customize your bio page, add links, and choose templates.</p>
+
+                    <h3>Profile Information</h3>
+                    <p>At the top of the Bio Editor, you can update your profile information:</p>
+                    <ul>
+                        <li><strong>Profile Picture:</strong> Upload a profile picture by clicking on the profile image circle</li>
+                        <li><strong>Display Name:</strong> Set the name that will appear on your bio page</li>
+                        <li><strong>Bio Text:</strong> Write a short description about yourself or your brand</li>
+                    </ul>
+
+                    <h3>Managing Links</h3>
+                    <p>The Links section allows you to add, edit, and organize your links:</p>
+                    <ul>
+                        <li><strong>Add Link:</strong> Click the "Add New Link" button to create a new link</li>
+                        <li><strong>Edit Link:</strong> Click the edit icon on any existing link to modify it</li>
+                        <li><strong>Delete Link:</strong> Click the delete icon to remove a link</li>
+                        <li><strong>Reorder Links:</strong> Drag and drop links to change their order on your page</li>
+                    </ul>
+
+                    <h3>Preview Your Page</h3>
+                    <p>The right side of the Bio Editor shows a live preview of your bio page. You can:</p>
+                    <ul>
+                        <li><strong>See Changes in Real-time:</strong> Any changes you make will be reflected in the preview</li>
+                        <li><strong>Open in New Tab:</strong> Click "Open in New Tab" to view your page in a full browser window</li>
+                        <li><strong>Copy Link:</strong> Click "Copy Link" to copy your bio page URL to share with others</li>
+                    </ul>
+
+                    <div class="note">
+                        <p><strong>Tip:</strong> Make sure to click "Save" after making changes to ensure they're applied to your live bio page.</p>
+                    </div>
+                </section>
+
+                <section id="templates" class="documentation-section">
+                    <h2>Templates</h2>
+                    <p>BINK offers a variety of templates to customize the look and feel of your bio page.</p>
+
+                    <h3>Free Templates</h3>
+                    <p>All users have access to these templates at no cost:</p>
+                    <ul>
+                        <li><strong>Classic:</strong> A clean, simple design with a focus on your links</li>
+                        <li><strong>Glassmorphism:</strong> A modern, translucent design with a frosted glass effect</li>
+                    </ul>
+
+                    <h3>Premium Templates</h3>
+                    <p>These templates are available to Premium subscribers or can be purchased with tokens:</p>
+                    <ul>
+                        <li><strong>Purple Card:</strong> A vibrant purple design with card-style links</li>
+                        <li><strong>Neon Card:</strong> A bold neon design with glowing elements</li>
+                        <li><strong>Black Landing:</strong> A sleek black template with centered about section</li>
+                        <li><strong>Tech Wave:</strong> A futuristic tech-themed template with wave animations</li>
+                        <li><strong>And more...</strong> New templates are added regularly</li>
+                    </ul>
+
+                    <h3>Selecting a Template</h3>
+                    <p>To choose a template for your bio page:</p>
+                    <ol>
+                        <li>Go to the Bio Editor page</li>
+                        <li>Scroll down to the "Choose a Template" section</li>
+                        <li>Click on a template to preview it</li>
+                        <li>Click "Use This Template" to apply it to your bio page</li>
+                    </ol>
+
+                    <div class="note">
+                        <p><strong>Note:</strong> If you're a free user and select a premium template, you'll be prompted to either purchase it with tokens or upgrade to a Premium plan.</p>
+                    </div>
+                </section>
+
+                <section id="token-system" class="documentation-section">
+                    <h2>Token System</h2>
+                    <p>BINK's token system allows free users to access premium templates without subscribing to a Premium plan.</p>
+
+                    <h3>How Tokens Work</h3>
+                    <p>Tokens are a virtual currency within BINK that can be used to purchase premium templates:</p>
+                    <ul>
+                        <li>Each premium template costs between 100-200 tokens</li>
+                        <li>Once you purchase a template with tokens, it's yours to use forever</li>
+                        <li>Premium and Creator plan subscribers have access to all templates without using tokens</li>
+                    </ul>
+
+                    <h3>Purchasing Tokens</h3>
+                    <p>To buy tokens:</p>
+                    <ol>
+                        <li>Go to the Tokens page from your dashboard</li>
+                        <li>Select a token package (800 tokens for ₦500)</li>
+                        <li>Click "Buy Tokens" to proceed to payment</li>
+                        <li>Complete the payment process</li>
+                        <li>Tokens will be added to your account immediately after payment verification</li>
+                    </ol>
+
+                    <h3>First Purchase Bonus</h3>
+                    <p>New users receive 200 bonus tokens on their first token purchase. This bonus is automatically added to your account after your first purchase is verified.</p>
+
+                    <div class="note">
+                        <p><strong>Tip:</strong> If you plan to use multiple premium templates, it may be more cost-effective to upgrade to a Premium plan, which gives you access to all templates.</p>
+                    </div>
+                </section>
+
+                <section id="analytics" class="documentation-section">
+                    <h2>Analytics</h2>
+                    <p>BINK provides detailed analytics to help you understand your audience and track the performance of your bio page.</p>
+
+                    <h3>Basic Analytics (Free Plan)</h3>
+                    <p>Free users have access to essential analytics data:</p>
+                    <ul>
+                        <li><strong>Total Views:</strong> The number of times your bio page has been viewed</li>
+                        <li><strong>Total Clicks:</strong> The number of times visitors have clicked on your links</li>
+                        <li><strong>Click Rate:</strong> The percentage of views that result in clicks</li>
+                        <li><strong>Link Performance:</strong> See which links are getting the most clicks</li>
+                    </ul>
+
+                    <h3>Advanced Analytics (Premium Plan)</h3>
+                    <p>Premium users get access to comprehensive analytics features:</p>
+                    <ul>
+                        <li><strong>Visitor Demographics:</strong> Information about your visitors' devices, browsers, and referrers</li>
+                        <li><strong>Geographic Data:</strong> See where your visitors are coming from with location tracking</li>
+                        <li><strong>Time Analysis:</strong> Track when your page gets the most traffic</li>
+                        <li><strong>Performance Over Time:</strong> View trends and patterns in your page's performance</li>
+                        <li><strong>Detailed Reports:</strong> Get insights into visitor behavior and engagement</li>
+                    </ul>
+
+                    <h3>Accessing Analytics</h3>
+                    <p>To view your analytics:</p>
+                    <ol>
+                        <li>Go to the Analytics page from your dashboard</li>
+                        <li>Free users will see the Basic Analytics tab by default</li>
+                        <li>Premium users will see both Basic and Advanced tabs</li>
+                        <li>Use the filters to customize the data view (time range, chart type, etc.)</li>
+                    </ol>
+
+                    <div class="note">
+                        <p><strong>Note:</strong> Analytics data is updated in real-time, so you can always see the most current information about your bio page's performance.</p>
+                    </div>
+                </section>
+
+                <section id="pricing" class="documentation-section">
+                    <h2>Pricing & Plans</h2>
+                    <p>BINK offers different plans to suit your needs and budget.</p>
+
+                    <h3>Free Plan</h3>
+                    <p>The Free plan is perfect for getting started with BINK:</p>
+                    <ul>
+                        <li>Up to 5 links on your bio page</li>
+                        <li>Basic analytics</li>
+                        <li>Access to free templates</li>
+                        <li>Ability to purchase premium templates with tokens</li>
+                        <li>200 free tokens on first purchase</li>
+                    </ul>
+
+                    <h3>Premium Plan</h3>
+                    <p>The Premium plan offers enhanced features for serious users:</p>
+                    <ul>
+                        <li>Unlimited links</li>
+                        <li>Advanced analytics with location data</li>
+                        <li>Access to all premium templates</li>
+                        <li>No need to purchase tokens</li>
+                        <li>No BINK branding on your page</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <p><strong>Pricing:</strong></p>
+                    <ul>
+                        <li>Monthly: ₦2,500 per month</li>
+                        <li>Yearly: ₦25,000 per year (Save 17%)</li>
+                        <li>Lifetime: ₦60,000 one-time payment</li>
+                    </ul>
+
+                    <h3>Content Creator Plan</h3>
+                    <p>The Content Creator plan is designed for influencers and content creators:</p>
+                    <ul>
+                        <li>All Premium plan features</li>
+                        <li>Verified creator badge on your profile</li>
+                        <li>Featured placement in the creator directory</li>
+                        <li>Upcoming monetization options</li>
+                    </ul>
+                    <p><strong>Requirements:</strong></p>
+                    <ul>
+                        <li>At least 10,000 followers on a social platform</li>
+                        <li>At least 20,000 video views</li>
+                        <li>Application approval required</li>
+                    </ul>
+                    <p><strong>Pricing:</strong> ₦6,000 for 3 months</p>
+
+                    <h3>Token Packages</h3>
+                    <p>For users who want to access premium templates without a subscription:</p>
+                    <ul>
+                        <li>800 tokens for ₦500</li>
+                        <li>Premium templates cost 100-200 tokens each</li>
+                        <li>200 bonus tokens on first purchase</li>
+                    </ul>
+                </section>
+
+                <section id="payment" class="documentation-section">
+                    <h2>Payment Options</h2>
+                    <p>BINK offers several payment methods to make it easy for you to upgrade your plan or purchase tokens.</p>
+
+                    <h3>Available Payment Methods</h3>
+                    <ul>
+                        <li><strong>Credit/Debit Cards:</strong> Pay securely with your card</li>
+                        <li><strong>Mobile Money:</strong> Use mobile payment services</li>
+                        <li><strong>Bank Transfer:</strong> Make a direct bank transfer (requires manual verification)</li>
+                    </ul>
+
+                    <h3>Payment Process</h3>
+                    <p>To make a payment:</p>
+                    <ol>
+                        <li>Select your desired plan or token package</li>
+                        <li>Click the "Buy" or "Upgrade" button</li>
+                        <li>You'll be redirected to the payment page</li>
+                        <li>Select your preferred payment method</li>
+                        <li>Complete the payment process</li>
+                        <li>For bank transfers, upload your payment receipt for verification</li>
+                    </ol>
+
+                    <h3>Payment Security</h3>
+                    <p>All payments on BINK are secure. We use industry-standard encryption to protect your payment information, and we never store your full card details on our servers.</p>
+
+                    <div class="note">
+                        <p><strong>Note:</strong> After making a payment, you'll receive a confirmation email with your receipt. If you don't receive this email, please check your spam folder or contact our support team.</p>
+                    </div>
+                </section>
+
+                <section id="faq" class="documentation-section">
+                    <h2>Frequently Asked Questions</h2>
+
+                    <h3>General Questions</h3>
+                    <div class="faq-item">
+                        <h4>What is BINK?</h4>
+                        <p>BINK is a bio link platform that allows you to create a customizable page with all your important links in one place. It's perfect for social media profiles, especially platforms that only allow one link in bio.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>How do I get started with BINK?</h4>
+                        <p>Simply sign up for a free account, choose your unique username, and start adding links to your page. You can customize your page design, add a profile picture, and write a bio to make it truly yours.</p>
+                    </div>
+
+                    <h3>Templates & Customization</h3>
+                    <div class="faq-item">
+                        <h4>What templates are available?</h4>
+                        <p>BINK offers a variety of templates to make your bio page stand out. Free templates include Classic and Glassmorphism. Premium templates include Purple Card, Neon Card, Black Landing, Tech Wave, and more.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Can I customize my bio page?</h4>
+                        <p>Yes! You can customize your bio page by adding a profile picture, writing a bio, and choosing a template that matches your style. Premium users have access to more customization options.</p>
+                    </div>
+
+                    <h3>Tokens & Pricing</h3>
+                    <div class="faq-item">
+                        <h4>How does the token system work?</h4>
+                        <p>Tokens allow free users to purchase premium templates without subscribing to a premium plan. Each premium template costs between 100-200 tokens. You can buy 800 tokens for ₦500, and you'll receive 200 bonus tokens on your first purchase.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>What happens to my premium templates if I cancel my subscription?</h4>
+                        <p>If you cancel your Premium subscription, your account will revert to the Free plan at the end of your billing period. However, any premium templates you've purchased with tokens will remain available to you.</p>
+                    </div>
+
+                    <h3>Technical Support</h3>
+                    <div class="faq-item">
+                        <h4>How do I get help if I have a problem?</h4>
+                        <p>If you need assistance, you can contact our support team by emailing support@bink.com. Premium users receive priority support.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Is my data secure on BINK?</h4>
+                        <p>Yes, we take data security seriously. We use industry-standard encryption and security measures to protect your information. For more details, please refer to our Privacy Policy.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <footer class="landing-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="index.html">
+                    <img src="logo.png" alt="BINK Logo">
+                </a>
+                <p>Your Bio Link Platform</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="index.html#pricing">Pricing</a></li>
+                        <li><a href="index.html#testimonials">Testimonials</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                        <li><a href="documentation.html">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BINK. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="landing.js"></script>
+</body>
+</html>

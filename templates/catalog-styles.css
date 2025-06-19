@@ -1,0 +1,234 @@
+/* Catalog Styles for Templates */
+
+/* Base catalog styles that work across all templates */
+.catalog-section {
+    width: 100%;
+    margin: 30px 0;
+    padding: 0 20px;
+}
+
+.catalog-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+    color: inherit;
+}
+
+.catalog-grid {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 0;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(59, 130, 246, 0.6) transparent;
+}
+
+.catalog-grid::-webkit-scrollbar {
+    height: 6px;
+}
+
+.catalog-grid::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.catalog-grid::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.6);
+    border-radius: 3px;
+}
+
+.catalog-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    flex: 0 0 220px;
+    min-height: 280px;
+}
+
+.catalog-item:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.catalog-item-image {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.catalog-item:hover .catalog-item-image {
+    transform: scale(1.05);
+}
+
+.catalog-item-content {
+    padding: 15px;
+}
+
+.catalog-item-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: inherit;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.catalog-item-description {
+    font-size: 0.8rem;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    opacity: 0.8;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.catalog-item-price {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #10b981;
+}
+
+.catalog-buy-btn {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    position: relative;
+    overflow: hidden;
+    width: auto;
+    margin: 0 auto;
+    min-width: 80px;
+}
+
+.catalog-buy-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.4s ease;
+    z-index: -1;
+}
+
+.catalog-buy-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    text-decoration: none;
+    color: white;
+}
+
+.catalog-buy-btn:hover::before {
+    left: 100%;
+}
+
+.catalog-buy-btn i {
+    transition: transform 0.3s ease;
+}
+
+.catalog-buy-btn:hover i {
+    transform: scale(1.2);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .catalog-item {
+        flex: 0 0 180px;
+        min-height: 250px;
+    }
+
+    .catalog-item-image {
+        height: 120px;
+    }
+
+    .catalog-item-content {
+        padding: 12px;
+    }
+
+    .catalog-section {
+        padding: 0 10px;
+    }
+
+    .catalog-grid {
+        gap: 12px;
+    }
+}
+
+/* Template-specific overrides */
+
+/* Classic template */
+.bio-page .catalog-section {
+    background: var(--bio-card-bg, rgba(31, 41, 55, 1));
+    border-radius: 12px;
+    padding: 30px 20px;
+    border: 1px solid var(--bio-border-color, #374151);
+}
+
+.bio-page .catalog-title {
+    background: linear-gradient(to right, var(--bio-accent-color, #3b82f6), var(--bio-secondary-color, #ec4899));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.bio-page .catalog-item {
+    background: var(--bio-card-bg, rgba(31, 41, 55, 1));
+    border: 1px solid var(--bio-border-color, #374151);
+}
+
+.bio-page .catalog-item-title {
+    color: var(--bio-text-color, #e5e7eb);
+}
+
+.bio-page .catalog-item-description {
+    color: var(--bio-muted-color, #9ca3af);
+}
+
+/* Glassmorphism template */
+.glass-bio-bg .catalog-section {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Neon template */
+.neoncard-bio-page .catalog-section {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+}
+
+.neoncard-bio-page .catalog-title {
+    color: #00ffff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+/* Purple card template */
+.purplecard-bio-bg .catalog-section {
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}

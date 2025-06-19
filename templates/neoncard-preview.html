@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="neoncard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>body{margin:0;}</style>
+</head>
+<body>
+    <div class="neoncard-bio-page">
+        <div class="neoncard-container">
+            <div class="neoncard-header-actions">
+                <div class="neoncard-join-link">
+                    <a href="index.html" class="neoncard-join-btn"><i class="fas fa-user-plus"></i>Join BINK</a>
+                </div>
+                <div class="neoncard-share">
+                    <button class="neoncard-share-btn"><i class="fas fa-share-alt"></i></button>
+                </div>
+            </div>
+            <div class="neoncard-header">
+                <div class="neoncard-avatar-container">
+                    <img class="neoncard-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Profile">
+                </div>
+                <div class="neoncard-username" data-text="alextech">alextech</div>
+                <div class="neoncard-bio">Tech enthusiast & digital creator sharing the latest in innovation and design</div>
+            </div>
+            <div class="neoncard-links">
+                <div class="neoncard-link-container">
+                    <a class="neoncard-link" href="#">
+                        <i class="fas fa-globe"></i>
+                        <span>My Website</span>
+                    </a>
+                    <button class="neoncard-link-share-btn"><i class="fas fa-share-alt"></i></button>
+                </div>
+                <div class="neoncard-link-container">
+                    <a class="neoncard-link" href="#">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </a>
+                    <button class="neoncard-link-share-btn"><i class="fas fa-share-alt"></i></button>
+                </div>
+                <div class="neoncard-link-container">
+                    <a class="neoncard-link" href="#">
+                        <i class="fab fa-youtube"></i>
+                        <span>YouTube Channel</span>
+                    </a>
+                    <button class="neoncard-link-share-btn"><i class="fas fa-share-alt"></i></button>
+                </div>
+            </div>
+            <div class="neoncard-socials">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+
+            <!-- Media Content Section -->
+            <div class="media-section">
+                <h3 class="media-section-title">
+                    <i class="fas fa-images"></i> Gallery
+                </h3>
+                <div class="media-grid images-grid">
+                    <div class="media-item image-item">
+                        <div class="image-container">
+                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=200&fit=crop" alt="Tech Project 1" loading="lazy">
+                        </div>
+                        <div class="media-info">
+                            <h4 class="media-title">Tech Innovation</h4>
+                            <p class="media-description">Latest technology projects and innovations</p>
+                        </div>
+                    </div>
+                    <div class="media-item image-item">
+                        <div class="image-container">
+                            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&h=200&fit=crop" alt="Tech Project 2" loading="lazy">
+                        </div>
+                        <div class="media-info">
+                            <h4 class="media-title">Digital Design</h4>
+                            <p class="media-description">Creative digital solutions and design work</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="media-section">
+                <h3 class="media-section-title">
+                    <i class="fas fa-music"></i> Music
+                </h3>
+                <div class="media-grid music-grid">
+                    <div class="media-item music-item">
+                        <div class="music-player" onclick="window.open('https://open.spotify.com/track/4iV5W9uYEdYUVa79Axb7Rh', '_blank')">
+                            <div class="music-platform-icon spotify">
+                                <i class="fab fa-spotify"></i>
+                            </div>
+                            <div class="music-info">
+                                <h4 class="music-title">Tech Beats</h4>
+                                <p class="music-artist">by Alex Tech</p>
+                                <p class="music-platform">Spotify</p>
+                            </div>
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="neoncard-footer">
+                Powered by <a href="index.html" target="_blank">BINK</a>
+            </div>
+            <div class="neoncard-save-template">
+                <button class="neoncard-save-btn" onclick="window.parent.handleTemplateSelection('neoncard')">Save Template</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

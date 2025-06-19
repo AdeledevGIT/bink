@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - BINK</title>
+    <!-- Favicon configuration for better browser compatibility -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo1.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/logo1.png">
+    <link rel="shortcut icon" href="/logo1.png">
+    <link rel="apple-touch-icon" href="/logo1.png">
+    <!-- Fallback favicon from GitHub Pages -->
+    <link rel="icon" type="image/png" href="https://adeledevgit.github.io/bink/logo1.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="./logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <!-- Removed header-text div -->
+    </header>
+
+    <div class="auth-container">
+        <!-- Added welcome message container here -->
+        <div class="welcome-message-container">
+            <h2>Create Your BINK Account</h2>
+            <p>Start managing your links in one place.</p>
+        </div>
+
+        <div class="auth-form">
+            <p id="error-message" class="auth-error" style="display: none;"></p>
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="username">Username (for your link: bink.com/u/username)</label>
+                    <input type="text" id="username" name="username" required minlength="3" pattern="^[a-zA-Z0-9_]+$" title="Only letters, numbers, and underscores allowed.">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password (min. 6 characters)</label>
+                    <input type="password" id="password" name="password" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                </div>
+                <div class="terms-notice">
+                    <p>By clicking Create account, you agree to BINK <a href="privacy-policy.html" target="_blank">privacy notice</a>, <a href="terms-of-service.html" target="_blank">T&Cs</a> and to receive offers, news and updates.</p>
+                </div>
+                <button type="submit" id="signup-button" class="auth-button">Create account</button>
+            </form>
+            <div class="auth-switch">
+                Already have an account? <a href="login.html">Log In</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+    <script src="firebase-config.js"></script> <!-- Your Firebase config -->
+    <script src="auth.js"></script> <!-- Login/Signup logic -->
+</body>
+</html>

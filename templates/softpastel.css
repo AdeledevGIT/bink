@@ -1,0 +1,638 @@
+/* Soft Pastel Template - Pastel colors with soft rounded elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #ffeef8 0%, #f0f4ff 50%, #fff0f8 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffc1e3' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    z-index: -1;
+}
+
+.softpastel-bio-bg {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+}
+
+.softpastel-container {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    border-radius: 32px;
+    padding: 36px;
+    box-shadow: 0 20px 60px rgba(255, 193, 227, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    position: relative;
+    overflow: hidden;
+}
+
+.softpastel-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(255, 193, 227, 0.1), transparent);
+    animation: rotate 20s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.softpastel-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 2;
+}
+
+.softpastel-join-btn {
+    background: linear-gradient(135deg, #ffc1e3, #c1a3ff);
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 193, 227, 0.3);
+}
+
+.softpastel-join-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 193, 227, 0.4);
+}
+
+.softpastel-share-btn {
+    background: rgba(255, 193, 227, 0.2);
+    border: none;
+    color: #d946ef;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.softpastel-share-btn:hover {
+    background: rgba(255, 193, 227, 0.3);
+    transform: scale(1.1);
+}
+
+.softpastel-profile {
+    text-align: center;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 2;
+}
+
+.softpastel-avatar-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.softpastel-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: 0 8px 32px rgba(255, 193, 227, 0.3);
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+}
+
+.softpastel-avatar-container::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    background: linear-gradient(135deg, #ffc1e3, #c1a3ff, #a3c1ff);
+    border-radius: 50%;
+    z-index: 1;
+    opacity: 0.6;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+.softpastel-username {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #6b46c1;
+    margin-bottom: 8px;
+}
+
+.softpastel-bio {
+    color: #8b5cf6;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+.softpastel-links {
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 2;
+}
+
+.softpastel-link-container {
+    position: relative;
+    margin-bottom: 14px;
+}
+
+.softpastel-link {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(255, 193, 227, 0.3);
+    border-radius: 20px;
+    padding: 16px 22px;
+    text-decoration: none;
+    color: #6b46c1;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.softpastel-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 193, 227, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.softpastel-link:hover::before {
+    left: 100%;
+}
+
+.softpastel-link:hover {
+    border-color: #ffc1e3;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 193, 227, 0.3);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.softpastel-link i {
+    margin-right: 14px;
+    font-size: 1.1rem;
+    color: #d946ef;
+}
+
+.softpastel-link-share-btn {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 193, 227, 0.2);
+    border: none;
+    color: #d946ef;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    font-size: 0.85rem;
+}
+
+.softpastel-link-container:hover .softpastel-link-share-btn {
+    opacity: 1;
+}
+
+.softpastel-link-share-btn:hover {
+    background: rgba(255, 193, 227, 0.4);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.softpastel-socials {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 2;
+}
+
+.softpastel-socials a {
+    width: 46px;
+    height: 46px;
+    background: linear-gradient(135deg, #ffc1e3, #c1a3ff);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(255, 193, 227, 0.3);
+}
+
+.softpastel-socials a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 193, 227, 0.4);
+}
+
+.softpastel-footer {
+    text-align: center;
+    color: #c084fc;
+    font-size: 0.85rem;
+    position: relative;
+    z-index: 2;
+}
+
+.softpastel-footer a {
+    color: #d946ef;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.softpastel-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .softpastel-container {
+        padding: 28px;
+        margin: 10px;
+        border-radius: 28px;
+    }
+    
+    .softpastel-avatar {
+        width: 85px;
+        height: 85px;
+    }
+    
+    .softpastel-username {
+        font-size: 1.3rem;
+    }
+    
+    .softpastel-bio {
+        font-size: 0.9rem;
+    }
+    
+    .softpastel-link {
+        padding: 14px 18px;
+        border-radius: 18px;
+    }
+    
+    .softpastel-socials a {
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
+    }
+}
+
+/* Soft Pastel Media Styles */
+.softpastel-container .media-section {
+    margin: 25px 0;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 193, 227, 0.3);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 2px solid rgba(255, 193, 227, 0.2);
+    position: relative;
+    z-index: 2;
+}
+
+.softpastel-container .media-section:first-child {
+    border-top: none;
+    margin-top: 0;
+}
+
+.softpastel-container .media-section-title {
+    background: linear-gradient(135deg, #d946ef, #8b5cf6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    justify-content: center;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.softpastel-container .media-section-title i {
+    color: #ffc1e3;
+    font-size: 1rem;
+}
+
+.softpastel-container .media-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.softpastel-container .videos-grid {
+    grid-template-columns: 1fr;
+}
+
+.softpastel-container .images-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.softpastel-container .music-grid {
+    grid-template-columns: 1fr;
+}
+
+.softpastel-container .media-item {
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(255, 193, 227, 0.3);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(255, 193, 227, 0.2);
+}
+
+.softpastel-container .media-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 193, 227, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.softpastel-container .media-item:hover::before {
+    left: 100%;
+}
+
+.softpastel-container .media-item:hover {
+    border-color: #ffc1e3;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 193, 227, 0.3);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Video Items */
+.softpastel-container .video-item {
+    padding: 15px;
+}
+
+.softpastel-container .video-thumbnail {
+    width: 100%;
+    height: 180px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.softpastel-container .video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.softpastel-container .video-play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #ffc1e3, #c1a3ff);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 193, 227, 0.3);
+}
+
+.softpastel-container .video-play-overlay:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 8px 25px rgba(255, 193, 227, 0.4);
+}
+
+/* Image Items */
+.softpastel-container .image-item {
+    /* Removed aspect-ratio to allow space for titles/descriptions */
+}
+
+.softpastel-container .image-container {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+    border-radius: 12px;
+}
+
+.softpastel-container .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.softpastel-container .image-container:hover img {
+    transform: scale(1.05);
+}
+
+/* Music Items */
+.softpastel-container .media-container .music-item,
+.softpastel-container .music-item {
+    padding: 15px;
+}
+
+.softpastel-container .media-container .music-player,
+.softpastel-container .music-player {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 193, 227, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 193, 227, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.softpastel-container .media-container .music-player::before,
+.softpastel-container .music-player::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 193, 227, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.softpastel-container .media-container .music-player:hover::before,
+.softpastel-container .music-player:hover::before {
+    left: 100%;
+}
+
+.softpastel-container .media-container .music-player:hover,
+.softpastel-container .music-player:hover {
+    border-color: rgba(255, 193, 227, 0.6);
+    box-shadow: 0 8px 25px rgba(255, 193, 227, 0.4);
+    transform: translateY(-2px);
+}
+
+.softpastel-container .media-container .music-platform-icon,
+.softpastel-container .music-platform-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: white;
+    background: linear-gradient(135deg, #ffc1e3, #c1a3ff);
+    box-shadow: 0 4px 15px rgba(255, 193, 227, 0.3);
+    flex-shrink: 0;
+}
+
+.softpastel-container .music-platform-icon.spotify { background: #1db954; }
+.softpastel-container .music-platform-icon.apple-music { background: #fa243c; }
+.softpastel-container .music-platform-icon.youtube-music { background: #ff0000; }
+.softpastel-container .music-platform-icon.audiomack { background: #ff6600; }
+.softpastel-container .music-platform-icon.soundcloud { background: #ff7700; }
+.softpastel-container .music-platform-icon.bandcamp { background: #629aa0; }
+.softpastel-container .music-platform-icon.tidal { background: #000000; }
+.softpastel-container .music-platform-icon.deezer { background: #feaa2d; }
+.softpastel-container .music-platform-icon.amazon-music { background: #ff9900; }
+.softpastel-container .music-platform-icon.other { background: #666666; }
+
+.softpastel-container .media-container .music-info,
+.softpastel-container .music-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.softpastel-container .media-container .music-title,
+.softpastel-container .music-title {
+    color: #6b46c1;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.softpastel-container .media-container .music-artist,
+.softpastel-container .music-artist {
+    color: #8b5cf6;
+    font-size: 0.85rem;
+    margin: 0 0 3px 0;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.softpastel-container .media-container .music-platform,
+.softpastel-container .music-platform {
+    color: #c1a3ff;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin: 0;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.softpastel-container .media-container .play-button,
+.softpastel-container .play-button {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffc1e3, #c1a3ff);
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 193, 227, 0.3);
+    flex-shrink: 0;
+}
+
+.softpastel-container .play-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(255, 193, 227, 0.4);
+}
+
+/* Media Info */
+.softpastel-container .media-info {
+    padding: 12px 15px;
+}
+
+.softpastel-container .media-title {
+    color: #6b46c1;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.softpastel-container .media-description {
+    color: #7c3aed;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}

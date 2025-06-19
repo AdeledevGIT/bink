@@ -1,0 +1,729 @@
+/* Aurora Glow Template - Dynamic aurora background with glowing elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0a0a0f;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(255, 118, 117, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 40% 80%, rgba(255, 204, 112, 0.3) 0%, transparent 50%);
+    animation: aurora 8s ease-in-out infinite alternate;
+    z-index: -1;
+}
+
+@keyframes aurora {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.1) rotate(180deg);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+        opacity: 0.7;
+    }
+}
+
+.auroraglow-bio-bg {
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+    z-index: 1;
+}
+
+.auroraglow-container {
+    background: rgba(15, 15, 25, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+.auroraglow-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        rgba(120, 119, 198, 0.1) 0%, 
+        rgba(255, 118, 117, 0.1) 50%, 
+        rgba(255, 204, 112, 0.1) 100%);
+    border-radius: 24px;
+    z-index: -1;
+    animation: glow-shift 6s ease-in-out infinite;
+}
+
+@keyframes glow-shift {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+.auroraglow-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 2;
+}
+
+.auroraglow-join-btn {
+    background: linear-gradient(135deg, rgba(120, 119, 198, 0.8), rgba(255, 118, 117, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.auroraglow-join-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(120, 119, 198, 0.4);
+}
+
+.auroraglow-share-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.auroraglow-share-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.auroraglow-profile {
+    text-align: center;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 2;
+}
+
+.auroraglow-avatar-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.auroraglow-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 0 30px rgba(120, 119, 198, 0.5);
+}
+
+.auroraglow-avatar-container::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    background: conic-gradient(
+        from 0deg,
+        rgba(120, 119, 198, 0.8),
+        rgba(255, 118, 117, 0.8),
+        rgba(255, 204, 112, 0.8),
+        rgba(120, 119, 198, 0.8)
+    );
+    border-radius: 50%;
+    z-index: 1;
+    animation: rotate-glow 4s linear infinite;
+}
+
+@keyframes rotate-glow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.auroraglow-username {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+    text-shadow: 0 0 20px rgba(120, 119, 198, 0.5);
+}
+
+.auroraglow-bio {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+.auroraglow-links {
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 2;
+}
+
+.auroraglow-link-container {
+    position: relative;
+    margin-bottom: 14px;
+}
+
+.auroraglow-link {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.auroraglow-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(120, 119, 198, 0.3), 
+        transparent);
+    transition: left 0.6s ease;
+}
+
+.auroraglow-link:hover::before {
+    left: 100%;
+}
+
+.auroraglow-link:hover {
+    border-color: rgba(120, 119, 198, 0.5);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(120, 119, 198, 0.2);
+}
+
+.auroraglow-link i {
+    margin-right: 14px;
+    font-size: 1.1rem;
+    color: rgba(120, 119, 198, 1);
+    width: 20px;
+    text-align: center;
+}
+
+.auroraglow-link-share-btn {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    font-size: 0.85rem;
+}
+
+.auroraglow-link-container:hover .auroraglow-link-share-btn {
+    opacity: 1;
+}
+
+.auroraglow-link-share-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.auroraglow-socials {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 2;
+}
+
+.auroraglow-socials a {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    backdrop-filter: blur(10px);
+}
+
+.auroraglow-socials a:hover {
+    background: rgba(120, 119, 198, 0.3);
+    border-color: rgba(120, 119, 198, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(120, 119, 198, 0.3);
+}
+
+.auroraglow-footer {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    position: relative;
+    z-index: 2;
+}
+
+.auroraglow-footer a {
+    color: rgba(120, 119, 198, 1);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auroraglow-footer a:hover {
+    text-shadow: 0 0 10px rgba(120, 119, 198, 0.5);
+}
+
+/* Aurora Glow Media Styles */
+.auroraglow-container .media-section {
+    margin: 25px 0;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(10, 10, 15, 0.6);
+    border-radius: 16px;
+    position: relative;
+}
+
+.auroraglow-container .media-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg,
+        rgba(120, 119, 198, 0.05) 0%,
+        rgba(255, 118, 117, 0.05) 50%,
+        rgba(255, 204, 112, 0.05) 100%);
+    border-radius: 16px;
+    z-index: -1;
+    animation: glow-shift 6s ease-in-out infinite;
+}
+
+.auroraglow-container .media-section:first-child {
+    border-top: none;
+    margin-top: 0;
+}
+
+.auroraglow-container .media-section-title {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-shadow: 0 0 20px rgba(120, 119, 198, 0.5);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    position: relative;
+    z-index: 2;
+}
+
+.auroraglow-container .media-section-title i {
+    color: rgba(120, 119, 198, 1);
+    text-shadow: 0 0 8px rgba(120, 119, 198, 0.5);
+}
+
+.auroraglow-container .media-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.auroraglow-container .videos-grid {
+    grid-template-columns: 1fr;
+}
+
+.auroraglow-container .images-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.auroraglow-container .music-grid {
+    grid-template-columns: 1fr;
+}
+
+.auroraglow-container .media-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.auroraglow-container .media-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(120, 119, 198, 0.3),
+        transparent);
+    transition: left 0.6s ease;
+}
+
+.auroraglow-container .media-item:hover::before {
+    left: 100%;
+}
+
+.auroraglow-container .media-item:hover {
+    border-color: rgba(120, 119, 198, 0.5);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(120, 119, 198, 0.2);
+}
+
+/* Video Items */
+.auroraglow-container .video-item {
+    padding: 15px;
+}
+
+.auroraglow-container .video-thumbnail {
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.auroraglow-container .video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.auroraglow-container .video-play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, rgba(120, 119, 198, 0.8), rgba(255, 118, 117, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.auroraglow-container .video-play-overlay:hover {
+    transform: translate(-50%, -50%) translateY(-2px);
+    box-shadow: 0 8px 25px rgba(120, 119, 198, 0.4);
+}
+
+/* Image Items */
+.auroraglow-container .image-item {
+    /* Removed aspect-ratio to allow space for titles/descriptions */
+}
+
+.auroraglow-container .image-container {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+    border-radius: 12px;
+}
+
+.auroraglow-container .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.auroraglow-container .image-container:hover img {
+    transform: scale(1.05);
+}
+
+/* Music Items */
+.auroraglow-container .media-container .music-item,
+.auroraglow-container .music-item {
+    padding: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.auroraglow-container .media-container .music-player,
+.auroraglow-container .music-player {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(30, 30, 30, 0.8);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(120, 119, 198, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.auroraglow-container .media-container .music-player::before,
+.auroraglow-container .music-player::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg,
+        rgba(120, 119, 198, 0.1),
+        rgba(255, 118, 117, 0.1),
+        rgba(255, 204, 112, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.auroraglow-container .media-container .music-player:hover::before,
+.auroraglow-container .music-player:hover::before {
+    opacity: 1;
+}
+
+.auroraglow-container .media-container .music-player:hover,
+.auroraglow-container .music-player:hover {
+    border-color: rgba(120, 119, 198, 0.6);
+    box-shadow: 0 8px 25px rgba(120, 119, 198, 0.3);
+    transform: translateY(-2px);
+}
+
+.auroraglow-container .media-container .music-platform-icon,
+.auroraglow-container .music-platform-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: white;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+}
+
+.auroraglow-container .music-platform-icon::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg,
+        rgba(120, 119, 198, 0.6),
+        rgba(255, 118, 117, 0.6),
+        rgba(255, 204, 112, 0.6));
+    border-radius: 14px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.auroraglow-container .music-item:hover .music-platform-icon::before {
+    opacity: 1;
+}
+
+.auroraglow-container .music-platform-icon.spotify { background: #1db954; }
+.auroraglow-container .music-platform-icon.apple-music { background: #fa243c; }
+.auroraglow-container .music-platform-icon.youtube-music { background: #ff0000; }
+.auroraglow-container .music-platform-icon.audiomack { background: #ff6600; }
+.auroraglow-container .music-platform-icon.soundcloud { background: #ff7700; }
+.auroraglow-container .music-platform-icon.bandcamp { background: #629aa0; }
+.auroraglow-container .music-platform-icon.tidal { background: #000000; }
+.auroraglow-container .music-platform-icon.deezer { background: #feaa2d; }
+.auroraglow-container .music-platform-icon.amazon-music { background: #ff9900; }
+.auroraglow-container .music-platform-icon.other { background: #666666; }
+
+.auroraglow-container .media-container .music-info,
+.auroraglow-container .music-info {
+    flex: 1;
+    position: relative;
+    z-index: 2;
+    min-width: 0;
+}
+
+.auroraglow-container .media-container .music-title,
+.auroraglow-container .music-title {
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    text-shadow: 0 0 20px rgba(120, 119, 198, 0.5);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.auroraglow-container .media-container .music-artist,
+.auroraglow-container .music-artist {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    margin: 0 0 3px 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.auroraglow-container .media-container .music-platform,
+.auroraglow-container .music-platform {
+    color: rgba(255, 204, 112, 0.9);
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.auroraglow-container .media-container .play-button,
+.auroraglow-container .play-button {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(120, 119, 198, 0.8), rgba(255, 118, 117, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+    flex-shrink: 0;
+}
+
+.auroraglow-container .play-button:hover {
+    transform: translateY(-2px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(120, 119, 198, 0.4);
+}
+
+/* Media Info */
+.auroraglow-container .media-info {
+    padding: 12px 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.auroraglow-container .media-title {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    text-shadow: 0 0 20px rgba(120, 119, 198, 0.5);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.auroraglow-container .media-description {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .auroraglow-container {
+        padding: 24px;
+        margin: 10px;
+    }
+    
+    .auroraglow-avatar {
+        width: 85px;
+        height: 85px;
+    }
+    
+    .auroraglow-username {
+        font-size: 1.3rem;
+    }
+    
+    .auroraglow-bio {
+        font-size: 0.9rem;
+    }
+    
+    .auroraglow-link {
+        padding: 14px 16px;
+    }
+    
+    .auroraglow-socials a {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}

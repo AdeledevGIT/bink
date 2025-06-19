@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BINK - Your Bio Link Platform</title>
+    <meta name="description" content="BINK is a bio link platform that helps you share all your important links in one place. Perfect for social media profiles.">
+    <!-- Favicon configuration for better browser compatibility -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo1.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/logo1.png">
+    <link rel="shortcut icon" href="/logo1.png">
+    <link rel="apple-touch-icon" href="/logo1.png">
+    <!-- Fallback favicon from GitHub Pages -->
+    <link rel="icon" type="image/png" href="https://adeledevgit.github.io/bink/logo1.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="landing.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="landing-header">
+        <div class="logo-container">
+            <a href="dashboard.html">
+                <img src="./logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="help-center.html">Help Center</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <a href="login.html" class="login-button">Log In</a>
+            <a href="signup.html" class="signup-button">Sign Up</a>
+        </div>
+        <button class="mobile-menu-button">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <div class="mobile-menu">
+        <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="help-center.html">Help Center</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="login.html">Log In</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>One Link for All Your Content</h1>
+                <p>Share everything you create and curate with just one link in bio. BINK is the perfect bio link platform for creators, influencers, and professionals.</p>
+                <div class="hero-buttons">
+                    <a href="signup.html" class="cta-button">Get Started for Free</a>
+                    <a href="#features" class="secondary-button">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-video-container">
+                    <!-- Replace the URL below with your Firebase Storage URL when you have it -->
+                    <video
+                        src="https://firebasestorage.googleapis.com/v0/b/trustpay-d9d40.appspot.com/o/Demo.mp4?alt=media&token=9584365e-1d35-4a80-8239-dae29435c3cc"
+                        class="hero-video"
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        preload="auto">
+                    </video>
+                    <!-- Add a play button overlay that disappears when video plays -->
+                    <div class="video-play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="video-caption">
+                        <h3>See BINK in Action</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features-section">
+            <div class="section-header">
+                <h2>Why Choose BINK?</h2>
+                <p>The simplest way to share all your important links</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Beautiful Templates</h3>
+                    <p>Choose from a variety of stunning templates to match your personal brand. Free and premium options available.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h3>Manage Your Links</h3>
+                    <p>Add up to 5 links with our Free plan or unlimited links with Premium. Organize all your important content in one place.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Detailed Analytics</h3>
+                    <p>Track views, clicks, and visitor locations. Premium users get advanced insights to understand audience behavior.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3>Flexible Token System</h3>
+                    <p>Purchase tokens to unlock premium templates without a subscription. Get 200 bonus tokens on your first purchase.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Optimized</h3>
+                    <p>Your bio page looks perfect on any device, from smartphones to desktops, with fully responsive design.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3>Creator Program</h3>
+                    <p>Qualified content creators get premium features free for 3 months, plus a verified badge and featured placement.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="showcase-section">
+            <div class="showcase-content">
+                <h2>Create Your Bio Page in Minutes</h2>
+                <p>BINK's intuitive editor makes it easy to build a beautiful, customized bio page that showcases all your content.</p>
+                <ul class="showcase-features">
+                    <li><i class="fas fa-check"></i> Simple drag-and-drop bio editor</li>
+                    <li><i class="fas fa-check"></i> Free templates: Classic and Glassmorphism</li>
+                    <li><i class="fas fa-check"></i> Premium templates: Purple Card, Neon Card, Black Landing</li>
+                    <li><i class="fas fa-check"></i> Real-time preview of your bio page</li>
+                    <li><i class="fas fa-check"></i> One-click copy of your bio link</li>
+                    <li><i class="fas fa-check"></i> Social media icons integration</li>
+                    <li><i class="fas fa-check"></i> Profile customization options</li>
+                    <li><i class="fas fa-check"></i> Visitor location tracking</li>
+                </ul>
+                <a href="signup.html" class="cta-button">Create Your Bio Page</a>
+            </div>
+            <div class="showcase-image">
+                <img src="./demo.png" alt="BINK Editor Interface">
+            </div>
+        </section>
+
+
+
+        <section id="pricing" class="pricing-section">
+            <div class="section-header">
+                <h2>Choose Your Plan</h2>
+                <p>Simple, transparent pricing options</p>
+            </div>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Free</h3>
+                        <div class="pricing-price">
+                            <span class="price">₦0</span>
+                            <span class="period">/forever</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Up to 5 links</li>
+                            <li><i class="fas fa-check"></i> Basic analytics</li>
+                            <li><i class="fas fa-check"></i> Free templates (Classic, Glassmorphism)</li>
+                            <li><i class="fas fa-check"></i> Buy tokens for premium templates</li>
+                            <li><i class="fas fa-check"></i> 200 bonus tokens on first purchase</li>
+                            <li><i class="fas fa-check"></i> Single bio link</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="signup.html" class="pricing-button">Get Started</a>
+                    </div>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Popular</div>
+                    <div class="pricing-header">
+                        <h3>Premium</h3>
+                        <div class="pricing-price">
+                            <span class="price">₦2,500</span>
+                            <span class="period">/month</span>
+                        </div>
+                        <div class="pricing-save">
+                            <span>₦25,000/year (Save 17%)</span>
+                        </div>
+                        <div class="pricing-save" id="lifetime-offer">
+                            <span>₦60,000 lifetime</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> <strong>Unlimited</strong> links</li>
+                            <li><i class="fas fa-check"></i> Advanced analytics with location data</li>
+                            <li><i class="fas fa-check"></i> Access to all premium templates</li>
+                            <li><i class="fas fa-check"></i> No need to purchase tokens</li>
+                            <li><i class="fas fa-check"></i> No BINK branding</li>
+                            <li><i class="fas fa-check"></i> Priority support</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <!-- Regular upgrade button (shown when promo is active) -->
+                        <a href="signup.html" class="pricing-button premium-button" id="upgrade-button">Upgrade Now</a>
+
+                        <!-- Button shown when promo is not active -->
+                        <div class="promo-inactive" id="promo-inactive-message">
+                            <p>Lifetime plan available during promotional periods only</p>
+                            <a href="signup.html" class="pricing-button">Subscribe Monthly/Yearly</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Token Packages</h3>
+                        <div class="pricing-price">
+                            <span class="price">₦500</span>
+                            <span class="period">/800 tokens</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> For free users who want premium templates</li>
+                            <li><i class="fas fa-check"></i> Templates cost 100-200 tokens each</li>
+                            <li><i class="fas fa-check"></i> One-time purchase per template</li>
+                            <li><i class="fas fa-check"></i> 200 bonus tokens on first purchase</li>
+                            <li><i class="fas fa-check"></i> No subscription required</li>
+                            <li><i class="fas fa-check"></i> Keep templates forever</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="signup.html" class="pricing-button">Buy Tokens</a>
+                    </div>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Content Creator</h3>
+                        <div class="pricing-price">
+                            <span class="price">₦0</span>
+                            <span class="period">/3 months</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> All Premium features included</li>
+                            <li><i class="fas fa-check"></i> Verified creator badge</li>
+                            <li><i class="fas fa-check"></i> Featured in creator directory</li>
+                            <li><i class="fas fa-info-circle"></i> <strong>Requirements:</strong></li>
+                            <li><i class="fas fa-users"></i> 10K+ followers</li>
+                            <li><i class="fas fa-video"></i> 20K+ video views</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="signup.html" class="pricing-button">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials-section">
+            <div class="section-header">
+                <h2>What Our Users Say</h2>
+                <p>Hear from people who love using BINK</p>
+            </div>
+            <div class="testimonials-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"BINK makes sharing my content so much easier. The templates look professional and it only took minutes to set up!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="./pf3.png" alt="User Avatar">
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Content Creator</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"The analytics feature helps me understand which links my audience clicks most. This has been invaluable for my marketing strategy."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="./pf1.png" alt="User Avatar">
+                        <div class="author-info">
+                            <h4>Michael Adeyemi</h4>
+                            <p>Digital Marketer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"I love how easy it is to customize my bio page. The premium templates are worth every token!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="./pf2.png" alt="User Avatar">
+                        <div class="author-info">
+                            <h4>Aisha Oladele</h4>
+                            <p>Influencer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </section>
+
+        <section id="faq" class="faq-section">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Quick answers to common questions</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is BINK?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>BINK is a bio link platform that lets you create a customizable page with all your important links in one place. It's perfect for social media profiles where you can only have one link in your bio.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I get started?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sign up for a free account, choose your username, and start adding links. You can customize your page with different templates, add a profile picture, and write a bio to personalize your page.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What templates are available?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Free users get access to Classic and Glassmorphism templates. Premium templates include Purple Card, Neon Card, Black Landing, and more. Free users can purchase premium templates using tokens.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How does the token system work?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Tokens let free users buy premium templates without a subscription. Templates cost 100-200 tokens each. You can buy 800 tokens for ₦500, with 200 bonus tokens on your first purchase. Premium users get all templates included.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What analytics do you provide?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Free users get basic analytics (views, clicks, click rates). Premium users get advanced analytics including visitor locations, devices, referrers, and more detailed insights about your audience.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I change my template later?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! You can change your template anytime. Your bio link stays the same, so you don't need to update it on your social profiles. All your content automatically transfers to the new template.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Create Your Bio Page Today</h2>
+                <p>Join creators and professionals who use BINK to share their content with a single link</p>
+                <div class="cta-buttons">
+                    <a href="signup.html" class="cta-button">Get Started for Free</a>
+                    <a href="login.html" class="secondary-button">Log In</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="landing-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="dashboard.html">
+                    <img src="./logo.png" alt="BINK Logo">
+                </a>
+                <p>Your Bio Link Platform</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>BINK</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact-support.html">Contact Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BINK. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="landing.js"></script>
+</body>
+</html>

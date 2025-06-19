@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="splitscreen.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>body{margin:0;}</style>
+</head>
+<body>
+    <div class="splitscreen-bio-bg">
+        <div class="splitscreen-container">
+            <div class="splitscreen-sidebar">
+                <div class="splitscreen-profile">
+                    <div class="splitscreen-avatar-container">
+                        <img class="splitscreen-avatar" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face" alt="Profile">
+                    </div>
+                    <div class="splitscreen-username">carlosmusic</div>
+                    <div class="splitscreen-bio">A modern split-screen layout with profile on one side and content on the other</div>
+                    <div class="splitscreen-socials">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="splitscreen-content">
+                <div class="splitscreen-header-actions">
+                    <div class="splitscreen-join-link">
+                        <a href="index.html" class="splitscreen-join-btn"><i class="fas fa-user-plus"></i>Join BINK</a>
+                    </div>
+                    <div class="splitscreen-share">
+                        <button class="splitscreen-share-btn">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="splitscreen-section-title">My Links</div>
+                <div class="splitscreen-links">
+                    <div class="splitscreen-link-container">
+                        <a class="splitscreen-link" href="#"><i class="fas fa-globe"></i>My Website</a>
+                        <button class="splitscreen-link-share-btn">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                    <div class="splitscreen-link-container">
+                        <a class="splitscreen-link" href="#"><i class="fab fa-instagram"></i>Instagram</a>
+                        <button class="splitscreen-link-share-btn">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                    <div class="splitscreen-link-container">
+                        <a class="splitscreen-link" href="#"><i class="fab fa-twitter"></i>Twitter</a>
+                        <button class="splitscreen-link-share-btn">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Media Content Section -->
+                <div class="media-section">
+                    <h3 class="media-section-title">
+                        <i class="fas fa-images"></i> Gallery
+                    </h3>
+                    <div class="media-grid images-grid">
+                        <div class="media-item image-item">
+                            <div class="image-container">
+                                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=200&fit=crop" alt="Music Studio 1" loading="lazy">
+                            </div>
+                            <div class="media-info">
+                                <h4 class="media-title">Studio Sessions</h4>
+                                <p class="media-description">Behind the scenes music production</p>
+                            </div>
+                        </div>
+                        <div class="media-item image-item">
+                            <div class="image-container">
+                                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop" alt="Music Studio 2" loading="lazy">
+                            </div>
+                            <div class="media-info">
+                                <h4 class="media-title">Live Performance</h4>
+                                <p class="media-description">Live music performances and concerts</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="media-section">
+                    <h3 class="media-section-title">
+                        <i class="fas fa-music"></i> Music
+                    </h3>
+                    <div class="media-grid music-grid">
+                        <div class="media-item music-item">
+                            <div class="music-player" onclick="window.open('https://open.spotify.com/track/4iV5W9uYEdYUVa79Axb7Rh', '_blank')">
+                                <div class="music-platform-icon spotify">
+                                    <i class="fab fa-spotify"></i>
+                                </div>
+                                <div class="music-info">
+                                    <h4 class="music-title">Latest Track</h4>
+                                    <p class="music-artist">by Carlos Music</p>
+                                    <p class="music-platform">Spotify</p>
+                                </div>
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="splitscreen-footer">
+                    Powered by <a href="index.html" target="_blank">BINK</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

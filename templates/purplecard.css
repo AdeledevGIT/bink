@@ -1,0 +1,633 @@
+.purplecard-bio-bg {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.purplecard-bio-bg::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    top: -100px;
+    right: -100px;
+    animation: float-bubble 15s ease-in-out infinite alternate;
+}
+
+.purplecard-bio-bg::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    bottom: -50px;
+    left: -50px;
+    animation: float-bubble 12s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes float-bubble {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(50px, 50px);
+    }
+}
+.purplecard-bio-main {
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    padding: 0 0 32px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.purplecard-header {
+    width: 100%;
+    background: #6d28d9;
+    border-radius: 0 0 40px 40px;
+    padding: 36px 0 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+.purplecard-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    object-fit: cover;
+    margin-bottom: 12px;
+    box-shadow: 0 0 0 6px #a78bfa;
+    position: relative;
+    z-index: 1;
+    animation: avatar-pulse 3s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+
+.purplecard-avatar:hover {
+    transform: scale(1.05);
+}
+
+@keyframes avatar-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.7), 0 0 0 6px #a78bfa;
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(167, 139, 250, 0), 0 0 0 6px #a78bfa;
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(167, 139, 250, 0), 0 0 0 6px #a78bfa;
+    }
+}
+.purplecard-username {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+}
+.purplecard-bio {
+    color: #ede9fe;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 18px;
+}
+.purplecard-links {
+    width: 100%;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+}
+
+.purplecard-link-container {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    gap: 10px;
+    animation: slide-up 0.5s both;
+}
+
+.purplecard-links .purplecard-link-container:nth-child(1) {
+    animation-delay: 0.1s;
+}
+.purplecard-links .purplecard-link-container:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.purplecard-links .purplecard-link-container:nth-child(3) {
+    animation-delay: 0.3s;
+}
+.purplecard-links .purplecard-link-container:nth-child(4) {
+    animation-delay: 0.4s;
+}
+.purplecard-links .purplecard-link-container:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.purplecard-link {
+    flex: 1;
+    background: #7c3aed;
+    color: #fff;
+    border-radius: 18px;
+    padding: 18px 24px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 16px #a78bfa55;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transform: translateY(0);
+}
+
+.purplecard-link-share-btn {
+    background: #7c3aed;
+    color: #fff;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    border: none;
+    box-shadow: 0 4px 16px #a78bfa55;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.purplecard-link-share-btn:hover {
+    background: #a78bfa;
+    color: #6d28d9;
+    box-shadow: 0 8px 24px #a78bfa99;
+    transform: translateY(-3px) scale(1.1);
+}
+
+.purplecard-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.5s ease;
+    z-index: -1;
+}
+
+.purplecard-link:hover {
+    background: #a78bfa;
+    color: #6d28d9;
+    box-shadow: 0 8px 24px #a78bfa99;
+    transform: translateY(-5px) scale(1.02);
+}
+
+.purplecard-link:hover::before {
+    left: 100%;
+}
+
+.purplecard-link i {
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+}
+
+.purplecard-link:hover i {
+    transform: rotate(10deg) scale(1.2);
+}
+
+/* Animation is now handled by the .purplecard-link-container selectors above */
+
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.purplecard-socials {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin: 24px 0 0 0;
+}
+.purplecard-socials a {
+    color: #fff;
+    font-size: 1.5rem;
+    background: #a78bfa;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    animation: bounce 2s infinite alternate;
+}
+
+.purplecard-socials a:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.purplecard-socials a:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.purplecard-socials a:nth-child(4) {
+    animation-delay: 0.9s;
+}
+
+.purplecard-socials a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.purplecard-socials a:hover {
+    background: #fff;
+    color: #7c3aed;
+    transform: translateY(-5px) scale(1.15);
+    box-shadow: 0 5px 15px rgba(124, 58, 237, 0.4);
+}
+
+.purplecard-socials a:hover::before {
+    opacity: 1;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-5px);
+    }
+}
+.purplecard-footer {
+    margin-top: 32px;
+    text-align: center;
+    color: #ede9fe;
+    font-size: 1rem;
+    width: 100%;
+}
+.purplecard-footer a {
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+}
+.purplecard-footer a:hover {
+    text-decoration: underline;
+}
+.purplecard-header-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    position: relative;
+    z-index: 10;
+}
+
+.purplecard-join-link {
+    position: relative;
+    z-index: 10;
+}
+
+.purplecard-join-btn {
+    background: #7c3aed;
+    color: #fff;
+    border-radius: 18px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 16px #a78bfa55;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.purplecard-join-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+    opacity: 0;
+}
+
+.purplecard-join-btn i {
+    margin-right: 5px;
+    transition: transform 0.3s ease;
+}
+
+.purplecard-join-btn:hover {
+    background: #a78bfa;
+    color: #6d28d9;
+    box-shadow: 0 8px 24px #a78bfa99;
+    transform: translateY(-3px);
+}
+
+.purplecard-join-btn:hover::after {
+    opacity: 1;
+    left: 100%;
+}
+
+.purplecard-join-btn:hover i {
+    transform: rotate(15deg);
+}
+
+.purplecard-share {
+    position: relative;
+    z-index: 10;
+}
+
+.purplecard-share-btn {
+    background: #7c3aed;
+    color: #fff;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    border: none;
+    box-shadow: 0 4px 16px #a78bfa55;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.purplecard-share-btn:hover {
+    background: #a78bfa;
+    color: #6d28d9;
+    box-shadow: 0 8px 24px #a78bfa99;
+    transform: translateY(-3px) scale(1.1);
+}
+
+.purplecard-save-template {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.purplecard-save-btn {
+    background: #7c3aed;
+    color: #fff;
+    border-radius: 18px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 4px 16px #a78bfa55;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.purplecard-save-btn:hover {
+    background: #a78bfa;
+    color: #6d28d9;
+    box-shadow: 0 8px 24px #a78bfa99;
+}
+
+/* Purple Card Media Styles */
+.purplecard-bio-main .media-section {
+    margin: 25px 0;
+    padding: 20px 0;
+    border-top: 1px solid rgba(124, 58, 237, 0.2);
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(167, 139, 250, 0.1) 100%);
+    border-radius: 16px;
+}
+
+.purplecard-bio-main .media-section:first-child {
+    border-top: none;
+    margin-top: 0;
+}
+
+.purplecard-bio-main .media-section-title {
+    color: #7c3aed;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    justify-content: center;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+.purplecard-bio-main .media-section-title i {
+    color: #a78bfa;
+    font-size: 1rem;
+}
+
+.purplecard-bio-main .media-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.purplecard-bio-main .videos-grid {
+    grid-template-columns: 1fr;
+}
+
+.purplecard-bio-main .images-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.purplecard-bio-main .music-grid {
+    grid-template-columns: 1fr;
+}
+
+.purplecard-bio-main .media-item {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #a78bfa;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(167, 139, 250, 0.3);
+}
+
+.purplecard-bio-main .media-item:hover {
+    transform: translateY(-3px);
+    border-color: #7c3aed;
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4);
+}
+
+/* Video Items */
+.purplecard-bio-main .video-item {
+    padding: 15px;
+}
+
+.purplecard-bio-main .video-thumbnail {
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.purplecard-bio-main .video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.purplecard-bio-main .video-play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: #7c3aed;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
+}
+
+.purplecard-bio-main .video-play-overlay:hover {
+    background: #a78bfa;
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 8px 24px rgba(167, 139, 250, 0.4);
+}
+
+/* Image Items */
+.purplecard-bio-main .image-item {
+    /* Removed aspect-ratio to allow space for titles/descriptions */
+}
+
+.purplecard-bio-main .image-container {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+    border-radius: 12px;
+}
+
+.purplecard-bio-main .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.purplecard-bio-main .image-container:hover img {
+    transform: scale(1.05);
+}
+
+/* Music Items */
+.purplecard-bio-main .music-item {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+}
+
+.purplecard-bio-main .music-platform-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: white;
+    background: #7c3aed;
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
+}
+
+.purplecard-bio-main .music-info {
+    flex: 1;
+}
+
+.purplecard-bio-main .music-title {
+    color: #7c3aed;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+.purplecard-bio-main .music-artist {
+    color: #6b7280;
+    font-size: 0.85rem;
+    margin: 0;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+.purplecard-bio-main .play-button {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #7c3aed;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
+}
+
+.purplecard-bio-main .play-button:hover {
+    background: #a78bfa;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3);
+}
+
+/* Media Info */
+.purplecard-bio-main .media-info {
+    padding: 12px 15px;
+}
+
+.purplecard-bio-main .media-title {
+    color: #7c3aed;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+.purplecard-bio-main .media-description {
+    color: #4a5568;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+    font-family: 'Poppins', Arial, sans-serif;
+}

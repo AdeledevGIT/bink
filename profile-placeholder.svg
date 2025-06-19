@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="100" fill="#f3f4f6"/>
+  
+  <!-- Gradient background -->
+  <defs>
+    <linearGradient id="profileGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.1"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="100" fill="url(#profileGradient)"/>
+  
+  <!-- Person icon -->
+  <g transform="translate(100, 100)">
+    <!-- Head -->
+    <circle cx="0" cy="-20" r="25" fill="#9ca3af"/>
+    
+    <!-- Body -->
+    <path d="M -35 20 Q -35 -5 -25 -10 Q 0 -15 25 -10 Q 35 -5 35 20 L 35 50 L -35 50 Z" fill="#9ca3af"/>
+  </g>
+  
+  <!-- Border -->
+  <circle cx="100" cy="100" r="98" fill="none" stroke="#e5e7eb" stroke-width="4"/>
+</svg>

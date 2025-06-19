@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - BINK</title>
+    <!-- Favicon configuration for better browser compatibility -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo1.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/logo1.png">
+    <link rel="shortcut icon" href="/logo1.png">
+    <link rel="apple-touch-icon" href="/logo1.png">
+    <!-- Fallback favicon from GitHub Pages -->
+    <link rel="icon" type="image/png" href="https://adeledevgit.github.io/bink/logo1.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pricing.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="./logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <!-- Dashboard and logout buttons removed as requested -->
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <main class="dashboard-main">
+            <!-- Pricing title removed -->
+
+            <!-- Token Purchase Confirmation Section -->
+            <div id="token-purchase-section" class="token-purchase-section" style="display: none;">
+                <div class="token-purchase-card">
+                    <div class="token-purchase-header">
+                        <h3>Token Purchase Confirmation</h3>
+                    </div>
+                    <div class="token-purchase-details">
+                        <div class="token-detail">
+                            <span class="token-label">Amount:</span>
+                            <span id="token-amount-display" class="token-value">800 tokens</span>
+                        </div>
+                        <div class="token-detail">
+                            <span class="token-label">Price:</span>
+                            <span id="token-price-display" class="token-value">₦500</span>
+                        </div>
+                        <div class="token-detail">
+                            <span class="token-label">First Purchase Bonus:</span>
+                            <span id="token-bonus-display" class="token-value">+200 tokens</span>
+                        </div>
+                        <div class="token-detail total">
+                            <span class="token-label">Total Tokens:</span>
+                            <span id="token-total-display" class="token-value">1000 tokens</span>
+                        </div>
+                    </div>
+                    <div class="bank-details">
+                        <h4>Bank Transfer Details</h4>
+                        <div class="bank-detail">
+                            <span class="bank-label">Bank Name:</span>
+                            <span class="bank-value">First Bank</span>
+                        </div>
+                        <div class="bank-detail">
+                            <span class="bank-label">Account Name:</span>
+                            <span class="bank-value">BINK Digital Services</span>
+                        </div>
+                        <div class="bank-detail">
+                            <span class="bank-label">Account Number:</span>
+                            <span class="bank-value">1234567890</span>
+                        </div>
+                        <div class="bank-detail">
+                            <span class="bank-label">Reference:</span>
+                            <span id="payment-reference" class="bank-value">BINK-TOKEN-12345</span>
+                        </div>
+                    </div>
+                    <div class="token-purchase-instructions">
+                        <p>Please make a bank transfer using the details above. Include the reference number in your transfer description.</p>
+                        <p>After making the payment, please take a screenshot of your payment receipt and upload it below:</p>
+                    </div>
+                    <div class="token-purchase-form">
+                        <div class="form-group">
+                            <label for="payment-screenshot">Payment Screenshot/Receipt</label>
+                            <input type="file" id="payment-screenshot" accept="image/*" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment-notes">Additional Notes (Optional)</label>
+                            <textarea id="payment-notes" rows="2" placeholder="Any additional information..."></textarea>
+                        </div>
+                    </div>
+                    <div class="token-purchase-footer">
+                        <button id="confirm-payment-button" class="pricing-button premium-button">Confirm Payment</button>
+                        <button id="cancel-payment-button" class="pricing-button">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pricing-container" id="pricing-plans-container">
+                <!-- Free Plan -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Free</h3>
+                        <div class="pricing-price">
+                            <span class="price">₦0</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Up to 5 links</li>
+                            <li><i class="fas fa-check"></i> Basic analytics</li>
+                            <li><i class="fas fa-check"></i> Standard bio page</li>
+                            <li><i class="fas fa-check"></i> BINK branding</li>
+                            <li><i class="fas fa-times"></i> Custom themes</li>
+                            <li><i class="fas fa-times"></i> Advanced analytics</li>
+                            <li><i class="fas fa-times"></i> Priority support</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <button id="free-plan-button" class="pricing-button current-plan">Current Plan</button>
+                    </div>
+                </div>
+
+                <!-- Premium Monthly Plan -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Premium Monthly</h3>
+                        <div class="pricing-price">
+                            <span class="price">₦2,500</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> <strong>Unlimited</strong> links</li>
+                            <li><i class="fas fa-check"></i> Advanced analytics</li>
+                            <li><i class="fas fa-check"></i> Custom bio page</li>
+                            <li><i class="fas fa-check"></i> No BINK branding</li>
+                            <li><i class="fas fa-check"></i> Custom themes</li>
+                            <li><i class="fas fa-check"></i> Priority support</li>
+                            <li><i class="fas fa-check"></i> Custom domain (coming soon)</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <button id="premium-monthly-button" class="pricing-button premium-button" data-plan="premium" data-duration="monthly">Upgrade Now</button>
+                    </div>
+                </div>
+                <!-- Premium Lifetime Plan -->
+                <div class="pricing-card">
+                    <div class="pricing-badge">One-Time</div>
+                    <div class="pricing-header">
+                        <h3>Premium Lifetime</h3>
+                        <div class="pricing-price">
+                            <span class="price">₦60,000</span>
+                            <span class="period">one-time</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> <strong>Unlimited</strong> links</li>
+                            <li><i class="fas fa-check"></i> Advanced analytics</li>
+                            <li><i class="fas fa-check"></i> Custom bio page</li>
+                            <li><i class="fas fa-check"></i> No BINK branding</li>
+                            <li><i class="fas fa-check"></i> Custom themes</li>
+                            <li><i class="fas fa-check"></i> Priority support</li>
+                            <li><i class="fas fa-check"></i> Custom domain (coming soon)</li>
+                            <li><i class="fas fa-check"></i> <strong>Never expires</strong></li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <button id="premium-lifetime-button" class="pricing-button premium-button" data-plan="premium" data-duration="lifetime">Upgrade Now</button>
+                    </div>
+                </div>
+
+                <!-- Premium Yearly Plan -->
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Best Value</div>
+                    <div class="pricing-header">
+                        <h3>Premium Yearly</h3>
+                        <div class="pricing-price">
+                            <span class="price">₦25,000</span>
+                            <span class="period">/year</span>
+                        </div>
+                        <div class="pricing-save">Save 17% (₦5,000)</div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> <strong>Unlimited</strong> links</li>
+                            <li><i class="fas fa-check"></i> Advanced analytics</li>
+                            <li><i class="fas fa-check"></i> Custom bio page</li>
+                            <li><i class="fas fa-check"></i> No BINK branding</li>
+                            <li><i class="fas fa-check"></i> Custom themes</li>
+                            <li><i class="fas fa-check"></i> Priority support</li>
+                            <li><i class="fas fa-check"></i> Custom domain (coming soon)</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <button id="premium-yearly-button" class="pricing-button premium-button" data-plan="premium" data-duration="yearly">Upgrade Now</button>
+                    </div>
+                </div>
+                <!-- Content Creator Plan -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Content Creator</h3>
+                        <div class="pricing-price">
+                            <span class="price">₦0</span>
+                            <span class="period">/3 months</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> All Premium features</li>
+                            <li><i class="fas fa-check"></i> Verified badge</li>
+                            <li><i class="fas fa-check"></i> Featured in directory</li>
+                            <li><i class="fas fa-check"></i> Monetization options (coming soon)</li>
+                            <li><i class="fas fa-info-circle"></i> <strong>Requirements:</strong></li>
+                            <li><i class="fas fa-users"></i> 10K+ followers</li>
+                            <li><i class="fas fa-video"></i> Promotional video with 20K+ views</li>
+                            <li><i class="fas fa-calendar-alt"></i> 3-month subscription period</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <button id="creator-plan-button" class="pricing-button" data-plan="creator" data-duration="quarterly">Apply Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pricing-faq">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How do I upgrade my plan?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Click the "Upgrade Now" button on your desired plan. You'll be directed to our secure payment page where you can complete your purchase.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Can I cancel my subscription?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, you can cancel your subscription at any time. Your premium features will remain active until the end of your billing period.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>What happens when my subscription expires?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>When your subscription expires, your account will automatically revert to the free plan. You'll need to renew your subscription to regain premium features. Lifetime subscriptions never expire.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>What's the difference between monthly, yearly, and lifetime plans?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Monthly plans are billed every month at ₦2,500. Yearly plans are billed annually at ₦25,000 (saving you ₦5,000 compared to monthly). Lifetime plans are a one-time payment of ₦60,000 with no recurring charges and never expire.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How do I qualify for the Content Creator plan?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To qualify, you need at least 10,000 followers on a social media platform and a promotional video about BINK with at least 20,000 views. Click "Apply Now" to submit your application.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>What payment methods do you accept?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept credit/debit cards, bank transfers, and mobile money payments. All transactions are secure and encrypted.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Creator Application Modal -->
+    <div id="creator-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Content Creator Application</h3>
+            <form id="creator-application-form">
+                <div class="form-group">
+                    <label for="social-platform">Primary Social Platform</label>
+                    <select id="social-platform" name="social-platform" required>
+                        <option value="">Select Platform</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="youtube">YouTube</option>
+                        <option value="twitter">Twitter</option>
+                        <option value="facebook">Facebook</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="follower-count">Follower Count</label>
+                    <input type="number" id="follower-count" name="follower-count" min="10000" required placeholder="e.g., 15000">
+                </div>
+                <div class="form-group">
+                    <label for="profile-url">Profile URL</label>
+                    <input type="url" id="profile-url" name="profile-url" required placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label for="video-url">Promotional Video URL</label>
+                    <input type="url" id="video-url" name="video-url" required placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label for="video-views">Video Views</label>
+                    <input type="number" id="video-views" name="video-views" min="20000" required placeholder="e.g., 25000">
+                </div>
+                <div class="form-group">
+                    <label for="application-notes">Why should we approve your application?</label>
+                    <textarea id="application-notes" name="application-notes" rows="4" placeholder="Tell us about your content and audience..."></textarea>
+                </div>
+                <button type="submit" id="submit-application-button" class="auth-button">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <!-- Firebase Storage - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+
+    <script src="firebase-config.js"></script>
+    <script src="sidebar.js"></script>
+    <script src="pricing.js"></script>
+</body>
+</html>

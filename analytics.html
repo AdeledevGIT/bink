@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - BINK</title>
+    <!-- Favicon configuration for better browser compatibility -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo1.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/logo1.png">
+    <link rel="shortcut icon" href="/logo1.png">
+    <link rel="apple-touch-icon" href="/logo1.png">
+    <!-- Fallback favicon from GitHub Pages -->
+    <link rel="icon" type="image/png" href="https://adeledevgit.github.io/bink/logo1.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="analytics.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="./logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <button id="upgrade-button" class="upgrade-button">Upgrade to Premium</button>
+            <!-- Dashboard and logout buttons removed as requested -->
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <main class="dashboard-main">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Analytics</h1>
+            </div>
+
+            <!-- Analytics tabs -->
+            <div class="analytics-tabs">
+                <button id="basic-tab" class="analytics-tab active">Basic Analytics</button>
+                <button id="advanced-tab" class="analytics-tab">Advanced Analytics</button>
+            </div>
+
+            <!-- Basic Analytics Tab -->
+            <div id="basic-analytics" class="analytics-tab-content active">
+                <div class="dashboard-section">
+                    <h3>Overview</h3>
+                    <div class="analytics-overview">
+                        <div class="analytics-card">
+                            <div class="analytics-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="analytics-data">
+                                <span id="total-views" class="analytics-number">0</span>
+                                <span class="analytics-label">Total Views</span>
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <div class="analytics-icon">
+                                <i class="fas fa-mouse-pointer"></i>
+                            </div>
+                            <div class="analytics-data">
+                                <span id="total-clicks" class="analytics-number">0</span>
+                                <span class="analytics-label">Total Clicks</span>
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <div class="analytics-icon">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="analytics-data">
+                                <span id="click-rate" class="analytics-number">0%</span>
+                                <span class="analytics-label">Click Rate</span>
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <div class="analytics-icon">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <div class="analytics-data">
+                                <span id="total-links" class="analytics-number">0</span>
+                                <span class="analytics-label">Active Links</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-section">
+                    <h3>Performance Over Time</h3>
+                    <div class="chart-filters">
+                        <div class="filter-group">
+                            <label for="time-range">Time Range:</label>
+                            <select id="time-range" class="filter-select">
+                                <option value="7">Last 7 Days</option>
+                                <option value="30" selected>Last 30 Days</option>
+                                <option value="90">Last 90 Days</option>
+                                <option value="365">Last Year</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="chart-type">Chart Type:</label>
+                            <select id="chart-type" class="filter-select">
+                                <option value="line" selected>Line Chart</option>
+                                <option value="bar">Bar Chart</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="performance-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="dashboard-section">
+                    <h3>Top Performing Links</h3>
+                    <div class="table-container">
+                        <table class="analytics-table">
+                            <thead>
+                                <tr>
+                                    <th>Link</th>
+                                    <th>Views</th>
+                                    <th>Clicks</th>
+                                    <th>Click Rate</th>
+                                    <th>Last Click</th>
+                                </tr>
+                            </thead>
+                            <tbody id="links-table-body">
+                                <!-- Links will be loaded here -->
+                                <tr class="placeholder-row">
+                                    <td colspan="5">Loading link data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Analytics Tab -->
+            <div id="advanced-analytics" class="analytics-tab-content">
+                <div class="dashboard-section premium-feature">
+                    <h3>Visitor Demographics</h3>
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <h4>Devices</h4>
+                            <div class="pie-chart-container">
+                                <canvas id="devices-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <h4>Browsers</h4>
+                            <div class="pie-chart-container">
+                                <canvas id="browsers-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <h4>Referrers</h4>
+                            <div class="pie-chart-container">
+                                <canvas id="referrers-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <h4>Time of Day</h4>
+                            <div class="pie-chart-container">
+                                <canvas id="time-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-section premium-feature">
+                    <h3>Geographic Distribution</h3>
+                    <div class="table-container">
+                        <table class="analytics-table">
+                            <thead>
+                                <tr>
+                                    <th>Country</th>
+                                    <th>Visitors</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody id="geo-table-body">
+                                <!-- Geographic data will be loaded here -->
+                                <tr class="placeholder-row">
+                                    <td colspan="3">Loading geographic data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="dashboard-section premium-feature">
+                    <h3>Conversion Tracking</h3>
+                    <div class="table-container">
+                        <table class="analytics-table">
+                            <thead>
+                                <tr>
+                                    <th>Link</th>
+                                    <th>Clicks</th>
+                                    <th>Conversions</th>
+                                    <th>Conversion Rate</th>
+                                    <th>Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody id="conversion-table-body">
+                                <!-- Conversion data will be loaded here -->
+                                <tr class="placeholder-row">
+                                    <td colspan="5">Loading conversion data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+    <script src="firebase-config.js"></script>
+    <script src="sidebar.js"></script>
+    <script src="analytics.js"></script>
+</body>
+</html>

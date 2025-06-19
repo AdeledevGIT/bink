@@ -1,0 +1,1308 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+  /* Updated Palette Inspired by Example */
+  --background-color: #111827; /* Darker blue/gray */
+  --text-color: #e5e7eb; /* Lighter gray */
+  --primary-color: #3b82f6; /* Vibrant Blue */
+  --primary-color-rgb: 59, 130, 246; /* RGB values for primary color */
+  --primary-hover-color: #2563eb; /* Darker Blue */
+  --secondary-color: #1f2937; /* Slightly lighter dark blue/gray */
+  --border-color: #374151; /* Grayer border */
+  --card-background: #1f2937; /* Match secondary */
+  --card-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Deeper shadow */
+  --text-muted: #9ca3af; /* Muted gray */
+  --accent-color: #ec4899; /* Vibrant Pink/Magenta */
+  --error-bg: rgba(239, 68, 68, 0.1);
+  --error-text: #fca5a5;
+  --error-border: rgba(239, 68, 68, 0.4);
+  --success-bg: rgba(16, 185, 129, 0.1);
+  --success-text: #a7f3d0;
+  --success-border: rgba(16, 185, 129, 0.4);
+
+  /* Transitions & Animations */
+  --transition-speed: 0.25s;
+  --transition-timing: ease-in-out;
+  --border-radius: 8px; /* Consistent border radius */
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Changed font */
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6; /* Adjusted line height */
+  font-size: 16px;
+  padding-top: 70px; /* Add padding equal to header height to prevent overlap */
+  /* Removed gradient, using solid color */
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed) var(--transition-timing);
+}
+
+a:hover {
+    color: var(--accent-color); /* Use accent color for link hover */
+    text-decoration: underline; /* Add underline on hover */
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color var(--transition-speed) var(--transition-timing),
+                transform 0.15s ease,
+                box-shadow var(--transition-speed) var(--transition-timing);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: var(--primary-hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+button:disabled {
+    background-color: var(--border-color);
+    color: var(--text-muted);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 12px 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 15px;
+    width: 100%;
+    font-size: 1rem;
+    transition: border-color var(--transition-speed) var(--transition-timing),
+                box-shadow var(--transition-speed) var(--transition-timing);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* Adjusted focus ring color */
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+
+/* --- Page Header Styles --- */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space between logo and navigation */
+    padding: 0 40px;
+    background-color: rgba(31, 41, 55, 0.95); /* More opaque for better readability */
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100; /* Increased z-index to ensure it's above all content */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    height: 70px; /* Reduced height to take up less space */
+}
+
+.logo-container-header {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.logo-container-header {
+    cursor: pointer; /* Show pointer cursor to indicate clickable */
+}
+
+.logo-container-header img {
+    height: 65px; /* Keep the increased height */
+    width: auto; /* Maintain aspect ratio */
+    display: block;
+    transition: transform 0.3s ease;
+    margin-left: -5px; /* Move logo closer to sidebar icon */
+}
+
+.logo-container-header:hover img {
+    transform: scale(1.05);
+}
+.welcome-message-container {
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInSlideUp 0.6s 0.2s ease-out forwards;
+}
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.welcome-message-container h2 {
+    font-size: 2.2rem; /* Larger */
+    font-weight: 700;
+    margin-bottom: 8px;
+    /* Gradient Text Effect */
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent; /* Fallback */
+}
+
+.welcome-message-container p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+
+/* Auth Page Specific Styles */
+.auth-container {
+  display: flex;
+  flex-direction: column; /* Stack welcome message and form vertically */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  padding-top: 30px; /* Reduced padding since body already has 70px padding-top */
+}
+
+.auth-form {
+  background-color: var(--card-background);
+  padding: 40px 50px;
+  border-radius: 12px; /* Slightly more rounded */
+  box-shadow: var(--card-shadow);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  border-top: none; /* Remove top border, rely on shadow/bg */
+  transition: transform var(--transition-speed) var(--transition-timing),
+              box-shadow var(--transition-speed) var(--transition-timing);
+}
+
+/* Optional: Slight lift on form hover */
+/*
+.auth-form:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+*/
+
+.auth-form h2 {
+  margin-bottom: 15px; /* Reduced space after h2 if logo is present */
+  font-size: 1.8rem; /* Larger heading */
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 25px; /* More space between fields */
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.95rem; /* Slightly larger label */
+  font-weight: 500;
+}
+
+.auth-button {
+  width: 100%; /* Make button full width */
+  padding: 14px 20px;
+  margin-top: 15px;
+  font-size: 1.1rem;
+}
+
+.auth-error, .auth-success { /* Shared styles for messages */
+  color: var(--error-text);
+  border: 1px solid var(--error-border);
+  background-color: var(--error-bg);
+  padding: 12px 15px; /* More padding */
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.auth-success { /* Specific success colors */
+    color: var(--success-text);
+    border-color: var(--success-border);
+    background-color: var(--success-bg);
+}
+
+
+.auth-switch {
+  margin-top: 30px; /* More space above switch link */
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.auth-switch a {
+  font-weight: 600; /* Bolder link */
+  margin-left: 5px;
+}
+
+/* Dashboard Specific Styles */
+/* Adjust dashboard header specifically */
+.dashboard-container .page-header {
+    /* Removed justify-content: space-between; */
+    /* Items will now default to flex-start (left alignment) */
+    display: flex;
+    align-items: center;
+}
+
+/* User Avatar Styles */
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.user-avatar:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-avatar .avatar-initials {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Premium Badge Styles */
+.premium-badge {
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(59, 130, 246, 0.15);
+    color: var(--primary-color);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 5px;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.premium-badge i {
+    color: gold;
+    margin-right: 5px;
+}
+
+.premium-badge.expired {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: var(--error-text);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* Header user info styles - applied globally */
+.header-user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Consistent spacing between elements */
+}
+
+.token-balance-display {
+    display: flex;
+    align-items: center;
+    background-color: #2a2a2a;
+    color: #ffd700;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.token-balance-display:hover {
+    background-color: #333333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    color: #ffd700;
+}
+
+.token-balance-display i {
+    margin-right: 5px;
+}
+
+.token-balance-display i.fa-plus {
+    margin-left: 5px;
+    font-size: 0.8em;
+}
+
+#welcome-message {
+    color: var(--text-color);
+    font-weight: 500;
+    white-space: nowrap;
+    font-size: 0.95rem;
+}
+
+.button-link {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 18px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+}
+
+.button-link:hover {
+    background-color: var(--primary-hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(59, 130, 246, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+.logout-button {
+    padding: 10px 18px;
+    font-weight: 500;
+    white-space: nowrap;
+    background-color: transparent;
+    color: var(--text-color);
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--error-text);
+    border-color: var(--error-text);
+    transform: translateY(-2px);
+}
+
+/* Notification styles */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+.notification.success {
+    background-color: var(--success-bg);
+    color: var(--success-text);
+    border: 1px solid var(--success-border);
+}
+
+.notification.error {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    border: 1px solid var(--error-border);
+}
+
+.notification i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+
+/* Dashboard container styles moved to sidebar.css */
+
+.dashboard-main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+.dashboard-main h2 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent; /* Fallback */
+    display: inline-block; /* Needed for gradient */
+}
+
+.dashboard-section {
+    background-color: var(--card-background);
+    padding: 30px;
+    border-radius: 16px;
+    margin-bottom: 10px;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dashboard-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-section:hover::before {
+    opacity: 1;
+}
+
+.dashboard-section h3 {
+    font-size: 1.4rem; /* Adjusted size */
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 600; /* Bolder */
+    color: var(--text-color);
+}
+
+/* Remove the placeholder style */
+/* .placeholder-box { ... } */
+
+/* Add styles for actual content within sections later */
+/* Example: */
+.profile-form .form-group {
+    margin-bottom: 20px;
+}
+
+.link-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.link-list li {
+    background-color: var(--secondary-color);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border-color);
+}
+
+.link-actions button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    margin-left: 8px;
+}
+
+/* Add subtle animations/transitions */
+.dashboard-section, .auth-form {
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+/* Example hover effect for sections (optional) */
+/*
+.dashboard-section:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+*/
+
+/* --- Profile Page Styles --- */
+.profile-form .form-group {
+    margin-bottom: 20px; /* Consistent spacing */
+}
+
+.profile-form label {
+    font-weight: 500;
+}
+
+.profile-form input[readonly] {
+    background-color: var(--border-color); /* Indicate non-editable */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.profile-form small {
+    display: block;
+    margin-top: 5px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* --- General Button Link Style --- */
+.button-link {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 10px 18px; /* Slightly larger */
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color var(--transition-speed) var(--transition-timing),
+                transform 0.15s ease,
+                box-shadow var(--transition-speed) var(--transition-timing);
+    border: 1px solid var(--border-color);
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.button-link:hover {
+    background-color: #374151; /* Use border color for hover */
+    color: var(--text-color);
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.button-link:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+/* --- Forgot Password Link --- */
+.auth-switch a#forgot-password-link {
+    margin-right: 5px; /* Space before the separator */
+}
+
+/* --- Message Styling Consistency --- */
+#profile-message, #profile-error {
+    margin-bottom: 20px; /* Space below messages */
+}
+
+/* --- Link List Placeholder Styles (Optional) --- */
+.link-list ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.link-list li {
+    background-color: var(--secondary-color);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border-color);
+}
+
+.link-actions button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    margin-left: 8px;
+}
+
+/* --- Dashboard Section Enhancements --- */
+.dashboard-section p {
+    margin-bottom: 15px; /* Add space below paragraphs in sections */
+    color: var(--text-muted); /* Subtler text for descriptions */
+}
+
+.dashboard-section h3 + p { /* Target paragraph directly after h3 */
+     margin-top: -10px; /* Reduce space between h3 and its description */
+}
+
+/* Adjust header spacing */
+.dashboard-header {
+    align-items: center; /* Vertically align items */
+}
+
+.dashboard-header > div { /* Target the div containing welcome/logout */
+    display: flex;
+    align-items: center;
+}
+
+#welcome-message {
+    margin-right: 15px; /* Adjust spacing */
+}
+
+/* Welcome message container on auth pages */
+.welcome-message-container {
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInSlideUp 0.6s 0.2s ease-out forwards;
+}
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.welcome-message-container h2 {
+    font-size: 2.2rem; /* Larger */
+    font-weight: 700;
+    margin-bottom: 8px;
+    /* Gradient Text Effect */
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent; /* Fallback */
+}
+
+.welcome-message-container p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+
+/* Auth Page Specific Styles */
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  padding-top: 30px; /* Reduced since body already has padding-top */
+  background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent 60%),
+              radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.1), transparent 60%);
+}
+
+.auth-form {
+  background-color: var(--card-background);
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.auth-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+}
+
+.auth-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Optional: Slight lift on form hover */
+/*
+.auth-form:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+*/
+
+.auth-form-header {
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+.auth-form-header img {
+  max-width: 140px;
+  margin-bottom: 25px;
+  transition: transform 0.3s ease;
+}
+
+.auth-form-header img:hover {
+  transform: scale(1.05);
+}
+
+.auth-form-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.auth-form-header p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 25px;
+  text-align: left;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) inset;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3), 0 2px 5px rgba(0, 0, 0, 0.1) inset;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.terms-notice {
+  margin: 20px 0 10px 0;
+  text-align: center;
+}
+
+.terms-notice p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.terms-notice a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.terms-notice a:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 16px 20px;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+}
+
+.auth-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(59, 130, 246, 0.3);
+}
+
+.auth-button:disabled {
+  background: linear-gradient(135deg, #6b7280, #9ca3af);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+.auth-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.auth-button:hover::after {
+  transform: translateX(100%);
+}
+
+.auth-error, .auth-success { /* Shared styles for messages */
+  color: var(--error-text);
+  border: 1px solid var(--error-border);
+  background-color: var(--error-bg);
+  padding: 12px 15px; /* More padding */
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.auth-success { /* Specific success colors */
+    color: var(--success-text);
+    border-color: var(--success-border);
+    background-color: var(--success-bg);
+}
+
+
+.auth-switch {
+  margin-top: 30px; /* More space above switch link */
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.auth-switch a {
+  font-weight: 600; /* Bolder link */
+  margin-left: 5px;
+}
+
+/* Dashboard Specific Styles */
+/* Adjust dashboard header specifically */
+.dashboard-container .page-header {
+    /* This rule ensures space between the logo and the user info */
+    justify-content: space-between; /* Ensures items are pushed to ends */
+    display: flex; /* Make sure flex is explicitly set */
+    align-items: center; /* Keep items vertically centered */
+}
+
+/* This targets the container for the welcome message and logout button */
+.dashboard-container .header-user-info {
+    display: flex;
+    align-items: center;
+    /* margin-left: auto; */ /* Removed this, space-between on parent is better */
+}
+.dashboard-container #welcome-message {
+    margin-right: 15px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.dashboard-container .logout-button {
+    /* Styles should be inherited or defined here if needed */
+    padding: 8px 15px;
+    font-weight: 500;
+    white-space: nowrap;
+    background-color: var(--secondary-color); /* Ensure style consistency */
+    color: var(--text-color);
+    box-shadow: none;
+    border: 1px solid var(--border-color); /* Add border for visibility */
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color var(--transition-speed) var(--transition-timing);
+}
+.dashboard-container .logout-button:hover {
+     background-color: var(--border-color); /* Use a slightly lighter hover */
+}
+
+
+.dashboard-container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+    padding-top: 100px; /* Adjust based on header height */
+}
+
+/* Removed redundant .dashboard-header rules */
+/*
+.dashboard-header { ... }
+.dashboard-header h1 { ... }
+*/
+
+/* Removed redundant .header-user-info rules outside dashboard context */
+/*
+.header-user-info { ... }
+#welcome-message { ... }
+.logout-button { ... }
+*/
+
+.dashboard-main h2 {
+    font-size: 1.8rem; /* Adjusted size */
+    margin-bottom: 25px;
+    font-weight: 600;
+    /* Use gradient for dashboard headings too */
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent; /* Fallback */
+    display: inline-block; /* Needed for gradient */
+}
+
+.dashboard-section {
+    background-color: var(--card-background);
+    padding: 25px 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: var(--card-shadow);
+    transition: transform var(--transition-speed) var(--transition-timing),
+                box-shadow var(--transition-speed) var(--transition-timing);
+    border-left: 4px solid transparent;
+}
+
+.dashboard-section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5); /* Enhanced shadow */
+    border-left-color: var(--primary-color);
+}
+
+.dashboard-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 600;
+    color: var(--text-color);
+    position: relative;
+}
+
+.dashboard-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    border-radius: 3px;
+}
+
+/* Remove the placeholder style */
+/* .placeholder-box { ... } */
+
+/* Add styles for actual content within sections later */
+/* Example: */
+.profile-form .form-group {
+    margin-bottom: 20px;
+}
+
+.link-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.link-list li {
+    background-color: var(--secondary-color);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border-color);
+}
+
+.link-actions button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    margin-left: 8px;
+}
+
+/* Add subtle animations/transitions */
+.dashboard-section, .auth-form {
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+/* Example hover effect for sections (optional) */
+/*
+.dashboard-section:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+*/
+
+/* --- Profile Page Styles --- */
+.profile-form .form-group {
+    margin-bottom: 20px; /* Consistent spacing */
+}
+
+.profile-form label {
+    font-weight: 500;
+}
+
+.profile-form input[readonly] {
+    background-color: var(--border-color); /* Indicate non-editable */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.profile-form small {
+    display: block;
+    margin-top: 5px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* --- General Button Link Style --- */
+.button-link {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 10px 18px; /* Slightly larger */
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color var(--transition-speed) var(--transition-timing),
+                transform 0.15s ease,
+                box-shadow var(--transition-speed) var(--transition-timing);
+    border: 1px solid var(--border-color);
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.button-link:hover {
+    background-color: #374151; /* Use border color for hover */
+    color: var(--text-color);
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.button-link:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+/* --- Forgot Password Link --- */
+.auth-switch a#forgot-password-link {
+    margin-right: 5px; /* Space before the separator */
+}
+
+/* --- Message Styling Consistency --- */
+#profile-message, #profile-error {
+    margin-bottom: 20px; /* Space below messages */
+}
+
+/* --- Link List Placeholder Styles (Optional) --- */
+.link-list ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.link-list li {
+    background-color: var(--secondary-color);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border-color);
+}
+
+.link-actions button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    margin-left: 8px;
+}
+
+/* --- Dashboard Section Enhancements --- */
+.dashboard-section p {
+    margin-bottom: 15px; /* Add space below paragraphs in sections */
+    color: var(--text-muted); /* Subtler text for descriptions */
+}
+
+.dashboard-section h3 + p { /* Target paragraph directly after h3 */
+     margin-top: -10px; /* Reduce space between h3 and its description */
+}
+
+/* Adjust header spacing */
+.dashboard-header {
+    align-items: center; /* Vertically align items */
+}
+
+.dashboard-header > div { /* Target the div containing welcome/logout */
+    display: flex;
+    align-items: center;
+}
+
+#welcome-message {
+    margin-right: 15px; /* Adjust spacing */
+}
+
+/* Ensure logout button on profile page matches dashboard */
+#logout-button.logout-button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 8px 15px;
+    font-weight: 500;
+    box-shadow: none;
+}
+
+#logout-button.logout-button:hover {
+    background-color: #333;
+}
+
+
+/* Add subtle animations/transitions */
+.dashboard-section, .auth-form {
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    body {
+        padding-top: 60px; /* Adjust for smaller mobile header */
+    }
+
+    .page-header {
+        height: 60px; /* Smaller header on mobile */
+        padding: 0 15px; /* Reduce padding on mobile */
+    }
+
+    .logo-container-header img {
+        height: 50px; /* Smaller logo on mobile */
+    }
+
+    .auth-container {
+        padding: 15px;
+        padding-top: 20px; /* Reduced padding since body already has padding-top */
+    }
+
+    .auth-form {
+        padding: 30px 25px;
+    }
+
+    .auth-form-header img {
+        max-width: 120px;
+    }
+
+    .auth-form-header h2 {
+        font-size: 1.8rem;
+    }
+
+    /* Improve mobile responsiveness for all content */
+    .dashboard-section {
+        padding: 20px 15px; /* Smaller padding on mobile */
+    }
+
+    /* Make sure content doesn't overflow on mobile */
+    .bio-link-container, .link-item, .link-details, .link-url {
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+    }
+
+    /* Adjust token display on mobile */
+    .token-balance-display {
+        padding: 5px 10px;
+        font-size: 0.9rem;
+    }
+
+    /* Make sure tables are responsive */
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+}

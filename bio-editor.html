@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Bio Page - BINK</title>
+    <!-- Favicon configuration for better browser compatibility -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo1.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/logo1.png">
+    <link rel="shortcut icon" href="/logo1.png">
+    <link rel="apple-touch-icon" href="/logo1.png">
+    <!-- Fallback favicon from GitHub Pages -->
+    <link rel="icon" type="image/png" href="https://adeledevgit.github.io/bink/logo1.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bio-editor.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="./logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <a href="tokens.html" class="token-balance-display">
+                <i class="fas fa-coins"></i> <span id="header-token-count">0</span> tokens <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <main class="dashboard-main">
+            <!-- Navigation Tabs -->
+            <div class="editor-navigation">
+                <div class="nav-tabs">
+                    <button class="nav-tab active" data-tab="templates">
+                        <i class="fas fa-palette"></i>
+                        <span>Templates</span>
+                    </button>
+                    <button class="nav-tab" data-tab="profile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </button>
+                    <button class="nav-tab" data-tab="links">
+                        <i class="fas fa-link"></i>
+                        <span>Links</span>
+                    </button>
+                    <button class="nav-tab" data-tab="social">
+                        <i class="fas fa-share-alt"></i>
+                        <span>Social</span>
+                    </button>
+                    <button class="nav-tab" data-tab="media">
+                        <i class="fas fa-images"></i>
+                        <span>Media & Catalog</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Content Container -->
+            <div class="tab-content-container">
+                <!-- Templates Tab -->
+                <div class="tab-content active" id="templates">
+                    <div class="tab-header">
+                        <h3>Choose Your Template</h3>
+                        <p>Select a template that best represents your style • Scroll horizontally to see more</p>
+                    </div>
+                    <div class="templates-grid">
+                        <div class="templates-scroll">
+                        <!-- NeonCard -->
+                        <div class="template-card">
+                            <div id="neoncard-label"></div>
+                            <iframe src="templates/neoncard-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Neon Card</div>
+                                <button class="template-select-btn" data-template="neoncard">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Glassmorphism -->
+                        <div class="template-card">
+                            <div id="glassmorphism-label"></div>
+                            <iframe src="templates/glassmorphism-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Glassmorphism</div>
+                                <button class="template-select-btn" data-template="glassmorphism">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Classic (optional) -->
+                        <div class="template-card">
+                            <div id="classic-label"></div>
+                            <iframe src="templates/classic-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Classic</div>
+                                <button class="template-select-btn" data-template="classic">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Purple Card -->
+                        <div class="template-card">
+                            <div id="purplecard-label"></div>
+                            <iframe src="templates/purplecard-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Purple Card</div>
+                                <button class="template-select-btn" data-template="purplecard">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Landing Profile -->
+                        <div class="template-card">
+                            <div id="landingprofile-label"></div>
+                            <iframe src="templates/landingprofile-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Landing Profile</div>
+                                <button class="template-select-btn" data-template="landingprofile">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Black Landing -->
+                        <div class="template-card">
+                            <div id="blacklanding-label"></div>
+                            <iframe src="templates/blacklanding-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Black Landing</div>
+                                <button class="template-select-btn" data-template="blacklanding">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Gradient Flow -->
+                        <div class="template-card">
+                            <div id="gradientflow-label"></div>
+                            <iframe src="templates/gradientflow-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Gradient Flow</div>
+                                <button class="template-select-btn" data-template="gradientflow">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Dark Elegance -->
+                        <div class="template-card">
+                            <div id="darkelegance-label"></div>
+                            <iframe src="templates/darkelegance-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Dark Elegance</div>
+                                <button class="template-select-btn" data-template="darkelegance">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Neon Glow -->
+                        <div class="template-card">
+                            <div id="neonglow-label"></div>
+                            <iframe src="templates/neonglow-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Neon Glow</div>
+                                <button class="template-select-btn" data-template="neonglow">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Minimal Zen -->
+                        <div class="template-card">
+                            <div id="minimalzen-label"></div>
+                            <iframe src="templates/minimalzen-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Minimal Zen</div>
+                                <button class="template-select-btn" data-template="minimalzen">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Tech Wave -->
+                        <div class="template-card">
+                            <div id="techwave-label"></div>
+                            <iframe src="templates/techwave-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Tech Wave</div>
+                                <button class="template-select-btn" data-template="techwave">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Split Screen -->
+                        <div class="template-card">
+                            <div id="splitscreen-label"></div>
+                            <iframe src="templates/splitscreen-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Split Screen</div>
+                                <button class="template-select-btn" data-template="splitscreen">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Magazine -->
+                        <div class="template-card">
+                            <div id="magazine-label"></div>
+                            <iframe src="templates/magazine-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Magazine</div>
+                                <button class="template-select-btn" data-template="magazine">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Retro Wave -->
+                        <div class="template-card">
+                            <div id="retrowave-label"></div>
+                            <iframe src="templates/retrowave-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Retro Wave</div>
+                                <button class="template-select-btn" data-template="retrowave">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Nature -->
+                        <div class="template-card">
+                            <div id="nature-label"></div>
+                            <iframe src="templates/nature-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Nature</div>
+                                <button class="template-select-btn" data-template="nature">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Portfolio -->
+                        <div class="template-card">
+                            <div id="portfolio-label"></div>
+                            <iframe src="templates/portfolio-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Portfolio</div>
+                                <button class="template-select-btn" data-template="portfolio">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Corporate Professional -->
+                        <div class="template-card">
+                            <div id="corporate-label"></div>
+                            <iframe src="templates/corporate-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Corporate Professional</div>
+                                <button class="template-select-btn" data-template="corporate">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Creative Artist -->
+                        <div class="template-card">
+                            <div id="creative-label"></div>
+                            <iframe src="templates/creative-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Creative Artist</div>
+                                <button class="template-select-btn" data-template="creative">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Gradient Card -->
+                        <div class="template-card">
+                            <div id="gradientcard-label"></div>
+                            <iframe src="templates/gradientcard-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Gradient Card</div>
+                                <button class="template-select-btn" data-template="gradientcard">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Neon Minimal -->
+                        <div class="template-card">
+                            <div id="neonminimal-label"></div>
+                            <iframe src="templates/neonminimal-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Neon Minimal</div>
+                                <button class="template-select-btn" data-template="neonminimal">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Soft Pastel -->
+                        <div class="template-card">
+                            <div id="softpastel-label"></div>
+                            <iframe src="templates/softpastel-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Soft Pastel</div>
+                                <button class="template-select-btn" data-template="softpastel">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Cover Story -->
+                        <div class="template-card">
+                            <div id="coverstory-label"></div>
+                            <iframe src="templates/coverstory-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Cover Story</div>
+                                <button class="template-select-btn" data-template="coverstory">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Aurora Glow -->
+                        <div class="template-card">
+                            <div id="auroraglow-label"></div>
+                            <iframe src="templates/auroraglow-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Aurora Glow</div>
+                                <button class="template-select-btn" data-template="auroraglow">Preview</button>
+                            </div>
+                        </div>
+                        <!-- Hero Banner -->
+                        <div class="template-card">
+                            <div id="herobanner-label"></div>
+                            <iframe src="templates/herobanner-preview.html" class="template-preview"></iframe>
+                            <div class="template-info">
+                                <div class="template-title">Hero Banner</div>
+                                <button class="template-select-btn" data-template="herobanner">Preview</button>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="templates-controls">
+                            <button class="template-control prev">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="template-control next">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Profile Tab -->
+                <div class="tab-content" id="profile">
+                    <div class="tab-header">
+                        <h3>Profile Information</h3>
+                        <p>Set up your basic profile details</p>
+                    </div>
+                    <div class="profile-editor">
+                        <div class="profile-section">
+                            <div class="profile-image-section">
+                                <div class="profile-pic-container">
+                                    <div class="profile-pic-preview" id="profilePicPreview">
+                                        <img src="profile.png" alt="Profile" id="profilePicImage">
+                                        <div class="profile-pic-overlay">
+                                            <i class="fas fa-camera"></i>
+                                            <span>Change Photo</span>
+                                        </div>
+                                    </div>
+                                    <input type="file" id="profilePicUpload" accept="image/*" style="display: none;">
+                                </div>
+                            </div>
+
+                            <div class="profile-form-section">
+                                <form id="profile-form" class="modern-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="displayName">Display Name</label>
+                                            <input type="text" id="displayName" name="displayName" placeholder="Your Name">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="username">Your Unique Link</label>
+                                        <div class="link-preview">
+                                            <span class="link-prefix">bink/</span>
+                                            <span id="username-display" class="username-value">username</span>
+                                            <div class="link-actions">
+                                                <button type="button" id="copy-link-button" class="icon-btn" title="Copy Link">
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                                <button type="button" id="save-link-button" class="icon-btn" title="Save">
+                                                    <i class="fas fa-bookmark"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="bio">Bio</label>
+                                        <textarea id="bio" name="bio" placeholder="Tell visitors about yourself..." rows="4"></textarea>
+                                        <div class="char-counter">
+                                            <span id="bio-char-count">0</span>/500 characters
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" id="profilePicUrl" name="profilePicUrl">
+
+                                    <div class="form-actions">
+                                        <button type="submit" id="save-profile-button" class="action-btn primary-btn">
+                                            <i class="fas fa-save"></i> Save Profile
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Links Tab -->
+                <div class="tab-content" id="links">
+                    <div class="tab-header">
+                        <h3>Manage Links</h3>
+                        <p>Add and organize your important links</p>
+                        <button id="add-link-button" class="action-btn primary-btn">
+                            <i class="fas fa-plus"></i> Add New Link
+                        </button>
+                    </div>
+                    <div class="links-manager">
+                        <div id="links-container" class="links-grid">
+                            <div class="links-placeholder">
+                                <i class="fas fa-link"></i>
+                                <h4>No links yet</h4>
+                                <p>Add your first link to get started</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Tab -->
+                <div class="tab-content" id="social">
+                    <div class="tab-header">
+                        <h3>Social Media</h3>
+                        <p>Connect your social media accounts</p>
+                    </div>
+                    <div class="social-manager">
+                        <div id="social-links-form" class="social-grid">
+                            <!-- Social media inputs will be generated here -->
+                        </div>
+                        <div class="social-actions">
+                            <button type="button" id="save-social-links-button" class="action-btn primary-btn">
+                                <i class="fas fa-save"></i> Save Social Links
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Media Tab -->
+                <div class="tab-content" id="media">
+                    <div class="tab-header">
+                        <div class="media-catalog-toggle">
+                            <button class="toggle-btn active" id="media-toggle-btn" data-section="media">
+                                <i class="fas fa-play-circle"></i>
+                                <span>Media Content</span>
+                            </button>
+                            <button class="toggle-btn" id="catalog-toggle-btn" data-section="catalog">
+                                <i class="fas fa-store"></i>
+                                <span>Catalog</span>
+                            </button>
+                        </div>
+                        <div id="media-header-content">
+                            <h3>Media Content</h3>
+                            <p>Add YouTube videos, pictures, and music from all platforms</p>
+                        </div>
+                        <div id="catalog-header-content" style="display: none;">
+                            <h3>Product Catalog</h3>
+                            <p>Showcase your products with buy buttons that link to your store</p>
+                            <button id="add-product-button" class="action-btn primary-btn">
+                                <i class="fas fa-plus"></i> Add New Product
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Media Content Section -->
+                    <div class="media-content-section" id="media-content-section">
+                        <div class="media-manager">
+                            <!-- Media Type Selector -->
+                            <div class="media-type-selector">
+                                <button class="media-type-btn active" data-type="youtube">
+                                    <i class="fab fa-youtube"></i>
+                                    <span>YouTube Videos</span>
+                                </button>
+                                <button class="media-type-btn" data-type="images">
+                                    <i class="fas fa-images"></i>
+                                    <span>Pictures</span>
+                                </button>
+                                <button class="media-type-btn" data-type="music">
+                                    <i class="fas fa-music"></i>
+                                    <span>Music</span>
+                                </button>
+                            </div>
+
+                        <!-- YouTube Videos Section -->
+                        <div class="media-section active" id="youtube-section">
+                            <div class="section-header">
+                                <h4>YouTube Videos</h4>
+                                <button id="add-youtube-button" class="action-btn primary-btn">
+                                    <i class="fas fa-plus"></i> Add YouTube Video
+                                </button>
+                            </div>
+                            <div id="youtube-container" class="media-grid">
+                                <div class="media-placeholder">
+                                    <i class="fab fa-youtube"></i>
+                                    <h4>No YouTube videos yet</h4>
+                                    <p>Add your first YouTube video to get started</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Images Section -->
+                        <div class="media-section" id="images-section">
+                            <div class="section-header">
+                                <h4>Picture Gallery</h4>
+                                <button id="add-image-button" class="action-btn primary-btn">
+                                    <i class="fas fa-plus"></i> Add Picture
+                                </button>
+                            </div>
+                            <div id="images-container" class="media-grid">
+                                <div class="media-placeholder">
+                                    <i class="fas fa-images"></i>
+                                    <h4>No pictures yet</h4>
+                                    <p>Add your first picture to get started</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Music Section -->
+                        <div class="media-section" id="music-section">
+                            <div class="section-header">
+                                <h4>Music Links</h4>
+                                <button id="add-music-button" class="action-btn primary-btn">
+                                    <i class="fas fa-plus"></i> Add Music Link
+                                </button>
+                            </div>
+                            <div id="music-container" class="media-grid">
+                                <div class="media-placeholder">
+                                    <i class="fas fa-music"></i>
+                                    <h4>No music links yet</h4>
+                                    <p>Add your first music link to get started</p>
+                                </div>
+                            </div>
+                        </div>
+
+                            <div class="media-actions">
+                                <button type="button" id="save-media-button" class="action-btn primary-btn">
+                                    <i class="fas fa-save"></i> Save Media Content
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Catalog Content Section -->
+                    <div class="catalog-content-section" id="catalog-content-section" style="display: none;">
+                        <div class="catalog-manager">
+                            <div id="products-container" class="products-grid">
+                                <div class="products-placeholder">
+                                    <i class="fas fa-shopping-bag"></i>
+                                    <h4>No products yet</h4>
+                                    <p>Add your first product to get started</p>
+                                </div>
+                            </div>
+                            <div class="catalog-actions">
+                                <button type="button" id="save-catalog-button" class="action-btn primary-btn">
+                                    <i class="fas fa-save"></i> Save Catalog
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Live Preview Sidebar -->
+            <div class="preview-sidebar">
+                <div class="preview-header">
+                    <h4>Live Preview</h4>
+                </div>
+                <div class="preview-container">
+                    <div class="preview-frame-container">
+                        <iframe id="preview-frame" src="about:blank" title="Bio Page Preview"></iframe>
+                    </div>
+                </div>
+                <div class="preview-actions">
+                    <button id="use-template-button" class="action-btn primary-btn">
+                        <i class="fas fa-check"></i> Use Selected Template
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="message-container" class="message-container">
+        <div id="success-message" class="message success-message" style="display: none;">
+            <i class="fas fa-check-circle"></i>
+            <span class="message-text"></span>
+        </div>
+        <div id="error-message" class="message error-message" style="display: none;">
+            <i class="fas fa-exclamation-circle"></i>
+            <span class="message-text"></span>
+        </div>
+    </div>
+
+
+    <!-- Link Editor Modal -->
+    <div id="link-editor-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="modal-title">Add New Link</h3>
+            <form id="link-form">
+                <input type="hidden" id="link-id" name="link-id">
+                <div class="form-group">
+                    <label for="link-title">Link Title</label>
+                    <input type="text" id="link-title" name="link-title" required placeholder="e.g., My Website">
+                </div>
+                <div class="form-group">
+                    <label for="link-url">URL</label>
+                    <input type="url" id="link-url" name="link-url" required placeholder="https://example.com">
+                </div>
+                <div class="form-group">
+                    <label for="link-platform">Platform</label>
+                    <select id="link-platform" name="link-platform">
+                        <option value="other">Other</option>
+                        <option value="website">Website</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="twitter">Twitter</option>
+                        <option value="facebook">Facebook</option>
+                        <option value="youtube">YouTube</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="linkedin">LinkedIn</option>
+                        <option value="github">GitHub</option>
+                        <option value="pinterest">Pinterest</option>
+                        <option value="snapchat">Snapchat</option>
+                        <option value="reddit">Reddit</option>
+                        <option value="twitch">Twitch</option>
+                        <option value="discord">Discord</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="telegram">Telegram</option>
+                        <option value="medium">Medium</option>
+                        <option value="spotify">Spotify</option>
+                        <option value="apple-music">Apple Music</option>
+                        <option value="youtube-music">YouTube Music</option>
+                        <option value="audiomack">AudioMack</option>
+                        <option value="soundcloud">SoundCloud</option>
+                        <option value="bandcamp">Bandcamp</option>
+                        <option value="tidal">Tidal</option>
+                        <option value="deezer">Deezer</option>
+                        <option value="amazon-music">Amazon Music</option>
+                        <option value="behance">Behance</option>
+                        <option value="dribbble">Dribbble</option>
+                        <option value="email">Email</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="save-link-button" class="auth-button">Save Link</button>
+                    <button type="button" id="delete-link-button" class="delete-button" style="display: none;">Delete Link</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Premium Template Modal -->
+    <div id="premium-template-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-premium-modal">&times;</span>
+            <h3>Premium Template</h3>
+            <p>This is a premium template that requires tokens to use.</p>
+            <div id="premium-template-info">
+                <div class="template-price-info">
+                    <p><strong>Template:</strong> <span id="premium-template-name">Template Name</span></p>
+                    <p><strong>Price:</strong> <span id="premium-template-price">100</span> tokens</p>
+                    <p><strong>Your balance:</strong> <span id="premium-template-balance">0</span> tokens</p>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button id="use-tokens-btn" class="auth-button">Use Tokens</button>
+                <button id="buy-tokens-btn" class="auth-button secondary-button">Buy Tokens</button>
+                <button id="close-premium-modal-btn" class="auth-button secondary-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- YouTube Video Modal -->
+    <div id="youtube-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="youtube-modal-title">Add YouTube Video</h3>
+            <form id="youtube-form">
+                <input type="hidden" id="youtube-id" name="youtube-id">
+                <div class="form-group">
+                    <label for="youtube-title">Video Title</label>
+                    <input type="text" id="youtube-title" name="youtube-title" required placeholder="e.g., My Latest Video">
+                </div>
+                <div class="form-group">
+                    <label for="youtube-url">YouTube URL</label>
+                    <input type="url" id="youtube-url" name="youtube-url" required placeholder="https://www.youtube.com/watch?v=...">
+                    <small>Paste the full YouTube video URL</small>
+                </div>
+                <div class="form-group">
+                    <label for="youtube-description">Description (Optional)</label>
+                    <textarea id="youtube-description" name="youtube-description" placeholder="Brief description of the video..." rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="save-youtube-button" class="auth-button">Save Video</button>
+                    <button type="button" id="delete-youtube-button" class="delete-button" style="display: none;">Delete Video</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Image Upload Modal -->
+    <div id="image-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="image-modal-title">Add Picture</h3>
+            <form id="image-form">
+                <input type="hidden" id="image-id" name="image-id">
+                <div class="form-group">
+                    <label for="image-title">Picture Title</label>
+                    <input type="text" id="image-title" name="image-title" required placeholder="e.g., My Artwork">
+                </div>
+                <div class="form-group">
+                    <label for="image-upload">Upload Image</label>
+                    <input type="file" id="image-upload" name="image-upload" accept="image/*" required>
+                    <small>Supported formats: JPG, PNG, GIF (Max 5MB)</small>
+                </div>
+                <div class="form-group">
+                    <label for="image-description">Description (Optional)</label>
+                    <textarea id="image-description" name="image-description" placeholder="Brief description of the image..." rows="3"></textarea>
+                </div>
+                <div class="image-preview-container" id="image-preview-container" style="display: none;">
+                    <img id="image-preview" src="" alt="Preview">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="save-image-button" class="auth-button">Save Picture</button>
+                    <button type="button" id="delete-image-button" class="delete-button" style="display: none;">Delete Picture</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Music Link Modal -->
+    <div id="music-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="music-modal-title">Add Music Link</h3>
+            <form id="music-form">
+                <input type="hidden" id="music-id" name="music-id">
+                <div class="form-group">
+                    <label for="music-title">Song/Album Title</label>
+                    <input type="text" id="music-title" name="music-title" required placeholder="e.g., My Latest Track">
+                </div>
+                <div class="form-group">
+                    <label for="music-artist">Artist Name</label>
+                    <input type="text" id="music-artist" name="music-artist" placeholder="e.g., Your Artist Name">
+                </div>
+                <div class="form-group">
+                    <label for="music-platform">Music Platform</label>
+                    <select id="music-platform" name="music-platform" required>
+                        <option value="">Select Platform</option>
+                        <option value="spotify">Spotify</option>
+                        <option value="apple-music">Apple Music</option>
+                        <option value="youtube-music">YouTube Music</option>
+                        <option value="audiomack">AudioMack</option>
+                        <option value="soundcloud">SoundCloud</option>
+                        <option value="bandcamp">Bandcamp</option>
+                        <option value="tidal">Tidal</option>
+                        <option value="deezer">Deezer</option>
+                        <option value="amazon-music">Amazon Music</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="music-url">Music URL</label>
+                    <input type="url" id="music-url" name="music-url" required placeholder="https://...">
+                    <small>Paste the link to your song/album on the selected platform</small>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="save-music-button" class="auth-button">Save Music Link</button>
+                    <button type="button" id="delete-music-button" class="delete-button" style="display: none;">Delete Music Link</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Product Editor Modal -->
+    <div id="product-editor-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="product-modal-title">Add New Product</h3>
+            <form id="product-form">
+                <input type="hidden" id="product-id" name="product-id">
+                <div class="form-group">
+                    <label for="product-title">Product Name</label>
+                    <input type="text" id="product-title" name="product-title" required placeholder="e.g., My Amazing Product">
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Description</label>
+                    <textarea id="product-description" name="product-description" placeholder="Brief description of your product..." rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="product-currency">Currency</label>
+                    <select id="product-currency" name="product-currency">
+                        <option value="$">$ - US Dollar</option>
+                        <option value="₦">₦ - Nigerian Naira</option>
+                        <option value="€">€ - Euro</option>
+                        <option value="£">£ - British Pound</option>
+                        <option value="¥">¥ - Japanese Yen</option>
+                        <option value="₹">₹ - Indian Rupee</option>
+                        <option value="₽">₽ - Russian Ruble</option>
+                        <option value="¢">¢ - Cent</option>
+                        <option value="₩">₩ - South Korean Won</option>
+                        <option value="₪">₪ - Israeli Shekel</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="product-price">Price Amount</label>
+                    <input type="text" id="product-price" name="product-price" placeholder="e.g., 29.99 or Free">
+                </div>
+                <div class="form-group">
+                    <label for="product-image-upload">Product Image</label>
+                    <input type="file" id="product-image-upload" name="product-image-upload" accept="image/*">
+                    <small>Upload an image of your product (Max 5MB)</small>
+                </div>
+                <div class="form-group">
+                    <label for="product-image-url">Or Image URL</label>
+                    <input type="url" id="product-image-url" name="product-image-url" placeholder="https://example.com/image.jpg">
+                    <small>Alternatively, provide a direct link to your product image</small>
+                </div>
+                <div class="form-group">
+                    <label for="product-buy-link">Buy Link</label>
+                    <input type="url" id="product-buy-link" name="product-buy-link" required placeholder="https://your-store.com/product">
+                    <small>Link where customers can purchase this product</small>
+                </div>
+                <div class="form-group">
+                    <label for="product-category">Category</label>
+                    <select id="product-category" name="product-category">
+                        <option value="other">Other</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="books">Books</option>
+                        <option value="art">Art</option>
+                        <option value="music">Music</option>
+                        <option value="software">Software</option>
+                        <option value="courses">Courses</option>
+                        <option value="services">Services</option>
+                        <option value="food">Food & Beverages</option>
+                        <option value="health">Health & Beauty</option>
+                        <option value="home">Home & Garden</option>
+                        <option value="sports">Sports & Outdoors</option>
+                        <option value="toys">Toys & Games</option>
+                    </select>
+                </div>
+                <div class="product-preview-container" id="product-preview-container" style="display: none;">
+                    <img id="product-preview" src="" alt="Product Preview">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="save-product-button" class="auth-button">Save Product</button>
+                    <button type="button" id="delete-product-button" class="delete-button" style="display: none;">Delete Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <!-- Firebase Storage - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+
+    <script src="firebase-config.js"></script>
+    <script src="templates/templates.js"></script>
+    <script src="premium-enforcement.js"></script>
+    <script src="sidebar.js"></script>
+    <script src="bio-editor.js"></script>
+</body>
+</html>

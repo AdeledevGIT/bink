@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Processing - BINK</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="payment.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .payment-processing {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            text-align: center;
+        }
+
+        .payment-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .payment-status {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .payment-message {
+            margin-bottom: 25px;
+            color: var(--text-muted);
+        }
+
+        .payment-details {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: var(--secondary-color);
+            border-radius: var(--border-radius);
+            text-align: left;
+        }
+
+        .payment-detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .payment-detail-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(59, 130, 246, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .success-icon {
+            color: #10B981;
+        }
+
+        .error-icon {
+            color: #EF4444;
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <!-- Dashboard and logout buttons removed as requested -->
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <main class="dashboard-main">
+            <div class="payment-processing">
+                <div id="loading-state">
+                    <div class="loading-spinner"></div>
+                    <div class="payment-status">Processing Your Payment</div>
+                    <div class="payment-message">Please wait while we verify your payment...</div>
+                </div>
+
+                <div id="success-state" style="display: none;">
+                    <div class="payment-icon success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="payment-status">Payment Successful!</div>
+                    <div class="payment-message" id="success-message">Your payment has been processed successfully.</div>
+
+                    <div class="payment-details" id="payment-details">
+                        <!-- Payment details will be inserted here -->
+                    </div>
+
+                    <a href="dashboard.html" class="cta-button">Go to Dashboard</a>
+                </div>
+
+                <div id="error-state" style="display: none;">
+                    <div class="payment-icon error-icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="payment-status">Payment Failed</div>
+                    <div class="payment-message" id="error-message">There was an issue processing your payment.</div>
+
+                    <div class="payment-actions">
+                        <a href="payment.html" class="cta-button">Try Again</a>
+                        <a href="dashboard.html" class="secondary-button">Go to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+    <script src="firebase-config.js"></script>
+    <script src="paystack-config.js"></script>
+    <script src="paystack-handler.js"></script>
+    <script>
+        // Global variables
+        let currentUser = null;
+        let db = null;
+        let auth = null;
+
+        // Initialize Firebase
+        function initFirebase() {
+            // Firebase should be initialized in firebase-config.js
+            if (firebase) {
+                db = firebase.firestore();
+                auth = firebase.auth();
+
+                // Check authentication
+                auth.onAuthStateChanged((user) => {
+                    if (user) {
+                        currentUser = user;
+                        processPaymentCallback();
+                    } else {
+                        // Redirect to login if not authenticated
+                        window.location.href = 'login.html';
+                    }
+                });
+            } else {
+                showError('Firebase not initialized');
+            }
+        }
+
+        // Process payment callback
+        function processPaymentCallback() {
+
+            // Update UI to show processing
+            document.getElementById('loading-state').querySelector('.payment-message').textContent =
+                'Please wait while we verify your payment...';
+
+            // Get reference from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const reference = urlParams.get('reference');
+            const trxref = urlParams.get('trxref');
+
+            // Use either reference or trxref
+            const paymentReference = reference || trxref;
+
+            if (!paymentReference) {
+                showError('No payment reference found. Please contact support if you believe this is an error.');
+                return;
+            }
+
+            // Update UI to show verification in progress
+            document.getElementById('loading-state').querySelector('.payment-message').textContent =
+                'Verifying payment with reference: ' + paymentReference;
+
+            // Check if this is a bank transfer payment
+            const isBankTransfer = urlParams.get('channel') === 'bank_transfer' ||
+                                  urlParams.get('payment_type') === 'bank_transfer';
+
+            if (isBankTransfer) {
+                // For bank transfers, show a special message
+                document.getElementById('loading-state').style.display = 'none';
+
+                // Create a bank transfer info state
+                const bankTransferState = document.createElement('div');
+                bankTransferState.id = 'bank-transfer-state';
+                bankTransferState.innerHTML = `
+                    <div class="payment-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="payment-status">Bank Transfer Initiated</div>
+                    <div class="payment-message">
+                        <p>Your bank transfer has been initiated. Please note that bank transfers require admin verification before tokens/subscription are activated.</p>
+                        <p>Your payment reference: <strong>${paymentReference}</strong></p>
+                        <p>Please include this reference in your bank transfer description.</p>
+                        <p>Once your payment is verified by our team, your account will be updated automatically.</p>
+                    </div>
+                    <div class="payment-actions">
+                        <a href="dashboard.html" class="cta-button">Go to Dashboard</a>
+                    </div>
+                `;
+
+                // Add the same styling as other states
+                bankTransferState.style.textAlign = 'center';
+
+                // Replace the loading state with bank transfer state
+                document.getElementById('loading-state').parentNode.insertBefore(bankTransferState, document.getElementById('loading-state'));
+                return; // Don't proceed with normal payment verification
+            }
+
+            // For other payment methods, proceed normally
+
+            // Add a timeout to show an error if the callback takes too long
+            const timeoutId = setTimeout(() => {
+                document.getElementById('loading-state').querySelector('.payment-message').textContent =
+                    'Payment verification is taking longer than expected. Please be patient...';
+            }, 10000); // 10 seconds
+
+            window.BINK.paystackHandler.handlePaymentCallback(paymentReference)
+                .then((result) => {
+                    clearTimeout(timeoutId);
+                    showSuccess(result);
+                })
+                .catch((error) => {
+                    clearTimeout(timeoutId);
+                    console.error('Error processing payment:', error);
+
+                    // Check if it's a verification error
+                    if (error.message && error.message.includes('verification failed')) {
+                        showError('Payment verification failed. This could be due to a delay in processing. Please wait a few minutes and refresh this page, or contact support if the issue persists.');
+                    } else if (error.message && error.message.includes('not found')) {
+                        showError('Payment reference not found in our records. Please contact support with your payment reference: ' + paymentReference);
+                    } else {
+                        showError(error.message || 'An unexpected error occurred while processing your payment. Please contact support.');
+                    }
+                });
+        }
+
+        // Show success state
+        function showSuccess(result) {
+            console.log('Showing success state with result:', result);
+
+            // Hide loading state
+            document.getElementById('loading-state').style.display = 'none';
+
+            // Show success state
+            document.getElementById('success-state').style.display = 'block';
+
+            // Update success message based on payment type
+            const successMessage = document.getElementById('success-message');
+            const paymentDetails = document.getElementById('payment-details');
+
+            if (result.type === 'token') {
+                // Token purchase success
+                successMessage.innerHTML = `
+                    <p>Your token purchase was successful! <strong>${result.tokenAmount} tokens</strong> have been added to your account.</p>
+                `;
+
+                // Add bonus token message if applicable
+                if (result.bonusTokens > 0) {
+                    successMessage.innerHTML += `
+                        <p>You also received <strong>${result.bonusTokens} bonus tokens</strong> as a first-time purchaser!</p>
+                    `;
+                }
+
+                successMessage.innerHTML += `
+                    <p>You can now use these tokens to access premium templates and features.</p>
+                `;
+
+                // Add payment details
+                paymentDetails.innerHTML = `
+                    <div class="payment-detail-item">
+                        <span class="detail-label">Tokens Purchased:</span>
+                        <span class="detail-value">${result.tokenAmount}</span>
+                    </div>
+                    ${result.bonusTokens > 0 ? `
+                    <div class="payment-detail-item">
+                        <span class="detail-label">Bonus Tokens:</span>
+                        <span class="detail-value">${result.bonusTokens}</span>
+                    </div>
+                    ` : ''}
+                    <div class="payment-detail-item">
+                        <span class="detail-label">Total Token Balance:</span>
+                        <span class="detail-value">${result.totalTokens}</span>
+                    </div>
+                    <div class="payment-detail-item">
+                        <span class="detail-label">Transaction Date:</span>
+                        <span class="detail-value">${formatDate(new Date())}</span>
+                    </div>
+                `;
+            } else {
+                // Subscription payment success
+                const planName = result.plan.charAt(0).toUpperCase() + result.plan.slice(1);
+                const durationText = getDurationText(result.duration);
+
+                successMessage.innerHTML = `
+                    <p>Your <strong>${planName}</strong> subscription has been activated successfully!</p>
+                    <p>You now have access to all the premium features included in the ${planName} plan.</p>
+                `;
+
+                if (result.duration === 'lifetime') {
+                    successMessage.innerHTML += `
+                        <p>This is a <strong>lifetime</strong> subscription, so you'll never have to renew!</p>
+                    `;
+                } else {
+                    successMessage.innerHTML += `
+                        <p>Your subscription will automatically expire on ${formatDate(result.expirationDate)}.</p>
+                    `;
+                }
+
+                // Add payment details
+                paymentDetails.innerHTML = `
+                    <div class="payment-detail-item">
+                        <span class="detail-label">Plan:</span>
+                        <span class="detail-value">${planName}</span>
+                    </div>
+                    <div class="payment-detail-item">
+                        <span class="detail-label">Duration:</span>
+                        <span class="detail-value">${durationText}</span>
+                    </div>
+                    <div class="payment-detail-item">
+                        <span class="detail-label">Start Date:</span>
+                        <span class="detail-value">${formatDate(new Date())}</span>
+                    </div>
+                    <div class="payment-detail-item">
+                        <span class="detail-label">Expires:</span>
+                        <span class="detail-value">${result.duration === 'lifetime' ? 'Never' : formatDate(result.expirationDate)}</span>
+                    </div>
+                `;
+            }
+
+            // Add a receipt ID
+            const receiptId = generateReceiptId();
+            paymentDetails.innerHTML += `
+                <div class="payment-detail-item">
+                    <span class="detail-label">Receipt ID:</span>
+                    <span class="detail-value">${receiptId}</span>
+                </div>
+            `;
+        }
+
+        // Generate a receipt ID
+        function generateReceiptId() {
+            const timestamp = Date.now().toString().slice(-6);
+            const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            return `BINK-${timestamp}-${random}`;
+        }
+
+        // Show error state
+        function showError(message) {
+            console.error('Payment error:', message);
+
+            // Hide loading state
+            document.getElementById('loading-state').style.display = 'none';
+
+            // Show error state
+            document.getElementById('error-state').style.display = 'block';
+
+            // Update error message
+            document.getElementById('error-message').innerHTML = message || 'There was an issue processing your payment.';
+
+            // Add support information
+            const errorActions = document.querySelector('.payment-actions');
+            errorActions.innerHTML = `
+                <a href="payment.html" class="cta-button">Try Again</a>
+                <a href="dashboard.html" class="secondary-button">Go to Dashboard</a>
+                <div style="margin-top: 20px; font-size: 0.9em; color: var(--text-muted);">
+                    <p>If you continue to experience issues, please contact our support team with the following information:</p>
+                    <p>Time: ${new Date().toLocaleString()}</p>
+                    <p>Reference: ${new URLSearchParams(window.location.search).get('reference') ||
+                                   new URLSearchParams(window.location.search).get('trxref') || 'Not available'}</p>
+                </div>
+            `;
+        }
+
+        // Get duration text
+        function getDurationText(duration) {
+            switch (duration) {
+                case 'monthly': return '1 Month';
+                case 'yearly': return '1 Year';
+                case 'quarterly': return '3 Months';
+                case 'lifetime': return 'Lifetime';
+                default: return duration;
+            }
+        }
+
+        // Format date
+        function formatDate(date) {
+            return new Date(date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initFirebase);
+    </script>
+</body>
+</html>

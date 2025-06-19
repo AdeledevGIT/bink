@@ -1,0 +1,627 @@
+/* Minimal Zen Template - Premium */
+.minimalzen-bio-bg {
+    min-height: 100vh;
+    background: #f8f8f8;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.minimalzen-bio-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(200, 200, 200, 0.1) 0%, transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(200, 200, 200, 0.1) 0%, transparent 25%);
+    z-index: 0;
+}
+
+.minimalzen-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.minimalzen-card {
+    width: 100%;
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+    animation: card-float 6s ease-in-out infinite;
+}
+
+@keyframes card-float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.minimalzen-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.minimalzen-avatar-container {
+    position: relative;
+    margin-bottom: 20px;
+    z-index: 1;
+}
+
+.minimalzen-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.minimalzen-avatar-container::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #e6e6e6, #f8f8f8);
+    z-index: -1;
+    animation: rotate-border 20s linear infinite;
+}
+
+.minimalzen-avatar-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    background: #fff;
+    z-index: -1;
+    margin: 3px;
+}
+
+.minimalzen-avatar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes rotate-border {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.minimalzen-username {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+
+.minimalzen-bio {
+    color: #666;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.minimalzen-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.minimalzen-link-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    animation: fade-in 0.5s ease forwards;
+    opacity: 0;
+}
+
+.minimalzen-link {
+    background: #f8f8f8;
+    border-radius: 12px;
+    padding: 16px 20px;
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #f0f0f0;
+    flex: 1;
+}
+
+.minimalzen-link-share-btn {
+    background: #f8f8f8;
+    color: #888;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    flex-shrink: 0;
+}
+
+.minimalzen-link-share-btn:hover {
+    background: #fff;
+    color: #333;
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.minimalzen-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.5),
+        transparent);
+    transition: all 0.5s ease;
+    z-index: -1;
+}
+
+.minimalzen-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
+.minimalzen-link:hover::before {
+    left: 100%;
+}
+
+.minimalzen-link i {
+    color: #888;
+    font-size: 1.3rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.minimalzen-link:hover i {
+    transform: rotate(10deg) scale(1.2);
+    color: #333;
+}
+
+.minimalzen-links .minimalzen-link-container:nth-child(1) { animation-delay: 0.1s; }
+.minimalzen-links .minimalzen-link-container:nth-child(2) { animation-delay: 0.2s; }
+.minimalzen-links .minimalzen-link-container:nth-child(3) { animation-delay: 0.3s; }
+.minimalzen-links .minimalzen-link-container:nth-child(4) { animation-delay: 0.4s; }
+.minimalzen-links .minimalzen-link-container:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.minimalzen-socials {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.minimalzen-socials a {
+    color: #888;
+    font-size: 1.4rem;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f8f8;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+    animation: float-icon 3s ease-in-out infinite;
+    border: 1px solid #f0f0f0;
+}
+
+.minimalzen-socials a:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.minimalzen-socials a:nth-child(3) {
+    animation-delay: 1s;
+}
+
+.minimalzen-socials a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    color: #333;
+}
+
+@keyframes float-icon {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.minimalzen-footer {
+    margin-top: 30px;
+    text-align: center;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.minimalzen-footer a {
+    color: #333;
+    font-weight: 700;
+    text-decoration: none;
+    position: relative;
+}
+
+.minimalzen-footer a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #333;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.minimalzen-footer a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.minimalzen-header-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 10;
+}
+
+.minimalzen-join-link {
+    position: relative;
+    z-index: 10;
+}
+
+.minimalzen-join-btn {
+    background: #f8f8f8;
+    color: #333;
+    border-radius: 30px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+}
+
+.minimalzen-join-btn i {
+    margin-right: 8px;
+}
+
+.minimalzen-join-btn:hover {
+    background: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.minimalzen-share {
+    position: relative;
+    z-index: 10;
+}
+
+.minimalzen-share-btn {
+    background: #f8f8f8;
+    color: #888;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+}
+
+.minimalzen-share-btn:hover {
+    background: #fff;
+    color: #333;
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Minimal Zen Media Styles */
+.minimalzen-container .media-section {
+    margin: 30px 0;
+    padding: 25px 0;
+    border-top: 1px solid #f0f0f0;
+    background: #fafafa;
+    border-radius: 12px;
+}
+
+.minimalzen-container .media-section:first-child {
+    border-top: none;
+    margin-top: 0;
+}
+
+.minimalzen-container .media-section-title {
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    justify-content: center;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.minimalzen-container .media-section-title i {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.minimalzen-container .media-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.minimalzen-container .videos-grid {
+    grid-template-columns: 1fr;
+}
+
+.minimalzen-container .images-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.minimalzen-container .music-grid {
+    grid-template-columns: 1fr;
+}
+
+.minimalzen-container .media-item {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.minimalzen-container .media-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    border-color: #e0e0e0;
+}
+
+/* Video Items */
+.minimalzen-container .video-item {
+    padding: 0;
+}
+
+.minimalzen-container .video-thumbnail {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+
+.minimalzen-container .video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.minimalzen-container .video-play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.minimalzen-container .video-play-overlay:hover {
+    background: #fff;
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Items */
+.minimalzen-container .image-item {
+    /* Removed aspect-ratio to allow space for titles/descriptions */
+}
+
+.minimalzen-container .image-container {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+    border-radius: 12px;
+}
+
+.minimalzen-container .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.minimalzen-container .image-container:hover img {
+    transform: scale(1.05);
+}
+
+/* Music Items */
+.minimalzen-container .media-container .music-item,
+.minimalzen-container .music-item {
+    padding: 20px;
+}
+
+.minimalzen-container .media-container .music-player,
+.minimalzen-container .music-player {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.minimalzen-container .media-container .music-player:hover,
+.minimalzen-container .music-player:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.minimalzen-container .music-platform-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: white;
+    background: #333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.minimalzen-container .music-info {
+    flex: 1;
+}
+
+.minimalzen-container .music-title {
+    color: #333;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 0 0 4px 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.minimalzen-container .music-artist {
+    color: #888;
+    font-size: 0.85rem;
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.minimalzen-container .play-button {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #f8f8f8;
+    border: 1px solid #f0f0f0;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.minimalzen-container .play-button:hover {
+    background: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Media Info */
+.minimalzen-container .media-info {
+    padding: 15px 20px;
+}
+
+.minimalzen-container .media-title {
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.minimalzen-container .media-description {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}

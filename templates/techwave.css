@@ -1,0 +1,749 @@
+/* Tech Wave Template - Premium */
+.techwave-bio-bg {
+    min-height: 100vh;
+    background: #0a192f;
+    font-family: 'Space Grotesk', 'Segoe UI', Arial, sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.techwave-bio-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(100, 255, 218, 0.05) 0%, transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(100, 255, 218, 0.05) 0%, transparent 25%);
+    z-index: 0;
+}
+
+/* Wave animation background */
+.techwave-waves {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%2364ffda' fill-opacity='0.1' d='M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+    background-size: 1440px 100px;
+    animation: wave-animation 20s linear infinite;
+    z-index: 0;
+}
+
+.techwave-waves-2 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%2364ffda' fill-opacity='0.05' d='M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,90.7C672,85,768,107,864,144C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+    background-size: 1440px 120px;
+    animation: wave-animation 15s linear infinite;
+    z-index: 0;
+}
+
+@keyframes wave-animation {
+    0% {
+        background-position-x: 0;
+    }
+    100% {
+        background-position-x: 1440px;
+    }
+}
+
+.techwave-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.techwave-card {
+    width: 100%;
+    background: rgba(17, 34, 64, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.techwave-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #64ffda, #0a192f, #64ffda);
+    background-size: 200% 200%;
+    animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+.techwave-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.techwave-avatar-container {
+    position: relative;
+    margin-bottom: 20px;
+    z-index: 1;
+}
+
+.techwave-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 3px solid #64ffda;
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 15px rgba(100, 255, 218, 0.3);
+}
+
+.techwave-avatar-container::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #64ffda, #0a192f, #64ffda);
+    background-size: 200% 200%;
+    animation: shimmer 3s linear infinite, rotate-border 8s linear infinite;
+    z-index: -1;
+}
+
+.techwave-avatar-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    background: #0a192f;
+    z-index: -1;
+    margin: 3px;
+}
+
+.techwave-avatar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.5);
+}
+
+@keyframes rotate-border {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.techwave-username {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #e6f1ff;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+    position: relative;
+    display: inline-block;
+}
+
+.techwave-username::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background: #64ffda;
+}
+
+.techwave-bio {
+    color: #8892b0;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.techwave-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.techwave-link-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    animation: fade-in 0.5s ease forwards;
+    opacity: 0;
+}
+
+.techwave-link {
+    background: rgba(17, 34, 64, 0.6);
+    border-radius: 8px;
+    padding: 16px 20px;
+    color: #e6f1ff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    flex: 1;
+}
+
+.techwave-link-share-btn {
+    background: rgba(17, 34, 64, 0.6);
+    color: #64ffda;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.techwave-link-share-btn:hover {
+    background: rgba(100, 255, 218, 0.1);
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    border-color: rgba(100, 255, 218, 0.3);
+}
+
+.techwave-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(100, 255, 218, 0.1),
+        transparent);
+    transition: all 0.5s ease;
+    z-index: -1;
+}
+
+.techwave-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    border-color: rgba(100, 255, 218, 0.3);
+}
+
+.techwave-link:hover::before {
+    left: 100%;
+}
+
+.techwave-link i {
+    color: #64ffda;
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+}
+
+.techwave-link:hover i {
+    transform: rotate(10deg) scale(1.2);
+}
+
+.techwave-links .techwave-link-container:nth-child(1) { animation-delay: 0.1s; }
+.techwave-links .techwave-link-container:nth-child(2) { animation-delay: 0.2s; }
+.techwave-links .techwave-link-container:nth-child(3) { animation-delay: 0.3s; }
+.techwave-links .techwave-link-container:nth-child(4) { animation-delay: 0.4s; }
+.techwave-links .techwave-link-container:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.techwave-socials {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.techwave-socials a {
+    color: #8892b0;
+    font-size: 1.4rem;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(17, 34, 64, 0.6);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    animation: float-icon 3s ease-in-out infinite;
+}
+
+.techwave-socials a:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.techwave-socials a:nth-child(3) {
+    animation-delay: 1s;
+}
+
+.techwave-socials a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(100, 255, 218, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.techwave-socials a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    color: #64ffda;
+    border-color: rgba(100, 255, 218, 0.3);
+}
+
+.techwave-socials a:hover::before {
+    opacity: 1;
+}
+
+@keyframes float-icon {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.techwave-footer {
+    margin-top: 30px;
+    text-align: center;
+    color: #8892b0;
+    font-size: 0.9rem;
+}
+
+.techwave-footer a {
+    color: #64ffda;
+    font-weight: 700;
+    text-decoration: none;
+    position: relative;
+}
+
+.techwave-footer a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #64ffda;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.techwave-footer a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.techwave-header-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 10;
+}
+
+.techwave-join-link {
+    position: relative;
+    z-index: 10;
+}
+
+.techwave-join-btn {
+    background: rgba(17, 34, 64, 0.6);
+    color: #64ffda;
+    border-radius: 8px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.techwave-join-btn i {
+    margin-right: 8px;
+}
+
+.techwave-join-btn:hover {
+    background: rgba(100, 255, 218, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    border-color: rgba(100, 255, 218, 0.3);
+}
+
+.techwave-share {
+    position: relative;
+    z-index: 10;
+}
+
+.techwave-share-btn {
+    background: rgba(17, 34, 64, 0.6);
+    color: #64ffda;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.techwave-share-btn:hover {
+    background: rgba(100, 255, 218, 0.1);
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    border-color: rgba(100, 255, 218, 0.3);
+}
+
+/* Tech Wave Media Styles */
+.techwave-container .media-section {
+    margin: 25px 0;
+    padding: 20px 0;
+    border-top: 1px solid rgba(100, 255, 218, 0.2);
+    background: rgba(17, 34, 64, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.techwave-container .media-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #64ffda, #0a192f, #64ffda);
+    background-size: 200% 200%;
+    animation: shimmer 3s linear infinite;
+}
+
+.techwave-container .media-section:first-child {
+    border-top: none;
+    margin-top: 0;
+}
+
+.techwave-container .media-section-title {
+    color: #64ffda;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.techwave-container .media-section-title i {
+    color: #64ffda;
+    font-size: 1rem;
+    animation: float-icon 2s ease-in-out infinite;
+}
+
+.techwave-container .media-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.techwave-container .videos-grid {
+    grid-template-columns: 1fr;
+}
+
+.techwave-container .images-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.techwave-container .music-grid {
+    grid-template-columns: 1fr;
+}
+
+.techwave-container .media-item {
+    background: rgba(17, 34, 64, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.techwave-container .media-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(100, 255, 218, 0.05), rgba(17, 34, 64, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.techwave-container .media-item:hover::before {
+    opacity: 1;
+}
+
+.techwave-container .media-item:hover {
+    transform: translateY(-5px);
+    border-color: rgba(100, 255, 218, 0.4);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Video Items */
+.techwave-container .video-item {
+    padding: 15px;
+}
+
+.techwave-container .video-thumbnail {
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.techwave-container .video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.techwave-container .video-play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(17, 34, 64, 0.8);
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64ffda;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.techwave-container .video-play-overlay:hover {
+    background: rgba(100, 255, 218, 0.1);
+    transform: translate(-50%, -50%) scale(1.1);
+    border-color: rgba(100, 255, 218, 0.5);
+}
+
+/* Image Items */
+.techwave-container .image-item {
+    /* Removed aspect-ratio to allow space for titles/descriptions */
+}
+
+.techwave-container .image-container {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+    border-radius: 12px;
+}
+
+.techwave-container .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.techwave-container .image-container:hover img {
+    transform: scale(1.05);
+}
+
+/* Music Items */
+.techwave-container .media-container .music-item,
+.techwave-container .music-item {
+    padding: 15px;
+}
+
+.techwave-container .media-container .music-player,
+.techwave-container .music-player {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(30, 30, 30, 0.9);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.techwave-container .media-container .music-player:hover,
+.techwave-container .music-player:hover {
+    border-color: rgba(0, 255, 255, 0.4);
+    box-shadow: 0 8px 25px rgba(0, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.techwave-container .music-platform-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: #64ffda;
+    background: rgba(17, 34, 64, 0.8);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.techwave-container .music-info {
+    flex: 1;
+}
+
+.techwave-container .music-title {
+    color: #ccd6f6;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    font-family: 'Space Grotesk', monospace;
+}
+
+.techwave-container .music-artist {
+    color: #8892b0;
+    font-size: 0.85rem;
+    margin: 0;
+    font-family: 'Space Grotesk', monospace;
+}
+
+.techwave-container .play-button {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: rgba(17, 34, 64, 0.8);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    color: #64ffda;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.techwave-container .play-button:hover {
+    background: rgba(100, 255, 218, 0.1);
+    transform: scale(1.1);
+    border-color: rgba(100, 255, 218, 0.4);
+}
+
+/* Media Info */
+.techwave-container .media-info {
+    padding: 12px 15px;
+}
+
+.techwave-container .media-title {
+    color: #ccd6f6;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    font-family: 'Space Grotesk', monospace;
+}
+
+.techwave-container .media-description {
+    color: #a8b2d1;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+    font-family: 'Space Grotesk', monospace;
+}

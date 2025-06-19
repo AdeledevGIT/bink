@@ -1,0 +1,591 @@
+/* Gradient Card Template - Modern gradient background with card-style layout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.gradientcard-bio-bg {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+}
+
+.gradientcard-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.gradientcard-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+    background-size: 300% 100%;
+    animation: gradient-shift 3s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.gradientcard-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.gradientcard-join-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.gradientcard-join-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.gradientcard-share-btn {
+    background: rgba(102, 126, 234, 0.1);
+    border: none;
+    color: #667eea;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gradientcard-share-btn:hover {
+    background: rgba(102, 126, 234, 0.2);
+    transform: scale(1.1);
+}
+
+.gradientcard-profile {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.gradientcard-avatar-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+
+.gradientcard-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+}
+
+.gradientcard-avatar-container::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    z-index: 1;
+    opacity: 0.3;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.05); opacity: 0.5; }
+}
+
+.gradientcard-username {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.gradientcard-bio {
+    color: #718096;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+.gradientcard-links {
+    margin-bottom: 24px;
+}
+
+.gradientcard-link-container {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.gradientcard-link {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: #2d3748;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.gradientcard-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.gradientcard-link:hover::before {
+    left: 100%;
+}
+
+.gradientcard-link:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+}
+
+.gradientcard-link i {
+    margin-right: 12px;
+    font-size: 1.1rem;
+    color: #667eea;
+}
+
+.gradientcard-link-share-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(102, 126, 234, 0.1);
+    border: none;
+    color: #667eea;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.gradientcard-link-container:hover .gradientcard-link-share-btn {
+    opacity: 1;
+}
+
+.gradientcard-socials {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.gradientcard-socials a {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.gradientcard-socials a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.gradientcard-footer {
+    text-align: center;
+    color: #a0aec0;
+    font-size: 0.85rem;
+}
+
+.gradientcard-footer a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.gradientcard-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Gradient Card Media Styles */
+.gradientcard-container .media-container .media-section,
+.gradientcard-container .media-section {
+    margin: 25px 0;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gradientcard-container .media-container .media-section:first-child,
+.gradientcard-container .media-section:first-child {
+    border-top: none;
+    margin-top: 0;
+}
+
+.gradientcard-container .media-container .media-section-title,
+.gradientcard-container .media-section-title {
+    color: #000000;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    justify-content: center;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.gradientcard-container .media-container .media-section-title i,
+.gradientcard-container .media-section-title i {
+    color: #667eea;;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.gradientcard-container .media-container .media-grid,
+.gradientcard-container .media-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.gradientcard-container .media-container .videos-grid,
+.gradientcard-container .videos-grid {
+    grid-template-columns: 1fr;
+}
+
+.gradientcard-container .media-container .images-grid,
+.gradientcard-container .images-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.gradientcard-container .media-container .music-grid,
+.gradientcard-container .music-grid {
+    grid-template-columns: 1fr;
+}
+
+.gradientcard-container .media-container .media-item,
+.gradientcard-container .media-item {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gradientcard-container .media-container .media-item:hover,
+.gradientcard-container .media-item:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Video Items */
+.gradientcard-container .media-container .video-item,
+.gradientcard-container .video-item {
+    padding: 15px;
+}
+
+.gradientcard-container .media-container .video-thumbnail,
+.gradientcard-container .video-thumbnail {
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.gradientcard-container .video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gradientcard-container .youtube-embed-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.gradientcard-container .youtube-embed-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Image Items */
+.gradientcard-container .image-item {
+    position: relative;
+}
+
+.gradientcard-container .image-container {
+    width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.gradientcard-container .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.gradientcard-container .image-container img:hover {
+    transform: scale(1.05);
+}
+
+/* Music Items */
+.gradientcard-container .media-container .music-item,
+.gradientcard-container .music-item {
+    padding: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.gradientcard-container .media-container .music-player,
+.gradientcard-container .music-player {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.gradientcard-container .media-container .music-player:hover,
+.gradientcard-container .music-player:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.gradientcard-container .media-container .music-platform-icon,
+.gradientcard-container .music-platform-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: white;
+    flex-shrink: 0;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.gradientcard-container .music-platform-icon.spotify { background: #1db954; }
+.gradientcard-container .music-platform-icon.apple-music { background: #fa243c; }
+.gradientcard-container .music-platform-icon.youtube-music { background: #ff0000; }
+.gradientcard-container .music-platform-icon.audiomack { background: #ff6600; }
+.gradientcard-container .music-platform-icon.soundcloud { background: #ff7700; }
+.gradientcard-container .music-platform-icon.bandcamp { background: #629aa0; }
+.gradientcard-container .music-platform-icon.tidal { background: #000000; }
+.gradientcard-container .music-platform-icon.deezer { background: #feaa2d; }
+.gradientcard-container .music-platform-icon.amazon-music { background: #ff9900; }
+.gradientcard-container .music-platform-icon.other { background: #666666; }
+
+.gradientcard-container .media-container .music-info,
+.gradientcard-container .music-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.gradientcard-container .media-container .music-title,
+.gradientcard-container .music-title {
+    color: #020000;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gradientcard-container .media-container .music-artist,
+.gradientcard-container .music-artist {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 0.9rem;
+    margin: 0 0 3px 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gradientcard-container .media-container .music-platform,
+.gradientcard-container .music-platform {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.gradientcard-container .media-container .play-button,
+.gradientcard-container .play-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #080303;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.gradientcard-container .media-container .play-button:hover,
+.gradientcard-container .play-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* Media Info */
+.gradientcard-container .media-container .media-info,
+.gradientcard-container .media-info {
+    padding: 12px 15px;
+}
+
+.gradientcard-container .media-container .media-title,
+.gradientcard-container .media-title {
+    color: #0f0101;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.gradientcard-container .media-container .media-description,
+.gradientcard-container .media-description {
+    color: rgba(7, 1, 1, 0.8);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .gradientcard-container {
+        padding: 24px;
+        margin: 10px;
+    }
+
+    .gradientcard-avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .gradientcard-username {
+        font-size: 1.3rem;
+    }
+
+    .gradientcard-bio {
+        font-size: 0.9rem;
+    }
+
+    .gradientcard-link {
+        padding: 14px 16px;
+    }
+
+    .gradientcard-container .images-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    .gradientcard-container .image-container {
+        height: 100px;
+    }
+
+    .gradientcard-container .video-thumbnail {
+        height: 150px;
+    }
+}

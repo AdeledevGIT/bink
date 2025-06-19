@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BINK Tasks - Earn Free Tokens</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .tasks-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .tasks-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+            background: linear-gradient(to right, #10B981, #059669);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .tasks-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 0.9rem;
+        }
+
+        .token-balance-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .token-balance {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            font-size: 1.1rem;
+            background-color: var(--card-background);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+        }
+
+        .token-balance i {
+            color: gold;
+        }
+
+        .token-count {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .tasks-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .task-card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .task-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, #10B981, #059669);
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .task-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        .task-reward {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            background-color: rgba(16, 185, 129, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #10B981;
+            font-size: 0.85rem;
+        }
+
+        .task-reward i {
+            color: gold;
+            font-size: 0.8rem;
+        }
+
+        .task-description {
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            flex-grow: 1;
+            font-size: 0.9rem;
+        }
+
+        .task-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-status {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-available {
+            color: #10B981;
+        }
+
+        .status-completed {
+            color: #6B7280;
+        }
+
+        .status-in-progress {
+            color: #F59E0B;
+        }
+
+        .task-action {
+            padding: 0.35rem 0.75rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .action-complete {
+            background-color: #10B981;
+            color: white;
+        }
+
+        .action-complete:hover {
+            background-color: #059669;
+        }
+
+        .action-completed {
+            background-color: #6B7280;
+            color: white;
+            cursor: default;
+        }
+
+        .action-view {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .action-view:hover {
+            background-color: var(--primary-hover-color);
+        }
+
+        .tasks-info {
+            background-color: var(--secondary-color);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tasks-info h2 {
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+
+        .tasks-info p {
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .tasks-info ul {
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .tasks-info li {
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .task-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .modal-description {
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .modal-reward {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-reward i {
+            color: gold;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .modal-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-complete {
+            background-color: #10B981;
+            color: white;
+        }
+
+        .modal-complete:hover {
+            background-color: #059669;
+        }
+
+        .modal-cancel {
+            background-color: #6B7280;
+            color: white;
+        }
+
+        .modal-cancel:hover {
+            background-color: #4B5563;
+        }
+
+        .task-form {
+            margin-top: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background-color: var(--input-background);
+            color: var(--text-color);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #10B981;
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-submit:hover {
+            background-color: #059669;
+        }
+
+        .no-tasks {
+            text-align: center;
+            padding: 3rem;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            color: var(--text-muted);
+        }
+
+        .no-tasks i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <button id="menu-toggle" class="menu-toggle-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a href="dashboard.html">
+                <img src="logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <!-- Welcome message and logout button removed as requested -->
+        </div>
+    </header>
+
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    <div class="dashboard-container">
+        <!-- Sidebar will be loaded by sidebar.js -->
+
+        <!-- Main Content Area -->
+        <div class="dashboard-main">
+            <div class="tasks-header">
+                <h1>Complete Tasks, Earn Tokens</h1>
+                <p>Complete simple tasks to earn free tokens that you can use to unlock premium templates.</p>
+            </div>
+
+            <div class="token-balance-container">
+                <div class="token-balance">
+                    <i class="fas fa-coins"></i>
+                    <span>Your Token Balance: <span id="tokenCount" class="token-count">0</span></span>
+                </div>
+
+                <a href="tokens.html" class="earn-tokens-btn" style="background-color: var(--primary-color); color: white; padding: 0.4rem 0.8rem; border-radius: var(--border-radius); font-size: 0.9rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;">
+                    <i class="fas fa-shopping-cart"></i> Buy More Tokens
+                </a>
+            </div>
+
+            <div id="tasks-container" class="tasks-container">
+                <!-- Tasks will be loaded here -->
+                <div class="loading-spinner"></div>
+            </div>
+
+            <div class="tasks-info">
+                <h2>How Tasks Work</h2>
+                <p>Completing tasks is an easy way to earn free tokens that you can use to unlock premium templates:</p>
+                <ul>
+                    <li>Each task has a specific token reward</li>
+                    <li>Complete the task requirements to earn the tokens</li>
+                    <li>Some tasks can be completed multiple times, while others are one-time only</li>
+                    <li>Tokens earned from tasks work exactly the same as purchased tokens</li>
+                </ul>
+                <p>Need more tokens? You can always <a href="tokens.html">purchase tokens</a> or upgrade to a Premium plan for unlimited access to all templates!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Modal -->
+    <div id="task-modal" class="task-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h2 id="modal-title" class="modal-title">Task Title</h2>
+            <div id="modal-description" class="modal-description">Task description will appear here.</div>
+            <div class="modal-reward">
+                <i class="fas fa-coins"></i>
+                <span>Reward: <span id="modal-reward-amount">0</span> Tokens</span>
+            </div>
+            <div id="task-form-container" class="task-form">
+                <!-- Task form will be loaded here based on task type -->
+            </div>
+            <div class="modal-actions">
+                <button id="modal-complete-btn" class="modal-button modal-complete">Complete Task</button>
+                <button class="modal-button modal-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+    <script src="firebase-config.js"></script> <!-- Your Firebase config -->
+    <script src="auth.js"></script> <!-- Auth functionality -->
+    <script src="sidebar.js"></script> <!-- Sidebar functionality -->
+    <script src="anonify-verification.js"></script> <!-- Anonify verification -->
+    <script src="tasks.js"></script> <!-- Tasks specific logic -->
+</body>
+</html>

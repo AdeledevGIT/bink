@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - BINK</title>
+    <!-- Favicon configuration for better browser compatibility -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo1.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/logo1.png">
+    <link rel="shortcut icon" href="/logo1.png">
+    <link rel="apple-touch-icon" href="/logo1.png">
+    <!-- Fallback favicon from GitHub Pages -->
+    <link rel="icon" type="image/png" href="https://adeledevgit.github.io/bink/logo1.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="./logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <span id="admin-welcome">Admin Dashboard</span>
+            <button id="logout-button" class="logout-button">Log Out</button>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <aside class="admin-sidebar">
+            <nav class="admin-nav">
+                <ul>
+                    <li class="nav-item active" data-tab="overview">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Overview</span>
+                    </li>
+                    <li class="nav-item" data-tab="users">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </li>
+                    <li class="nav-item" data-tab="subscriptions">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Subscriptions</span>
+                    </li>
+                    <li class="nav-item" data-tab="creator-applications">
+                        <i class="fas fa-user-check"></i>
+                        <span>Creator Applications</span>
+                    </li>
+                    <li class="nav-item" data-tab="payments">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Payments</span>
+                    </li>
+                    <li class="nav-item" data-tab="token-requests">
+                        <i class="fas fa-coins"></i>
+                        <span>Token Requests</span>
+                    </li>
+                    <li class="nav-item" data-tab="analytics">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </li>
+                    <li class="nav-item" data-tab="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="admin-tasks.html" style="color: inherit; text-decoration: none; display: flex; align-items: center;">
+                            <i class="fas fa-tasks"></i>
+                            <span>Task Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="admin-promotions.html" style="color: inherit; text-decoration: none; display: flex; align-items: center;">
+                            <i class="fas fa-bullhorn"></i>
+                            <span>Promotions</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <!-- Overview Tab -->
+            <section id="overview-tab" class="admin-tab active">
+                <h2>Dashboard Overview</h2>
+                <div class="overview-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-data">
+                            <span id="total-users" class="stat-number">0</span>
+                            <span class="stat-label">Total Users</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="stat-data">
+                            <span id="premium-users" class="stat-number">0</span>
+                            <span class="stat-label">Premium Users</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-data">
+                            <span id="creator-users" class="stat-number">0</span>
+                            <span class="stat-label">Content Creators</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-data">
+                            <span id="monthly-revenue" class="stat-number">₦0</span>
+                            <span class="stat-label">Monthly Revenue</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overview-charts">
+                    <div class="chart-container">
+                        <h3>User Growth</h3>
+                        <canvas id="user-growth-chart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Revenue</h3>
+                        <canvas id="revenue-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">New User Registered</div>
+                                <div class="activity-meta">username123 - 2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">New Premium Subscription</div>
+                                <div class="activity-meta">user456 - 5 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">Creator Application Received</div>
+                                <div class="activity-meta">creator789 - 1 day ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Tab -->
+            <section id="users-tab" class="admin-tab">
+                <h2>User Management</h2>
+                <div class="table-actions">
+                    <div class="search-container">
+                        <input type="text" id="user-search" placeholder="Search users...">
+                        <button id="search-button"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="filter-container">
+                        <select id="user-filter">
+                            <option value="all">All Users</option>
+                            <option value="free">Free Users</option>
+                            <option value="premium">Premium Users</option>
+                            <option value="creator">Content Creators</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Subscription</th>
+                                <th>Joined</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <!-- Users will be loaded here -->
+                            <tr class="placeholder-row">
+                                <td colspan="6">Loading users...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button id="prev-page" class="pagination-button"><i class="fas fa-chevron-left"></i></button>
+                    <span id="page-info">Page 1 of 1</span>
+                    <button id="next-page" class="pagination-button"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <!-- Subscriptions Tab -->
+            <section id="subscriptions-tab" class="admin-tab">
+                <h2>Subscription Management</h2>
+                <div class="table-actions">
+                    <div class="search-container">
+                        <input type="text" id="subscription-search" placeholder="Search subscriptions...">
+                        <button id="subscription-search-button"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="filter-container">
+                        <select id="subscription-filter">
+                            <option value="all">All Subscriptions</option>
+                            <option value="active">Active</option>
+                            <option value="expired">Expired</option>
+                            <option value="premium">Premium</option>
+                            <option value="creator">Creator</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Plan</th>
+                                <th>Duration</th>
+                                <th>Start Date</th>
+                                <th>Expiry Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subscriptions-table-body">
+                            <!-- Subscriptions will be loaded here -->
+                            <tr class="placeholder-row">
+                                <td colspan="7">Loading subscriptions...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button id="subscription-prev-page" class="pagination-button"><i class="fas fa-chevron-left"></i></button>
+                    <span id="subscription-page-info">Page 1 of 1</span>
+                    <button id="subscription-next-page" class="pagination-button"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <!-- Creator Applications Tab -->
+            <section id="creator-applications-tab" class="admin-tab">
+                <h2>Creator Applications</h2>
+                <div class="table-actions">
+                    <div class="filter-container">
+                        <select id="application-filter">
+                            <option value="all">All Applications</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Platform</th>
+                                <th>Followers</th>
+                                <th>Video Views</th>
+                                <th>Submitted</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applications-table-body">
+                            <!-- Applications will be loaded here -->
+                            <tr class="placeholder-row">
+                                <td colspan="7">Loading applications...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Payments Tab -->
+            <section id="payments-tab" class="admin-tab">
+                <h2>Payment Management</h2>
+                <div class="table-actions">
+                    <div class="search-container">
+                        <input type="text" id="payment-search" placeholder="Search payments...">
+                        <button id="payment-search-button"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="filter-container">
+                        <select id="payment-filter">
+                            <option value="all">All Payments</option>
+                            <option value="completed">Completed</option>
+                            <option value="pending">Pending</option>
+                            <option value="failed">Failed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Plan</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payments-table-body">
+                            <!-- Payments will be loaded here -->
+                            <tr class="placeholder-row">
+                                <td colspan="7">Loading payments...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button id="payment-prev-page" class="pagination-button"><i class="fas fa-chevron-left"></i></button>
+                    <span id="payment-page-info">Page 1 of 1</span>
+                    <button id="payment-next-page" class="pagination-button"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <!-- Token Requests Tab -->
+            <section id="token-requests-tab" class="admin-tab">
+                <h2>Token Purchase Requests</h2>
+                <div class="table-actions">
+                    <div class="filter-container">
+                        <select id="token-request-filter">
+                            <option value="all">All Requests</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Amount</th>
+                                <th>Price</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>First Purchase</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="token-requests-table-body">
+                            <!-- Token requests will be loaded here -->
+                            <tr class="placeholder-row">
+                                <td colspan="7">Loading token requests...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button id="token-request-prev-page" class="pagination-button"><i class="fas fa-chevron-left"></i></button>
+                    <span id="token-request-page-info">Page 1 of 1</span>
+                    <button id="token-request-next-page" class="pagination-button"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <!-- Analytics Tab -->
+            <section id="analytics-tab" class="admin-tab">
+                <h2>Analytics Dashboard</h2>
+                <div class="analytics-filters">
+                    <div class="date-range-picker">
+                        <label for="date-range">Date Range:</label>
+                        <select id="date-range">
+                            <option value="7">Last 7 Days</option>
+                            <option value="30" selected>Last 30 Days</option>
+                            <option value="90">Last 90 Days</option>
+                            <option value="365">Last Year</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3>User Growth</h3>
+                        <div class="analytics-chart-container">
+                            <canvas id="user-growth-analytics"></canvas>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Revenue Trends</h3>
+                        <div class="analytics-chart-container">
+                            <canvas id="revenue-analytics"></canvas>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Subscription Distribution</h3>
+                        <div class="analytics-chart-container">
+                            <canvas id="subscription-distribution"></canvas>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>User Retention</h3>
+                        <div class="analytics-chart-container">
+                            <canvas id="user-retention"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="analytics-insights">
+                    <h3>Key Insights</h3>
+                    <div class="insights-container" id="analytics-insights">
+                        <p>Loading insights...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Tab -->
+            <section id="settings-tab" class="admin-tab">
+                <h2>System Settings</h2>
+                <div class="settings-container">
+                    <div class="settings-card">
+                        <h3>Platform Settings</h3>
+                        <form id="platform-settings-form">
+                            <div class="form-group">
+                                <label for="site-name">Site Name</label>
+                                <input type="text" id="site-name" value="BINK">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Contact Email</label>
+                                <input type="email" id="contact-email" value="support@bink.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="premium-price">Premium Subscription Price (₦)</label>
+                                <input type="number" id="premium-price" value="2500">
+                            </div>
+                            <div class="form-group">
+                                <label for="creator-price">Creator Subscription Price (₦)</label>
+                                <input type="number" id="creator-price" value="6000">
+                            </div>
+                            <div class="form-group">
+                                <label for="lifetime-plan-enabled">Enable Lifetime Plan Promotion</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="lifetime-plan-enabled">
+                                    <label for="lifetime-plan-enabled"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lifetime-plan-price">Lifetime Plan Price (₦)</label>
+                                <input type="number" id="lifetime-plan-price" value="60000">
+                            </div>
+                            <button type="submit" class="settings-button">Save Platform Settings</button>
+                        </form>
+                    </div>
+                    <div class="settings-card">
+                        <h3>Email Settings</h3>
+                        <form id="email-settings-form">
+                            <div class="form-group">
+                                <label for="welcome-email">Welcome Email Template</label>
+                                <textarea id="welcome-email" rows="5">Welcome to BINK! We're excited to have you join our platform.</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-email">Payment Confirmation Template</label>
+                                <textarea id="payment-email" rows="5">Thank you for your payment. Your subscription has been activated.</textarea>
+                            </div>
+                            <button type="submit" class="settings-button">Save Email Settings</button>
+                        </form>
+                    </div>
+                    <div class="settings-card">
+                        <h3>Admin Users</h3>
+                        <div class="admin-users-list" id="admin-users-list">
+                            <div class="admin-user-item">
+                                <span class="admin-user-email">admin@bink.com</span>
+                                <span class="admin-user-role">Super Admin</span>
+                            </div>
+                        </div>
+                        <button id="add-admin-button" class="settings-button">Add Admin User</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- User Details Modal -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>User Details</h3>
+            <div id="user-details-container">
+                <!-- User details will be loaded here -->
+            </div>
+            <!-- The upgrade/extend buttons are now added dynamically in the openUserModal function -->
+            <div class="modal-actions">
+                <button id="edit-user-button" class="action-button" style="display: none;">Edit User</button>
+                <button id="delete-user-button" class="delete-button" style="display: none;">Delete User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Details Modal -->
+    <div id="application-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Creator Application</h3>
+            <div id="application-details-container">
+                <!-- Application details will be loaded here -->
+            </div>
+            <div class="modal-actions">
+                <button id="approve-application-button" class="approve-button">Approve</button>
+                <button id="reject-application-button" class="delete-button">Reject</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Token Request Details Modal -->
+    <div id="token-request-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Token Purchase Request</h3>
+            <div id="token-request-details-container">
+                <!-- Token request details will be loaded here -->
+            </div>
+            <div class="modal-actions">
+                <button id="approve-token-request-button" class="approve-button">Approve & Add Tokens</button>
+                <button id="reject-token-request-button" class="delete-button">Reject Request</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+    <script src="firebase-config.js"></script>
+    <script src="admin.js"></script>
+    <script src="admin-token-requests.js"></script>
+</body>
+</html>

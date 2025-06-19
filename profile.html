@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - BINK</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="profile.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="./logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <!-- Optional: Add user info here if needed, similar to dashboard -->
+         <div class="header-user-info">
+             <!-- Dashboard and logout buttons removed as requested -->
+         </div>
+    </header>
+
+    <div class="dashboard-container"> <!-- Reusing dashboard container for consistent layout -->
+        <!-- Removed the old dashboard-header div -->
+        <main class="dashboard-main">
+             <!-- Added a main title consistent with other pages -->
+             <!-- Profile title removed -->
+
+            <div class="dashboard-section">
+                <h3>Your Profile Information</h3>
+                <p id="profile-message" class="auth-success" style="display: none;"></p> <!-- For success/error messages -->
+                <p id="profile-error" class="auth-error" style="display: none;"></p>
+
+                <!-- Profile Picture Upload Section -->
+                <div class="profile-image-container">
+                    <div class="profile-pic-preview" id="profilePicPreview">
+                        <img src="profile.png" alt="Profile Picture" id="profilePicImage">
+                    </div>
+                    <input type="file" id="profilePicUpload" accept="image/*" style="display: none;">
+                </div>
+                <p class="text-center profile-pic-hint">Click on the image to change your profile picture</p>
+
+                <form id="profile-form" class="profile-form">
+                    <div class="form-group">
+                        <label for="username">Username (Cannot be changed)</label>
+                        <input type="text" id="username" name="username" readonly disabled>
+                         <small>Your unique link: bink.com/u/<span id="username-display"></span></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="displayName">Display Name</label>
+                        <input type="text" id="displayName" name="displayName" placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="bio">Bio</label>
+                        <textarea id="bio" name="bio" placeholder="Tell us a bit about yourself..."></textarea>
+                    </div>
+                    <!-- Hidden field to store the profile picture URL -->
+                    <input type="hidden" id="profilePicUrl" name="profilePicUrl">
+
+                    <button type="submit" id="save-profile-button" class="auth-button">Save Profile</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="sidebar.js"></script>
+    <script src="profile.js"></script> <!-- Profile specific logic -->
+</body>
+</html>

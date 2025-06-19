@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to BINK - Setup Your Profile</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="./logo1.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./logo1.png">
+    <link rel="shortcut icon" href="./logo1.png">
+    <link rel="apple-touch-icon" href="./logo1.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="onboarding.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="./logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <span id="welcome-message">Welcome to BINK!</span>
+        </div>
+    </header>
+
+    <div class="onboarding-container">
+        <!-- Modern Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-steps">
+                <div class="step active" data-step="1" data-tooltip="Create your profile with photo, name, and bio">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Profile</div>
+                </div>
+                <div class="step" data-step="2" data-tooltip="Add important links to your websites and content">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Links</div>
+                </div>
+                <div class="step" data-step="3" data-tooltip="Connect your social media profiles">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Social</div>
+                </div>
+                <div class="step" data-step="4" data-tooltip="Showcase your media content and products">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Media</div>
+                </div>
+                <div class="step" data-step="5" data-tooltip="Choose from our beautiful template collection">
+                    <div class="step-number">5</div>
+                    <div class="step-label">Template</div>
+                </div>
+                <div class="step" data-step="6" data-tooltip="Preview and publish your bio page">
+                    <div class="step-number">6</div>
+                    <div class="step-label">Preview</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step Content -->
+        <div class="step-content-container">
+            <!-- Step 1: Enhanced Profile Setup -->
+            <div class="step-content active" id="step-1">
+                <div class="step-header">
+                    <h2>✨ Create Your Profile</h2>
+                    <p>Let's start building your digital presence with some basic information that will help visitors connect with you</p>
+                </div>
+                <div class="profile-setup">
+                    <div class="profile-image-section">
+                        <div class="profile-pic-container">
+                            <div class="profile-pic-preview" id="profilePicPreview">
+                                <img src="./profile.png" alt="Profile" id="profilePicImage">
+                                <div class="profile-pic-overlay">
+                                    <i class="fas fa-camera"></i>
+                                    <span>Upload Photo</span>
+                                </div>
+                            </div>
+                            <input type="file" id="profilePicUpload" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                    <form id="profile-form" class="onboarding-form">
+                        <div class="form-group">
+                            <label for="displayName">Display Name *</label>
+                            <input type="text" id="displayName" name="displayName" placeholder="What should people call you?" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bio">Bio (Optional)</label>
+                            <textarea id="bio" name="bio" placeholder="Share a bit about yourself, your interests, or what you do..." rows="4"></textarea>
+                            <div class="char-counter">
+                                <span id="bio-char-count">0</span>/500 characters
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Your Unique Bio Link</label>
+                            <div class="link-preview">
+                                <span class="link-prefix">bink.com/u/</span>
+                                <span id="username-display" class="username-value">username</span>
+                            </div>
+                            <small style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem; display: block;">
+                                This link will be automatically generated from your display name
+                            </small>
+                        </div>
+                        <input type="hidden" id="profilePicUrl" name="profilePicUrl">
+                    </form>
+                </div>
+            </div>
+            <div class="step-content" id="step-2">
+                <div class="step-header">
+                    <h2>🔗 Add Your Important Links</h2>
+                    <p>Share your websites, portfolios, and other important links with your visitors</p>
+                </div>
+                <div class="links-section">
+                    <div class="links-header">
+                        <h3>Your Links Collection</h3>
+                        <button class="add-link-btn" onclick="showAddLinkModal()">
+                            <i class="fas fa-plus"></i>
+                            Add New Link
+                        </button>
+                    </div>
+                    <div class="links-container" id="linksContainer">
+                        <div class="empty-state">
+                            <i class="fas fa-link"></i>
+                            <h3>No Links Added Yet</h3>
+                            <p>Add your first link to get started. You can include websites, portfolios, social profiles, or any other important links.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Enhanced Social Media Integration -->
+            <div class="step-content" id="step-3">
+                <div class="step-header">
+                    <h2>📱 Connect Your Social Media</h2>
+                    <p>Link your social media profiles to help people find and connect with you across platforms</p>
+                </div>
+
+                <div class="social-setup">
+                    <div class="social-header">
+                        <h3>Your Social Media Collection</h3>
+                        <button class="add-link-btn" onclick="showAddLinkModal('social')">
+                            <i class="fas fa-plus"></i>
+                            Add Social Link
+                        </button>
+                    </div>
+                    <div class="social-grid">
+                        <div class="social-placeholder">
+                            <i class="fas fa-share-alt"></i>
+                            <h4>No Social Links Added Yet</h4>
+                            <p>Connect your social media accounts to expand your reach and help visitors find you on their favorite platforms</p>
+                        </div>
+
+                        <!-- Social links will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Enhanced Media & Catalog -->
+            <div class="step-content" id="step-4">
+                <div class="step-header">
+                    <h2>🎬 Showcase Your Content</h2>
+                    <p>Add videos, images, music, or products to create an engaging experience for your visitors</p>
+                </div>
+                <div class="media-setup">
+                    <div class="media-catalog-toggle">
+                        <button class="toggle-btn active" id="media-toggle-btn" data-section="media">
+                            <i class="fas fa-play-circle"></i>
+                            <span>Media Content</span>
+                        </button>
+                        <button class="toggle-btn" id="catalog-toggle-btn" data-section="catalog">
+                            <i class="fas fa-store"></i>
+                            <span>Product Catalog</span>
+                        </button>
+                    </div>
+
+                    <!-- Media Content Section -->
+                    <div class="media-content-section" id="media-content-section">
+                        <div class="media-manager">
+                            <!-- Media Type Selector -->
+                            <div class="media-type-selector">
+                                <button class="media-type-btn active" data-type="youtube">
+                                    <i class="fab fa-youtube"></i>
+                                    <span>YouTube Videos</span>
+                                </button>
+                                <button class="media-type-btn" data-type="images">
+                                    <i class="fas fa-images"></i>
+                                    <span>Pictures</span>
+                                </button>
+                                <button class="media-type-btn" data-type="music">
+                                    <i class="fas fa-music"></i>
+                                    <span>Music</span>
+                                </button>
+                            </div>
+
+                            <!-- YouTube Videos Section -->
+                            <div class="media-section active" id="youtube-section">
+                                <div class="section-header">
+                                    <h4>YouTube Videos</h4>
+                                    <button id="add-youtube-button" class="action-btn primary-btn">
+                                        <i class="fas fa-plus"></i> Add YouTube Video
+                                    </button>
+                                </div>
+                                <div id="youtube-container" class="media-grid">
+                                    <div class="media-placeholder">
+                                        <i class="fab fa-youtube"></i>
+                                        <h4>No YouTube videos yet</h4>
+                                        <p>Add your first YouTube video to get started</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Images Section -->
+                            <div class="media-section" id="images-section">
+                                <div class="section-header">
+                                    <h4>Picture Gallery</h4>
+                                    <button id="add-image-button" class="action-btn primary-btn">
+                                        <i class="fas fa-plus"></i> Add Picture
+                                    </button>
+                                </div>
+                                <div id="images-container" class="media-grid">
+                                    <div class="media-placeholder">
+                                        <i class="fas fa-images"></i>
+                                        <h4>No pictures yet</h4>
+                                        <p>Add your first picture to get started</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Music Section -->
+                            <div class="media-section" id="music-section">
+                                <div class="section-header">
+                                    <h4>Music Links</h4>
+                                    <button id="add-music-button" class="action-btn primary-btn">
+                                        <i class="fas fa-plus"></i> Add Music Link
+                                    </button>
+                                </div>
+                                <div id="music-container" class="media-grid">
+                                    <div class="media-placeholder">
+                                        <i class="fas fa-music"></i>
+                                        <h4>No music links yet</h4>
+                                        <p>Add your first music link to get started</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="media-actions">
+                                <button type="button" id="save-media-button" class="action-btn primary-btn">
+                                    <i class="fas fa-save"></i> Save Media Content
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Catalog Content Section -->
+                    <div class="catalog-content-section" id="catalog-content-section" style="display: none;">
+                        <div class="catalog-manager">
+                            <div class="section-header">
+                                <h4>Product Catalog</h4>
+                                <button id="add-product-button" class="action-btn primary-btn">
+                                    <i class="fas fa-plus"></i> Add New Product
+                                </button>
+                            </div>
+                            <div id="products-container" class="products-grid">
+                                <div class="products-placeholder">
+                                    <i class="fas fa-shopping-bag"></i>
+                                    <h4>No products yet</h4>
+                                    <p>Add your first product to get started</p>
+                                </div>
+                            </div>
+                            <div class="catalog-actions">
+                                <button type="button" id="save-catalog-button" class="action-btn primary-btn">
+                                    <i class="fas fa-save"></i> Save Catalog
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skip-note">
+                        <p><i class="fas fa-lightbulb"></i> This step is optional - you can always add media content later from your dashboard</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Enhanced Template Selection -->
+            <div class="step-content" id="step-5">
+                <div class="step-header">
+                    <h2>🎨 Choose Your Perfect Template</h2>
+                    <p>Select from our collection of beautiful templates that best represent your style and personality</p>
+                </div>
+                <div class="template-setup">
+                    <div class="templates-grid" id="templates-container">
+                        <!-- Templates will be loaded here dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 6: Enhanced Preview & Publish -->
+            <div class="step-content" id="step-6">
+                <div class="step-header">
+                    <h2>🚀 Your Bio Page is Ready!</h2>
+                    <p>Take a look at your beautiful bio page preview. Everything looks perfect? Let's publish it to the world!</p>
+                </div>
+                <div class="preview-setup">
+                    <div class="preview-container">
+                        <div class="preview-frame-container">
+                            <iframe id="bio-preview-frame" class="bio-preview-frame" src="about:blank" scrolling="yes" frameborder="0"></iframe>
+                            <div class="preview-frame-overlay">
+                                <div class="preview-instructions">
+                                    <i class="fas fa-mouse-pointer"></i>
+                                    <span>Scroll to explore your complete bio page</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preview-info">
+                            <div class="preview-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number" id="links-count">0</div>
+                                    <div class="stat-label">Links Added</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number" id="social-count">0</div>
+                                    <div class="stat-label">Social Accounts</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number" id="media-count">0</div>
+                                    <div class="stat-label">Media Items</div>
+                                </div>
+                            </div>
+                            <div class="preview-actions">
+                                <button class="nav-btn primary-btn" id="publish-btn">
+                                    <i class="fas fa-rocket"></i>
+                                    Publish & Go Live
+                                </button>
+                                <button class="nav-btn secondary-btn" id="copy-preview-link">
+                                    <i class="fas fa-copy"></i>
+                                    Copy Preview Link
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Navigation Buttons -->
+        <div class="navigation-buttons">
+            <button class="nav-btn secondary-btn" id="prev-btn" style="display: none;">
+                <i class="fas fa-arrow-left"></i>
+                Previous Step
+            </button>
+            <div class="nav-center-info" id="nav-center-info" style="display: none;">
+                <span class="step-indicator">Step <span id="current-step-number">1</span> of 6</span>
+            </div>
+            <button class="nav-btn primary-btn" id="next-btn">
+                Continue
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Enhanced Link Modal -->
+    <div class="modal" id="linkModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>✨ Add New Link</h3>
+                <button class="close-modal" onclick="closeLinkModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="linkForm" onsubmit="handleLinkSubmit(event)">
+                    <div class="form-group">
+                        <label for="platform">Platform *</label>
+                        <div class="custom-select" id="platform-select">
+                            <div class="select-selected" id="platform-selected">
+                                <i class="fas fa-globe"></i>
+                                <span>Choose a platform</span>
+                            </div>
+                            <div class="select-items select-hide" id="platform-options">
+                                <div class="select-option" data-value="website">
+                                    <i class="fas fa-globe"></i>
+                                    <span>Website</span>
+                                </div>
+                                <div class="select-option" data-value="youtube">
+                                    <i class="fab fa-youtube"></i>
+                                    <span>YouTube</span>
+                                </div>
+                                <div class="select-option" data-value="instagram">
+                                    <i class="fab fa-instagram"></i>
+                                    <span>Instagram</span>
+                                </div>
+                                <div class="select-option" data-value="twitter">
+                                    <i class="fab fa-twitter"></i>
+                                    <span>Twitter</span>
+                                </div>
+                                <div class="select-option" data-value="facebook">
+                                    <i class="fab fa-facebook"></i>
+                                    <span>Facebook</span>
+                                </div>
+                                <div class="select-option" data-value="linkedin">
+                                    <i class="fab fa-linkedin"></i>
+                                    <span>LinkedIn</span>
+                                </div>
+                                <div class="select-option" data-value="tiktok">
+                                    <i class="fab fa-tiktok"></i>
+                                    <span>TikTok</span>
+                                </div>
+                                <div class="select-option" data-value="github">
+                                    <i class="fab fa-github"></i>
+                                    <span>GitHub</span>
+                                </div>
+                                <div class="select-option" data-value="spotify">
+                                    <i class="fab fa-spotify"></i>
+                                    <span>Spotify</span>
+                                </div>
+                                <div class="select-option" data-value="soundcloud">
+                                    <i class="fab fa-soundcloud"></i>
+                                    <span>SoundCloud</span>
+                                </div>
+                                <div class="select-option" data-value="twitch">
+                                    <i class="fab fa-twitch"></i>
+                                    <span>Twitch</span>
+                                </div>
+                                <div class="select-option" data-value="discord">
+                                    <i class="fab fa-discord"></i>
+                                    <span>Discord</span>
+                                </div>
+                                <div class="select-option" data-value="telegram">
+                                    <i class="fab fa-telegram"></i>
+                                    <span>Telegram</span>
+                                </div>
+                                <div class="select-option" data-value="whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                    <span>WhatsApp</span>
+                                </div>
+                                <div class="select-option" data-value="medium">
+                                    <i class="fab fa-medium"></i>
+                                    <span>Medium</span>
+                                </div>
+                                <div class="select-option" data-value="behance">
+                                    <i class="fab fa-behance"></i>
+                                    <span>Behance</span>
+                                </div>
+                                <div class="select-option" data-value="dribbble">
+                                    <i class="fab fa-dribbble"></i>
+                                    <span>Dribbble</span>
+                                </div>
+                                <div class="select-option" data-value="pinterest">
+                                    <i class="fab fa-pinterest"></i>
+                                    <span>Pinterest</span>
+                                </div>
+                                <div class="select-option" data-value="reddit">
+                                    <i class="fab fa-reddit"></i>
+                                    <span>Reddit</span>
+                                </div>
+                                <div class="select-option" data-value="snapchat">
+                                    <i class="fab fa-snapchat"></i>
+                                    <span>Snapchat</span>
+                                </div>
+                                <div class="select-option" data-value="tumblr">
+                                    <i class="fab fa-tumblr"></i>
+                                    <span>Tumblr</span>
+                                </div>
+                                <div class="select-option" data-value="vimeo">
+                                    <i class="fab fa-vimeo"></i>
+                                    <span>Vimeo</span>
+                                </div>
+                                <div class="select-option" data-value="other">
+                                    <i class="fas fa-link"></i>
+                                    <span>Other</span>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="platform" name="platform" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Link Title *</label>
+                        <input type="text" id="title" name="title" placeholder="What should this link be called?" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="url">URL *</label>
+                        <input type="url" id="url" name="url" placeholder="https://example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description (Optional)</label>
+                        <textarea id="description" name="description" placeholder="Add a brief description to help visitors understand what this link is about..." rows="3"></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeLinkModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add Link
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- YouTube Video Modal -->
+    <div class="modal" id="youtubeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🎬 Add YouTube Video</h3>
+                <button class="close-modal" onclick="closeYouTubeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="youtubeForm" onsubmit="handleYouTubeSubmit(event)">
+                    <input type="hidden" id="youtube-id" name="youtube-id">
+                    <div class="form-group">
+                        <label for="youtube-title">Video Title *</label>
+                        <input type="text" id="youtube-title" name="youtube-title" required placeholder="e.g., My Latest Video">
+                    </div>
+                    <div class="form-group">
+                        <label for="youtube-url">YouTube URL *</label>
+                        <input type="url" id="youtube-url" name="youtube-url" required placeholder="https://www.youtube.com/watch?v=...">
+                        <small>Paste the full YouTube video URL</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="youtube-description">Description (Optional)</label>
+                        <textarea id="youtube-description" name="youtube-description" placeholder="Brief description of the video..." rows="3"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeYouTubeModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add Video
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Upload Modal -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🖼️ Add Picture</h3>
+                <button class="close-modal" onclick="closeImageModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="imageForm" onsubmit="handleImageSubmit(event)">
+                    <input type="hidden" id="image-id" name="image-id">
+                    <div class="form-group">
+                        <label for="image-title">Picture Title *</label>
+                        <input type="text" id="image-title" name="image-title" required placeholder="e.g., My Artwork">
+                    </div>
+                    <div class="form-group">
+                        <label for="image-upload">Upload Image *</label>
+                        <input type="file" id="image-upload" name="image-upload" accept="image/*" required>
+                        <small>Supported formats: JPG, PNG, GIF (Max 5MB)</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="image-description">Description (Optional)</label>
+                        <textarea id="image-description" name="image-description" placeholder="Brief description of the image..." rows="3"></textarea>
+                    </div>
+                    <div class="image-preview-container" id="image-preview-container" style="display: none;">
+                        <img id="image-preview" src="" alt="Preview">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeImageModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add Picture
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Music Link Modal -->
+    <div class="modal" id="musicModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🎵 Add Music Link</h3>
+                <button class="close-modal" onclick="closeMusicModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="musicForm" onsubmit="handleMusicSubmit(event)">
+                    <input type="hidden" id="music-id" name="music-id">
+                    <div class="form-group">
+                        <label for="music-title">Song/Album Title *</label>
+                        <input type="text" id="music-title" name="music-title" required placeholder="e.g., My Latest Track">
+                    </div>
+                    <div class="form-group">
+                        <label for="music-artist">Artist Name</label>
+                        <input type="text" id="music-artist" name="music-artist" placeholder="e.g., Your Artist Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="music-platform">Music Platform *</label>
+                        <select id="music-platform" name="music-platform" required>
+                            <option value="">Select Platform</option>
+                            <option value="spotify">Spotify</option>
+                            <option value="apple-music">Apple Music</option>
+                            <option value="youtube-music">YouTube Music</option>
+                            <option value="audiomack">AudioMack</option>
+                            <option value="soundcloud">SoundCloud</option>
+                            <option value="bandcamp">Bandcamp</option>
+                            <option value="tidal">Tidal</option>
+                            <option value="deezer">Deezer</option>
+                            <option value="amazon-music">Amazon Music</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="music-url">Music URL *</label>
+                        <input type="url" id="music-url" name="music-url" required placeholder="https://...">
+                        <small>Paste the link to your song/album on the selected platform</small>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeMusicModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add Music Link
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Editor Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🛍️ Add New Product</h3>
+                <button class="close-modal" onclick="closeProductModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm" onsubmit="handleProductSubmit(event)">
+                    <input type="hidden" id="product-id" name="product-id">
+                    <div class="form-group">
+                        <label for="product-title">Product Name *</label>
+                        <input type="text" id="product-title" name="product-title" required placeholder="e.g., My Amazing Product">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-description">Description</label>
+                        <textarea id="product-description" name="product-description" placeholder="Brief description of your product..." rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-currency">Currency</label>
+                        <select id="product-currency" name="product-currency">
+                            <option value="$">$ - US Dollar</option>
+                            <option value="₦">₦ - Nigerian Naira</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-price">Price Amount</label>
+                        <input type="text" id="product-price" name="product-price" placeholder="e.g., 29.99 or Free">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-image-upload">Product Image</label>
+                        <input type="file" id="product-image-upload" name="product-image-upload" accept="image/*">
+                        <small>Upload an image of your product (Max 5MB)</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-image-url">Or Image URL</label>
+                        <input type="url" id="product-image-url" name="product-image-url" placeholder="https://example.com/image.jpg">
+                        <small>Alternatively, provide a direct link to your product image</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-buy-link">Buy Link *</label>
+                        <input type="url" id="product-buy-link" name="product-buy-link" required placeholder="https://your-store.com/product">
+                        <small>Link where customers can purchase this product</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-category">Category</label>
+                        <select id="product-category" name="product-category">
+                            <option value="other">Other</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="books">Books</option>
+                            <option value="art">Art</option>
+                            <option value="music">Music</option>
+                            <option value="software">Software</option>
+                            <option value="courses">Courses</option>
+                            <option value="services">Services</option>
+                            <option value="food">Food & Beverages</option>
+                            <option value="health">Health & Beauty</option>
+                            <option value="home">Home & Garden</option>
+                            <option value="sports">Sports & Outdoors</option>
+                            <option value="toys">Toys & Games</option>
+                        </select>
+                    </div>
+                    <div class="product-preview-container" id="product-preview-container" style="display: none;">
+                        <img id="product-preview" src="" alt="Product Preview">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeProductModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add Product
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+
+    <script src="firebase-config.js"></script>
+    <script src="templates/templates.js"></script>
+    <script src="onboarding.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "*.html", "use": "@vercel/static" },
+    { "src": "*.css", "use": "@vercel/static" },
+    { "src": "*.js", "use": "@vercel/static" },
+    { "src": "*.png", "use": "@vercel/static" },
+    { "src": "*.jpg", "use": "@vercel/static" },
+    { "src": "*.jpeg", "use": "@vercel/static" },
+    { "src": "*.gif", "use": "@vercel/static" },
+    { "src": "*.svg", "use": "@vercel/static" },
+    { "src": "*.ico", "use": "@vercel/static" },
+    { "src": "*.mp4", "use": "@vercel/static" },
+    { "src": "logo.png", "use": "@vercel/static" },
+    { "src": "logo1.png", "use": "@vercel/static" },
+    { "src": "profile.png", "use": "@vercel/static" },
+    { "src": "profile-placeholder.svg", "use": "@vercel/static" },
+    { "src": "templates/**/*", "use": "@vercel/static" },
+    { "src": "api/**/*.js", "use": "@vercel/node" },
+    { "src": "images/**/*", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/paystack-webhook", "dest": "/api/paystack-webhook.js" },
+    { "src": "/api/check-expired-subscriptions", "dest": "/api/check-expired-subscriptions.js" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}

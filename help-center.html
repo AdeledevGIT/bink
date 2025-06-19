@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - BINK</title>
+    <meta name="description" content="Get help and support for your BINK bio link platform. Find answers to common questions and learn how to use all features.">
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="landing.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Help Center specific styles */
+        .help-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .help-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .help-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .help-header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .help-search {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            position: relative;
+        }
+
+        .help-search input {
+            width: 100%;
+            padding: 15px 20px;
+            padding-left: 50px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .help-search i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .help-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .help-category {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .help-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .help-category-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .help-category-icon i {
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .help-category h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .help-category p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .help-category ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .help-category li {
+            margin-bottom: 0.8rem;
+        }
+
+        .help-category a {
+            display: flex;
+            align-items: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .help-category a:hover {
+            color: var(--accent-color);
+        }
+
+        .help-category a i {
+            margin-right: 8px;
+            font-size: 0.8rem;
+        }
+
+        .help-contact {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 3rem;
+        }
+
+        .help-contact h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .help-contact p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 25px;
+            background-color: var(--secondary-color);
+            border-radius: var(--border-radius);
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            text-decoration: none;
+        }
+
+        .contact-button i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .faq-section {
+            margin-bottom: 3rem;
+        }
+
+        .faq-section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .faq-item {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .faq-question h3 {
+            font-size: 1.2rem;
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .faq-question i {
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-answer p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-item.active .faq-question {
+            border-bottom-color: var(--border-color);
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <span id="welcome-message">Welcome!</span>
+        </div>
+    </header>
+
+    <div class="help-container">
+        <div class="help-header">
+            <h1>BINK Help Center</h1>
+            <p>Find answers to common questions and learn how to make the most of your BINK experience.</p>
+        </div>
+
+        <div class="help-search">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search for help topics...">
+        </div>
+
+        <div class="help-categories">
+            <div class="help-category">
+                <div class="help-category-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Account Management</h3>
+                <p>Learn how to manage your BINK account settings.</p>
+                <ul>
+                    <li><a href="articles.html?article=account-setup"><i class="fas fa-chevron-right"></i> Creating an account</a></li>
+                    <li><a href="articles.html?article=account-setup&section=profile"><i class="fas fa-chevron-right"></i> Updating your profile</a></li>
+                    <li><a href="articles.html?article=account-setup&section=password"><i class="fas fa-chevron-right"></i> Changing your password</a></li>
+                    <li><a href="articles.html?article=tokens-system&section=subscription"><i class="fas fa-chevron-right"></i> Managing subscription</a></li>
+                </ul>
+            </div>
+
+            <div class="help-category">
+                <div class="help-category-icon">
+                    <i class="fas fa-link"></i>
+                </div>
+                <h3>Bio Link Management</h3>
+                <p>Everything you need to know about managing your bio links.</p>
+                <ul>
+                    <li><a href="articles.html?article=managing-links&section=adding"><i class="fas fa-chevron-right"></i> Adding links</a></li>
+                    <li><a href="articles.html?article=managing-links&section=organizing"><i class="fas fa-chevron-right"></i> Organizing links</a></li>
+                    <li><a href="articles.html?article=using-templates"><i class="fas fa-chevron-right"></i> Customizing appearance</a></li>
+                    <li><a href="articles.html?article=managing-links&section=sharing"><i class="fas fa-chevron-right"></i> Sharing your bio link</a></li>
+                </ul>
+            </div>
+
+            <div class="help-category">
+                <div class="help-category-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3>Templates</h3>
+                <p>Learn about the different templates available and how to use them.</p>
+                <ul>
+                    <li><a href="articles.html?article=using-templates&section=free"><i class="fas fa-chevron-right"></i> Free templates</a></li>
+                    <li><a href="articles.html?article=using-templates&section=premium"><i class="fas fa-chevron-right"></i> Premium templates</a></li>
+                    <li><a href="articles.html?article=using-templates&section=customizing"><i class="fas fa-chevron-right"></i> Customizing templates</a></li>
+                    <li><a href="articles.html?article=using-templates&section=switching"><i class="fas fa-chevron-right"></i> Switching templates</a></li>
+                </ul>
+            </div>
+
+            <div class="help-category">
+                <div class="help-category-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <h3>Tokens & Payments</h3>
+                <p>Information about tokens, purchases, and subscription plans.</p>
+                <ul>
+                    <li><a href="articles.html?article=tokens-system"><i class="fas fa-chevron-right"></i> Buying tokens</a></li>
+                    <li><a href="articles.html?article=tokens-system&section=earning"><i class="fas fa-chevron-right"></i> Earning free tokens</a></li>
+                    <li><a href="articles.html?article=tokens-system&section=subscription"><i class="fas fa-chevron-right"></i> Subscription plans</a></li>
+                    <li><a href="articles.html?article=tokens-system&section=payment"><i class="fas fa-chevron-right"></i> Payment methods</a></li>
+                </ul>
+            </div>
+
+            <div class="help-category">
+                <div class="help-category-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Analytics</h3>
+                <p>Understanding your bio link performance and visitor data.</p>
+                <ul>
+                    <li><a href="articles.html?article=viewing-analytics&section=accessing"><i class="fas fa-chevron-right"></i> Viewing analytics</a></li>
+                    <li><a href="articles.html?article=viewing-analytics&section=metrics"><i class="fas fa-chevron-right"></i> Understanding metrics</a></li>
+                    <li><a href="articles.html?article=viewing-analytics&section=location"><i class="fas fa-chevron-right"></i> Location tracking</a></li>
+                    <li><a href="articles.html?article=viewing-analytics&section=advanced"><i class="fas fa-chevron-right"></i> Exporting data</a></li>
+                </ul>
+            </div>
+
+            <div class="help-category">
+                <div class="help-category-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Security & Privacy</h3>
+                <p>Keeping your account secure and managing privacy settings.</p>
+                <ul>
+                    <li><a href="articles.html?article=security"><i class="fas fa-chevron-right"></i> Account security</a></li>
+                    <li><a href="articles.html?article=security&section=privacy"><i class="fas fa-chevron-right"></i> Privacy settings</a></li>
+                    <li><a href="articles.html?article=security&section=data"><i class="fas fa-chevron-right"></i> Data protection</a></li>
+                    <li><a href="articles.html?article=security&section=terms"><i class="fas fa-chevron-right"></i> Terms of service</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="help-contact">
+            <h2>Need More Help?</h2>
+            <p>Can't find what you're looking for? Our support team is ready to assist you with any questions or issues you may have.</p>
+            <div class="contact-buttons">
+                <a href="contact-support.html" class="contact-button">
+                    <i class="fas fa-envelope"></i>
+                    Contact Support
+                </a>
+                <a href="#" class="contact-button" onclick="openContactForm('', 'Live Chat Request', 'I would like to request live chat support for the following issue:'); return false;">
+                    <i class="fas fa-comments"></i>
+                    Live Chat
+                </a>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How do I create a BINK account?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Creating a BINK account is easy! Here's how:</p>
+                    <ol>
+                        <li>Click the "Sign Up" button on the homepage</li>
+                        <li>Enter your email address</li>
+                        <li>Choose a unique username (this will be used for your bio link: bink.com/u/username)</li>
+                        <li>Create a password (minimum 6 characters)</li>
+                        <li>Confirm your password</li>
+                        <li>Click "Sign Up" to create your account</li>
+                    </ol>
+                    <p>Once your account is created, you can start with a free plan and upgrade to premium features anytime.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How do tokens work?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Tokens are BINK's virtual currency that allow free users to access premium templates without a subscription:</p>
+                    <ul>
+                        <li>You can purchase 800 tokens for ₦500</li>
+                        <li>First-time token purchasers receive 200 bonus tokens</li>
+                        <li>Premium templates cost between 100-200 tokens each</li>
+                        <li>You can earn free tokens by completing tasks</li>
+                        <li>Premium users get access to all templates without using tokens</li>
+                        <li>Once you purchase a template with tokens, it's yours to keep forever</li>
+                    </ul>
+                    <p>Your token balance is displayed in your dashboard sidebar and can be clicked to purchase more tokens.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Can I change my template after creating my bio page?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! You can change your template at any time without losing your content or changing your bio link URL:</p>
+                    <ul>
+                        <li>Your bio link URL remains the same, so you don't need to update it on your social profiles</li>
+                        <li>All your content (links, profile information, etc.) automatically transfers to the new template</li>
+                        <li>Free users can use free templates (Classic and Glassmorphism) or purchase premium templates with tokens</li>
+                        <li>Premium users can switch between any template at any time without additional cost</li>
+                        <li>Templates you've purchased with tokens remain available to you even if you downgrade from a premium plan</li>
+                    </ul>
+                    <p>To change your template, go to the bio editor page and select a different template from the template selector.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What's the difference between free and premium plans?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Here's a comparison of our plans:</p>
+                    <p><strong>Free Plan (₦0):</strong></p>
+                    <ul>
+                        <li>Up to 5 links</li>
+                        <li>Basic analytics</li>
+                        <li>Free templates (Classic and Glassmorphism)</li>
+                        <li>BINK branding on your bio page</li>
+                        <li>Option to buy premium templates with tokens</li>
+                        <li>Single bio link</li>
+                    </ul>
+                    <p><strong>Premium Plan:</strong></p>
+                    <ul>
+                        <li>Monthly: ₦2,500/month</li>
+                        <li>Yearly: ₦25,000/year (Save 17%)</li>
+                        <li>Lifetime: ₦60,000 one-time payment</li>
+                        <li>Unlimited links</li>
+                        <li>Advanced analytics with location data</li>
+                        <li>Access to all premium templates</li>
+                        <li>No BINK branding</li>
+                        <li>Priority support</li>
+                        <li>Custom domain (coming soon)</li>
+                    </ul>
+                    <p>Free users can also access premium templates by purchasing them individually with tokens.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How do I qualify for the Content Creator plan?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>The Content Creator plan gives you premium features free for 3 months. To qualify, you need to meet at least one of these requirements:</p>
+                    <ul>
+                        <li>Have at least 10,000 followers on a social media platform</li>
+                        <li>Have at least 20,000 video views on your content</li>
+                    </ul>
+                    <p>Benefits of the Content Creator plan include:</p>
+                    <ul>
+                        <li>All Premium features included</li>
+                        <li>Verified creator badge on your profile</li>
+                        <li>Featured placement in the creator directory</li>
+                        <li>Monetization options (coming soon)</li>
+                    </ul>
+                    <p>To apply, select the "Content Creator" option on our pricing page. Our team will review your application and verify your follower count or video views before approving your account.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="landing-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="dashboard.html">
+                    <img src="logo.png" alt="BINK Logo">
+                </a>
+                <p>Your Bio Link Platform</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>BINK</h4>
+                    <ul>
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="index.html#pricing">Pricing</a></li>
+                        <li><a href="index.html#testimonials">Testimonials</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact-support.html">Contact Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BINK. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <!-- Firebase Config -->
+    <script src="firebase-config.js"></script>
+
+    <script>
+        // FAQ accordion functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // Function to show specific FAQ by question text
+        function showFaq(questionText) {
+            // First close all FAQs
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Find and open the matching FAQ
+            document.querySelectorAll('.faq-question').forEach(question => {
+                if (question.querySelector('h3').textContent === questionText) {
+                    // Open this FAQ
+                    const faqItem = question.parentElement;
+                    faqItem.classList.add('active');
+
+                    // Scroll to it
+                    setTimeout(() => {
+                        faqItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                }
+            });
+        }
+
+        // Search functionality (placeholder for now)
+        const searchInput = document.querySelector('.help-search input');
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                // Simple search implementation
+                let found = false;
+
+                document.querySelectorAll('.faq-question h3').forEach(question => {
+                    if (question.textContent.toLowerCase().includes(searchTerm)) {
+                        showFaq(question.textContent);
+                        found = true;
+                    }
+                });
+
+                if (!found) {
+                    alert('No results found for "' + searchInput.value + '". Please try a different search term.');
+                }
+            }
+        });
+
+        // Function to open contact form with pre-filled data
+        function openContactForm(email, subject, message) {
+            const url = `contact-support.html?email=${encodeURIComponent(email)}&subject=${encodeURIComponent(subject)}&message=${encodeURIComponent(message)}`;
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
