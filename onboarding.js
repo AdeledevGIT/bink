@@ -4,6 +4,9 @@ let currentUserData = null;
 let currentStep = 1;
 const totalSteps = 6;
 
+// Template selection
+let selectedTemplate = null;
+
 // DOM Elements
 const progressFill = document.getElementById('progressFill');
 const steps = document.querySelectorAll('.step');
@@ -43,7 +46,6 @@ const linkForm = document.getElementById('linkForm');
 let userLinks = [];
 let userSocialLinks = {};
 let userMedia = {};
-let selectedTemplate = 'neoncard'; // default template
 
 // State
 let userData = {
@@ -53,6 +55,18 @@ let userData = {
     catalog: {},
     template: null
 };
+
+// Social media platforms for the form (matching bio-editor structure)
+const socialPlatforms = [
+    { id: 'instagram', name: 'Instagram', icon: 'fab fa-instagram' },
+    { id: 'twitter', name: 'Twitter', icon: 'fab fa-twitter' },
+    { id: 'facebook', name: 'Facebook', icon: 'fab fa-facebook' },
+    { id: 'youtube', name: 'YouTube', icon: 'fab fa-youtube' },
+    { id: 'tiktok', name: 'TikTok', icon: 'fab fa-tiktok' },
+    { id: 'linkedin', name: 'LinkedIn', icon: 'fab fa-linkedin' },
+    { id: 'github', name: 'GitHub', icon: 'fab fa-github' },
+    { id: 'website', name: 'Website', icon: 'fas fa-globe' }
+];
 
 // Mobile-friendly initialization
 document.addEventListener('DOMContentLoaded', () => {
@@ -115,6 +129,11 @@ async function loadUserData() {
             if (currentUserData.profilePicUrl && profilePicImage) {
                 profilePicImage.src = currentUserData.profilePicUrl;
             }
+            
+            // Load selected template if it exists
+            if (currentUserData.template) {
+                selectedTemplate = currentUserData.template;
+            }
         }
         
         // Load social links
@@ -174,6 +193,12 @@ function setupEventListeners() {
 
         // Mobile enhancements
         setupMobileEnhancements();
+
+        // Publish and copy buttons
+        if (publishBtn) publishBtn.addEventListener('click', completeOnboarding);
+        
+        const copyPreviewLinkBtn = document.getElementById('copy-preview-link');
+        if (copyPreviewLinkBtn) copyPreviewLinkBtn.addEventListener('click', copyPreviewLink);
 
     } catch (error) {
         console.error('Error setting up event listeners:', error);
@@ -1903,10 +1928,31 @@ function deleteLink(linkId) {
 // Enhanced Social functions
 function loadSocialContent() {
     try {
-        generateSocialLinksForm();
-        showInfo('🌟 Connect your social media to expand your reach');
+        // Load existing social links from the separate socialLinks collection
+        if (currentUser) {
+            db.collection('users').doc(currentUser.uid).collection('socialLinks').doc('links').get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        userSocialLinks = doc.data();
+                    } else {
+                        userSocialLinks = {};
+                    }
+                    // Generate the social links display
+                    generateSocialLinksForm();
+                })
+                .catch((error) => {
+                    console.error('Error loading social links:', error);
+                    userSocialLinks = {};
+                    generateSocialLinksForm();
+                });
+        } else {
+            userSocialLinks = {};
+            generateSocialLinksForm();
+        }
     } catch (error) {
         console.error('Error loading social content:', error);
+        userSocialLinks = {};
+        generateSocialLinksForm();
     }
 }
 
@@ -1914,95 +1960,33 @@ function generateSocialLinksForm() {
     const socialGrid = document.querySelector('.social-grid');
     if (!socialGrid) return;
 
-    // Check if we have any social links
-    const hasSocialLinks = userSocialLinks && Object.keys(userSocialLinks).length > 0;
-
-    if (!hasSocialLinks) {
-        socialGrid.innerHTML = `
-            <div class="social-placeholder">
-                <i class="fas fa-share-alt"></i>
-                <h4>No Social Links Added Yet</h4>
-                <p>Connect your social media accounts to expand your reach and help visitors find you on their favorite platforms</p>
-            </div>
-        `;
-        return;
-    }
-
     // Clear existing content
     socialGrid.innerHTML = '';
 
-    const socialPlatforms = [
-        { name: 'Instagram', key: 'instagram', icon: 'fab fa-instagram', color: '#E4405F' },
-        { name: 'Twitter', key: 'twitter', icon: 'fab fa-twitter', color: '#1DA1F2' },
-        { name: 'YouTube', key: 'youtube', icon: 'fab fa-youtube', color: '#FF0000' },
-        { name: 'TikTok', key: 'tiktok', icon: 'fab fa-tiktok', color: '#000000' },
-        { name: 'LinkedIn', key: 'linkedin', icon: 'fab fa-linkedin', color: '#0077B5' },
-        { name: 'Facebook', key: 'facebook', icon: 'fab fa-facebook', color: '#1877F2' },
-        { name: 'GitHub', key: 'github', icon: 'fab fa-github', color: '#333333' },
-        { name: 'Spotify', key: 'spotify', icon: 'fab fa-spotify', color: '#1DB954' },
-        { name: 'SoundCloud', key: 'soundcloud', icon: 'fab fa-soundcloud', color: '#FF5500' },
-        { name: 'Twitch', key: 'twitch', icon: 'fab fa-twitch', color: '#9146FF' },
-        { name: 'Discord', key: 'discord', icon: 'fab fa-discord', color: '#5865F2' },
-        { name: 'Telegram', key: 'telegram', icon: 'fab fa-telegram', color: '#0088CC' },
-        { name: 'WhatsApp', key: 'whatsapp', icon: 'fab fa-whatsapp', color: '#25D366' },
-        { name: 'Medium', key: 'medium', icon: 'fab fa-medium', color: '#000000' },
-        { name: 'Behance', key: 'behance', icon: 'fab fa-behance', color: '#0057FF' },
-        { name: 'Dribbble', key: 'dribbble', icon: 'fab fa-dribbble', color: '#EA4C89' },
-        { name: 'Pinterest', key: 'pinterest', icon: 'fab fa-pinterest', color: '#E60023' },
-        { name: 'Reddit', key: 'reddit', icon: 'fab fa-reddit', color: '#FF4500' },
-        { name: 'Snapchat', key: 'snapchat', icon: 'fab fa-snapchat', color: '#FFFC00' },
-        { name: 'Tumblr', key: 'tumblr', icon: 'fab fa-tumblr', color: '#36465D' },
-        { name: 'Vimeo', key: 'vimeo', icon: 'fab fa-vimeo', color: '#1AB7EA' }
-    ];
-
+    // Create input fields for each social platform (matching bio-editor approach)
     socialPlatforms.forEach(platform => {
-        if (userSocialLinks[platform.key]) {
-            const linkItem = document.createElement('div');
-            linkItem.className = 'social-link-item';
-            linkItem.setAttribute('data-platform', platform.key);
+        const inputContainer = document.createElement('div');
+        inputContainer.className = 'social-link-input';
 
-            linkItem.innerHTML = `
-                <div class="social-link-icon" style="color: ${platform.color}">
-                    <i class="${platform.icon}"></i>
-                </div>
-                <div class="social-link-details">
-                    <div class="social-link-title">${platform.name}</div>
-                    <div class="social-link-url">${truncateUrl(userSocialLinks[platform.key])}</div>
-                </div>
-                <div class="social-link-actions">
-                    <button class="social-edit-button" onclick="editSocialLink('${platform.key}')" title="Edit ${platform.name}">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="social-delete-button" onclick="deleteSocialLink('${platform.key}')" title="Remove ${platform.name}">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            `;
+        inputContainer.innerHTML = `
+            <i class="${platform.icon}"></i>
+            <input type="url" id="social-${platform.id}" name="social-${platform.id}"
+                   placeholder="${platform.name} URL" value="${userSocialLinks[platform.id] || ''}">
+        `;
 
-            socialGrid.appendChild(linkItem);
-        }
+        // Add change event listener to save data when user types
+        const input = inputContainer.querySelector('input');
+        input.addEventListener('input', (e) => {
+            const value = e.target.value.trim();
+            if (value) {
+                userSocialLinks[platform.id] = value;
+            } else {
+                delete userSocialLinks[platform.id];
+            }
+        });
+
+        socialGrid.appendChild(inputContainer);
     });
-}
-
-function editSocialLink(platform) {
-    try {
-        showInfo(`Editing ${platform} link...`);
-        // Implementation for editing social links
-    } catch (error) {
-        console.error('Error editing social link:', error);
-    }
-}
-
-function deleteSocialLink(platform) {
-    try {
-        if (confirm(`Remove your ${platform} link?`)) {
-            delete userSocialLinks[platform];
-            generateSocialLinksForm();
-            showSuccess(`${platform} link removed`);
-        }
-    } catch (error) {
-        console.error('Error deleting social link:', error);
-    }
 }
 
 async function saveSocialData() {
@@ -2015,6 +1999,12 @@ async function saveSocialData() {
         // Save social links to Firestore
         if (userSocialLinks && Object.keys(userSocialLinks).length > 0) {
             await db.collection('users').doc(currentUser.uid).collection('socialLinks').doc('links').set(userSocialLinks, { merge: true });
+            
+            // Update local currentUserData to keep it in sync
+            if (currentUserData) {
+                currentUserData.socialLinks = { ...userSocialLinks };
+            }
+            
             showSuccess('Social links saved successfully!');
         }
     } catch (error) {
@@ -3032,35 +3022,263 @@ function setupMobileEnhancements() {
 }
 
 function loadTemplates() {
-    // Ensure templates are loaded
-    if (!window.BINK || !window.BINK.templates || !window.BINK.templates.templates) return;
-    const templates = window.BINK.templates.templates;
-    const templatesContainer = document.getElementById('templates-container');
-    if (!templatesContainer) return;
+    try {
+        console.log('Loading templates...');
+        
+        const templatesContainer = document.getElementById('templates-container');
+        if (!templatesContainer) {
+            console.error('Templates container not found');
+            return;
+        }
 
-    // Clear previous content
-    templatesContainer.innerHTML = '';
+        // Clear existing content
+        templatesContainer.innerHTML = '';
 
-    // Render each template card
-    Object.values(templates).forEach(template => {
-        const previewUrl = `templates/${template.id}-preview.html`;
-        const isSelected = selectedTemplate === template.id;
-        const card = document.createElement('div');
-        card.className = 'template-card' + (isSelected ? ' selected' : '');
-        card.innerHTML = `
-            <div class="template-preview-container">
-                <div class="template-label">${template.name}</div>
-                <iframe src="${previewUrl}" class="template-preview" frameborder="0" loading="lazy" title="${template.name}"></iframe>
-                <button class="template-select-btn${isSelected ? ' selected' : ''}" data-template="${template.id}">
-                    ${isSelected ? '<i class=\'fas fa-check\'></i> Selected' : 'Select'}
-                </button>
-            </div>
-        `;
-        // Select button handler
-        card.querySelector('.template-select-btn').addEventListener('click', function() {
-            selectedTemplate = template.id;
-            loadTemplates(); // re-render to update selection
+        // Load templates from templates.js
+        if (window.BINK && window.BINK.templates && window.BINK.templates.templates) {
+            const templates = window.BINK.templates.templates;
+            
+            Object.values(templates).forEach(template => {
+                const templateCard = document.createElement('div');
+                templateCard.className = 'template-card';
+                templateCard.dataset.templateId = template.id;
+                
+                // Create preview URL for the template
+                const previewUrl = `templates/${template.id}-preview.html`;
+                
+                // Add pro/free label
+                const isPro = template.isPremium || template.tokenPrice;
+                const labelClass = isPro ? 'template-label pro' : 'template-label free';
+                const labelText = isPro ? 'PRO' : 'FREE';
+                
+                templateCard.innerHTML = `
+                    <div class="${labelClass}">${labelText}</div>
+                    <iframe class="template-preview" src="${previewUrl}" title="${template.name}"></iframe>
+                    <div class="template-info">
+                        <div class="template-title">${template.name}</div>
+                        <div class="template-description">${template.description}</div>
+                        <button class="template-select-btn" data-template-id="${template.id}">
+                            ${selectedTemplate === template.id ? '<i class="fas fa-check"></i> Selected' : 'Select Template'}
+                        </button>
+                    </div>
+                `;
+                
+                // Mark as selected if this is the user's selected template
+                if (selectedTemplate === template.id) {
+                    templateCard.classList.add('selected');
+                    const selectBtn = templateCard.querySelector('.template-select-btn');
+                    if (selectBtn) {
+                        selectBtn.classList.add('selected');
+                    }
+                }
+                
+                templatesContainer.appendChild(templateCard);
+            });
+        } else {
+            templatesContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-palette"></i>
+                    <h3>No Templates Available</h3>
+                    <p>Please check back later for template options.</p>
+                </div>
+            `;
+        }
+
+        // Add event listeners after rendering all templates
+        addTemplateSelectionHandlers();
+    } catch (error) {
+        console.error('Error loading templates:', error);
+    }
+}
+
+function addTemplateSelectionHandlers() {
+    const templateCards = document.querySelectorAll('.template-card');
+    
+    templateCards.forEach(card => {
+        const templateId = card.dataset.templateId;
+        const selectBtn = card.querySelector('.template-select-btn');
+        
+        // Card click handler
+        card.addEventListener('click', () => {
+            handleTemplateSelection(templateId);
         });
-        templatesContainer.appendChild(card);
+        
+        // Button click handler
+        if(selectBtn) {
+             selectBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // prevent card click from firing too
+                handleTemplateSelection(templateId);
+            });
+        }
     });
 }
+
+function handleTemplateSelection(templateId) {
+    try {
+        console.log('Template selection triggered:', templateId);
+        
+        // Remove previous selection
+        const previouslySelected = document.querySelector('.template-card.selected');
+        if (previouslySelected) {
+            previouslySelected.classList.remove('selected');
+            const prevBtn = previouslySelected.querySelector('.template-select-btn');
+            if (prevBtn) {
+                prevBtn.textContent = 'Select Template';
+                prevBtn.classList.remove('selected');
+            }
+        }
+        
+        // Select new template
+        const selectedCard = document.querySelector(`[data-template-id="${templateId}"]`);
+        if (selectedCard) {
+            selectedCard.classList.add('selected');
+            selectedTemplate = templateId;
+            console.log('Template selected:', selectedTemplate);
+            
+            const selectedBtn = selectedCard.querySelector('.template-select-btn');
+            if (selectedBtn) {
+                selectedBtn.classList.add('selected');
+                selectedBtn.innerHTML = '<i class="fas fa-check"></i> Selected';
+            }
+        } else {
+            console.error('Template card not found for ID:', templateId);
+        }
+    } catch (error) {
+        console.error('Error handling template selection:', error);
+    }
+}
+
+async function saveTemplateSelection() {
+    try {
+        if (!selectedTemplate) {
+            throw new Error('No template selected');
+        }
+        
+        if (!currentUser) {
+            throw new Error('No user logged in');
+        }
+        
+        // Use Firebase v8 syntax consistently and save as 'template' to match bio.js expectations
+        await db.collection('users').doc(currentUser.uid).update({
+            template: selectedTemplate,
+            updatedAt: new Date()
+        });
+        
+        // Update local data
+        if (currentUserData) {
+            currentUserData.template = selectedTemplate;
+        }
+        
+        console.log('Template selection saved successfully');
+    } catch (error) {
+        console.error('Error saving template selection:', error);
+        throw error;
+    }
+}
+
+function loadPreview() {
+    try {
+        // Load preview content for step 6
+        console.log('Loading preview content...');
+        console.log('Selected template:', selectedTemplate);
+        console.log('Current user data:', currentUserData);
+        
+        // Update preview stats
+        const linksCount = document.getElementById('links-count');
+        const socialCount = document.getElementById('social-count');
+        const mediaCount = document.getElementById('media-count');
+        
+        if (linksCount) {
+            const links = currentUserData?.links || [];
+            linksCount.textContent = links.length;
+        }
+        
+        if (socialCount) {
+            // Use userSocialLinks instead of currentUserData.socialLinks
+            const socialCountValue = Object.keys(userSocialLinks || {}).length;
+            socialCount.textContent = socialCountValue;
+        }
+        
+        if (mediaCount) {
+            const media = currentUserData?.media || [];
+            const products = currentUserData?.products || [];
+            const totalMedia = media.length + products.length;
+            mediaCount.textContent = totalMedia;
+        }
+        
+        // Load bio preview iframe with template parameter
+        const bioPreviewFrame = document.getElementById('bio-preview-frame');
+        if (bioPreviewFrame && currentUserData?.username) {
+            const templateParam = selectedTemplate ? `&t=${selectedTemplate}` : '';
+            const previewUrl = `bio.html?u=${currentUserData.username}&preview=true${templateParam}`;
+            console.log('Selected template:', selectedTemplate);
+            console.log('Preview URL:', previewUrl);
+            bioPreviewFrame.src = previewUrl;
+        } else {
+            console.error('Bio preview frame or username not found:', {
+                bioPreviewFrame: !!bioPreviewFrame,
+                username: currentUserData?.username
+            });
+        }
+        
+    } catch (error) {
+        console.error('Error loading preview content:', error);
+    }
+}
+
+// Complete onboarding and redirect to dashboard
+async function completeOnboarding() {
+    try {
+        // Mark onboarding as completed
+        await db.collection('users').doc(currentUser.uid).update({
+            onboardingCompleted: true,
+            updatedAt: new Date()
+        });
+        
+        showSuccess('Your bio page is now live! 🎉');
+        
+        // Redirect to dashboard after a short delay
+        setTimeout(() => {
+            window.location.href = 'dashboard.html';
+        }, 2000);
+        
+    } catch (error) {
+        console.error('Error completing onboarding:', error);
+        showError('Failed to complete onboarding. Please try again.');
+    }
+}
+
+// Copy preview link to clipboard
+function copyPreviewLink() {
+    try {
+        if (!currentUserData?.username) {
+            showError('Username not available');
+            return;
+        }
+        
+        const bioUrl = `${window.location.origin}/bio.html?u=${currentUserData.username}`;
+        
+        navigator.clipboard.writeText(bioUrl).then(() => {
+            showSuccess('Bio link copied to clipboard! 📋');
+        }).catch(() => {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = bioUrl;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showSuccess('Bio link copied to clipboard! 📋');
+        });
+        
+    } catch (error) {
+        console.error('Error copying link:', error);
+        showError('Failed to copy link');
+    }
+}
+
+// Initialize onboarding when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeOnboarding();
+    setupMobileEnhancements();
+});

@@ -138,19 +138,9 @@
                 <div class="social-setup">
                     <div class="social-header">
                         <h3>Your Social Media Collection</h3>
-                        <button class="add-link-btn" onclick="showAddLinkModal('social')">
-                            <i class="fas fa-plus"></i>
-                            Add Social Link
-                        </button>
                     </div>
-                    <div class="social-grid">
-                        <div class="social-placeholder">
-                            <i class="fas fa-share-alt"></i>
-                            <h4>No Social Links Added Yet</h4>
-                            <p>Connect your social media accounts to expand your reach and help visitors find you on their favorite platforms</p>
-                        </div>
-
-                        <!-- Social links will be dynamically added here -->
+                    <div class="social-grid" id="social-links-form">
+                        <!-- Social media inputs will be generated here -->
                     </div>
                 </div>
             </div>
@@ -287,8 +277,8 @@
                     <h2>🎨 Choose Your Perfect Template</h2>
                     <p>Select from our collection of beautiful templates that best represent your style and personality</p>
                 </div>
-                <div class="template-setup">
-                    <div class="templates-grid" id="templates-container">
+                <div class="templates-grid">
+                    <div class="templates-scroll" id="templates-container">
                         <!-- Templates will be loaded here dynamically -->
                     </div>
                 </div>
@@ -301,41 +291,25 @@
                     <p>Take a look at your beautiful bio page preview. Everything looks perfect? Let's publish it to the world!</p>
                 </div>
                 <div class="preview-setup">
-                    <div class="preview-container">
-                        <div class="preview-frame-container">
-                            <iframe id="bio-preview-frame" class="bio-preview-frame" src="about:blank" scrolling="yes" frameborder="0"></iframe>
-                            <div class="preview-frame-overlay">
-                                <div class="preview-instructions">
-                                    <i class="fas fa-mouse-pointer"></i>
-                                    <span>Scroll to explore your complete bio page</span>
+                    <div class="phone-mockup-container">
+                        <div class="phone-mockup">
+                            <div class="phone-frame">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <iframe id="bio-preview-frame" class="bio-preview-frame" src="about:blank" scrolling="yes" frameborder="0"></iframe>
                                 </div>
+                                <div class="phone-home-indicator"></div>
                             </div>
                         </div>
-                        <div class="preview-info">
-                            <div class="preview-stats">
-                                <div class="stat-item">
-                                    <div class="stat-number" id="links-count">0</div>
-                                    <div class="stat-label">Links Added</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-number" id="social-count">0</div>
-                                    <div class="stat-label">Social Accounts</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-number" id="media-count">0</div>
-                                    <div class="stat-label">Media Items</div>
-                                </div>
-                            </div>
-                            <div class="preview-actions">
-                                <button class="nav-btn primary-btn" id="publish-btn">
-                                    <i class="fas fa-rocket"></i>
-                                    Publish & Go Live
-                                </button>
-                                <button class="nav-btn secondary-btn" id="copy-preview-link">
-                                    <i class="fas fa-copy"></i>
-                                    Copy Preview Link
-                                </button>
-                            </div>
+                        <div class="preview-actions">
+                            <button class="nav-btn primary-btn" id="publish-btn">
+                                <i class="fas fa-rocket"></i>
+                                Publish & Go Live
+                            </button>
+                            <button class="nav-btn secondary-btn" id="copy-preview-link">
+                                <i class="fas fa-copy"></i>
+                                Copy Preview Link
+                            </button>
                         </div>
                     </div>
                 </div>
