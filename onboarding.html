@@ -71,9 +71,13 @@
                         <div class="profile-pic-container">
                             <div class="profile-pic-preview" id="profilePicPreview">
                                 <img src="./profile.png" alt="Profile" id="profilePicImage">
+                                <div class="avatar-initials" id="profilePicInitials" style="display:none; align-items:center; justify-content:center; font-size:1rem; font-weight:500; color:var(--text-muted);">Add Profile Picture</div>
                                 <div class="profile-pic-overlay">
                                     <i class="fas fa-camera"></i>
                                     <span>Upload Photo</span>
+                                </div>
+                                <div class="profile-pic-indicator" id="profilePicIndicator">
+                                    <i class="fas fa-camera"></i><span class="plus-badge">+</span>
                                 </div>
                             </div>
                             <input type="file" id="profilePicUpload" accept="image/*" style="display: none;">

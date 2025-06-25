@@ -22,6 +22,7 @@ const saveButton = document.getElementById('save-profile-button');
 const logoutButton = document.getElementById('logout-button'); // Logout button on profile page
 const profileMessage = document.getElementById('profile-message');
 const profileError = document.getElementById('profile-error');
+const profilePicInitials = document.getElementById('profilePicInitials');
 
 let currentUser = null;
 let currentUserData = null;
@@ -228,4 +229,31 @@ if (logoutButton && auth) {
     });
 } else if (logoutButton) {
     logoutButton.style.display = 'none'; // Hide logout if auth isn't loaded
+}
+
+function updateProfilePicDisplay() {
+    if (profilePicUrlInput && !profilePicUrlInput.value) {
+        if (profilePicImage) profilePicImage.style.display = 'none';
+        if (profilePicInitials) {
+            let name = displayNameInput && displayNameInput.value.trim() ? displayNameInput.value.trim() : (usernameInput && usernameInput.value.trim() ? usernameInput.value.trim() : 'U');
+            profilePicInitials.textContent = name.charAt(0).toUpperCase();
+            profilePicInitials.style.display = 'flex';
+        }
+    } else {
+        if (profilePicImage) profilePicImage.style.display = '';
+        if (profilePicInitials) profilePicInitials.style.display = 'none';
+    }
+}
+
+// Call updateProfilePicDisplay on load and after profile picture changes
+window.addEventListener('DOMContentLoaded', updateProfilePicDisplay);
+if (profilePicUpload) {
+    profilePicUpload.addEventListener('change', function() {
+        setTimeout(updateProfilePicDisplay, 500);
+    });
+}
+if (displayNameInput) {
+    displayNameInput.addEventListener('input', function() {
+        setTimeout(updateProfilePicDisplay, 100);
+    });
 }

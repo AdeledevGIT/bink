@@ -879,18 +879,31 @@ function updateProfileImage(dataUrl) {
         const profilePicImage = document.getElementById('profilePicImage');
         const profilePicUrl = document.getElementById('profilePicUrl');
         const profilePicPreview = document.getElementById('profilePicPreview');
+        const profilePicInitials = document.getElementById('profilePicInitials');
 
-        if (profilePicImage) {
-            profilePicImage.src = dataUrl;
+        if (dataUrl) {
+            if (profilePicImage) {
+                profilePicImage.src = dataUrl;
+                profilePicImage.style.display = '';
+            }
+            if (profilePicInitials) {
+                profilePicInitials.style.display = 'none';
+            }
+        } else {
+            // No image, show placeholder
+            if (profilePicImage) {
+                profilePicImage.style.display = 'none';
+            }
+            if (profilePicInitials) {
+                profilePicInitials.textContent = 'Add Profile Picture';
+                profilePicInitials.style.display = 'flex';
+            }
         }
-
         if (profilePicUrl) {
-            profilePicUrl.value = dataUrl;
+            profilePicUrl.value = dataUrl || '';
         }
-
         // Store in user data
         userData.profile.profilePic = dataUrl;
-
         // Add success animation
         if (profilePicPreview) {
             profilePicPreview.style.transform = 'scale(1.1)';
@@ -901,6 +914,31 @@ function updateProfileImage(dataUrl) {
     } catch (error) {
         console.error('Error updating profile image:', error);
     }
+}
+
+// On load, show placeholder if no profilePicUrl
+window.addEventListener('DOMContentLoaded', function() {
+    const profilePicImage = document.getElementById('profilePicImage');
+    const profilePicInitials = document.getElementById('profilePicInitials');
+    const profilePicUrl = document.getElementById('profilePicUrl');
+    if (profilePicUrl && !profilePicUrl.value) {
+        if (profilePicImage) profilePicImage.style.display = 'none';
+        if (profilePicInitials) {
+            profilePicInitials.textContent = 'Add Profile Picture';
+            profilePicInitials.style.display = 'flex';
+        }
+    }
+});
+
+// Update placeholder live as user types display name (no longer needed, but keep for future logic)
+const displayNameInput = document.getElementById('displayName');
+if (displayNameInput) {
+    displayNameInput.addEventListener('input', function() {
+        const profilePicInitials = document.getElementById('profilePicInitials');
+        if (profilePicInitials) {
+            profilePicInitials.textContent = 'Add Profile Picture';
+        }
+    });
 }
 
 function showImageProcessing() {

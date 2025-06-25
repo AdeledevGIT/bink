@@ -351,6 +351,23 @@ window.BINK.templates.playMusicPreview = function(platform, url, title) {
     }
 };
 
+// Utility for initials and avatar HTML (bio page version, no camera+ indicator)
+function getAvatarHTML(data, className, containerClass, color, border = '', shadow = '') {
+    const initial = (data.displayName || data.username || 'U').charAt(0).toUpperCase();
+    const hasPic = !!data.profilePicUrl;
+    const bg = color ? `background:${color};` : '';
+    const borderStyle = border ? `border:${border};` : '';
+    const shadowStyle = shadow ? `box-shadow:${shadow};` : '';
+    return `
+        <div class="${containerClass || ''}" style="position:relative; width: 120px; height: 120px; display: flex; align-items: center; justify-content: center;">
+            <img class="${className}" src="${data.profilePicUrl || ''}" alt="Profile" style="${hasPic ? '' : 'display:none;'} width: 100%; height: 100%; object-fit: cover; border-radius: 50%; ${borderStyle} ${shadowStyle}">
+            <div class="avatar-initials" style="${hasPic ? 'display:none;' : ''}${bg} ${borderStyle} ${shadowStyle} position:absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:2.5rem; font-weight:700; border-radius:50%; z-index:2; letter-spacing:0.02em; text-transform:uppercase;">
+                ${initial}
+            </div>
+        </div>
+    `;
+}
+
 // Classic Template (fallback, no extra CSS)
 window.BINK.templates.templates['classic'] = {
     id: 'classic',
@@ -373,9 +390,7 @@ window.BINK.templates.templates['classic'] = {
                     </div>
                 </div>
                 <div class="bio-header">
-                    <div class="profile-image-container">
-                        <img src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile Image">
-                    </div>
+                    ${getAvatarHTML(data, 'profile-image', 'profile-image-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
                     <div class="bio-header-content">
                         <h1>${data.displayName || data.username}</h1>
                         <p class="bio-description">${data.bio || ''}</p>
@@ -434,9 +449,7 @@ window.BINK.templates.templates['neoncard'] = {
                     </div>
                 </div>
                 <div class="neoncard-header">
-                    <div class="neoncard-avatar-container">
-                        <img class="neoncard-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                    </div>
+                    ${getAvatarHTML(data, 'neoncard-avatar', 'neoncard-avatar-container', '#6b47dc', '3px solid #6b47dc', '0 0 18px #6b47dc, 0 0 0 6px rgba(255,255,255,0.2)')}
                     <div class="neoncard-username" data-text="${window.BINK.templates.formatUsername(data.displayName || data.username)}">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="neoncard-bio">${data.bio || ''}</div>
                 </div>
@@ -493,7 +506,7 @@ window.BINK.templates.templates['glassmorphism'] = {
                     </div>
                 </div>
                 <div class="glass-profile">
-                    <img class="glass-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
+                    ${getAvatarHTML(data, 'glass-avatar', 'glass-profile', '#fff', '3px solid #fff', '0 0 18px #fff, 0 0 0 6px rgba(255,255,255,0.2)')}
                     <div class="glass-name">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="glass-bio">${data.bio || ''}</div>
                 </div>
@@ -550,7 +563,7 @@ window.BINK.templates.templates['purplecard'] = {
                     </div>
                 </div>
                 <div class="purplecard-header">
-                    <img class="purplecard-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
+                    ${getAvatarHTML(data, 'purplecard-avatar', 'purplecard-avatar-container', '#6b47dc', '3px solid #6b47dc', '0 0 18px #6b47dc, 0 0 0 6px rgba(255,255,255,0.2)')}
                     <div class="purplecard-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="purplecard-bio">${data.bio || ''}</div>
                 </div>
@@ -608,7 +621,7 @@ window.BINK.templates.templates['landingprofile'] = {
             <div class="landing-banner">
                 <div class="landing-profile-row">
                     <div class="landing-profile-pic-username">
-                        <img class="landing-profile-pic" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
+                        ${getAvatarHTML(data, 'landing-profile-pic', 'landing-profile-pic-username', '#6b47dc', '3px solid #6b47dc', '0 0 18px #6b47dc, 0 0 0 6px rgba(255,255,255,0.2)')}
                         <div class="landing-username-inline">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     </div>
                 </div>
@@ -1024,7 +1037,7 @@ window.BINK.templates.templates['blacklanding'] = {
             <div class="blacklanding-banner">
                 <div class="blacklanding-profile-row-inline">
                     <div class="blacklanding-profile-pic-username">
-                        <img class="blacklanding-profile-pic" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
+                        ${getAvatarHTML(data, 'blacklanding-profile-pic', 'blacklanding-profile-pic-username', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
                         <div class="blacklanding-username-inline">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     </div>
                 </div>

@@ -235,12 +235,18 @@ function renderTemplate(userData) {
 
 // Function to render the classic template (fallback)
 function renderClassicTemplate(userData) {
+    const initial = (userData.displayName || userData.username || 'U').charAt(0).toUpperCase();
+    const hasPic = !!userData.profilePicUrl;
     bioRoot.innerHTML = `
         <div class="bio-page">
             <div class="bio-container">
                 <div class="bio-header">
-                    <div class="profile-image-container">
-                        <img id="profile-image" src="${userData.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile Image">
+                    <div class="profile-image-container" style="position:relative;">
+                        <img id="profile-image" src="${userData.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile Image" style="${hasPic ? '' : 'display:none;'}">
+                        <div class="avatar-initials" id="bioProfileInitials" style="${hasPic ? 'display:none;' : ''}; background: var(--secondary-color, #e0e7ef); color: var(--text-color, #222); position:absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:2.5rem; font-weight:700; border-radius:50%; z-index:2;">${initial}</div>
+                        <div class="profile-pic-indicator" style="position:absolute; bottom:8px; right:8px; width:36px; height:36px; background:var(--primary-color,#6b47dc); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.1rem; box-shadow:0 2px 8px rgba(0,0,0,0.12); border:2px solid #fff; z-index:3;">
+                            <i class="fas fa-camera"></i><span style="font-size:1.2rem;font-weight:900;margin-left:2px;line-height:1;">+</span>
+                        </div>
                     </div>
                     <div class="bio-header-content">
                         <h1 id="display-name">${userData.displayName || userData.username}</h1>
