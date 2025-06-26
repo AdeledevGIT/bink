@@ -24,7 +24,7 @@ const bioRoot = document.getElementById('bio-root');
 // Social media platform icons mapping
 const socialMediaIcons = {
     'instagram': 'fab fa-instagram',
-    'twitter': 'fab fa-twitter',
+    'twitter': 'fab fa-x-twitter',
     'facebook': 'fab fa-facebook',
     'youtube': 'fab fa-youtube',
     'tiktok': 'fab fa-tiktok',
@@ -263,6 +263,21 @@ function renderClassicTemplate(userData) {
             </div>
         </div>
     `;
+    // Add fallback: if image fails to load, show initials
+    const profileImg = document.getElementById('profile-image');
+    const initialsDiv = document.getElementById('bioProfileInitials');
+    if (profileImg) {
+        profileImg.onerror = function() {
+            profileImg.style.display = 'none';
+            if (initialsDiv) initialsDiv.style.display = 'flex';
+        };
+        profileImg.onload = function() {
+            if (profileImg.src && !profileImg.src.endsWith('profile.png')) {
+                profileImg.style.display = '';
+                if (initialsDiv) initialsDiv.style.display = 'none';
+            }
+        };
+    }
     // After links are loaded, update the classic template
     loadUserLinks(userData.id, null, userData);
     loadUserMedia(userData.id, null, userData);

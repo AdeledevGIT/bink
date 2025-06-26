@@ -6,7 +6,7 @@ window.BINK.templates.templates = window.BINK.templates.templates || {};
 window.BINK.templates.getPlatformIcon = function(platform) {
     const icons = {
         'instagram': 'fab fa-instagram',
-        'twitter': 'fab fa-twitter',
+        'twitter': 'fab fa-x-twitter',
         'facebook': 'fab fa-facebook',
         'youtube': 'fab fa-youtube',
         'tiktok': 'fab fa-tiktok',
@@ -358,10 +358,18 @@ function getAvatarHTML(data, className, containerClass, color, border = '', shad
     const bg = color ? `background:${color};` : '';
     const borderStyle = border ? `border:${border};` : '';
     const shadowStyle = shadow ? `box-shadow:${shadow};` : '';
+    // Generate unique IDs for image and initials for event handlers
+    const uniqueId = `avatar-${Math.random().toString(36).substr(2, 9)}`;
+    const imgId = `${uniqueId}-img`;
+    const initialsId = `${uniqueId}-initials`;
+    // Add onerror/onload handlers to toggle initials and image
     return `
         <div class="${containerClass || ''}" style="position:relative; width: 120px; height: 120px; display: flex; align-items: center; justify-content: center;">
-            <img class="${className}" src="${data.profilePicUrl || ''}" alt="Profile" style="${hasPic ? '' : 'display:none;'} width: 100%; height: 100%; object-fit: cover; border-radius: 50%; ${borderStyle} ${shadowStyle}">
-            <div class="avatar-initials" style="${hasPic ? 'display:none;' : ''}${bg} ${borderStyle} ${shadowStyle} position:absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:2.5rem; font-weight:700; border-radius:50%; z-index:2; letter-spacing:0.02em; text-transform:uppercase;">
+            <img class="${className}" id="${imgId}" src="${data.profilePicUrl || ''}" alt="Profile" style="${hasPic ? '' : 'display:none;'} width: 100%; height: 100%; object-fit: cover; border-radius: 50%; ${borderStyle} ${shadowStyle}"
+                onerror="this.style.display='none'; var initials=document.getElementById('${initialsId}'); if(initials){initials.style.display='flex';}"
+                onload="if(this.src && !this.src.endsWith('profile.png')){this.style.display=''; var initials=document.getElementById('${initialsId}'); if(initials){initials.style.display='none';}}"
+            >
+            <div class="avatar-initials" id="${initialsId}" style="${hasPic ? 'display:none;' : ''}${bg} ${borderStyle} ${shadowStyle} position:absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:2.5rem; font-weight:700; border-radius:50%; z-index:2; letter-spacing:0.02em; text-transform:uppercase;">
                 ${initial}
             </div>
         </div>
@@ -1002,9 +1010,27 @@ function selectTemplateAndSave(templateId) {
     });
 }
 
-// Function to show token purchase modal - now just selects the template directly
-window.BINK.templates.showTokenPurchaseModal = function(templateId, tokenPrice = 100) {
-    // Simply select the template directly - all templates are now free to use
+// Function to show premium template modal
+window.BINK.templates.showTokenPurchaseModal = function(templateId) {
+    // Get template details
+    const template = window.BINK.templates.getTemplateById(templateId);
+    if (!template) {
+        console.error("Template not found:", templateId);
+        return;
+    }
+
+    // Get current user data
+    const currentUser = firebase.auth().currentUser;
+    if (!currentUser) {
+        console.error("User not authenticated");
+        return;
+    }
+
+    const currentUserData = window.currentUserData || {};
+    const currentTokens = currentUserData.tokens || 0;
+    const tokenPrice = template.tokenPrice || 100;
+
+    // Directly select the template
     if (typeof window.handleTemplateSelection === 'function') {
         window.handleTemplateSelection(templateId);
     } else {

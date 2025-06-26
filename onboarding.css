@@ -3239,3 +3239,116 @@
     }
 }
 
+/* ... existing code ... */
+.premium-options .option,
+.pricing-option,
+.token-option {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    text-align: center;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+}
+
+.premium-options .option:hover,
+.pricing-option:hover,
+.token-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: var(--accent-primary);
+}
+
+.pricing-option .price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin: var(--space-md) 0;
+}
+
+.pricing-option .price span {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+.pricing-option.featured {
+    position: relative;
+    border-color: var(--accent-primary);
+    transform: scale(1.05);
+}
+
+.pricing-badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent-gradient);
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.token-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.token-amount {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.token-price {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+}
+/* ... existing code ... */
+
+/* ... existing code ... */
+.lock-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lock-message {
+    background: #fff;
+    color: #222;
+    padding: 2rem 2.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    text-align: center;
+    max-width: 350px;
+}
+.lock-message i {
+    font-size: 2.5rem;
+    color: var(--accent-primary);
+    margin-bottom: 1rem;
+}
+.lock-message h3 {
+    margin: 0.5rem 0 0.5rem 0;
+    font-size: 1.5rem;
+}
+.lock-message p {
+    margin-bottom: 1.5rem;
+    color: #444;
+}
+.lock-message .btn {
+    font-size: 1rem;
+    padding: 0.75rem 2rem;
+}
+/* ... existing code ... */
+

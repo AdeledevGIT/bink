@@ -3025,6 +3025,78 @@
         padding: 5px 8px;
         font-size: 0.75rem;
     }
+
+.lock-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+.lock-message {
+    background: #fff;
+    color: #222;
+    padding: 2rem 2.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    text-align: center;
+    max-width: 350px;
+}
+.lock-message i {
+    font-size: 2.5rem;
+    color: var(--accent-primary);
+    margin-bottom: 1rem;
+}
+.lock-message h3 {
+    margin: 0.5rem 0 0.5rem 0;
+    font-size: 1.5rem;
+}
+.lock-message p {
+    margin-bottom: 1.5rem;
+    color: #444;
+}
+.lock-message .btn {
+    font-size: 1rem;
+    padding: 0.75rem 2rem;
+}
+
+.section-lock-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid #eee;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    padding: 2rem 2.5rem;
+    margin: 2rem auto;
+    max-width: 350px;
+    text-align: center;
+    z-index: 1;
+}
+.section-lock-message i {
+    font-size: 2.5rem;
+    color: var(--accent-primary);
+    margin-bottom: 1rem;
+}
+.section-lock-message h3 {
+    margin: 0.5rem 0 0.5rem 0;
+    font-size: 1.5rem;
+}
+.section-lock-message p {
+    margin-bottom: 1.5rem;
+    color: #444;
+}
+.section-lock-message .btn {
+    font-size: 1rem;
+    padding: 0.75rem 2rem;
+}
+.lock-overlay { display: none !important; }
 
 

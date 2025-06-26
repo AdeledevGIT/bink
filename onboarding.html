@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="./logo1.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="onboarding.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
     <header class="page-header">
@@ -170,6 +170,14 @@
 
                     <!-- Media Content Section -->
                     <div class="media-content-section" id="media-content-section">
+                        <div id="media-lock-overlay" class="lock-overlay" style="display:none;">
+                            <div class="lock-message">
+                                <i class="fas fa-lock"></i>
+                                <h3>Premium Feature</h3>
+                                <p>Media and Catalog are available for Pro users only.</p>
+                                <button class="btn btn-primary" onclick="showPricingModal()">Upgrade to Pro</button>
+                            </div>
+                        </div>
                         <div class="media-manager">
                             <!-- Media Type Selector -->
                             <div class="media-type-selector">
@@ -248,6 +256,14 @@
 
                     <!-- Catalog Content Section -->
                     <div class="catalog-content-section" id="catalog-content-section" style="display: none;">
+                        <div id="catalog-lock-overlay" class="lock-overlay" style="display:none;">
+                            <div class="lock-message">
+                                <i class="fas fa-lock"></i>
+                                <h3>Premium Feature</h3>
+                                <p>Media and Catalog are available for Pro users only.</p>
+                                <button class="btn btn-primary" onclick="showPricingModal()">Upgrade to Pro</button>
+                            </div>
+                        </div>
                         <div class="catalog-manager">
                             <div class="section-header">
                                 <h4>Product Catalog</h4>
@@ -610,6 +626,102 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium Template Modal -->
+    <div class="modal" id="premiumTemplateModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-gem"></i> Unlock Premium Template</h3>
+                <button class="close-modal" onclick="closePremiumTemplateModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="premium-modal-body">
+                <p>The template <strong id="premium-template-name"></strong> is a premium template.</p>
+                <p>You can unlock it using tokens or by upgrading to a Pro account for access to all premium features.</p>
+                <div class="premium-options">
+                    <div class="option">
+                        <h4>Upgrade to Pro</h4>
+                        <p>Get unlimited access to all templates and features.</p>
+                        <a href="pricing.html" class="btn btn-primary">Upgrade Now</a>
+                    </div>
+                    <div class="option">
+                        <h4>Use Tokens</h4>
+                        <p>Unlock this template for <strong id="template-token-price"></strong> tokens.</p>
+                        <p>Your balance: <strong id="user-token-balance"></strong> tokens.</p>
+                        <button id="use-tokens-button" class="btn btn-secondary">Use Tokens</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing Modal -->
+    <div class="modal" id="pricingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-rocket"></i> Upgrade to Pro</h3>
+                <button class="close-modal" onclick="closePricingModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Unlock all premium features, including exclusive templates, advanced analytics, and priority support.</p>
+                <div class="pricing-options">
+                    <div class="pricing-option" onclick="selectPlan('premium', 'monthly', 2500)">
+                        <h4>Monthly</h4>
+                        <p class="price">₦2,500<span>/month</span></p>
+                        <p>Billed monthly.</p>
+                    </div>
+                    <div class="pricing-option featured" onclick="selectPlan('premium', 'yearly', 25000)">
+                        <div class="pricing-badge">Best Value</div>
+                        <h4>Yearly</h4>
+                        <p class="price">₦25,000<span>/year</span></p>
+                        <p>Save 17% with annual billing.</p>
+                    </div>
+                    <div class="pricing-option" onclick="selectPlan('premium', 'lifetime', 60000)">
+                        <div class="pricing-badge">One-Time</div>
+                        <h4>Lifetime</h4>
+                        <p class="price">₦60,000<span>/one-time</span></p>
+                        <p>Pay once, own it forever.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tokens Modal -->
+    <div class="modal" id="tokensModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-coins"></i> Buy Tokens</h3>
+                <button class="close-modal" onclick="closeTokensModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Purchase tokens to unlock premium templates individually.</p>
+                <div class="token-options">
+                    <div class="token-option" onclick="selectTokens(800, 500)">
+                        <span class="token-amount">800 Tokens</span>
+                        <span class="token-price">₦500</span>
+                    </div>
+                    <div class="token-option" onclick="selectTokens(1600, 900)">
+                        <span class="token-amount">1600 Tokens</span>
+                        <span class="token-price">₦900</span>
+                    </div>
+                    <div class="token-option" onclick="selectTokens(2500, 1300)">
+                        <span class="token-amount">2500 Tokens</span>
+                        <span class="token-price">₦1,300</span>
+                    </div>
+                    <div class="token-option" onclick="selectTokens(5000, 2500)">
+                        <span class="token-amount">5000 Tokens</span>
+                        <span class="token-price">₦2,500</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

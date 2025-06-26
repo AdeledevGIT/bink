@@ -300,7 +300,17 @@ function loadStepContent() {
                 loadSocialContent();
                 break;
             case 4:
+                // Lock media & catalog for free users
+                const isPremiumUser = currentUserData?.isPremium || false;
+                const isCreator = currentUserData?.isCreator || false;
+                if (!isPremiumUser && !isCreator) {
+                    document.getElementById('media-lock-overlay').style.display = 'flex';
+                    document.getElementById('catalog-lock-overlay').style.display = 'flex';
+                } else {
+                    document.getElementById('media-lock-overlay').style.display = 'none';
+                    document.getElementById('catalog-lock-overlay').style.display = 'none';
                 loadMediaContent();
+                }
                 break;
             case 5:
                 loadTemplates();
@@ -644,11 +654,9 @@ function handleBioChange(event) {
         counterContainer.classList.remove('warning', 'error');
 
         if (charCount > maxChars) {
-            counterContainer.classList.add('error');
-            bioCharCount.style.color = '#f87171';
-            // Prevent further input
-            event.target.value = text.substring(0, maxChars);
-            bioCharCount.textContent = maxChars;
+            showFieldError(bioInput, 'Bio must be 500 characters or less');
+            bioInput.focus();
+            return false;
         } else if (charCount > maxChars * 0.8) {
             counterContainer.classList.add('warning');
             bioCharCount.style.color = '#fbbf24';
@@ -3089,8 +3097,166 @@ function addTemplateSelectionHandlers() {
 
 function handleTemplateSelection(templateId) {
     try {
-        console.log('Template selection triggered:', templateId);
-        
+        const template = window.BINK.templates.templates[templateId];
+        if (!template) {
+            showError('Sorry, this template could not be found.');
+            return;
+        }
+
+        const isPremiumTemplate = template.isPremium || (template.tokenPrice && template.tokenPrice > 0);
+        const isPremiumUser = currentUserData?.isPremium || false;
+        const isCreator = currentUserData?.isCreator || false;
+        const usedTemplates = currentUserData?.usedTemplates || [];
+        const hasUsedTemplate = usedTemplates.includes(templateId);
+
+        if (isPremiumTemplate && !isPremiumUser && !isCreator && !hasUsedTemplate) {
+            showPremiumTemplateModal(templateId);
+            return;
+        }
+
+        selectTemplate(templateId);
+
+    } catch (error) {
+        console.error('Error handling template selection:', error);
+    }
+}
+
+function showPremiumTemplateModal(templateId) {
+    const modal = document.getElementById('premiumTemplateModal');
+    const template = window.BINK.templates.templates[templateId];
+    if (!modal || !template) return;
+
+    document.getElementById('premium-template-name').textContent = template.name;
+    document.getElementById('template-token-price').textContent = template.tokenPrice || 1;
+    document.getElementById('user-token-balance').textContent = currentUserData?.tokens || 0;
+
+    const useTokensButton = document.getElementById('use-tokens-button');
+    useTokensButton.onclick = () => useTokenForTemplate(templateId, template.tokenPrice || 1);
+
+    const upgradeButton = document.querySelector('#premium-modal-body .option a');
+    upgradeButton.onclick = (e) => {
+        e.preventDefault();
+        closePremiumTemplateModal();
+        showPricingModal();
+    };
+
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closePremiumTemplateModal() {
+    const modal = document.getElementById('premiumTemplateModal');
+    if (modal) {
+        modal.classList.remove('show');
+    }
+    document.body.style.overflow = 'auto';
+}
+
+function showPricingModal() {
+    const modal = document.getElementById('pricingModal');
+    if (modal) {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closePricingModal() {
+    const modal = document.getElementById('pricingModal');
+    if (modal) {
+        modal.classList.remove('show');
+    }
+    document.body.style.overflow = 'auto';
+}
+
+function showTokensModal() {
+    const modal = document.getElementById('tokensModal');
+    if (modal) {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeTokensModal() {
+    const modal = document.getElementById('tokensModal');
+    if (modal) {
+        modal.classList.remove('show');
+    }
+    document.body.style.overflow = 'auto';
+}
+
+function selectPlan(plan, duration, price) {
+    window.location.href = `payment.html?plan=${plan}&duration=${duration}&price=${price}`;
+}
+
+async function selectTokens(amount, price) {
+    try {
+        const purchaseRequestRef = await db.collection('tokenPurchaseRequests').add({
+            userId: currentUser.uid,
+            username: currentUserData.username || '',
+            email: currentUser.email,
+            tokenAmount: amount,
+            price: price,
+            currency: 'NGN',
+            status: 'pending',
+            isFirstPurchase: !(currentUserData.hasPurchasedTokens || false),
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        window.location.href = `payment.html?purchase=${purchaseRequestRef.id}&amount=${amount}&price=${price}&type=token`;
+    } catch (error) {
+        console.error('Error processing token purchase:', error);
+        showError('Error initiating purchase. Please try again.');
+    }
+}
+
+async function useTokenForTemplate(templateId, tokenPrice = 1) {
+    if (!currentUser) {
+        showError("You must be logged in to use tokens.");
+        return;
+    }
+
+    const currentTokens = currentUserData?.tokens || 0;
+
+    if (currentTokens < tokenPrice) {
+        showError(`You don't have enough tokens. Please buy more.`);
+        closePremiumTemplateModal();
+        showTokensModal();
+        return;
+    }
+
+    const usedTemplates = currentUserData?.usedTemplates || [];
+    if (usedTemplates.includes(templateId)) {
+        selectTemplate(templateId);
+        closePremiumTemplateModal();
+        return;
+    }
+    
+    const newTokenBalance = currentTokens - tokenPrice;
+
+    try {
+        await db.collection('users').doc(currentUser.uid).update({
+            tokens: newTokenBalance,
+            usedTemplates: firebase.firestore.FieldValue.arrayUnion(templateId)
+        });
+
+        currentUserData.tokens = newTokenBalance;
+        if (currentUserData.usedTemplates) {
+            currentUserData.usedTemplates.push(templateId);
+        } else {
+            currentUserData.usedTemplates = [templateId];
+        }
+
+        showSuccess(`Template unlocked! You have ${newTokenBalance} tokens remaining.`);
+        selectTemplate(templateId, true); // Select the template visually
+        closePremiumTemplateModal();
+
+    } catch (error) {
+        console.error("Error using tokens:", error);
+        showError(`Error unlocking template: ${error.message}`);
+    }
+}
+
+// This function just handles the visual selection part
+function selectTemplate(templateId, isPurchase = false) {
         // Remove previous selection
         const previouslySelected = document.querySelector('.template-card.selected');
         if (previouslySelected) {
@@ -3107,18 +3273,15 @@ function handleTemplateSelection(templateId) {
         if (selectedCard) {
             selectedCard.classList.add('selected');
             selectedTemplate = templateId;
-            console.log('Template selected:', selectedTemplate);
             
             const selectedBtn = selectedCard.querySelector('.template-select-btn');
             if (selectedBtn) {
                 selectedBtn.classList.add('selected');
                 selectedBtn.innerHTML = '<i class="fas fa-check"></i> Selected';
             }
-        } else {
-            console.error('Template card not found for ID:', templateId);
         }
-    } catch (error) {
-        console.error('Error handling template selection:', error);
+    if(isPurchase){
+        saveTemplateSelection();
     }
 }
 

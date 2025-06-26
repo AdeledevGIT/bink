@@ -202,6 +202,9 @@ function loadUserProfile(userId) {
             if (headerTokenCount) {
                 headerTokenCount.textContent = userTokens;
             }
+
+            // Check media catalog lock
+            enforceMediaCatalogLock(currentUserData);
         } else {
             console.log("No such user document!");
             showMessage("Could not load profile data.", true);
@@ -3027,6 +3030,80 @@ function improveMobileModals() {
         });
     });
 }
+
+// ... existing code ...
+function enforceMediaCatalogLock(userData) {
+    const isPremium = userData?.isPremium || false;
+    const isCreator = userData?.isCreator || false;
+    const lockOverlay = document.getElementById('media-catalog-lock-overlay');
+    if (!isPremium && !isCreator && lockOverlay) {
+        lockOverlay.style.display = 'flex';
+        // Optionally, disable tab navigation or hide media/catalog tabs here
+        // You can also add logic to prevent backend actions if needed
+    } else if (lockOverlay) {
+        lockOverlay.style.display = 'none';
+    }
+}
+// Call this after user data is loaded
+// Example: enforceMediaCatalogLock(currentUserData);
+// ... existing code ...
+// After user data is loaded (e.g., in loadUserProfile or similar):
+// enforceMediaCatalogLock(userData);
+
+// ... existing code ...
+function enforceSectionLocks(userData) {
+    const isPremium = userData?.isPremium || false;
+    const isCreator = userData?.isCreator || false;
+    // Media section
+    const mediaLock = document.getElementById('media-lock-message');
+    const mediaSection = document.getElementById('media-content-section');
+    if (mediaLock && mediaSection) {
+        if (!isPremium && !isCreator) {
+            mediaLock.style.display = 'flex';
+            // Optionally hide or disable media controls
+            Array.from(mediaSection.querySelectorAll('.media-manager, .media-actions, .media-type-selector, .media-section')).forEach(el => el.style.display = 'none');
+        } else {
+            mediaLock.style.display = 'none';
+            Array.from(mediaSection.querySelectorAll('.media-manager, .media-actions, .media-type-selector, .media-section')).forEach(el => el.style.display = '');
+        }
+    }
+    // Catalog section
+    const catalogLock = document.getElementById('catalog-lock-message');
+    const catalogSection = document.getElementById('catalog-content-section');
+    if (catalogLock && catalogSection) {
+        if (!isPremium && !isCreator) {
+            catalogLock.style.display = 'flex';
+            Array.from(catalogSection.querySelectorAll('.catalog-manager, .catalog-actions')).forEach(el => el.style.display = 'none');
+        } else {
+            catalogLock.style.display = 'none';
+            Array.from(catalogSection.querySelectorAll('.catalog-manager, .catalog-actions')).forEach(el => el.style.display = '');
+        }
+    }
+}
+// Call enforceSectionLocks(currentUserData) after user data is loaded
+// ... existing code ...
+// Backend enforcement for media/catalog actions
+function isProUser(userData) {
+    return userData?.isPremium || userData?.isCreator;
+}
+// Example for media save
+async function saveMediaItem(mediaData, mediaType) {
+    if (!isProUser(currentUserData)) {
+        showMessage('Upgrade to Pro to use Media features.', true);
+        return;
+    }
+    // ... existing code ...
+}
+// Example for catalog save
+async function saveProductData(productData, saveButton) {
+    if (!isProUser(currentUserData)) {
+        showMessage('Upgrade to Pro to use Catalog features.', true);
+        return;
+    }
+    // ... existing code ...
+}
+// Repeat similar checks in all media/catalog upload/edit/delete functions
+// ... existing code ...
 
 
 
