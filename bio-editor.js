@@ -1816,8 +1816,6 @@ function copyLinkToClipboard() {
     const username = usernameDisplay.textContent;
     if (!username) return;
 
-    // Use only the username parameter - no template parameter
-    // This way the link will always show the user's current template
     const bioUrl = `bio.html?u=${username}`;
 
     // Get the full URL including the domain
@@ -2153,7 +2151,7 @@ function initializeTabNavigation() {
             if (targetTab === 'media') {
                 const isPremiumUser = checkPremiumStatus(currentUserData);
                 if (!isPremiumUser) {
-                    showMessage("Media & Catalog is a premium feature. Please upgrade to Pro to access.", true);
+                    showMessage("Media & Catalog is a premium feature. Please upgrade to Pro to add media and sell on your bio.", true);
                     return; // Stop the function here
                 }
             }
@@ -3047,19 +3045,10 @@ function enforceMediaCatalogLock(userData) {
     const lockOverlay = document.getElementById('media-catalog-lock-overlay');
     if (!isPremium && !isCreator && lockOverlay) {
         lockOverlay.style.display = 'flex';
-        // Optionally, disable tab navigation or hide media/catalog tabs here
-        // You can also add logic to prevent backend actions if needed
     } else if (lockOverlay) {
         lockOverlay.style.display = 'none';
     }
 }
-// Call this after user data is loaded
-// Example: enforceMediaCatalogLock(currentUserData);
-// ... existing code ...
-// After user data is loaded (e.g., in loadUserProfile or similar):
-// enforceMediaCatalogLock(userData);
-
-// ... existing code ...
 function enforceSectionLocks(userData) {
     const isPremium = userData?.isPremium || false;
     const isCreator = userData?.isCreator || false;
@@ -3089,30 +3078,21 @@ function enforceSectionLocks(userData) {
         }
     }
 }
-// Call enforceSectionLocks(currentUserData) after user data is loaded
-// ... existing code ...
-// Backend enforcement for media/catalog actions
 function isProUser(userData) {
     return userData?.isPremium || userData?.isCreator;
 }
-// Example for media save
 async function saveMediaItem(mediaData, mediaType) {
     if (!isProUser(currentUserData)) {
         showMessage('Upgrade to Pro to use Media features.', true);
         return;
     }
-    // ... existing code ...
 }
-// Example for catalog save
 async function saveProductData(productData, saveButton) {
     if (!isProUser(currentUserData)) {
         showMessage('Upgrade to Pro to use Catalog features.', true);
         return;
     }
-    // ... existing code ...
 }
-// Repeat similar checks in all media/catalog upload/edit/delete functions
-// ... existing code ...
 
 
 
