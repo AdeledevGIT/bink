@@ -420,17 +420,6 @@
     pointer-events: none;
 }
 
-.profile-pic-overlay i {
-    font-size: 2.5rem;
-    margin-bottom: var(--space-xs);
-    transform: translateY(10px);
-    transition: transform var(--transition-normal);
-}
-
-.profile-pic-preview:hover .profile-pic-overlay i {
-    transform: translateY(0);
-}
-
 .profile-pic-overlay span {
     font-weight: 700;
     letter-spacing: 0.025em;
@@ -1089,9 +1078,9 @@
             rgba(15, 23, 42, 0.95) 100%
         );
     border-radius: var(--radius-2xl);
-    max-width: 520px;
-    width: 92%;
-    max-height: 92vh;
+    max-width: 90vw;
+    width: 90vw;
+    max-height: 90vh;
     overflow: hidden;
     box-shadow:
         0 25px 50px rgba(0, 0, 0, 0.5),
@@ -1477,8 +1466,8 @@
     text-shadow: 0 0 10px rgba(225, 48, 108, 0.3);
 }
 .select-option[data-value="twitter"] i {
-    color: #1da1f2;
-    text-shadow: 0 0 10px rgba(29, 161, 242, 0.3);
+    color: #000000;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 .select-option[data-value="facebook"] i {
     color: #1877f2;
@@ -1860,7 +1849,7 @@
 #platform option[value="website"] { color: #6b7280; }
 #platform option[value="youtube"] { color: #ef4444; }
 #platform option[value="instagram"] { color: #ec4899; }
-#platform option[value="twitter"] { color: #60a5fa; }
+#platform option[value="twitter"] { color: #000000; }
 #platform option[value="facebook"] { color: #1877f2; }
 #platform option[value="linkedin"] { color: #0a66c2; }
 #platform option[value="tiktok"] { color: #000000; }
@@ -1889,9 +1878,33 @@
     background-size: 1rem;
     padding-right: 3rem;
     cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 #platform:focus {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+}
+
+/* Enhanced styling for all select elements */
+#music-platform,
+#product-currency,
+#product-category {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    padding-right: 3rem;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+#music-platform:focus,
+#product-currency:focus,
+#product-category:focus {
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
 }
 
@@ -3164,5 +3177,65 @@
     font-weight: 900;
     margin-left: 2px;
     line-height: 1;
+}
+
+/* Modal responsive styles */
+@media (max-width: 768px) {
+    .modal-content {
+        max-width: 95vw;
+        width: 95vw;
+        max-height: 95vh;
+        margin: 2.5vh auto;
+    }
+    
+    .modal-header {
+        padding: var(--space-lg) var(--space-lg) var(--space-md);
+    }
+    
+    .modal-header h3 {
+        font-size: 1.4rem;
+    }
+    
+    .modal-body {
+        padding: var(--space-lg);
+        max-height: 70vh;
+    }
+    
+    .modal-footer {
+        padding: var(--space-md) var(--space-lg) var(--space-lg);
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        max-width: 98vw;
+        width: 98vw;
+        max-height: 98vh;
+        margin: 1vh auto;
+    }
+    
+    .modal-header {
+        padding: var(--space-md) var(--space-md) var(--space-sm);
+    }
+    
+    .modal-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .modal-body {
+        padding: var(--space-md);
+        max-height: 75vh;
+    }
+    
+    .modal-footer {
+        padding: var(--space-sm) var(--space-md) var(--space-md);
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+    
+    .modal-footer .btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 

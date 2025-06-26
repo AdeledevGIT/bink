@@ -56,10 +56,10 @@ let userData = {
     template: null
 };
 
-// Social media platforms for the form (matching bio-editor structure)
+// Social media platforms for the form
 const socialPlatforms = [
     { id: 'instagram', name: 'Instagram', icon: 'fab fa-instagram' },
-    { id: 'twitter', name: 'Twitter', icon: 'fab fa-twitter' },
+    { id: 'twitter', name: 'X (Twitter)', icon: 'fab fa-x-twitter' },
     { id: 'facebook', name: 'Facebook', icon: 'fab fa-facebook' },
     { id: 'youtube', name: 'YouTube', icon: 'fab fa-youtube' },
     { id: 'tiktok', name: 'TikTok', icon: 'fab fa-tiktok' },
@@ -128,6 +128,24 @@ async function loadUserData() {
             
             if (currentUserData.profilePicUrl && profilePicImage) {
                 profilePicImage.src = currentUserData.profilePicUrl;
+                profilePicImage.style.display = 'block';
+                // Set the hidden input field
+                const profilePicUrl = document.getElementById('profilePicUrl');
+                if (profilePicUrl) {
+                    profilePicUrl.value = currentUserData.profilePicUrl;
+                }
+                if (profilePicInitials) {
+                    profilePicInitials.style.display = 'none';
+                }
+            } else {
+                // Show "Add Profile Picture" text when no profile picture is set
+                if (profilePicImage) {
+                    profilePicImage.style.display = 'none';
+                }
+                if (profilePicInitials) {
+                    profilePicInitials.textContent = 'Add Profile Picture';
+                    profilePicInitials.style.display = 'flex';
+                }
             }
             
             // Load selected template if it exists
@@ -136,15 +154,8 @@ async function loadUserData() {
             }
         }
         
-        // Load social links
-        try {
-            const socialLinksDoc = await db.collection('users').doc(currentUser.uid).collection('socialLinks').doc('links').get();
-            if (socialLinksDoc.exists) {
-                userSocialLinks = socialLinksDoc.data();
-            }
-        } catch (error) {
-            console.error('Error loading social links:', error);
-        }
+        // Social links are now loaded directly from the user document
+        // No need for separate collection loading
         
         setupEventListeners();
         generateSocialLinksForm();
@@ -188,9 +199,6 @@ function setupEventListeners() {
             setupDragAndDrop();
         }
 
-        // Setup custom select dropdown
-        setupCustomSelect();
-
         // Mobile enhancements
         setupMobileEnhancements();
 
@@ -205,90 +213,8 @@ function setupEventListeners() {
     }
 }
 
-// Custom Select Dropdown Functionality
-function setupCustomSelect() {
-    const platformSelect = document.getElementById('platform-select');
-    if (!platformSelect) return;
-
-    const selectedElement = document.getElementById('platform-selected');
-    const optionsContainer = document.getElementById('platform-options');
-    const hiddenInput = document.getElementById('platform');
-
-    // Toggle dropdown
-    selectedElement.addEventListener('click', function(e) {
-        e.stopPropagation();
-        platformSelect.classList.toggle('open');
-        optionsContainer.classList.toggle('select-hide');
-    });
-
-    // Handle option selection
-    const options = optionsContainer.querySelectorAll('.select-option');
-    options.forEach(option => {
-        option.addEventListener('click', function(e) {
-            e.stopPropagation();
-            
-            const value = this.getAttribute('data-value');
-            const icon = this.querySelector('i').cloneNode(true);
-            const text = this.querySelector('span').textContent;
-            
-            // Update selected display
-            selectedElement.innerHTML = '';
-            selectedElement.appendChild(icon);
-            selectedElement.appendChild(document.createElement('span')).textContent = text;
-            
-            // Update hidden input
-            hiddenInput.value = value;
-            
-            // Update visual state
-            options.forEach(opt => opt.classList.remove('selected'));
-            this.classList.add('selected');
-            
-            // Close dropdown
-            platformSelect.classList.remove('open');
-            optionsContainer.classList.add('select-hide');
-            
-            // Trigger change event for form validation
-            hiddenInput.dispatchEvent(new Event('change'));
-        });
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!platformSelect.contains(e.target)) {
-            platformSelect.classList.remove('open');
-            optionsContainer.classList.add('select-hide');
-        }
-    });
-
-    // Keyboard navigation
-    selectedElement.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            platformSelect.classList.toggle('open');
-            optionsContainer.classList.toggle('select-hide');
-        }
-    });
-
-    options.forEach((option, index) => {
-        option.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                this.click();
-            } else if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                const nextOption = options[index + 1] || options[0];
-                nextOption.focus();
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                const prevOption = options[index - 1] || options[options.length - 1];
-                prevOption.focus();
-            }
-        });
-        
-        // Make options focusable
-        option.setAttribute('tabindex', '0');
-    });
-}
+// Custom Select Dropdown Functionality - REMOVED
+// Now using standard HTML select element for better compatibility
 
 // Enhanced Navigation functions
 function goToNextStep() {
@@ -928,6 +854,9 @@ window.addEventListener('DOMContentLoaded', function() {
             profilePicInitials.style.display = 'flex';
         }
     }
+    
+    // Initialize social links form
+    generateSocialLinksForm();
 });
 
 // Update placeholder live as user types display name (no longer needed, but keep for future logic)
@@ -991,7 +920,13 @@ function hideImageProcessing() {
 function setupDragAndDrop() {
     try {
         const profilePicPreview = document.getElementById('profilePicPreview');
-        if (!profilePicPreview) return;
+        const profilePicUpload = document.getElementById('profilePicUpload');
+        if (!profilePicPreview || !profilePicUpload) return;
+
+        // Add click functionality to trigger file upload
+        profilePicPreview.addEventListener('click', function() {
+            profilePicUpload.click();
+        });
 
         // Prevent default drag behaviors
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -1263,28 +1198,14 @@ function showAddLinkModal(type = 'regular') {
             modalTitle.textContent = type === 'social' ? '✨ Add Social Media Link' : '✨ Add New Link';
         }
         
-        // Reset custom select to default state
-        const selectedElement = document.getElementById('platform-selected');
-        const hiddenInput = document.getElementById('platform');
-        if (selectedElement && hiddenInput) {
-            selectedElement.innerHTML = '<i class="fas fa-globe"></i><span>Choose a platform</span>';
-            hiddenInput.value = '';
-            
-            // Remove selected state from all options
-            const options = document.querySelectorAll('.select-option');
-            options.forEach(opt => opt.classList.remove('selected'));
+        // Reset platform select to default state
+        const platformSelect = document.getElementById('platform');
+        if (platformSelect) {
+            platformSelect.value = '';
         }
-        
-        // Reset submit handler to default
-        if (form) {
-            form.onsubmit = handleLinkSubmit;
-        }
-        
-        // Store the link type for form submission
-        modal.dataset.linkType = type;
         
     } catch (error) {
-        console.error('Error showing link modal:', error);
+        console.error('Error showing add link modal:', error);
     }
 }
 
@@ -1405,13 +1326,13 @@ function handleLinkSubmit(event) {
             const normalizedUrl = normalizeUrl(url);
             
             // Check for duplicates in social links
-            if (userSocialLinks[platform]) {
+            const currentSocialLinks = currentUserData?.socialLinks || {};
+            if (currentSocialLinks[platform]) {
                 showFieldError(urlInput, 'This social platform already has a link');
                 return;
             }
 
-            // Add to social links
-            userSocialLinks[platform] = normalizedUrl;
+            // Add to social links (will be saved via saveSocialData)
             
             // Save social data
             saveSocialData();
@@ -1966,42 +1887,33 @@ function deleteLink(linkId) {
 // Enhanced Social functions
 function loadSocialContent() {
     try {
-        // Load existing social links from the separate socialLinks collection
-        if (currentUser) {
-            db.collection('users').doc(currentUser.uid).collection('socialLinks').doc('links').get()
-                .then((doc) => {
-                    if (doc.exists) {
-                        userSocialLinks = doc.data();
-                    } else {
-                        userSocialLinks = {};
-                    }
-                    // Generate the social links display
-                    generateSocialLinksForm();
-                })
-                .catch((error) => {
-                    console.error('Error loading social links:', error);
-                    userSocialLinks = {};
-                    generateSocialLinksForm();
-                });
-        } else {
-            userSocialLinks = {};
-            generateSocialLinksForm();
+        const socialContent = document.getElementById('social-content');
+        if (!socialContent) return;
+
+        // Generate the social links form
+        generateSocialLinksForm();
+        
+        // Load existing social links data
+        loadSocialLinks();
+        
+        // Add save button event listener
+        const saveSocialBtn = document.getElementById('save-social-button');
+        if (saveSocialBtn) {
+            saveSocialBtn.addEventListener('click', handleSocialLinksSubmit);
         }
+        
     } catch (error) {
         console.error('Error loading social content:', error);
-        userSocialLinks = {};
-        generateSocialLinksForm();
     }
 }
 
+// Generate social links form
 function generateSocialLinksForm() {
-    const socialGrid = document.querySelector('.social-grid');
-    if (!socialGrid) return;
+    const socialLinksForm = document.getElementById('social-links-form');
+    if (!socialLinksForm) return;
+    
+    socialLinksForm.innerHTML = '';
 
-    // Clear existing content
-    socialGrid.innerHTML = '';
-
-    // Create input fields for each social platform (matching bio-editor approach)
     socialPlatforms.forEach(platform => {
         const inputContainer = document.createElement('div');
         inputContainer.className = 'social-link-input';
@@ -2009,42 +1921,66 @@ function generateSocialLinksForm() {
         inputContainer.innerHTML = `
             <i class="${platform.icon}"></i>
             <input type="url" id="social-${platform.id}" name="social-${platform.id}"
-                   placeholder="${platform.name} URL" value="${userSocialLinks[platform.id] || ''}">
+                   placeholder="${platform.name} URL">
         `;
 
-        // Add change event listener to save data when user types
-        const input = inputContainer.querySelector('input');
-        input.addEventListener('input', (e) => {
-            const value = e.target.value.trim();
-            if (value) {
-                userSocialLinks[platform.id] = value;
-            } else {
-                delete userSocialLinks[platform.id];
-            }
-        });
+        socialLinksForm.appendChild(inputContainer);
+    });
+}
 
-        socialGrid.appendChild(inputContainer);
+// Load social links
+function loadSocialLinks() {
+    if (!currentUserData || !currentUserData.socialLinks) return;
+
+    const socialLinks = currentUserData.socialLinks;
+
+    socialPlatforms.forEach(platform => {
+        const input = document.getElementById(`social-${platform.id}`);
+        if (input && socialLinks[platform.id]) {
+            input.value = socialLinks[platform.id];
+        }
+    });
+}
+
+// Handle social links submission
+function handleSocialLinksSubmit() {
+    if (!currentUser) {
+        showNotification("Not authenticated. Cannot save.", 'error');
+        return;
+    }
+
+    const socialLinks = {};
+
+    socialPlatforms.forEach(platform => {
+        const input = document.getElementById(`social-${platform.id}`);
+        if (input && input.value.trim()) {
+            socialLinks[platform.id] = input.value.trim();
+        }
+    });
+
+    // Update Firestore document
+    const userDocRef = db.collection('users').doc(currentUser.uid);
+    userDocRef.update({
+        socialLinks: socialLinks,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+        console.log("Social links updated successfully!");
+        showNotification("Social links saved successfully!", 'success');
+
+        // Update local data
+        currentUserData = { ...currentUserData, socialLinks };
+    })
+    .catch((error) => {
+        console.error("Error updating social links: ", error);
+        showNotification(`Error saving social links: ${error.message}`, 'error');
     });
 }
 
 async function saveSocialData() {
     try {
-        if (!currentUser) {
-            console.error('No user logged in');
-            return;
-        }
-
-        // Save social links to Firestore
-        if (userSocialLinks && Object.keys(userSocialLinks).length > 0) {
-            await db.collection('users').doc(currentUser.uid).collection('socialLinks').doc('links').set(userSocialLinks, { merge: true });
-            
-            // Update local currentUserData to keep it in sync
-            if (currentUserData) {
-                currentUserData.socialLinks = { ...userSocialLinks };
-            }
-            
-            showSuccess('Social links saved successfully!');
-        }
+        // Use the new handleSocialLinksSubmit function
+        handleSocialLinksSubmit();
     } catch (error) {
         console.error('Error saving social data:', error);
         showError('Failed to save social links');
@@ -3232,8 +3168,8 @@ function loadPreview() {
         }
         
         if (socialCount) {
-            // Use userSocialLinks instead of currentUserData.socialLinks
-            const socialCountValue = Object.keys(userSocialLinks || {}).length;
+            // Use currentUserData.socialLinks for consistency
+            const socialCountValue = Object.keys(currentUserData?.socialLinks || {}).length;
             socialCount.textContent = socialCountValue;
         }
         

@@ -82,7 +82,7 @@ let editingProductId = null;
 // Social media platforms for the form
 const socialPlatforms = [
     { id: 'instagram', name: 'Instagram', icon: 'fab fa-instagram' },
-    { id: 'twitter', name: 'Twitter', icon: 'fab fa-twitter' },
+    { id: 'twitter', name: 'X (Twitter)', icon: 'fab fa-x-twitter' },
     { id: 'facebook', name: 'Facebook', icon: 'fab fa-facebook' },
     { id: 'youtube', name: 'YouTube', icon: 'fab fa-youtube' },
     { id: 'tiktok', name: 'TikTok', icon: 'fab fa-tiktok' },
@@ -320,7 +320,7 @@ function addLinkToUI(linkId, linkData) {
 function getPlatformIcon(platform) {
     const icons = {
         'instagram': 'fab fa-instagram',
-        'twitter': 'fab fa-twitter',
+        'twitter': 'fab fa-x-twitter',
         'facebook': 'fab fa-facebook',
         'youtube': 'fab fa-youtube',
         'tiktok': 'fab fa-tiktok',

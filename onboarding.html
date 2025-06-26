@@ -73,8 +73,7 @@
                                 <img src="./profile.png" alt="Profile" id="profilePicImage">
                                 <div class="avatar-initials" id="profilePicInitials" style="display:none; align-items:center; justify-content:center; font-size:1rem; font-weight:500; color:var(--text-muted);">Add Profile Picture</div>
                                 <div class="profile-pic-overlay">
-                                    <i class="fas fa-camera"></i>
-                                    <span>Upload Photo</span>
+                                    <span>Add Profile Picture</span>
                                 </div>
                             </div>
                             <input type="file" id="profilePicUpload" accept="image/*" style="display: none;">
@@ -142,6 +141,11 @@
                     </div>
                     <div class="social-grid" id="social-links-form">
                         <!-- Social media inputs will be generated here -->
+                    </div>
+                    <div class="social-actions">
+                        <button type="button" id="save-social-button" class="action-btn primary-btn">
+                            <i class="fas fa-save"></i> Save Social Links
+                        </button>
                     </div>
                 </div>
             </div>
@@ -344,107 +348,32 @@
                 <form id="linkForm" onsubmit="handleLinkSubmit(event)">
                     <div class="form-group">
                         <label for="platform">Platform *</label>
-                        <div class="custom-select" id="platform-select">
-                            <div class="select-selected" id="platform-selected">
-                                <i class="fas fa-globe"></i>
-                                <span>Choose a platform</span>
-                            </div>
-                            <div class="select-items select-hide" id="platform-options">
-                                <div class="select-option" data-value="website">
-                                    <i class="fas fa-globe"></i>
-                                    <span>Website</span>
-                                </div>
-                                <div class="select-option" data-value="youtube">
-                                    <i class="fab fa-youtube"></i>
-                                    <span>YouTube</span>
-                                </div>
-                                <div class="select-option" data-value="instagram">
-                                    <i class="fab fa-instagram"></i>
-                                    <span>Instagram</span>
-                                </div>
-                                <div class="select-option" data-value="twitter">
-                                    <i class="fab fa-twitter"></i>
-                                    <span>Twitter</span>
-                                </div>
-                                <div class="select-option" data-value="facebook">
-                                    <i class="fab fa-facebook"></i>
-                                    <span>Facebook</span>
-                                </div>
-                                <div class="select-option" data-value="linkedin">
-                                    <i class="fab fa-linkedin"></i>
-                                    <span>LinkedIn</span>
-                                </div>
-                                <div class="select-option" data-value="tiktok">
-                                    <i class="fab fa-tiktok"></i>
-                                    <span>TikTok</span>
-                                </div>
-                                <div class="select-option" data-value="github">
-                                    <i class="fab fa-github"></i>
-                                    <span>GitHub</span>
-                                </div>
-                                <div class="select-option" data-value="spotify">
-                                    <i class="fab fa-spotify"></i>
-                                    <span>Spotify</span>
-                                </div>
-                                <div class="select-option" data-value="soundcloud">
-                                    <i class="fab fa-soundcloud"></i>
-                                    <span>SoundCloud</span>
-                                </div>
-                                <div class="select-option" data-value="twitch">
-                                    <i class="fab fa-twitch"></i>
-                                    <span>Twitch</span>
-                                </div>
-                                <div class="select-option" data-value="discord">
-                                    <i class="fab fa-discord"></i>
-                                    <span>Discord</span>
-                                </div>
-                                <div class="select-option" data-value="telegram">
-                                    <i class="fab fa-telegram"></i>
-                                    <span>Telegram</span>
-                                </div>
-                                <div class="select-option" data-value="whatsapp">
-                                    <i class="fab fa-whatsapp"></i>
-                                    <span>WhatsApp</span>
-                                </div>
-                                <div class="select-option" data-value="medium">
-                                    <i class="fab fa-medium"></i>
-                                    <span>Medium</span>
-                                </div>
-                                <div class="select-option" data-value="behance">
-                                    <i class="fab fa-behance"></i>
-                                    <span>Behance</span>
-                                </div>
-                                <div class="select-option" data-value="dribbble">
-                                    <i class="fab fa-dribbble"></i>
-                                    <span>Dribbble</span>
-                                </div>
-                                <div class="select-option" data-value="pinterest">
-                                    <i class="fab fa-pinterest"></i>
-                                    <span>Pinterest</span>
-                                </div>
-                                <div class="select-option" data-value="reddit">
-                                    <i class="fab fa-reddit"></i>
-                                    <span>Reddit</span>
-                                </div>
-                                <div class="select-option" data-value="snapchat">
-                                    <i class="fab fa-snapchat"></i>
-                                    <span>Snapchat</span>
-                                </div>
-                                <div class="select-option" data-value="tumblr">
-                                    <i class="fab fa-tumblr"></i>
-                                    <span>Tumblr</span>
-                                </div>
-                                <div class="select-option" data-value="vimeo">
-                                    <i class="fab fa-vimeo"></i>
-                                    <span>Vimeo</span>
-                                </div>
-                                <div class="select-option" data-value="other">
-                                    <i class="fas fa-link"></i>
-                                    <span>Other</span>
-                                </div>
-                            </div>
-                        </div>
-                        <input type="hidden" id="platform" name="platform" required>
+                        <select id="platform" name="platform" required>
+                            <option value="">Choose a platform</option>
+                            <option value="website">Website</option>
+                            <option value="youtube">YouTube</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="twitter">X (Twitter)</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="linkedin">LinkedIn</option>
+                            <option value="tiktok">TikTok</option>
+                            <option value="github">GitHub</option>
+                            <option value="spotify">Spotify</option>
+                            <option value="soundcloud">SoundCloud</option>
+                            <option value="twitch">Twitch</option>
+                            <option value="discord">Discord</option>
+                            <option value="telegram">Telegram</option>
+                            <option value="whatsapp">WhatsApp</option>
+                            <option value="medium">Medium</option>
+                            <option value="behance">Behance</option>
+                            <option value="dribbble">Dribbble</option>
+                            <option value="pinterest">Pinterest</option>
+                            <option value="reddit">Reddit</option>
+                            <option value="snapchat">Snapchat</option>
+                            <option value="tumblr">Tumblr</option>
+                            <option value="vimeo">Vimeo</option>
+                            <option value="other">Other</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
