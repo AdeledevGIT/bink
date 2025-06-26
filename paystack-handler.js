@@ -1,7 +1,4 @@
-// Paystack Payment Handler for BINK platform
-// This file contains functions for handling Paystack payments
 
-// Global variables - using different names to avoid conflicts with payment.js
 let paystackUser = null;
 let paystackUserData = null;
 
@@ -260,7 +257,7 @@ function processTokenPurchaseCompletion(payment) {
 
             // Update token purchase request
             return firebase.firestore().collection('tokenPurchaseRequests').doc(payment.tokenPurchaseId).update({
-                status: 'approved',
+                status: 'completed',
                 paymentId: payment.paymentId,
                 approvedAt: firebase.firestore.FieldValue.serverTimestamp(),
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()

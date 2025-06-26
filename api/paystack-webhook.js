@@ -1,6 +1,4 @@
-// Paystack Webhook Handler for BINK (Vercel Serverless Function)
-// This file handles webhook events from Paystack to automatically
-// process payments and update user subscriptions.
+
 
 // Firebase Admin SDK
 const admin = require('firebase-admin');
@@ -13,10 +11,6 @@ function initializeFirebase() {
   if (firebaseInitialized) return;
 
   try {
-    // For testing purposes, we'll use a simplified initialization
-    // In production, you should set the FIREBASE_SERVICE_ACCOUNT environment variable in Vercel
-
-    // Check if using service account or environment variables
     if (process.env.FIREBASE_SERVICE_ACCOUNT) {
       // Using service account JSON from environment variable
       const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
@@ -26,8 +20,6 @@ function initializeFirebase() {
       });
       console.log('Firebase initialized with service account');
     } else {
-      // For testing, initialize with just the project ID
-      // This won't actually connect to Firebase, but it allows the function to deploy
       console.log('No service account found, initializing with project ID only');
       try {
         admin.initializeApp({
@@ -238,7 +230,7 @@ async function processTokenPurchase(payment, paystackData) {
 
     // Update token purchase request
     await admin.firestore().collection('tokenPurchaseRequests').doc(purchaseRequestId).update({
-      status: 'approved',
+      status: 'completed',
       paystackReference: paystackData.reference,
       approvedAt: admin.firestore.FieldValue.serverTimestamp(),
       updatedAt: admin.firestore.FieldValue.serverTimestamp()

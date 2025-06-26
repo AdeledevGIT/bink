@@ -1,31 +1,15 @@
 <?php
-/**
- * Paystack Webhook Handler for BINK
- *
- * This script handles webhook events from Paystack to automatically
- * process payments and update user subscriptions.
- */
 
 // Set headers
 header('Content-Type: application/json');
 
 // Paystack settings
-$paystackSecretKey = 'sk_live_02edcbcdb3317e6385d9b4163faa76584ccfc01d'; // Your Paystack secret key
-// Paystack uses the secret key to sign webhooks, so we'll use that as the webhook secret
-$webhookSecret = $paystackSecretKey; // Use the secret key for webhook verification
-
-// IMPORTANT: When going live, replace the test keys with your live keys
-// $paystackSecretKey = 'sk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
-
-// Firebase settings
-// Get these values from your Firebase project settings
+$paystackSecretKey = 'sk_live_02edcbcdb3317e6385d9b4163faa76584ccfc01d'; /
+$webhookSecret = $paystackSecretKey; /
 $firebaseApiKey = 'AIzaSyCC0cGcsdiMmeTYp2gNCjpO_XrJFE4Uj-g'; 
 $firebaseProjectId = 'trustpay-d9d40'; 
 
-// IMPORTANT: For security, consider storing these values in environment variables
-// rather than hardcoding them in the file
 
-// Verify Paystack webhook signature
 function verifyWebhookSignature($payload, $signature, $secret) {
     // Get expected signature
     $expectedSignature = hash_hmac('sha512', $payload, $secret);
@@ -44,21 +28,12 @@ function logWebhookEvent($event, $data) {
     file_put_contents($logFile, $logEntry, FILE_APPEND);
 }
 
-// Get Firebase ID token (for server-to-server authentication)
 function getFirebaseIdToken($apiKey) {
-    // In a real implementation, you would use a service account key file
-    // and the Firebase Admin SDK to authenticate with Firebase
-
-    // For demonstration purposes, we'll return a placeholder
-    // In production, you should:
-    // 1. Use a service account key file
-    // 2. Use the Firebase Admin SDK to generate a token
-    // 3. Use that token to authenticate with Firebase
 
     // Log the attempt to get a token
     logWebhookEvent('auth', [
         'message' => 'Attempting to get Firebase ID token',
-        'apiKey' => substr($apiKey, 0, 5) . '...' // Only log part of the key for security
+        'apiKey' => substr($apiKey, 0, 5) . '...' 
     ]);
 
     return 'firebase-id-token';
@@ -122,11 +97,6 @@ function processChargeSuccess($data) {
     // Get Firebase ID token
     $idToken = getFirebaseIdToken($firebaseApiKey);
 
-    // Find payment in Firebase
-    // In a real implementation, you would query Firestore to find the payment
-    // For demonstration purposes, we'll assume we know the payment ID
-
-    // Update payment status
     $paymentData = [
         'status' => 'completed',
         'paystackResponse' => json_encode($data),
@@ -182,10 +152,6 @@ function processTokenPurchase($data, $metadata, $idToken) {
 
     // Calculate bonus tokens
     $bonusTokens = $isFirstPurchase ? 200 : 0;
-
-    // First, get the user's current token balance
-    // In a real implementation, you would query Firestore to get the user's current token balance
-    // For demonstration purposes, we'll assume the user has 0 tokens
     $currentTokens = 0;
     $totalTokens = $currentTokens + $tokenAmount + $bonusTokens;
 
@@ -344,9 +310,6 @@ function processSubscription($data, $metadata, $idToken) {
         'expirationDate' => $expirationDate->format('c')
     ]);
 
-    // Get current user data to check previous subscription
-    // In a real implementation, you would query Firestore to get the user's current subscription
-    // For demonstration purposes, we'll assume the user has no subscription
     $previousTier = 'free';
     $isUpgrade = $previousTier === 'free' ||
         ($previousTier === 'premium' && $plan === 'creator');
