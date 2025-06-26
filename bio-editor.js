@@ -2149,6 +2149,15 @@ function initializeTabNavigation() {
         tab.addEventListener('click', () => {
             const targetTab = tab.getAttribute('data-tab');
 
+            // Prevent access to Media/Catalog for non-premium users
+            if (targetTab === 'media') {
+                const isPremiumUser = checkPremiumStatus(currentUserData);
+                if (!isPremiumUser) {
+                    showMessage("Media & Catalog is a premium feature. Please upgrade to Pro to access.", true);
+                    return; // Stop the function here
+                }
+            }
+
             // Remove active class from all tabs and contents
             navTabs.forEach(t => t.classList.remove('active'));
             tabContents.forEach(content => content.classList.remove('active'));
