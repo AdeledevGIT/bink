@@ -103,11 +103,11 @@
 
 /* Tab Content */
 .tab-content-container {
-    display: flex;
-    gap: 30px;
-    min-height: 600px;
-    max-height: calc(100vh - 200px);
+    flex: 1;
+    min-width: 0;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .tab-content {
@@ -170,7 +170,7 @@
 .templates-grid {
     margin-bottom: 30px;
     height: 650px;
-    overflow: hidden;
+    overflow: hidden; /* Hide overflow from template cards */
     border-radius: 12px;
     border: 1px solid var(--border-color);
     position: relative;
@@ -212,6 +212,7 @@
     scrollbar-color: var(--primary-color) var(--secondary-color);
     scroll-behavior: smooth;
     position: relative;
+    /* Remove overflow: hidden here to allow horizontal scroll */
 }
 
 .templates-scroll::-webkit-scrollbar {
@@ -3098,5 +3099,14 @@
     padding: 0.75rem 2rem;
 }
 .lock-overlay { display: none !important; }
+
+.editor-main-area {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    width: 100%;
+    /* Ensure no overflow from children */
+    overflow: hidden;
+}
 
 
