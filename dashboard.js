@@ -376,7 +376,7 @@ function formatBioLinkForDisplay(linkData, username) {
                                userProfile?.username ||
                                (currentUser?.email ? currentUser.email.split('@')[0] : 'user');
 
-        return `bink.bio/${displayUsername}`;
+        return `bink/${displayUsername}`;
     }
 
     return linkData.url;
@@ -1229,7 +1229,7 @@ function setupEventListeners() {
 
             // Create URL without template parameter
             // This way the link will always show the user's current template
-            const bioUrl = new URL(`u/${userData.username}`, window.location.origin).href;
+            const bioUrl = new URL(`bio.html?u=${userData.username}`, window.location.href).href;
             console.log("Sharing URL:", bioUrl); // Debug log
 
             // Try to use native Web Share API first
@@ -1261,7 +1261,7 @@ function setupEventListeners() {
         } catch (error) {
             console.error('Error getting user data:', error);
             // Fallback to ID-based URL
-            const bioLink = new URL(`u/?id=${currentUser.uid}`, window.location.href).href;
+            const bioLink = new URL(`bio.html?id=${currentUser.uid}`, window.location.href).href;
             console.log("Fallback URL:", bioLink); // Debug log
 
             // Try native share with fallback URL
@@ -1303,7 +1303,7 @@ function setupEventListeners() {
 
             // Create URL without template parameter
             // This way the link will always show the user's current template
-            const bioUrl = new URL(`u/${userData.username}`, window.location.origin).href;
+            const bioUrl = new URL(`bio.html?u=${userData.username}`, window.location.href).href;
             console.log("Opening URL:", bioUrl); // Debug log
 
             // Show loading indicator on the button
@@ -1341,7 +1341,7 @@ function setupEventListeners() {
         } catch (error) {
             console.error('Error getting user data:', error);
             // Fallback to ID-based URL
-            const fallbackUrl = new URL(`u/?id=${currentUser.uid}`, window.location.href).href;
+            const fallbackUrl = new URL(`bio.html?id=${currentUser.uid}`, window.location.href).href;
             console.log("Fallback preview URL:", fallbackUrl); // Debug log
 
             // Show a confirmation dialog before navigating
