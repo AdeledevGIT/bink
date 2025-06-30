@@ -457,7 +457,7 @@ window.BINK.templates.templates['neoncard'] = {
                     </div>
                 </div>
                 <div class="neoncard-header">
-                    ${getAvatarHTML(data, 'neoncard-avatar', 'neoncard-avatar-container', '#6b47dc', '3px solid #6b47dc', '0 0 18px #6b47dc, 0 0 0 6px rgba(255,255,255,0.2)')}
+                    ${getAvatarHTML(data, 'neoncard-avatar', 'neoncard-avatar-container', '#0f0524', '3px solid #00fff7', '0 0 15px #00fff7')}
                     <div class="neoncard-username" data-text="${window.BINK.templates.formatUsername(data.displayName || data.username)}">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="neoncard-bio">${data.bio || ''}</div>
                 </div>
@@ -571,7 +571,7 @@ window.BINK.templates.templates['purplecard'] = {
                     </div>
                 </div>
                 <div class="purplecard-header">
-                    ${getAvatarHTML(data, 'purplecard-avatar', 'purplecard-avatar-container', '#6b47dc', '3px solid #6b47dc', '0 0 18px #6b47dc, 0 0 0 6px rgba(255,255,255,0.2)')}
+                    ${getAvatarHTML(data, 'purplecard-avatar', 'purplecard-avatar-container', '#6d28d9', '4px solid #fff', '0 0 0 6px #a78bfa')}
                     <div class="purplecard-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="purplecard-bio">${data.bio || ''}</div>
                 </div>
@@ -1121,9 +1121,7 @@ window.BINK.templates.templates['gradientflow'] = {
                         </div>
                     </div>
                     <div class="gradientflow-profile">
-                        <div class="gradientflow-avatar-container">
-                            <img class="gradientflow-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                        </div>
+                        ${getAvatarHTML(data, 'gradientflow-avatar', 'gradientflow-avatar-container', 'rgba(255,255,255,0.15)', '3px solid #23a6d5', '0 5px 15px #23a6d5')}
                         <div class="gradientflow-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                         <div class="gradientflow-bio">${data.bio || ''}</div>
                     </div>
@@ -1180,9 +1178,7 @@ window.BINK.templates.templates['darkelegance'] = {
                         </div>
                     </div>
                     <div class="darkelegance-profile">
-                        <div class="darkelegance-avatar-container">
-                            <img class="darkelegance-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                        </div>
+                        ${getAvatarHTML(data, 'darkelegance-avatar', 'darkelegance-avatar-container', '#1a1a1a', '4px solid #d4af37', '0 0 15px #d4af37')}
                         <div class="darkelegance-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                         <div class="darkelegance-bio">${data.bio || ''}</div>
                     </div>
@@ -1239,9 +1235,7 @@ window.BINK.templates.templates['neonglow'] = {
                         </div>
                     </div>
                     <div class="neonglow-profile">
-                        <div class="neonglow-avatar-container">
-                            <img class="neonglow-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                        </div>
+                        ${getAvatarHTML(data, 'neonglow-avatar', 'neonglow-avatar-container', '#0c0c0c', '3px solid #ff0080', '0 0 20px #ff0080')}
                         <div class="neonglow-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                         <div class="neonglow-bio">${data.bio || ''}</div>
                     </div>
@@ -1300,9 +1294,7 @@ window.BINK.templates.templates['minimalzen'] = {
                         </div>
                     </div>
                     <div class="minimalzen-profile">
-                        <div class="minimalzen-avatar-container">
-                            <img class="minimalzen-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                        </div>
+                        ${getAvatarHTML(data, 'minimalzen-avatar', 'minimalzen-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
                         <div class="minimalzen-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                         <div class="minimalzen-bio">${data.bio || ''}</div>
                     </div>
@@ -1361,9 +1353,7 @@ window.BINK.templates.templates['techwave'] = {
                         </div>
                     </div>
                     <div class="techwave-profile">
-                        <div class="techwave-avatar-container">
-                            <img class="techwave-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                        </div>
+                        ${getAvatarHTML(data, 'techwave-avatar', 'techwave-avatar-container', '#0a192f', '3px solid #64ffda', '0 0 15px #64ffda')}
                         <div class="techwave-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                         <div class="techwave-bio">${data.bio || ''}</div>
                     </div>
@@ -1410,9 +1400,7 @@ window.BINK.templates.templates['splitscreen'] = {
             <div class="splitscreen-container">
                 <div class="splitscreen-sidebar">
                     <div class="splitscreen-profile">
-                        <div class="splitscreen-avatar-container">
-                            <img class="splitscreen-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                        </div>
+                        ${getAvatarHTML(data, 'splitscreen-avatar', 'splitscreen-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
                         <div class="splitscreen-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                         <div class="splitscreen-bio">${data.bio || ''}</div>
                         <div class="splitscreen-socials">
@@ -1483,9 +1471,7 @@ window.BINK.templates.templates['magazine'] = {
 
                 <div class="magazine-profile-section">
                     <div class="magazine-profile-header">
-                        <div class="magazine-avatar-container">
-                            <img class="magazine-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                        </div>
+                        ${getAvatarHTML(data, 'magazine-avatar', 'magazine-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
                         <div class="magazine-profile-info">
                             <div class="magazine-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                             <div class="magazine-socials">
@@ -1558,11 +1544,8 @@ window.BINK.templates.templates['retrowave'] = {
                             </button>
                         </div>
                     </div>
-                    <!-- Removed RETRO header as requested -->
                     <div class="retrowave-profile">
-                        <div class="retrowave-avatar-container">
-                            <img class="retrowave-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                        </div>
+                        ${getAvatarHTML(data, 'retrowave-avatar', 'retrowave-avatar-container', '#2b0054', '4px solid #ff00ff', '0 0 20px #00ffff')}
                         <div class="retrowave-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                         <div class="retrowave-bio">${data.bio || ''}</div>
                     </div>
@@ -1619,9 +1602,7 @@ window.BINK.templates.templates['nature'] = {
                         </div>
                     </div>
                     <div class="nature-profile">
-                        <div class="nature-avatar-container">
-                            <img class="nature-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                        </div>
+                        ${getAvatarHTML(data, 'nature-avatar', 'nature-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
                         <div class="nature-username">@${data.displayName || data.username}</div>
                         <div class="nature-bio">${data.bio || ''}</div>
                     </div>
@@ -1678,9 +1659,7 @@ window.BINK.templates.templates['portfolio'] = {
                 </div>
 
                 <div class="portfolio-profile-section">
-                    <div class="portfolio-avatar-container">
-                        <img class="portfolio-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                    </div>
+                    ${getAvatarHTML(data, 'portfolio-avatar', 'portfolio-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
                     <div class="portfolio-profile-info">
                         <div class="portfolio-username">@${data.displayName || data.username}</div>
                         <div class="portfolio-bio">${data.bio || ''}</div>
@@ -1745,9 +1724,7 @@ window.BINK.templates.templates['corporate'] = {
                 </div>
 
                 <div class="corporate-header">
-                    <div class="corporate-avatar-container">
-                        <img class="corporate-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                    </div>
+                    ${getAvatarHTML(data, 'corporate-avatar', 'corporate-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
                     <div class="corporate-name">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="corporate-title">Professional</div>
                     <div class="corporate-bio">${data.bio || ''}</div>
@@ -1809,9 +1786,7 @@ window.BINK.templates.templates['creative'] = {
                 </div>
 
                 <div class="creative-header">
-                    <div class="creative-avatar-container">
-                        <img class="creative-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                    </div>
+                    ${getAvatarHTML(data, 'creative-avatar', 'creative-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
                     <div class="creative-name">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="creative-title">Creative Artist</div>
                     <div class="creative-bio">${data.bio || ''}</div>
@@ -1871,15 +1846,11 @@ window.BINK.templates.templates['gradientcard'] = {
                         <i class="fas fa-share-alt"></i>
                     </button>
                 </div>
-
                 <div class="gradientcard-profile">
-                    <div class="gradientcard-avatar-container">
-                        <img class="gradientcard-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                    </div>
+                    ${getAvatarHTML(data, 'gradientcard-avatar', 'gradientcard-avatar-container', '#667eea', '4px solid #fff', '0 8px 32px #667eea')}
                     <div class="gradientcard-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="gradientcard-bio">${data.bio || ''}</div>
                 </div>
-
                 <div class="gradientcard-links">
                     ${(data.links || []).map(link => `
                         <div class="gradientcard-link-container">
@@ -1893,13 +1864,10 @@ window.BINK.templates.templates['gradientcard'] = {
                         </div>
                     `).join('')}
                 </div>
-
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
-
                 <div class="gradientcard-socials">
                     ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
                 </div>
-
                 <div class="gradientcard-footer">
                     Powered by <a href="index.html" target="_blank">BINK</a>
                 </div>
@@ -1931,9 +1899,7 @@ window.BINK.templates.templates['neonminimal'] = {
                 </div>
 
                 <div class="neonminimal-profile">
-                    <div class="neonminimal-avatar-container">
-                        <img class="neonminimal-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                    </div>
+                    ${getAvatarHTML(data, 'neonminimal-avatar', 'neonminimal-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
                     <div class="neonminimal-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="neonminimal-bio">${data.bio || ''}</div>
                 </div>
@@ -1987,15 +1953,11 @@ window.BINK.templates.templates['softpastel'] = {
                         <i class="fas fa-share-alt"></i>
                     </button>
                 </div>
-
                 <div class="softpastel-profile">
-                    <div class="softpastel-avatar-container">
-                        <img class="softpastel-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                    </div>
+                    ${getAvatarHTML(data, 'softpastel-avatar', 'softpastel-avatar-container', '#ffeef8', '4px solid #ffc1e3', '0 8px 32px #ffc1e3')}
                     <div class="softpastel-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="softpastel-bio">${data.bio || ''}</div>
                 </div>
-
                 <div class="softpastel-links">
                     ${(data.links || []).map(link => `
                         <div class="softpastel-link-container">
@@ -2009,13 +1971,10 @@ window.BINK.templates.templates['softpastel'] = {
                         </div>
                     `).join('')}
                 </div>
-
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
-
                 <div class="softpastel-socials">
                     ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
                 </div>
-
                 <div class="softpastel-footer">
                     Powered by <a href="index.html" target="_blank">BINK</a>
                 </div>
@@ -2105,15 +2064,11 @@ window.BINK.templates.templates['auroraglow'] = {
                         <i class="fas fa-share-alt"></i>
                     </button>
                 </div>
-
                 <div class="auroraglow-profile">
-                    <div class="auroraglow-avatar-container">
-                        <img class="auroraglow-avatar" src="${data.profilePicUrl || 'https://adeledevgit.github.io/bink/profile.png'}" alt="Profile">
-                    </div>
+                    ${getAvatarHTML(data, 'auroraglow-avatar', 'auroraglow-avatar-container', '#0a0a0f', '3px solid #7877c6', '0 0 30px #7877c6')}
                     <div class="auroraglow-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="auroraglow-bio">${data.bio || ''}</div>
                 </div>
-
                 <div class="auroraglow-links">
                     ${(data.links || []).map(link => `
                         <div class="auroraglow-link-container">
@@ -2127,13 +2082,10 @@ window.BINK.templates.templates['auroraglow'] = {
                         </div>
                     `).join('')}
                 </div>
-
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
-
                 <div class="auroraglow-socials">
                     ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
                 </div>
-
                 <div class="auroraglow-footer">
                     Powered by <a href="index.html" target="_blank">BINK</a>
                 </div>
