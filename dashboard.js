@@ -376,7 +376,7 @@ function formatBioLinkForDisplay(linkData, username) {
                                userProfile?.username ||
                                (currentUser?.email ? currentUser.email.split('@')[0] : 'user');
 
-        return `bink/${displayUsername}`;
+        return `bink.bio/${displayUsername}`;
     }
 
     return linkData.url;
@@ -1229,7 +1229,7 @@ function setupEventListeners() {
 
             // Create URL without template parameter
             // This way the link will always show the user's current template
-            const bioUrl = new URL(`bio.html?u=${userData.username}`, window.location.href).href;
+            const bioUrl = new URL(userData.username, window.location.origin).href;
             console.log("Sharing URL:", bioUrl); // Debug log
 
             // Try to use native Web Share API first
@@ -1303,7 +1303,7 @@ function setupEventListeners() {
 
             // Create URL without template parameter
             // This way the link will always show the user's current template
-            const bioUrl = new URL(`bio.html?u=${userData.username}`, window.location.href).href;
+            const bioUrl = new URL(userData.username, window.location.origin).href;
             console.log("Opening URL:", bioUrl); // Debug log
 
             // Show loading indicator on the button

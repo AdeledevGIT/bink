@@ -1816,7 +1816,7 @@ function copyLinkToClipboard() {
     const username = usernameDisplay.textContent;
     if (!username) return;
 
-    const bioUrl = `bio.html?u=${username}`;
+    const bioUrl = username;
 
     // Get the full URL including the domain
     const fullUrl = new URL(bioUrl, window.location.origin).href;
@@ -1857,7 +1857,7 @@ function saveBioLinkToDashboard() {
     // This way the link will always show the user's current template
     const bioLinkData = {
         title: `My BINK Profile: ${username}`,
-        url: `bio.html?u=${username}`,
+        url: new URL(username, window.location.origin).href,
         platform: 'website',
         isBioLink: true,
         order: userLinks.length,
@@ -2062,7 +2062,7 @@ function copyPreviewLinkToClipboard() {
 
     // Generate the preview URL without template parameter
     // This way the link will always show the user's current template
-    const previewUrl = new URL(`bio.html?u=${username}`, window.location.origin).href;
+    const previewUrl = new URL(username, window.location.origin).href;
 
     // Use the enhanced copy function
     copyTextToClipboard(previewUrl)
