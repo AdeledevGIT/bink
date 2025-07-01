@@ -89,6 +89,7 @@ function loadUserProfile(userId) {
             }
 
             // Populate other fields if added
+            updateProfilePicDisplay();
         } else {
             console.log("No such user document!");
             showProfileMessage("Could not load profile data.", true);
@@ -235,8 +236,7 @@ function updateProfilePicDisplay() {
     if (profilePicUrlInput && !profilePicUrlInput.value) {
         if (profilePicImage) profilePicImage.style.display = 'none';
         if (profilePicInitials) {
-            let name = displayNameInput && displayNameInput.value.trim() ? displayNameInput.value.trim() : (usernameInput && usernameInput.value.trim() ? usernameInput.value.trim() : 'U');
-            profilePicInitials.textContent = name.charAt(0).toUpperCase();
+            profilePicInitials.textContent = 'Add Profile Picture';
             profilePicInitials.style.display = 'flex';
         }
     } else {
@@ -257,3 +257,11 @@ if (displayNameInput) {
         setTimeout(updateProfilePicDisplay, 100);
     });
 }
+
+// Ensure sidebar user profile is updated after everything is loaded (fix for missing initial in sidebar on profile page)
+window.addEventListener('DOMContentLoaded', function() {
+    if (typeof updateSidebarUserProfile === 'function') {
+        setTimeout(updateSidebarUserProfile, 300); // Short delay
+        setTimeout(updateSidebarUserProfile, 1200); // Longer delay for slow DOMs
+    }
+});

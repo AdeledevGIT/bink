@@ -117,14 +117,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 700;
-    color: var(--text-color);
-    background: var(--secondary-color);
+    color: var(--primary-color);
+    background: linear-gradient(135deg, var(--secondary-color) 60%, var(--card-background) 100%);
     border-radius: 50%;
-    z-index: 2;
-    letter-spacing: 0.02em;
+    z-index: 1;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 2px solid var(--primary-color);
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Only show avatar-initials when inside .profile-pic-preview */
+.avatar-initials:not(.profile-pic-preview .avatar-initials) {
+    display: none !important;
 }
 
 .profile-pic-indicator {

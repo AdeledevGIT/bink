@@ -379,20 +379,46 @@
 }
 
 .profile-pic-preview {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     overflow: hidden;
     border: 3px solid var(--primary-color);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     position: relative;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-initials {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--secondary-color);
+    border-radius: 50%;
+    z-index: 2;
+    letter-spacing: 0.02em;
+    text-align: center;
+    padding: 0 10px;
+    line-height: 1.2;
+    white-space: pre-line;
 }
 
 .profile-pic-preview:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    border-color: var(--accent-color);
 }
 
 .profile-pic-preview img {
@@ -1202,6 +1228,31 @@
     position: relative;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-initials {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--secondary-color);
+    border-radius: 50%;
+    z-index: 2;
+    letter-spacing: 0.02em;
+    text-align: center;
+    padding: 0 10px;
+    line-height: 1.2;
+    white-space: pre-line;
 }
 
 .profile-pic-preview:hover {
@@ -2520,7 +2571,9 @@
     }
 
     .logo-container-header img {
-        height: 35px;
+        height: 45px !important;
+        width: auto;
+        display: block;
     }
 
     .header-user-info {
@@ -3107,6 +3160,89 @@
     width: 100%;
     /* Ensure no overflow from children */
     overflow: hidden;
+}
+
+.bioeditor-avatar-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+    background: var(--card-background, #fff);
+    border: 3px solid var(--primary-color, #667eea);
+    overflow: hidden;
+    z-index: 1;
+    cursor: pointer;
+    transition: box-shadow 0.3s, border-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bioeditor-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    position: relative;
+    z-index: 2;
+}
+
+.bioeditor-avatar-container .avatar-initials {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-muted, #888);
+    background: var(--secondary-color, #f8fafc);
+    border-radius: 50%;
+    z-index: 3;
+    letter-spacing: 0.02em;
+    text-align: center;
+    padding: 0 10px;
+    line-height: 1.2;
+    white-space: pre-line;
+}
+
+.bioeditor-avatar-container:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    border-color: var(--accent-color, #3b82f6);
+}
+
+.bioeditor-avatar-container .profile-pic-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.8rem;
+    z-index: 4;
+}
+
+.bioeditor-avatar-container:hover .profile-pic-overlay {
+    opacity: 1;
+}
+
+.bioeditor-avatar-container .profile-pic-overlay i {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
 }
 
 

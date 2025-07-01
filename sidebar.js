@@ -281,8 +281,8 @@ function updateSidebarUserProfile() {
                         if (userData.profilePicUrl) {
                             userAvatar.innerHTML = `<img src="${userData.profilePicUrl}" alt="User Avatar">`;
                         } else {
-                            // Use first letter of name as avatar
-                            const initials = (userData.displayName || userData.username || user.email.split('@')[0]).charAt(0).toUpperCase();
+                            // Always use first initial of username or email prefix, never fallback to icon
+                            const initials = (userData.username || userData.displayName || user.email.split('@')[0]).charAt(0).toUpperCase();
                             userAvatar.innerHTML = `<div class="avatar-initials">${initials}</div>`;
                         }
 
@@ -337,7 +337,8 @@ function updateSidebarUserProfile() {
                     } else {
                         // No user document found
                         userName.textContent = user.email.split('@')[0];
-                        userAvatar.innerHTML = `<i class="fas fa-user"></i>`;
+                        const initials = user.email.split('@')[0].charAt(0).toUpperCase();
+                        userAvatar.innerHTML = `<div class="avatar-initials">${initials}</div>`;
                         planBadge.className = 'plan-badge free';
                         planBadge.innerHTML = `<i class="fas fa-user"></i> Free Plan`;
                     }
@@ -346,7 +347,8 @@ function updateSidebarUserProfile() {
                     console.error("Error getting user data for sidebar:", error);
                     // Set defaults on error
                     userName.textContent = user.email.split('@')[0];
-                    userAvatar.innerHTML = `<i class="fas fa-user"></i>`;
+                    const initials = user.email.split('@')[0].charAt(0).toUpperCase();
+                    userAvatar.innerHTML = `<div class="avatar-initials">${initials}</div>`;
                     planBadge.className = 'plan-badge free';
                     planBadge.innerHTML = `<i class="fas fa-user"></i> Free Plan`;
                 });
@@ -354,7 +356,7 @@ function updateSidebarUserProfile() {
             // User is signed out, set defaults
             userName.textContent = 'Guest User';
             userEmail.textContent = 'Not signed in';
-            userAvatar.innerHTML = `<i class="fas fa-user"></i>`;
+            userAvatar.innerHTML = `<div class="avatar-initials">U</div>`;
             planBadge.className = 'plan-badge free';
             planBadge.innerHTML = `<i class="fas fa-user"></i> Free Plan`;
         }

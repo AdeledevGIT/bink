@@ -11,8 +11,9 @@ const displayNameInput = document.getElementById('displayName');
 const bioInput = document.getElementById('bio');
 const profilePicUrlInput = document.getElementById('profilePicUrl');
 const profilePicUpload = document.getElementById('profilePicUpload');
-const profilePicPreview = document.getElementById('profilePicPreview');
+const profilePicPreview = document.querySelector('.bioeditor-avatar-container');
 const profilePicImage = document.getElementById('profilePicImage');
+const profilePicInitials = document.getElementById('profilePicInitials');
 const saveProfileButton = document.getElementById('save-profile-button');
 const copyLinkButton = document.getElementById('copy-link-button');
 const copyPreviewLinkButton = document.getElementById('copy-preview-link-button');
@@ -164,9 +165,16 @@ function loadUserProfile(userId) {
             bioInput.value = currentUserData.bio || '';
             profilePicUrlInput.value = currentUserData.profilePicUrl || '';
 
-            // Update profile picture preview
+            // Update profile picture preview logic
             if (currentUserData.profilePicUrl) {
                 profilePicImage.src = currentUserData.profilePicUrl;
+                profilePicImage.style.display = '';
+                profilePicInitials.style.display = 'none';
+            } else {
+                profilePicImage.src = 'profile-placeholder.svg';
+                profilePicImage.style.display = 'none';
+                profilePicInitials.textContent = 'Add Profile Picture';
+                profilePicInitials.style.display = 'flex';
             }
 
             // Update preview link
@@ -903,7 +911,7 @@ function handleProfilePicUpload(file) {
     }
 
     // Show loading state
-    profilePicImage.src = 'profile.png';
+    profilePicImage.src = 'profile-placeholder.svg';
 
     // Create a storage reference
     const storageRef = storage.ref();
@@ -923,7 +931,7 @@ function handleProfilePicUpload(file) {
         })
         .catch(error => {
             console.error('Error uploading profile picture:', error);
-            profilePicImage.src = currentUserData?.profilePicUrl || 'profile.png';
+            profilePicImage.src = currentUserData?.profilePicUrl || 'profile-placeholder.svg';
             showMessage(`Error uploading image: ${error.message}`, true);
             throw error;
         });
@@ -2240,11 +2248,12 @@ function initializeMessageSystem() {
 
 // Enhanced Profile Picture Upload
 function initializeProfilePictureUpload() {
-    const profilePicPreview = document.getElementById('profilePicPreview');
+    const profilePicPreview = document.querySelector('.bioeditor-avatar-container');
     const profilePicUpload = document.getElementById('profilePicUpload');
     const profilePicImage = document.getElementById('profilePicImage');
+    const profilePicInitials = document.getElementById('profilePicInitials');
 
-    if (profilePicPreview && profilePicUpload && profilePicImage) {
+    if (profilePicPreview && profilePicUpload) {
         profilePicPreview.addEventListener('click', () => {
             profilePicUpload.click();
         });
@@ -2252,12 +2261,12 @@ function initializeProfilePictureUpload() {
         profilePicUpload.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (file) {
-                // Show loading state
                 profilePicPreview.style.opacity = '0.7';
-
                 try {
-                    const imageUrl = await uploadProfilePicture(file);
+                    const imageUrl = await handleProfilePicUpload(file);
                     profilePicImage.src = imageUrl;
+                    profilePicImage.style.display = '';
+                    profilePicInitials.style.display = 'none';
                     document.getElementById('profilePicUrl').value = imageUrl;
                     showMessage('Profile picture updated successfully!');
                 } catch (error) {
@@ -2457,6 +2466,9 @@ function selectTemplate(templateId) {
 
     // Save the template selection to database
     saveTemplateSelection(templateId);
+
+    // Add this function after DOM elements and before updatePreviewFrameWithTemplate
+    updateProfilePictureSectionForTemplate(templateId);
 }
 
 // Catalog Tab Functions
@@ -3092,6 +3104,104 @@ async function saveProductData(productData, saveButton) {
         showMessage('Upgrade to Pro to use Catalog features.', true);
         return;
     }
+}
+
+// Add this function after DOM elements and before selectTemplate
+function updateProfilePictureSectionForTemplate(templateId) {
+    const container = document.querySelector('.profile-image-section');
+    if (!container) return;
+
+    // Get current image URL or placeholder
+    const currentImg = document.getElementById('profilePicImage');
+    const imgSrc = currentImg ? currentImg.src : 'profile-placeholder.svg';
+    const imgAlt = currentImg ? currentImg.alt : 'Profile Picture';
+
+    // Remove old avatar container if present
+    const oldAvatar = container.querySelector('.bioeditor-avatar-container, .softpastel-avatar-container, .auroraglow-avatar-container, .neonminimal-avatar-container, .gradientcard-avatar-container, .creative-avatar-container, .corporate-avatar-container, .magazine-avatar-container');
+    if (oldAvatar) oldAvatar.remove();
+
+    // Map templateId to structure/class
+    let avatarHTML = '';
+    switch (templateId) {
+        case 'softpastel':
+            avatarHTML = `<div class="softpastel-avatar-container">
+                <img class="softpastel-avatar" src="${imgSrc}" alt="${imgAlt}" id="profilePicImage">
+                <div class="avatar-initials" id="profilePicInitials" style="display:none;">Add Profile Picture</div>
+                <div class="profile-pic-overlay"><i class="fas fa-camera"></i><span>Change Photo</span></div>
+            </div>`;
+            break;
+        case 'auroraglow':
+            avatarHTML = `<div class="auroraglow-avatar-container">
+                <img class="auroraglow-avatar" src="${imgSrc}" alt="${imgAlt}" id="profilePicImage">
+                <div class="avatar-initials" id="profilePicInitials" style="display:none;">Add Profile Picture</div>
+                <div class="profile-pic-overlay"><i class="fas fa-camera"></i><span>Change Photo</span></div>
+            </div>`;
+            break;
+        case 'neonminimal':
+            avatarHTML = `<div class="neonminimal-avatar-container">
+                <img class="neonminimal-avatar" src="${imgSrc}" alt="${imgAlt}" id="profilePicImage">
+                <div class="avatar-initials" id="profilePicInitials" style="display:none;">Add Profile Picture</div>
+                <div class="profile-pic-overlay"><i class="fas fa-camera"></i><span>Change Photo</span></div>
+            </div>`;
+            break;
+        case 'gradientcard':
+            avatarHTML = `<div class="gradientcard-avatar-container">
+                <img class="gradientcard-avatar" src="${imgSrc}" alt="${imgAlt}" id="profilePicImage">
+                <div class="avatar-initials" id="profilePicInitials" style="display:none;">Add Profile Picture</div>
+                <div class="profile-pic-overlay"><i class="fas fa-camera"></i><span>Change Photo</span></div>
+            </div>`;
+            break;
+        case 'creative':
+            avatarHTML = `<div class="creative-avatar-container">
+                <img class="creative-avatar" src="${imgSrc}" alt="${imgAlt}" id="profilePicImage">
+                <div class="avatar-initials" id="profilePicInitials" style="display:none;">Add Profile Picture</div>
+                <div class="profile-pic-overlay"><i class="fas fa-camera"></i><span>Change Photo</span></div>
+            </div>`;
+            break;
+        case 'corporate':
+            avatarHTML = `<div class="corporate-avatar-container">
+                <img class="corporate-avatar" src="${imgSrc}" alt="${imgAlt}" id="profilePicImage">
+                <div class="avatar-initials" id="profilePicInitials" style="display:none;">Add Profile Picture</div>
+                <div class="profile-pic-overlay"><i class="fas fa-camera"></i><span>Change Photo</span></div>
+            </div>`;
+            break;
+        case 'magazine':
+            avatarHTML = `<div class="magazine-avatar-container">
+                <img class="magazine-avatar" src="${imgSrc}" alt="${imgAlt}" id="profilePicImage">
+                <div class="avatar-initials" id="profilePicInitials" style="display:none;">Add Profile Picture</div>
+                <div class="profile-pic-overlay"><i class="fas fa-camera"></i><span>Change Photo</span></div>
+            </div>`;
+            break;
+        default:
+            // fallback to default
+            avatarHTML = `<div class="bioeditor-avatar-container">
+                <img class="bioeditor-avatar" src="${imgSrc}" alt="${imgAlt}" id="profilePicImage">
+                <div class="avatar-initials" id="profilePicInitials" style="display:none;">Add Profile Picture</div>
+                <div class="profile-pic-overlay"><i class="fas fa-camera"></i><span>Change Photo</span></div>
+            </div>`;
+    }
+    // Insert new avatar container before the file input
+    const fileInput = container.querySelector('#profilePicUpload');
+    if (fileInput) {
+        fileInput.insertAdjacentHTML('beforebegin', avatarHTML);
+    } else {
+        container.insertAdjacentHTML('afterbegin', avatarHTML);
+    }
+
+    // Re-attach upload logic
+    const newAvatar = container.querySelector('[id="profilePicImage"]');
+    const newOverlay = container.querySelector('.profile-pic-overlay');
+    const initialsDiv = container.querySelector('#profilePicInitials');
+    const uploadInput = container.querySelector('#profilePicUpload');
+    if (newAvatar && uploadInput) {
+        newAvatar.addEventListener('click', () => uploadInput.click());
+    }
+    if (newOverlay && uploadInput) {
+        newOverlay.addEventListener('click', () => uploadInput.click());
+    }
+    // Optionally, update global references if needed
+    window.profilePicImage = newAvatar;
+    window.profilePicInitials = initialsDiv;
 }
 
 
