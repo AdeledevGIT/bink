@@ -276,12 +276,16 @@ body {
     .coverstory-content {
         padding: 24px 20px 20px;
     }
-    
+
+    .coverstory-container .media-section {
+        padding: 20px;
+    }
+
     .coverstory-link {
         padding: 14px 16px;
         border-radius: 14px;
     }
-    
+
     .coverstory-socials a {
         width: 40px;
         height: 40px;
@@ -308,7 +312,7 @@ body {
 /* Cover Story Media Styles */
 .coverstory-container .media-section {
     margin: 25px 0;
-    padding: 20px 0;
+    padding: 20px;
     border-top: 1px solid #e9ecef;
     background: #f8f9fa;
     border-radius: 16px;

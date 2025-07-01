@@ -1,0 +1,489 @@
+/* Zen Minimal Template - Clean, peaceful, and purposeful design */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #fafafa;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.zenminimal-bio-bg {
+    min-height: 100vh;
+    background: 
+        linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%),
+        radial-gradient(circle at 30% 20%, rgba(0, 0, 0, 0.02) 0%, transparent 50%);
+    position: relative;
+    padding: 40px 20px;
+}
+
+.zenminimal-container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 48px 40px;
+    position: relative;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.08),
+        0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.zenminimal-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 48px;
+}
+
+.zenminimal-join-btn {
+    background: #2563eb;
+    border: none;
+    color: white;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.zenminimal-join-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.zenminimal-share-btn {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.zenminimal-share-btn:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #475569;
+}
+
+.zenminimal-profile {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.zenminimal-avatar-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 32px;
+}
+
+.zenminimal-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+    border: 4px solid white;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.zenminimal-avatar-ring {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border-radius: 50%;
+    border: 2px solid #e2e8f0;
+    z-index: 1;
+    animation: gentle-pulse 4s ease-in-out infinite;
+}
+
+@keyframes gentle-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.05); opacity: 0.3; }
+}
+
+.zenminimal-username {
+    font-size: 2.25rem;
+    font-weight: 600;
+    font-family: 'Playfair Display', serif;
+    color: #1e293b;
+    margin-bottom: 8px;
+    letter-spacing: -0.025em;
+}
+
+.zenminimal-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #64748b;
+    margin-bottom: 24px;
+    letter-spacing: 0.025em;
+}
+
+.zenminimal-bio {
+    color: #475569;
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 360px;
+    margin: 0 auto;
+    font-weight: 400;
+}
+
+.zenminimal-links {
+    margin-bottom: 48px;
+}
+
+.zenminimal-link-container {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.zenminimal-link {
+    display: flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 20px 24px;
+    text-decoration: none;
+    color: #334155;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.zenminimal-link:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.zenminimal-link i {
+    margin-right: 16px;
+    font-size: 1.2rem;
+    color: #64748b;
+    width: 20px;
+    text-align: center;
+}
+
+.zenminimal-link-share-btn {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0;
+    font-size: 0.8rem;
+}
+
+.zenminimal-link-container:hover .zenminimal-link-share-btn {
+    opacity: 1;
+}
+
+.zenminimal-link-share-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #475569;
+}
+
+.zenminimal-socials {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 48px;
+}
+
+.zenminimal-socials a {
+    width: 48px;
+    height: 48px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 1.1rem;
+}
+
+.zenminimal-socials a:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #475569;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.zenminimal-footer {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.zenminimal-footer a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.zenminimal-footer a:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+/* Zen Minimal Media Styles */
+.zenminimal-container .media-section {
+    margin: 40px 0;
+    padding: 32px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    position: relative;
+}
+
+.zenminimal-container .media-section:first-child {
+    margin-top: 0;
+}
+
+.zenminimal-container .media-section-title {
+    color: #1e293b;
+    font-size: 1.25rem;
+    font-weight: 600;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: -0.025em;
+}
+
+.zenminimal-container .media-section-title i {
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+.zenminimal-container .media-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.zenminimal-container .images-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.zenminimal-container .music-grid {
+    grid-template-columns: 1fr;
+}
+
+.zenminimal-container .media-item {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.zenminimal-container .media-item:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.zenminimal-container .image-container {
+    width: 100%;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 16px;
+    background: #f1f5f9;
+}
+
+.zenminimal-container .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.zenminimal-container .image-container:hover img {
+    transform: scale(1.02);
+}
+
+.zenminimal-container .music-item {
+    padding: 24px;
+}
+
+.zenminimal-container .music-player {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.zenminimal-container .music-player:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.zenminimal-container .music-platform-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.zenminimal-container .music-platform-icon.spotify { background: #1db954; }
+
+.zenminimal-container .music-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.zenminimal-container .music-title {
+    color: #1e293b;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.zenminimal-container .music-artist {
+    color: #64748b;
+    font-size: 0.875rem;
+    margin: 0 0 2px 0;
+    font-weight: 400;
+}
+
+.zenminimal-container .music-platform {
+    color: #94a3b8;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.zenminimal-container .play-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #2563eb;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    font-size: 0.875rem;
+}
+
+.zenminimal-container .play-button:hover {
+    background: #1d4ed8;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.zenminimal-container .media-info {
+    padding: 16px 20px;
+}
+
+.zenminimal-container .media-title {
+    color: #1e293b;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.zenminimal-container .media-description {
+    color: #64748b;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .zenminimal-bio-bg {
+        padding: 20px 16px;
+    }
+
+    .zenminimal-container {
+        padding: 32px 24px;
+        border-radius: 20px;
+    }
+
+    .zenminimal-container .media-section {
+        padding: 24px;
+        margin: 32px 0;
+    }
+
+    .zenminimal-avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .zenminimal-username {
+        font-size: 1.875rem;
+    }
+
+    .zenminimal-link {
+        padding: 18px 20px;
+    }
+
+    .zenminimal-socials a {
+        width: 44px;
+        height: 44px;
+        font-size: 1rem;
+    }
+}

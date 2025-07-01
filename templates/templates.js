@@ -398,7 +398,9 @@ window.BINK.templates.templates['classic'] = {
                     </div>
                 </div>
                 <div class="bio-header">
-                    ${getAvatarHTML(data, 'profile-image', 'profile-image-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
+                    <div class="profile-image-container">
+                        <img src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'}" alt="Profile Image">
+                    </div>
                     <div class="bio-header-content">
                         <h1>${data.displayName || data.username}</h1>
                         <p class="bio-description">${data.bio || ''}</p>
@@ -457,7 +459,9 @@ window.BINK.templates.templates['neoncard'] = {
                     </div>
                 </div>
                 <div class="neoncard-header">
-                    ${getAvatarHTML(data, 'neoncard-avatar', 'neoncard-avatar-container', '#0f0524', '3px solid #00fff7', '0 0 15px #00fff7')}
+                    <div class="neoncard-avatar-container">
+                        <img class="neoncard-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                    </div>
                     <div class="neoncard-username" data-text="${window.BINK.templates.formatUsername(data.displayName || data.username)}">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="neoncard-bio">${data.bio || ''}</div>
                 </div>
@@ -514,7 +518,7 @@ window.BINK.templates.templates['glassmorphism'] = {
                     </div>
                 </div>
                 <div class="glass-profile">
-                    ${getAvatarHTML(data, 'glass-avatar', 'glass-profile', '#fff', '3px solid #fff', '0 0 18px #fff, 0 0 0 6px rgba(255,255,255,0.2)')}
+                    <img class="glass-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
                     <div class="glass-name">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="glass-bio">${data.bio || ''}</div>
                 </div>
@@ -571,7 +575,7 @@ window.BINK.templates.templates['purplecard'] = {
                     </div>
                 </div>
                 <div class="purplecard-header">
-                    ${getAvatarHTML(data, 'purplecard-avatar', 'purplecard-avatar-container', '#6d28d9', '4px solid #fff', '0 0 0 6px #a78bfa')}
+                    <img class="purplecard-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
                     <div class="purplecard-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="purplecard-bio">${data.bio || ''}</div>
                 </div>
@@ -629,7 +633,7 @@ window.BINK.templates.templates['landingprofile'] = {
             <div class="landing-banner">
                 <div class="landing-profile-row">
                     <div class="landing-profile-pic-username">
-                        ${getAvatarHTML(data, 'landing-profile-pic', 'landing-profile-pic-username', '#6b47dc', '3px solid #6b47dc', '0 0 18px #6b47dc, 0 0 0 6px rgba(255,255,255,0.2)')}
+                        <img class="landing-profile-pic" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
                         <div class="landing-username-inline">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     </div>
                 </div>
@@ -1063,7 +1067,7 @@ window.BINK.templates.templates['blacklanding'] = {
             <div class="blacklanding-banner">
                 <div class="blacklanding-profile-row-inline">
                     <div class="blacklanding-profile-pic-username">
-                        ${getAvatarHTML(data, 'blacklanding-profile-pic', 'blacklanding-profile-pic-username', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
+                        <img class="blacklanding-profile-pic" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
                         <div class="blacklanding-username-inline">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     </div>
                 </div>
@@ -1121,7 +1125,9 @@ window.BINK.templates.templates['gradientflow'] = {
                         </div>
                     </div>
                     <div class="gradientflow-profile">
-                        ${getAvatarHTML(data, 'gradientflow-avatar', 'gradientflow-avatar-container', 'rgba(255,255,255,0.15)', '3px solid #23a6d5', '0 5px 15px #23a6d5')}
+                        <div class="gradientflow-avatar-container">
+                            <img class="gradientflow-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                        </div>
                         <div class="gradientflow-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                         <div class="gradientflow-bio">${data.bio || ''}</div>
                     </div>
@@ -1178,7 +1184,9 @@ window.BINK.templates.templates['darkelegance'] = {
                         </div>
                     </div>
                     <div class="darkelegance-profile">
-                        ${getAvatarHTML(data, 'darkelegance-avatar', 'darkelegance-avatar-container', '#1a1a1a', '4px solid #d4af37', '0 0 15px #d4af37')}
+                        <div class="darkelegance-avatar-container">
+                            <img class="darkelegance-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                        </div>
                         <div class="darkelegance-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                         <div class="darkelegance-bio">${data.bio || ''}</div>
                     </div>
@@ -1235,7 +1243,9 @@ window.BINK.templates.templates['neonglow'] = {
                         </div>
                     </div>
                     <div class="neonglow-profile">
-                        ${getAvatarHTML(data, 'neonglow-avatar', 'neonglow-avatar-container', '#0c0c0c', '3px solid #ff0080', '0 0 20px #ff0080')}
+                        <div class="neonglow-avatar-container">
+                            <img class="neonglow-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                        </div>
                         <div class="neonglow-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                         <div class="neonglow-bio">${data.bio || ''}</div>
                     </div>
@@ -1294,7 +1304,9 @@ window.BINK.templates.templates['minimalzen'] = {
                         </div>
                     </div>
                     <div class="minimalzen-profile">
-                        ${getAvatarHTML(data, 'minimalzen-avatar', 'minimalzen-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
+                        <div class="minimalzen-avatar-container">
+                            <img class="minimalzen-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                        </div>
                         <div class="minimalzen-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                         <div class="minimalzen-bio">${data.bio || ''}</div>
                     </div>
@@ -1353,7 +1365,9 @@ window.BINK.templates.templates['techwave'] = {
                         </div>
                     </div>
                     <div class="techwave-profile">
-                        ${getAvatarHTML(data, 'techwave-avatar', 'techwave-avatar-container', '#0a192f', '3px solid #64ffda', '0 0 15px #64ffda')}
+                        <div class="techwave-avatar-container">
+                            <img class="techwave-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                        </div>
                         <div class="techwave-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                         <div class="techwave-bio">${data.bio || ''}</div>
                     </div>
@@ -1400,7 +1414,9 @@ window.BINK.templates.templates['splitscreen'] = {
             <div class="splitscreen-container">
                 <div class="splitscreen-sidebar">
                     <div class="splitscreen-profile">
-                        ${getAvatarHTML(data, 'splitscreen-avatar', 'splitscreen-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
+                        <div class="splitscreen-avatar-container">
+                            <img class="splitscreen-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                        </div>
                         <div class="splitscreen-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                         <div class="splitscreen-bio">${data.bio || ''}</div>
                         <div class="splitscreen-socials">
@@ -1471,7 +1487,9 @@ window.BINK.templates.templates['magazine'] = {
 
                 <div class="magazine-profile-section">
                     <div class="magazine-profile-header">
-                        ${getAvatarHTML(data, 'magazine-avatar', 'magazine-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
+                        <div class="magazine-avatar-container">
+                            <img class="magazine-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                        </div>
                         <div class="magazine-profile-info">
                             <div class="magazine-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                             <div class="magazine-socials">
@@ -1545,7 +1563,9 @@ window.BINK.templates.templates['retrowave'] = {
                         </div>
                     </div>
                     <div class="retrowave-profile">
-                        ${getAvatarHTML(data, 'retrowave-avatar', 'retrowave-avatar-container', '#2b0054', '4px solid #ff00ff', '0 0 20px #00ffff')}
+                        <div class="retrowave-avatar-container">
+                            <img class="retrowave-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                        </div>
                         <div class="retrowave-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                         <div class="retrowave-bio">${data.bio || ''}</div>
                     </div>
@@ -1602,7 +1622,9 @@ window.BINK.templates.templates['nature'] = {
                         </div>
                     </div>
                     <div class="nature-profile">
-                        ${getAvatarHTML(data, 'nature-avatar', 'nature-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
+                        <div class="nature-avatar-container">
+                            <img class="nature-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                        </div>
                         <div class="nature-username">@${data.displayName || data.username}</div>
                         <div class="nature-bio">${data.bio || ''}</div>
                     </div>
@@ -1659,7 +1681,9 @@ window.BINK.templates.templates['portfolio'] = {
                 </div>
 
                 <div class="portfolio-profile-section">
-                    ${getAvatarHTML(data, 'portfolio-avatar', 'portfolio-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
+                    <div class="portfolio-avatar-container">
+                        <img class="portfolio-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                    </div>
                     <div class="portfolio-profile-info">
                         <div class="portfolio-username">@${data.displayName || data.username}</div>
                         <div class="portfolio-bio">${data.bio || ''}</div>
@@ -2147,6 +2171,348 @@ window.BINK.templates.templates['herobanner'] = {
                     <div class="herobanner-footer">
                         Powered by <a href="index.html" target="_blank">BINK</a>
                     </div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+};
+
+// Cyberpunk Template (Premium)
+window.BINK.templates.templates['cyberpunk'] = {
+    id: 'cyberpunk',
+    name: 'Cyberpunk',
+    description: 'Futuristic neon-lit cyberpunk aesthetic with matrix effects.',
+    css: 'templates/cyberpunk.css',
+    isPremium: true,
+    tokenPrice: 200,
+    render: function(data) {
+        return `
+        <div class="cyberpunk-bio-bg">
+            <div class="cyberpunk-container">
+                <div class="cyberpunk-header-actions">
+                    <a href="index.html" class="cyberpunk-join-btn">
+                        <i class="fas fa-user-plus"></i> JOIN BINK
+                    </a>
+                    <button class="cyberpunk-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+
+                <div class="cyberpunk-profile">
+                    <div class="cyberpunk-avatar-container">
+                        ${getAvatarHTML(data, 'cyberpunk-avatar', 'cyberpunk-avatar-container', '#0a0a0a', '3px solid #00ffff', '0 0 20px #00ffff')}
+                        <div class="cyberpunk-avatar-glow"></div>
+                    </div>
+                    <div class="cyberpunk-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
+                    <div class="cyberpunk-title">CYBER SPECIALIST</div>
+                    <div class="cyberpunk-bio">${data.bio || 'Digital guardian navigating the neon-lit corridors of cyberspace'}</div>
+                </div>
+
+                <div class="cyberpunk-links">
+                    ${(data.links || []).map(link => `
+                        <div class="cyberpunk-link-container">
+                            <a class="cyberpunk-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
+                                <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
+                                <span>${link.title}</span>
+                                <div class="cyberpunk-link-glow"></div>
+                            </a>
+                            <button class="cyberpunk-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+
+                ${window.BINK.templates.renderMediaContent(data.media || {})}
+
+                <div class="cyberpunk-socials">
+                    ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
+                </div>
+
+                <div class="cyberpunk-footer">
+                    <span class="cyberpunk-glitch">POWERED BY</span> <a href="index.html" target="_blank">BINK</a>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+};
+
+// Ocean Waves Template (Premium)
+window.BINK.templates.templates['oceanwaves'] = {
+    id: 'oceanwaves',
+    name: 'Ocean Waves',
+    description: 'Serene ocean-inspired design with flowing wave animations.',
+    css: 'templates/oceanwaves.css',
+    isPremium: true,
+    tokenPrice: 180,
+    render: function(data) {
+        return `
+        <div class="oceanwaves-bio-bg">
+            <div class="oceanwaves-waves">
+                <div class="wave wave1"></div>
+                <div class="wave wave2"></div>
+                <div class="wave wave3"></div>
+            </div>
+
+            <div class="oceanwaves-container">
+                <div class="oceanwaves-header-actions">
+                    <a href="index.html" class="oceanwaves-join-btn">
+                        <i class="fas fa-user-plus"></i> Join BINK
+                    </a>
+                    <button class="oceanwaves-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+
+                <div class="oceanwaves-profile">
+                    <div class="oceanwaves-avatar-container">
+                        ${getAvatarHTML(data, 'oceanwaves-avatar', 'oceanwaves-avatar-container', 'rgba(255,255,255,0.1)', '4px solid rgba(255,255,255,0.8)', '0 10px 30px rgba(0,0,0,0.2)')}
+                        <div class="oceanwaves-avatar-ripple"></div>
+                    </div>
+                    <div class="oceanwaves-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
+                    <div class="oceanwaves-title">Ocean Explorer</div>
+                    <div class="oceanwaves-bio">${data.bio || 'Capturing the endless beauty of ocean waves and marine life'}</div>
+                </div>
+
+                <div class="oceanwaves-links">
+                    ${(data.links || []).map(link => `
+                        <div class="oceanwaves-link-container">
+                            <a class="oceanwaves-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
+                                <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
+                                <span>${link.title}</span>
+                                <div class="oceanwaves-link-wave"></div>
+                            </a>
+                            <button class="oceanwaves-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+
+                ${window.BINK.templates.renderMediaContent(data.media || {})}
+
+                <div class="oceanwaves-socials">
+                    ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
+                </div>
+
+                <div class="oceanwaves-footer">
+                    <span class="oceanwaves-flowing-text">Powered by</span> <a href="index.html" target="_blank">BINK</a>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+};
+
+// Vintage Polaroid Template (Premium)
+window.BINK.templates.templates['vintagepolaroid'] = {
+    id: 'vintagepolaroid',
+    name: 'Vintage Polaroid',
+    description: 'Nostalgic film photography aesthetic with polaroid frames.',
+    css: 'templates/vintagepolaroid.css',
+    isPremium: true,
+    tokenPrice: 160,
+    render: function(data) {
+        return `
+        <div class="vintagepolaroid-bio-bg">
+            <div class="vintagepolaroid-container">
+                <div class="vintagepolaroid-header-actions">
+                    <a href="index.html" class="vintagepolaroid-join-btn">
+                        <i class="fas fa-user-plus"></i> Join BINK
+                    </a>
+                    <button class="vintagepolaroid-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+
+                <div class="vintagepolaroid-polaroid-frame">
+                    <div class="vintagepolaroid-photo">
+                        <img class="vintagepolaroid-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                    </div>
+                    <div class="vintagepolaroid-caption">
+                        <div class="vintagepolaroid-handwriting">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
+                        <div class="vintagepolaroid-date">Est. 2024</div>
+                    </div>
+                </div>
+
+                <div class="vintagepolaroid-profile">
+                    <div class="vintagepolaroid-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
+                    <div class="vintagepolaroid-title">Vintage Photographer & Collector</div>
+                    <div class="vintagepolaroid-bio">${data.bio || 'Capturing life\'s beautiful moments through the lens of nostalgia'}</div>
+                </div>
+
+                <div class="vintagepolaroid-links">
+                    ${(data.links || []).map(link => `
+                        <div class="vintagepolaroid-link-container">
+                            <a class="vintagepolaroid-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
+                                <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
+                                <span>${link.title}</span>
+                                <div class="vintagepolaroid-tape"></div>
+                            </a>
+                            <button class="vintagepolaroid-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+
+                ${window.BINK.templates.renderMediaContent(data.media || {})}
+
+                <div class="vintagepolaroid-socials">
+                    ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
+                </div>
+
+                <div class="vintagepolaroid-footer">
+                    <span class="vintagepolaroid-typewriter">Powered by</span> <a href="index.html" target="_blank">BINK</a>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+};
+
+// Neon Gaming Template (Premium)
+window.BINK.templates.templates['neongaming'] = {
+    id: 'neongaming',
+    name: 'Neon Gaming',
+    description: 'High-tech gaming aesthetic with RGB lighting and stats.',
+    css: 'templates/neongaming.css',
+    isPremium: true,
+    tokenPrice: 220,
+    render: function(data) {
+        return `
+        <div class="neongaming-bio-bg">
+            <div class="neongaming-grid-overlay"></div>
+            <div class="neongaming-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+
+            <div class="neongaming-container">
+                <div class="neongaming-header-actions">
+                    <a href="index.html" class="neongaming-join-btn">
+                        <i class="fas fa-user-plus"></i> JOIN GAME
+                    </a>
+                    <button class="neongaming-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+
+                <div class="neongaming-profile">
+                    <div class="neongaming-avatar-container">
+                        <div class="neongaming-avatar-frame">
+                            ${getAvatarHTML(data, 'neongaming-avatar', 'neongaming-avatar-frame', '#0d0d0d', 'none', 'none')}
+                            <div class="neongaming-avatar-border"></div>
+                        </div>
+                        <div class="neongaming-level-badge">LVL 99</div>
+                    </div>
+                    <div class="neongaming-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
+                    <div class="neongaming-title">PRO GAMER</div>
+                    <div class="neongaming-stats">
+                        <div class="stat">
+                            <span class="stat-value">2.5K</span>
+                            <span class="stat-label">WINS</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">98%</span>
+                            <span class="stat-label">WIN RATE</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">1.2M</span>
+                            <span class="stat-label">SCORE</span>
+                        </div>
+                    </div>
+                    <div class="neongaming-bio">${data.bio || 'Elite gamer conquering virtual worlds and breaking records'}</div>
+                </div>
+
+                <div class="neongaming-links">
+                    ${(data.links || []).map(link => `
+                        <div class="neongaming-link-container">
+                            <a class="neongaming-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
+                                <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
+                                <span>${link.title}</span>
+                                <div class="neongaming-link-glow"></div>
+                            </a>
+                            <button class="neongaming-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+
+                ${window.BINK.templates.renderMediaContent(data.media || {})}
+
+                <div class="neongaming-socials">
+                    ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
+                </div>
+
+                <div class="neongaming-footer">
+                    <span class="neongaming-glitch-text">POWERED BY</span> <a href="index.html" target="_blank">BINK</a>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+};
+
+// Zen Minimal Template (Premium)
+window.BINK.templates.templates['zenminimal'] = {
+    id: 'zenminimal',
+    name: 'Zen Minimal',
+    description: 'Clean, peaceful, and purposeful minimalist design.',
+    css: 'templates/zenminimal.css',
+    isPremium: true,
+    tokenPrice: 140,
+    render: function(data) {
+        return `
+        <div class="zenminimal-bio-bg">
+            <div class="zenminimal-container">
+                <div class="zenminimal-header-actions">
+                    <a href="index.html" class="zenminimal-join-btn">
+                        <i class="fas fa-user-plus"></i> Join BINK
+                    </a>
+                    <button class="zenminimal-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+
+                <div class="zenminimal-profile">
+                    <div class="zenminimal-avatar-container">
+                        ${getAvatarHTML(data, 'zenminimal-avatar', 'zenminimal-avatar-container', '#f8fafc', '4px solid white', '0 8px 32px rgba(0,0,0,0.12)')}
+                        <div class="zenminimal-avatar-ring"></div>
+                    </div>
+                    <div class="zenminimal-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
+                    <div class="zenminimal-title">Mindful Designer</div>
+                    <div class="zenminimal-bio">${data.bio || 'Creating beautiful, purposeful designs with intention and simplicity'}</div>
+                </div>
+
+                <div class="zenminimal-links">
+                    ${(data.links || []).map(link => `
+                        <div class="zenminimal-link-container">
+                            <a class="zenminimal-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
+                                <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
+                                <span>${link.title}</span>
+                            </a>
+                            <button class="zenminimal-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+
+                ${window.BINK.templates.renderMediaContent(data.media || {})}
+
+                <div class="zenminimal-socials">
+                    ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
+                </div>
+
+                <div class="zenminimal-footer">
+                    <span>Powered by</span> <a href="index.html" target="_blank">BINK</a>
                 </div>
             </div>
         </div>

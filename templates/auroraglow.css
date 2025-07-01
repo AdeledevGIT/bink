@@ -59,12 +59,13 @@ body::before {
     backdrop-filter: blur(20px);
     border: none;
     border-radius: 0;
-    padding: 0;
+    padding: 32px;
     position: relative;
     overflow: hidden;
     box-shadow: none;
     width: 100vw;
     min-height: 100vh;
+    box-sizing: border-box;
 }
 
 .auroraglow-container::before {
@@ -341,7 +342,7 @@ body::before {
 /* Aurora Glow Media Styles */
 .auroraglow-container .media-section {
     margin: 25px 0;
-    padding: 20px 0;
+    padding: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(10, 10, 15, 0.6);
     border-radius: 16px;
@@ -703,8 +704,8 @@ body::before {
 /* Mobile Responsive */
 @media (max-width: 480px) {
     .auroraglow-container {
-        padding: 24px;
-        margin: 10px;
+        padding: 20px;
+        margin: 0;
     }
     
     .auroraglow-avatar {

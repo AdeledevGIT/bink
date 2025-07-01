@@ -464,7 +464,7 @@
 /* Glassmorphism Media Styles */
 .glass-bio-card .media-section {
     margin: 25px 0;
-    padding: 20px 0;
+    padding: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     background: linear-gradient(120deg, rgba(224, 234, 252, 0.6) 0%, rgba(207, 222, 243, 0.6) 100%);
     backdrop-filter: blur(12px);

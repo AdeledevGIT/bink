@@ -1,0 +1,552 @@
+/* Vintage Polaroid Template - Nostalgic film photography design */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Merriweather', serif;
+    background: #f5f1e8;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.vintagepolaroid-bio-bg {
+    min-height: 100vh;
+    background: 
+        linear-gradient(45deg, #f5f1e8 0%, #e8dcc6 50%, #d4c5a9 100%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4c5a9' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    position: relative;
+    padding: 20px;
+}
+
+.vintagepolaroid-bio-bg::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(139, 69, 19, 0.05) 0%, transparent 50%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.vintagepolaroid-container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 32px;
+    position: relative;
+    z-index: 1;
+    background: #faf7f0;
+    border-radius: 15px;
+    box-shadow: 
+        0 10px 30px rgba(139, 69, 19, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(139, 69, 19, 0.1);
+}
+
+.vintagepolaroid-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.vintagepolaroid-join-btn {
+    background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+    border: none;
+    color: #faf7f0;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+    font-family: 'Merriweather', serif;
+}
+
+.vintagepolaroid-join-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+}
+
+.vintagepolaroid-share-btn {
+    background: rgba(139, 69, 19, 0.1);
+    border: 2px solid rgba(139, 69, 19, 0.3);
+    color: #8b4513;
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.vintagepolaroid-share-btn:hover {
+    background: rgba(139, 69, 19, 0.2);
+    transform: scale(1.05);
+}
+
+.vintagepolaroid-polaroid-frame {
+    background: white;
+    padding: 20px 20px 60px 20px;
+    border-radius: 5px;
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 32px;
+    transform: rotate(-2deg);
+    position: relative;
+}
+
+.vintagepolaroid-polaroid-frame::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(139, 69, 19, 0.2);
+    transform: rotate(45deg);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.vintagepolaroid-photo {
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    background: #f0f0f0;
+}
+
+.vintagepolaroid-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(20%) contrast(1.1) brightness(1.05);
+}
+
+.vintagepolaroid-caption {
+    text-align: center;
+}
+
+.vintagepolaroid-handwriting {
+    font-family: 'Caveat', cursive;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #4a4a4a;
+    margin-bottom: 5px;
+    transform: rotate(1deg);
+}
+
+.vintagepolaroid-date {
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+    color: #8b4513;
+    transform: rotate(-1deg);
+}
+
+.vintagepolaroid-profile {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.vintagepolaroid-username {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #8b4513;
+    margin-bottom: 8px;
+    font-family: 'Merriweather', serif;
+}
+
+.vintagepolaroid-title {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #a0522d;
+    margin-bottom: 16px;
+    font-style: italic;
+}
+
+.vintagepolaroid-bio {
+    color: #5d4e37;
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 320px;
+    margin: 0 auto;
+    font-weight: 400;
+}
+
+.vintagepolaroid-links {
+    margin-bottom: 32px;
+}
+
+.vintagepolaroid-link-container {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.vintagepolaroid-link {
+    display: flex;
+    align-items: center;
+    background: #faf7f0;
+    border: 2px solid rgba(139, 69, 19, 0.2);
+    border-radius: 10px;
+    padding: 18px 24px;
+    text-decoration: none;
+    color: #5d4e37;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(139, 69, 19, 0.1);
+}
+
+.vintagepolaroid-tape {
+    position: absolute;
+    top: -5px;
+    right: 20px;
+    width: 40px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(139, 69, 19, 0.2);
+    transform: rotate(15deg);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.vintagepolaroid-link:hover {
+    background: #f5f1e8;
+    border-color: rgba(139, 69, 19, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.2);
+}
+
+.vintagepolaroid-link i {
+    margin-right: 16px;
+    font-size: 1.3rem;
+    color: #8b4513;
+    width: 24px;
+    text-align: center;
+}
+
+.vintagepolaroid-link-share-btn {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(139, 69, 19, 0.1);
+    border: 1px solid rgba(139, 69, 19, 0.3);
+    color: #8b4513;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    font-size: 0.9rem;
+}
+
+.vintagepolaroid-link-container:hover .vintagepolaroid-link-share-btn {
+    opacity: 1;
+}
+
+.vintagepolaroid-link-share-btn:hover {
+    background: rgba(139, 69, 19, 0.2);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.vintagepolaroid-socials {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.vintagepolaroid-socials a {
+    width: 50px;
+    height: 50px;
+    background: #faf7f0;
+    border: 2px solid rgba(139, 69, 19, 0.3);
+    color: #8b4513;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    box-shadow: 0 3px 10px rgba(139, 69, 19, 0.1);
+}
+
+.vintagepolaroid-socials a:hover {
+    background: #f5f1e8;
+    border-color: rgba(139, 69, 19, 0.5);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.2);
+}
+
+.vintagepolaroid-footer {
+    text-align: center;
+    color: #8b4513;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: 'Merriweather', serif;
+}
+
+.vintagepolaroid-typewriter {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+}
+
+.vintagepolaroid-footer a {
+    color: #8b4513;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.vintagepolaroid-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Vintage Polaroid Media Styles */
+.vintagepolaroid-container .media-section {
+    margin: 30px 0;
+    padding: 25px;
+    background: #faf7f0;
+    border: 2px solid rgba(139, 69, 19, 0.2);
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(139, 69, 19, 0.1);
+}
+
+.vintagepolaroid-container .media-section::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 30px;
+    width: 50px;
+    height: 25px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(139, 69, 19, 0.2);
+    transform: rotate(-10deg);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.vintagepolaroid-container .media-section:first-child {
+    margin-top: 0;
+}
+
+.vintagepolaroid-container .media-section-title {
+    color: #8b4513;
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-family: 'Merriweather', serif;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.vintagepolaroid-container .media-section-title i {
+    color: #a0522d;
+    font-size: 1.2rem;
+}
+
+.vintagepolaroid-container .media-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.vintagepolaroid-container .images-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.vintagepolaroid-container .music-grid {
+    grid-template-columns: 1fr;
+}
+
+.vintagepolaroid-container .media-item {
+    background: white;
+    border: 1px solid rgba(139, 69, 19, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(139, 69, 19, 0.1);
+    position: relative;
+}
+
+.vintagepolaroid-container .media-item:hover {
+    transform: translateY(-3px) rotate(1deg);
+    box-shadow: 0 8px 25px rgba(139, 69, 19, 0.2);
+}
+
+.vintagepolaroid-container .image-container {
+    width: 100%;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+    background: #f0f0f0;
+}
+
+.vintagepolaroid-container .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    filter: sepia(15%) contrast(1.05) brightness(1.02);
+}
+
+.vintagepolaroid-container .image-container:hover img {
+    transform: scale(1.05);
+}
+
+.vintagepolaroid-container .music-item {
+    padding: 20px;
+}
+
+.vintagepolaroid-container .music-player {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: #faf7f0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(139, 69, 19, 0.2);
+}
+
+.vintagepolaroid-container .music-player:hover {
+    background: #f5f1e8;
+    border-color: rgba(139, 69, 19, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.15);
+}
+
+.vintagepolaroid-container .music-platform-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.vintagepolaroid-container .music-platform-icon.spotify { background: #1db954; }
+
+.vintagepolaroid-container .music-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.vintagepolaroid-container .music-title {
+    color: #8b4513;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'Merriweather', serif;
+    margin: 0 0 5px 0;
+}
+
+.vintagepolaroid-container .music-artist {
+    color: #5d4e37;
+    font-size: 0.9rem;
+    margin: 0 0 3px 0;
+    font-style: italic;
+}
+
+.vintagepolaroid-container .music-platform {
+    color: #a0522d;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.vintagepolaroid-container .play-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+    border: none;
+    color: #faf7f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(139, 69, 19, 0.3);
+}
+
+.vintagepolaroid-container .play-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
+}
+
+.vintagepolaroid-container .media-info {
+    padding: 15px 20px;
+}
+
+.vintagepolaroid-container .media-title {
+    color: #8b4513;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'Merriweather', serif;
+    margin: 0 0 8px 0;
+}
+
+.vintagepolaroid-container .media-description {
+    color: #5d4e37;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+    font-style: italic;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .vintagepolaroid-container {
+        padding: 24px;
+        margin: 10px;
+    }
+
+    .vintagepolaroid-container .media-section {
+        padding: 20px;
+    }
+
+    .vintagepolaroid-polaroid-frame {
+        padding: 15px 15px 45px 15px;
+    }
+
+    .vintagepolaroid-photo {
+        height: 240px;
+    }
+
+    .vintagepolaroid-username {
+        font-size: 1.6rem;
+    }
+
+    .vintagepolaroid-link {
+        padding: 16px 20px;
+    }
+
+    .vintagepolaroid-socials a {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+}

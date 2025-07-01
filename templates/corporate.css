@@ -315,11 +315,15 @@
     .corporate-content {
         padding: 30px 20px;
     }
-    
+
+    .corporate-container .media-section {
+        padding: 25px 20px;
+    }
+
     .corporate-name {
         font-size: 1.6rem;
     }
-    
+
     .corporate-avatar {
         width: 100px;
         height: 100px;
@@ -329,7 +333,7 @@
 /* Corporate Professional Media Styles */
 .corporate-container .media-section {
     margin: 30px 0;
-    padding: 25px 0;
+    padding: 25px 30px;
     border-top: 1px solid #e2e8f0;
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     border-radius: 12px;

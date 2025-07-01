@@ -367,21 +367,21 @@
     text-decoration: underline;
 }
 /* Black Landing Media Styles */
-.blacklanding-banner .media-section {
+.blacklanding-main .media-section {
     margin: 25px 0;
-    padding: 20px 0;
+    padding: 20px;
     border-top: 1px solid #3f3f46;
     background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
     border-radius: 16px;
     border: 1px solid #3f3f46;
 }
 
-.blacklanding-banner .media-section:first-child {
+.blacklanding-main .media-section:first-child {
     border-top: none;
     margin-top: 0;
 }
 
-.blacklanding-banner .media-section-title {
+.blacklanding-main .media-section-title {
     color: #a78bfa;
     font-size: 1.1rem;
     font-weight: 600;
@@ -394,29 +394,29 @@
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 
-.blacklanding-banner .media-section-title i {
+.blacklanding-main .media-section-title i {
     color: #a78bfa;
     font-size: 1rem;
 }
 
-.blacklanding-banner .media-grid {
+.blacklanding-main .media-grid {
     display: grid;
     gap: 15px;
 }
 
-.blacklanding-banner .videos-grid {
+.blacklanding-main .videos-grid {
     grid-template-columns: 1fr;
 }
 
-.blacklanding-banner .images-grid {
+.blacklanding-main .images-grid {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
 
-.blacklanding-banner .music-grid {
+.blacklanding-main .music-grid {
     grid-template-columns: 1fr;
 }
 
-.blacklanding-banner .media-item {
+.blacklanding-main .media-item {
     background: #27272a;
     border: 1px solid #3f3f46;
     border-radius: 12px;
@@ -425,18 +425,18 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.blacklanding-banner .media-item:hover {
+.blacklanding-main .media-item:hover {
     transform: translateY(-3px);
     border-color: #a78bfa;
     box-shadow: 0 8px 25px rgba(167, 139, 250, 0.3);
 }
 
 /* Video Items */
-.blacklanding-banner .video-item {
+.blacklanding-main .video-item {
     padding: 15px;
 }
 
-.blacklanding-banner .video-thumbnail {
+.blacklanding-main .video-thumbnail {
     width: 100%;
     height: 180px;
     border-radius: 8px;
@@ -445,13 +445,13 @@
     margin-bottom: 12px;
 }
 
-.blacklanding-banner .video-thumbnail img {
+.blacklanding-main .video-thumbnail img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.blacklanding-banner .video-play-overlay {
+.blacklanding-main .video-play-overlay {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -469,25 +469,27 @@
     box-shadow: 0 4px 15px rgba(167, 139, 250, 0.3);
 }
 
-.blacklanding-banner .video-play-overlay:hover {
+.blacklanding-main .video-play-overlay:hover {
     background: #8b5cf6;
     transform: translate(-50%, -50%) scale(1.1);
     box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
 }
 
 /* Image Items */
-.blacklanding-banner .image-item {
-    aspect-ratio: 1;
+.blacklanding-main .image-item {
+    /* Removed aspect-ratio to allow space for titles/descriptions */
 }
 
-.blacklanding-banner .image-container {
+.blacklanding-main .image-container {
     width: 100%;
-    height: 100%;
+    height: 200px;
     position: relative;
     overflow: hidden;
+    margin-bottom: 15px;
+    border-radius: 8px;
 }
 
-.blacklanding-banner .image-container img {
+.blacklanding-main .image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -495,20 +497,34 @@
     transition: transform 0.3s ease;
 }
 
-.blacklanding-banner .image-container:hover img {
+.blacklanding-main .image-container:hover img {
     transform: scale(1.05);
 }
 
 /* Music Items */
-.blacklanding-banner .music-item {
+.blacklanding-main .music-item {
     padding: 15px;
+}
+
+.blacklanding-main .music-player {
     display: flex;
     align-items: center;
     gap: 15px;
+    padding: 15px;
+    background: #18181b;
+    border-radius: 12px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #3f3f46;
 }
 
-.blacklanding-banner .music-platform-icon {
+.blacklanding-main .music-player:hover {
+    border-color: #a78bfa;
+    box-shadow: 0 8px 25px rgba(167, 139, 250, 0.3);
+    transform: translateY(-2px);
+}
+
+.blacklanding-main .music-platform-icon {
     width: 45px;
     height: 45px;
     border-radius: 8px;
@@ -517,30 +533,55 @@
     justify-content: center;
     font-size: 1.3rem;
     color: white;
-    background: #3f3f46;
-    border: 1px solid #52525b;
+    flex-shrink: 0;
 }
 
-.blacklanding-banner .music-info {
+.blacklanding-main .music-platform-icon.spotify { background: #1db954; }
+.blacklanding-main .music-platform-icon.apple-music { background: #fa243c; }
+.blacklanding-main .music-platform-icon.youtube-music { background: #ff0000; }
+.blacklanding-main .music-platform-icon.audiomack { background: #ff6600; }
+.blacklanding-main .music-platform-icon.soundcloud { background: #ff7700; }
+.blacklanding-main .music-platform-icon.bandcamp { background: #629aa0; }
+.blacklanding-main .music-platform-icon.tidal { background: #000000; }
+.blacklanding-main .music-platform-icon.deezer { background: #feaa2d; }
+.blacklanding-main .music-platform-icon.amazon-music { background: #ff9900; }
+.blacklanding-main .music-platform-icon.other { background: #666666; }
+
+.blacklanding-main .music-info {
     flex: 1;
+    min-width: 0;
 }
 
-.blacklanding-banner .music-title {
+.blacklanding-main .music-title {
     color: #f4f4f5;
     font-size: 0.95rem;
     font-weight: 600;
     margin: 0 0 4px 0;
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.blacklanding-banner .music-artist {
+.blacklanding-main .music-artist {
     color: #a1a1aa;
     font-size: 0.85rem;
+    margin: 0 0 3px 0;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.blacklanding-main .music-platform {
+    color: #a78bfa;
+    font-size: 0.8rem;
+    font-weight: 500;
     margin: 0;
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 
-.blacklanding-banner .play-button {
+.blacklanding-main .play-button {
     width: 35px;
     height: 35px;
     border-radius: 50%;
@@ -553,30 +594,31 @@
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(167, 139, 250, 0.2);
+    flex-shrink: 0;
 }
 
-.blacklanding-banner .play-button:hover {
+.blacklanding-main .play-button:hover {
     background: #8b5cf6;
     transform: scale(1.1);
     box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
 }
 
 /* Media Info */
-.blacklanding-banner .media-info {
+.blacklanding-main .media-info {
     padding: 12px 15px;
 }
 
-.blacklanding-banner .media-title {
+.blacklanding-main .media-title {
     color: #f4f4f5;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    margin: 0 0 6px 0;
+    margin: 0 0 8px 0;
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 
-.blacklanding-banner .media-description {
+.blacklanding-main .media-description {
     color: #a1a1aa;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     line-height: 1.4;
     margin: 0;
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif;

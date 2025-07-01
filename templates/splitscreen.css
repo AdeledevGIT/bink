@@ -520,7 +520,7 @@
 /* Split Screen Media Styles */
 .splitscreen-content .media-section {
     margin: 25px 0;
-    padding: 20px 0;
+    padding: 20px;
     border-top: 1px solid #ddd;
     background: #fff;
     border-radius: 12px;
