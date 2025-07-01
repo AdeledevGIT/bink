@@ -441,7 +441,7 @@ window.BINK.templates.templates['neoncard'] = {
     id: 'neoncard',
     name: 'Neon Card',
     description: 'A modern, animated neon-styled bio page with sleek design.',
-    css: '/templates/neoncard.css',
+    css: 'templates/neoncard.css',
     isPremium: false,
     render: function(data) {
         // data: { displayName, username, bio, profilePicUrl, links, socialLinks }
@@ -501,7 +501,7 @@ window.BINK.templates.templates['glassmorphism'] = {
     id: 'glassmorphism',
     name: 'Glassmorphism',
     description: 'Frosted glass effect with soft gradients.',
-    css: '/templates/glassmorphism.css',
+    css: 'templates/glassmorphism.css',
     isPremium: false,
     render: function(data) {
         return `
@@ -557,7 +557,7 @@ window.BINK.templates.templates['purplecard'] = {
     id: 'purplecard',
     name: 'Purple Card',
     description: 'Rounded, modern, purple card style (matches your screenshot)',
-    css: '/templates/purplecard.css',
+    css: 'templates/purplecard.css',
     isPremium: true,
     tokenPrice: 150,
     render: function(data) {
@@ -614,7 +614,7 @@ window.BINK.templates.templates['landingprofile'] = {
     id: 'landingprofile',
     name: 'Landing Profile',
     description: 'Banner, profile at top left, username in front, share buttons, and sections as described.',
-    css: '/templates/landingprofile.css',
+    css: 'templates/landingprofile.css',
     isPremium: true,
     tokenPrice: 120,
     render: function(data) {
@@ -669,8 +669,8 @@ window.BINK.templates.templates['landingprofile'] = {
 // Share logic for profile and links
 window.BINK.templates.shareProfile = function(e, username) {
     e.preventDefault();
-    // Use clean URL format
-    const url = `${window.location.origin}/${username}`;
+    // Use only username parameter - no template parameter
+    const url = `${window.location.origin}/bio.html?u=${username}`;
     if (navigator.share) {
         navigator.share({
             title: `Check out @${username}'s BINK profile!`,
@@ -745,9 +745,10 @@ window.BINK.templates.previewTemplate = function(templateId) {
     const username = document.getElementById('username-display')?.textContent;
     if (!username) return;
 
-    // For preview purposes, we use clean URL with template parameter
+    // For preview purposes, we still use the template parameter
     // This allows users to preview templates before applying them
-    const previewUrl = `${window.location.origin}/${username}?t=${templateId}`;
+    // But for actual bio links, we don't include the template parameter
+    const previewUrl = `bio.html?u=${username}&t=${templateId}`;
     const previewFrame = document.getElementById('preview-frame');
     if (previewFrame) {
         previewFrame.src = previewUrl;
@@ -1047,7 +1048,7 @@ window.BINK.templates.templates['blacklanding'] = {
     id: 'blacklanding',
     name: 'Black Landing',
     description: 'Dark landing page, username inline, centered about section.',
-    css: '/templates/blacklanding.css',
+    css: 'templates/blacklanding.css',
     isPremium: true,
     tokenPrice: 180,
     render: function(data) {
@@ -1105,7 +1106,7 @@ window.BINK.templates.templates['gradientflow'] = {
     id: 'gradientflow',
     name: 'Gradient Flow',
     description: 'A modern template with flowing gradient backgrounds.',
-    css: '/templates/gradientflow.css',
+    css: 'templates/gradientflow.css',
     isPremium: true,
     tokenPrice: 120,
     render: function(data) {
@@ -1164,7 +1165,7 @@ window.BINK.templates.templates['darkelegance'] = {
     id: 'darkelegance',
     name: 'Dark Elegance',
     description: 'A sophisticated dark template with gold accents.',
-    css: '/templates/darkelegance.css',
+    css: 'templates/darkelegance.css',
     isPremium: true,
     tokenPrice: 180,
     render: function(data) {
@@ -1223,7 +1224,7 @@ window.BINK.templates.templates['neonglow'] = {
     id: 'neonglow',
     name: 'Neon Glow',
     description: 'A vibrant template with neon glow effects.',
-    css: '/templates/neonglow.css',
+    css: 'templates/neonglow.css',
     isPremium: true,
     tokenPrice: 200,
     render: function(data) {
@@ -1284,7 +1285,7 @@ window.BINK.templates.templates['minimalzen'] = {
     id: 'minimalzen',
     name: 'Minimal Zen',
     description: 'A clean, minimalist template with subtle animations.',
-    css: '/templates/minimalzen.css',
+    css: 'templates/minimalzen.css',
     isPremium: true,
     tokenPrice: 150,
     render: function(data) {
@@ -1343,7 +1344,7 @@ window.BINK.templates.templates['techwave'] = {
     id: 'techwave',
     name: 'Tech Wave',
     description: 'A futuristic tech-themed template with wave animations.',
-    css: '/templates/techwave.css',
+    css: 'templates/techwave.css',
     isPremium: true,
     tokenPrice: 180,
     render: function(data) {
@@ -1404,7 +1405,7 @@ window.BINK.templates.templates['splitscreen'] = {
     id: 'splitscreen',
     name: 'Split Screen',
     description: 'A modern split-screen layout with content on one side and profile on the other.',
-    css: '/templates/splitscreen.css',
+    css: 'templates/splitscreen.css',
     isPremium: true,
     tokenPrice: 170,
     render: function(data) {
@@ -1466,7 +1467,7 @@ window.BINK.templates.templates['magazine'] = {
     id: 'magazine',
     name: 'Magazine',
     description: 'A modern magazine-style layout with clean sections.',
-    css: '/templates/magazine.css',
+    css: 'templates/magazine.css',
     isPremium: true,
     tokenPrice: 160,
     render: function(data) {
@@ -1542,7 +1543,7 @@ window.BINK.templates.templates['retrowave'] = {
     id: 'retrowave',
     name: 'Retro Wave',
     description: 'A retro-inspired template with 80s aesthetics.',
-    css: '/templates/retrowave.css',
+    css: 'templates/retrowave.css',
     isPremium: true,
     tokenPrice: 190,
     render: function(data) {
@@ -1602,7 +1603,7 @@ window.BINK.templates.templates['nature'] = {
     id: 'nature',
     name: 'Nature',
     description: 'An organic, nature-themed template with earthy tones.',
-    css: '/templates/nature.css',
+    css: 'templates/nature.css',
     isPremium: true,
     tokenPrice: 140,
     render: function(data) {
@@ -1661,7 +1662,7 @@ window.BINK.templates.templates['portfolio'] = {
     id: 'portfolio',
     name: 'Portfolio',
     description: 'A professional portfolio layout with prominent links.',
-    css: '/templates/portfolio.css',
+    css: 'templates/portfolio.css',
     isPremium: true,
     tokenPrice: 175,
     render: function(data) {
@@ -1730,7 +1731,7 @@ window.BINK.templates.templates['corporate'] = {
     id: 'corporate',
     name: 'Corporate Professional',
     description: 'Clean, professional template perfect for business professionals and executives.',
-    css: '/templates/corporate.css',
+    css: 'templates/corporate.css',
     isPremium: true,
     tokenPrice: 150,
     render: function(data) {
@@ -1792,7 +1793,7 @@ window.BINK.templates.templates['creative'] = {
     id: 'creative',
     name: 'Creative Artist',
     description: 'Vibrant, artistic template perfect for creatives, artists, and designers.',
-    css: '/templates/creative.css',
+    css: 'templates/creative.css',
     isPremium: true,
     tokenPrice: 180,
     render: function(data) {
@@ -1854,7 +1855,7 @@ window.BINK.templates.templates['gradientcard'] = {
     id: 'gradientcard',
     name: 'Gradient Card',
     description: 'Modern gradient background with card-style layout and smooth animations.',
-    css: '/templates/gradientcard.css',
+    css: 'templates/gradientcard.css',
     isPremium: true,
     tokenPrice: 140,
     render: function(data) {
@@ -1905,7 +1906,7 @@ window.BINK.templates.templates['neonminimal'] = {
     id: 'neonminimal',
     name: 'Neon Minimal',
     description: 'Clean minimal design with neon accents and cyberpunk aesthetics.',
-    css: '/templates/neonminimal.css',
+    css: 'templates/neonminimal.css',
     isPremium: true,
     tokenPrice: 150,
     render: function(data) {
@@ -1961,7 +1962,7 @@ window.BINK.templates.templates['softpastel'] = {
     id: 'softpastel',
     name: 'Soft Pastel',
     description: 'Dreamy pastel colors with soft rounded elements and whimsical design.',
-    css: '/templates/softpastel.css',
+    css: 'templates/softpastel.css',
     isPremium: true,
     tokenPrice: 160,
     render: function(data) {
@@ -2012,7 +2013,7 @@ window.BINK.templates.templates['coverstory'] = {
     id: 'coverstory',
     name: 'Cover Story',
     description: 'Profile picture as background cover with overlay text and modern card design.',
-    css: '/templates/coverstory.css',
+    css: 'templates/coverstory.css',
     isPremium: true,
     tokenPrice: 130,
     render: function(data) {
@@ -2072,7 +2073,7 @@ window.BINK.templates.templates['auroraglow'] = {
     id: 'auroraglow',
     name: 'Aurora Glow',
     description: 'Dynamic aurora background with glowing elements and mesmerizing animations.',
-    css: '/templates/auroraglow.css',
+    css: 'templates/auroraglow.css',
     isPremium: true,
     tokenPrice: 200,
     render: function(data) {
@@ -2123,7 +2124,7 @@ window.BINK.templates.templates['herobanner'] = {
     id: 'herobanner',
     name: 'Hero Banner',
     description: 'Clean hero banner with profile picture as background and content below.',
-    css: '/templates/herobanner.css',
+    css: 'templates/herobanner.css',
     isPremium: true,
     tokenPrice: 160,
     render: function(data) {
@@ -2182,7 +2183,7 @@ window.BINK.templates.templates['cyberpunk'] = {
     id: 'cyberpunk',
     name: 'Cyberpunk',
     description: 'Futuristic neon-lit cyberpunk aesthetic with matrix effects.',
-    css: '/templates/cyberpunk.css',
+    css: 'templates/cyberpunk.css',
     isPremium: true,
     tokenPrice: 200,
     render: function(data) {
@@ -2243,7 +2244,7 @@ window.BINK.templates.templates['oceanwaves'] = {
     id: 'oceanwaves',
     name: 'Ocean Waves',
     description: 'Serene ocean-inspired design with flowing wave animations.',
-    css: '/templates/oceanwaves.css',
+    css: 'templates/oceanwaves.css',
     isPremium: true,
     tokenPrice: 180,
     render: function(data) {
@@ -2310,7 +2311,7 @@ window.BINK.templates.templates['vintagepolaroid'] = {
     id: 'vintagepolaroid',
     name: 'Vintage Polaroid',
     description: 'Nostalgic film photography aesthetic with polaroid frames.',
-    css: '/templates/vintagepolaroid.css',
+    css: 'templates/vintagepolaroid.css',
     isPremium: true,
     tokenPrice: 160,
     render: function(data) {
@@ -2377,7 +2378,7 @@ window.BINK.templates.templates['neongaming'] = {
     id: 'neongaming',
     name: 'Neon Gaming',
     description: 'High-tech gaming aesthetic with RGB lighting and stats.',
-    css: '/templates/neongaming.css',
+    css: 'templates/neongaming.css',
     isPremium: true,
     tokenPrice: 220,
     render: function(data) {
@@ -2464,7 +2465,7 @@ window.BINK.templates.templates['zenminimal'] = {
     id: 'zenminimal',
     name: 'Zen Minimal',
     description: 'Clean, peaceful, and purposeful minimalist design.',
-    css: '/templates/zenminimal.css',
+    css: 'templates/zenminimal.css',
     isPremium: true,
     tokenPrice: 140,
     render: function(data) {

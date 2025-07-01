@@ -3347,7 +3347,7 @@ function loadPreview() {
         const bioPreviewFrame = document.getElementById('bio-preview-frame');
         if (bioPreviewFrame && currentUserData?.username) {
             const templateParam = selectedTemplate ? `&t=${selectedTemplate}` : '';
-            const previewUrl = `${window.location.origin}/${currentUserData.username}?preview=true${templateParam}`;
+            const previewUrl = `bio.html?u=${currentUserData.username}&preview=true${templateParam}`;
             console.log('Selected template:', selectedTemplate);
             console.log('Preview URL:', previewUrl);
             bioPreviewFrame.src = previewUrl;
@@ -3393,7 +3393,7 @@ function copyPreviewLink() {
             return;
         }
         
-        const bioUrl = `${window.location.origin}/${currentUserData.username}`;
+        const bioUrl = `${window.location.origin}/bio.html?u=${currentUserData.username}`;
         
         navigator.clipboard.writeText(bioUrl).then(() => {
             showSuccess('Bio link copied to clipboard! 📋');

@@ -10,29 +10,9 @@ if (typeof firebase !== 'undefined' && firebase.analytics) {
     console.log("Firebase Analytics initialized");
 }
 
-// Get username from URL - support both clean URLs and query parameters
-function getUsernameFromUrl() {
-    const urlParams = new URLSearchParams(window.location.search);
-    let username = urlParams.get('u');
-
-    // If no username in query params, try to get it from the path
-    if (!username) {
-        const path = window.location.pathname;
-        // Remove leading slash and get the first segment
-        const pathSegments = path.split('/').filter(segment => segment.length > 0);
-
-        // Check if this looks like a username (not a known page)
-        const knownPages = ['dashboard.html', 'bio.html', 'login.html', 'signup.html', 'index.html', 'onboarding.html', 'tasks.html', 'articles.html', 'payment-callback.html', 'api', 'templates', 'images'];
-        if (pathSegments.length === 1 && !knownPages.includes(pathSegments[0]) && !pathSegments[0].includes('.')) {
-            username = pathSegments[0];
-        }
-    }
-
-    return username;
-}
-
-const username = getUsernameFromUrl();
+// Get username from URL
 const urlParams = new URLSearchParams(window.location.search);
+const username = urlParams.get('u');
 const templateOverride = urlParams.get('t');
 const isPreview = urlParams.get('preview') === 'true';
 

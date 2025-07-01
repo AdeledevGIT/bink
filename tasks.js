@@ -1329,10 +1329,10 @@ function createTaskForm(task) {
                 <div class="form-group">
                     <label class="form-label">Share your BINK bio link on:</label>
                     <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
-                        <a href="https://twitter.com/intent/tweet?text=Check%20out%20my%20bio%20link%20created%20with%20BINK!&url=https://bink-tau.vercel.app/${userProfile.username}" target="_blank" class="modal-button modal-complete" style="flex: 1; text-align: center; text-decoration: none;">
+                        <a href="https://twitter.com/intent/tweet?text=Check%20out%20my%20bio%20link%20created%20with%20BINK!&url=https://bink-tau.vercel.app/bio.html?username=${userProfile.username}" target="_blank" class="modal-button modal-complete" style="flex: 1; text-align: center; text-decoration: none;">
                             <i class="fab fa-twitter"></i> Twitter
                         </a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://bink-tau.vercel.app/${userProfile.username}" target="_blank" class="modal-button modal-complete" style="flex: 1; text-align: center; text-decoration: none;">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://bink-tau.vercel.app/bio.html?username=${userProfile.username}" target="_blank" class="modal-button modal-complete" style="flex: 1; text-align: center; text-decoration: none;">
                             <i class="fab fa-facebook"></i> Facebook
                         </a>
                     </div>

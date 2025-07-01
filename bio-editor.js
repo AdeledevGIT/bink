@@ -374,7 +374,7 @@ function formatBioLinkForDisplay(linkData, username) {
                                currentUserData?.username ||
                                (currentUser?.email ? currentUser.email.split('@')[0] : 'user');
 
-        return `bink.bio/${displayUsername}`;
+        return `bink/${displayUsername}`;
     }
 
     return linkData.url;
@@ -493,7 +493,7 @@ function updatePreviewFrame(userId) {
 
     // Build the preview URL with the template parameter and preview flag
     // The preview flag will be used in bio.js to prevent tracking views
-    let previewUrl = `${window.location.origin}/${username}?t=${template}&preview=true`;
+    let previewUrl = `bio.html?u=${username}&t=${template}&preview=true`;
 
     // Update the iframe src and the open preview button href if they exist
     if (previewFrame) {
@@ -518,7 +518,7 @@ function updatePreviewLink(username) {
     const template = currentUserData?.template || 'classic';
 
     // Include the template parameter and preview flag in the preview URL
-    const previewUrl = `${window.location.origin}/${username}?t=${template}&preview=true`;
+    const previewUrl = `bio.html?u=${username}&t=${template}&preview=true`;
 
     // Check if openPreviewButton exists before setting href
     if (openPreviewButton) {
@@ -872,8 +872,8 @@ function updateSavedBioLink(templateId) {
     if (!currentUser || !currentUserData || !currentUserData.username) return;
 
     const username = currentUserData.username;
-    // Use clean URL format (relative path for storage)
-    const newBioUrl = `/${username}`;
+    // Remove template parameter from URL - use only username
+    const newBioUrl = `bio.html?u=${username}`;
 
     // Find and update any saved bio links
     const linksRef = db.collection('users').doc(currentUser.uid).collection('links');
@@ -1829,10 +1829,10 @@ function copyLinkToClipboard() {
     const username = usernameDisplay.textContent;
     if (!username) return;
 
-    const bioUrl = `${window.location.origin}/${username}`;
+    const bioUrl = `bio.html?u=${username}`;
 
-    // Use the full URL directly
-    const fullUrl = bioUrl;
+    // Get the full URL including the domain
+    const fullUrl = new URL(bioUrl, window.location.origin).href;
 
     // Use the enhanced copy function
     copyTextToClipboard(fullUrl)
@@ -1866,11 +1866,11 @@ function saveBioLinkToDashboard() {
     saveBioLinkButton.disabled = true;
     saveBioLinkButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
-    // Create link data using clean URL format (relative path for storage)
+    // Create link data without the template parameter
     // This way the link will always show the user's current template
     const bioLinkData = {
         title: `My BINK Profile: ${username}`,
-        url: `/${username}`,
+        url: `bio.html?u=${username}`,
         platform: 'website',
         isBioLink: true,
         order: userLinks.length,
@@ -2073,9 +2073,9 @@ function copyPreviewLinkToClipboard() {
         return;
     }
 
-    // Generate the preview URL using clean format
+    // Generate the preview URL without template parameter
     // This way the link will always show the user's current template
-    const previewUrl = `${window.location.origin}/${username}`;
+    const previewUrl = new URL(`bio.html?u=${username}`, window.location.origin).href;
 
     // Use the enhanced copy function
     copyTextToClipboard(previewUrl)
@@ -2426,7 +2426,7 @@ function updatePreviewFrameWithTemplate(templateId) {
     if (!username) return;
 
     // Add template param to preview URL with preview flag to prevent view tracking
-    const previewUrl = `${window.location.origin}/${username}?t=${templateId}&preview=true`;
+    const previewUrl = `bio.html?u=${username}&t=${templateId}&preview=true`;
 
     // Check if elements exist before setting properties
     if (previewFrame) {
