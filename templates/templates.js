@@ -669,8 +669,8 @@ window.BINK.templates.templates['landingprofile'] = {
 // Share logic for profile and links
 window.BINK.templates.shareProfile = function(e, username) {
     e.preventDefault();
-    // Use only username parameter - no template parameter
-    const url = `${window.location.origin}/bio.html?u=${username}`;
+    // Use clean URL format
+    const url = `${window.location.origin}/${username}`;
     if (navigator.share) {
         navigator.share({
             title: `Check out @${username}'s BINK profile!`,
@@ -745,10 +745,9 @@ window.BINK.templates.previewTemplate = function(templateId) {
     const username = document.getElementById('username-display')?.textContent;
     if (!username) return;
 
-    // For preview purposes, we still use the template parameter
+    // For preview purposes, we use clean URL with template parameter
     // This allows users to preview templates before applying them
-    // But for actual bio links, we don't include the template parameter
-    const previewUrl = `bio.html?u=${username}&t=${templateId}`;
+    const previewUrl = `${window.location.origin}/${username}?t=${templateId}`;
     const previewFrame = document.getElementById('preview-frame');
     if (previewFrame) {
         previewFrame.src = previewUrl;

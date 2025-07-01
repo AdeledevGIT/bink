@@ -22,6 +22,8 @@
   "routes": [
     { "src": "/paystack-webhook", "dest": "/api/paystack-webhook.js" },
     { "src": "/api/check-expired-subscriptions", "dest": "/api/check-expired-subscriptions.js" },
+    { "src": "/bio.html", "dest": "/bio.html" },
+    { "src": "/([^/]+)$", "dest": "/bio.html?u=$1" },
     { "src": "/(.*)", "dest": "/$1" }
   ]
 }
