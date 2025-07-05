@@ -978,10 +978,10 @@ function setupEventListeners() {
                 formattedUrl = 'https://' + formattedUrl;
             }
 
-            // Check if user has reached the free plan limit (5 links)
+            // Check if user has reached the free plan limit (3 links)
             if (userProfile && !userProfile.isPremium) {
                 const currentLinkCount = userLinks.length;
-                if (currentLinkCount >= 5) {
+                if (currentLinkCount >= 3) {
                     alert('You have reached the maximum number of links for the free plan. Please upgrade to add more links.');
                     return;
                 }

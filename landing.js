@@ -213,4 +213,143 @@ document.addEventListener('DOMContentLoaded', function() {
         // Check on scroll
         window.addEventListener('scroll', checkVisibility);
     }
+
+    // Initialize Template Preview System
+    initializeTemplatePreview();
 });
+
+// Template Preview System
+function initializeTemplatePreview() {
+    const templates = [
+        {
+            name: 'Glassmorphism',
+            description: 'Frosted glass effect with soft gradients',
+            file: 'glassmorphism-preview.html'
+        },
+        {
+            name: 'Neon Card',
+            description: 'Bold neon design with glowing elements',
+            file: 'neoncard-preview.html'
+        },
+        {
+            name: 'Tech Wave',
+            description: 'Futuristic tech-themed with wave animations',
+            file: 'techwave-preview.html'
+        },
+        {
+            name: 'Purple Card',
+            description: 'Vibrant purple design with card-style links',
+            file: 'purplecard-preview.html'
+        },
+        {
+            name: 'Creative Artist',
+            description: 'Perfect for artists and creative professionals',
+            file: 'creative-preview.html'
+        },
+        {
+            name: 'Corporate',
+            description: 'Professional design for business use',
+            file: 'corporate-preview.html'
+        },
+        {
+            name: 'Split Screen',
+            description: 'Modern split-screen layout design',
+            file: 'splitscreen-preview.html'
+        },
+        {
+            name: 'Magazine',
+            description: 'Editorial-style layout for content creators',
+            file: 'magazine-preview.html'
+        }
+    ];
+
+    let currentTemplateIndex = 0;
+
+    const templateFrameTop = document.getElementById('template-frame-top');
+    const templateFrameBottom = document.getElementById('template-frame-bottom');
+    const templateName = document.getElementById('template-name');
+    const templateDescription = document.getElementById('template-description');
+    const currentTemplateSpan = document.getElementById('current-template');
+    const totalTemplatesSpan = document.getElementById('total-templates');
+    const prevButton = document.getElementById('prev-template');
+    const nextButton = document.getElementById('next-template');
+
+    // Check if elements exist
+    if (!templateFrameTop || !templateFrameBottom || !templateName || !templateDescription) {
+        console.log('Template preview elements not found');
+        return;
+    }
+
+    // Set total templates
+    if (totalTemplatesSpan) {
+        totalTemplatesSpan.textContent = templates.length;
+    }
+
+    function loadTemplate(index) {
+        const template = templates[index];
+        const templatePath = `templates/${template.file}`;
+
+        console.log('Loading template:', template.name, 'from path:', templatePath);
+
+        // Update both frames with the same template
+        templateFrameTop.src = templatePath;
+        templateFrameBottom.src = templatePath;
+
+        // Add load event listeners to debug
+        templateFrameTop.onload = function() {
+            console.log('Top frame loaded successfully');
+        };
+
+        templateFrameBottom.onload = function() {
+            console.log('Bottom frame loaded successfully');
+            // Try to scroll to media section after load
+            try {
+                const bottomDoc = templateFrameBottom.contentDocument || templateFrameBottom.contentWindow.document;
+                const mediaSection = bottomDoc.querySelector('.media-section, #media, [class*="media"]');
+                if (mediaSection) {
+                    mediaSection.scrollIntoView();
+                    console.log('Scrolled to media section');
+                } else {
+                    // If no media section found, scroll to approximate position
+                    templateFrameBottom.contentWindow.scrollTo(0, 400);
+                    console.log('Scrolled to approximate media position');
+                }
+            } catch (e) {
+                console.log('Could not scroll bottom frame:', e);
+            }
+        };
+
+        // Update template info
+        templateName.textContent = template.name;
+        templateDescription.textContent = template.description;
+
+        if (currentTemplateSpan) {
+            currentTemplateSpan.textContent = index + 1;
+        }
+    }
+
+    function nextTemplate() {
+        currentTemplateIndex = (currentTemplateIndex + 1) % templates.length;
+        loadTemplate(currentTemplateIndex);
+    }
+
+    function prevTemplate() {
+        currentTemplateIndex = (currentTemplateIndex - 1 + templates.length) % templates.length;
+        loadTemplate(currentTemplateIndex);
+    }
+
+    // Event listeners
+    if (nextButton) {
+        nextButton.addEventListener('click', nextTemplate);
+    }
+
+    if (prevButton) {
+        prevButton.addEventListener('click', prevTemplate);
+    }
+
+    // Auto-rotate templates every 5 seconds
+    setInterval(nextTemplate, 5000);
+
+    // Load initial template
+    loadTemplate(currentTemplateIndex);
+}

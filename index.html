@@ -28,6 +28,7 @@
             <ul>
                 <li><a href="#features">Features</a></li>
                 <li><a href="#pricing">Pricing</a></li>
+                <li><a href="documentation.html">Documentation</a></li>
                 <li><a href="help-center.html">Help Center</a></li>
                 <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="#faq">FAQ</a></li>
@@ -46,6 +47,7 @@
         <ul>
             <li><a href="#features">Features</a></li>
             <li><a href="#pricing">Pricing</a></li>
+            <li><a href="documentation.html">Documentation</a></li>
             <li><a href="help-center.html">Help Center</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#faq">FAQ</a></li>
@@ -57,31 +59,78 @@
     <main>
         <section class="hero-section">
             <div class="hero-content">
-                <h1>One Link for All Your Content</h1>
-                <p>Share everything you create and curate with just one link in bio. BINK is the perfect bio link platform for creators, influencers, and professionals.</p>
+                <h1>Your Complete Digital Identity in One Link</h1>
+                <p>Create a stunning bio page with links, media content, and product catalog. Perfect for creators, influencers, and businesses who want to showcase everything in one place.</p>
+                <div class="hero-features-preview">
+                    <div class="feature-preview">
+                        <i class="fas fa-link"></i>
+                        <span>Unlimited Links</span>
+                    </div>
+                    <div class="feature-preview">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Media Content</span>
+                    </div>
+                    <div class="feature-preview">
+                        <i class="fas fa-store"></i>
+                        <span>Product Catalog</span>
+                    </div>
+                    <div class="feature-preview">
+                        <i class="fas fa-palette"></i>
+                        <span>20+ Templates</span>
+                    </div>
+                </div>
                 <div class="hero-buttons">
-                    <a href="signup.html" class="cta-button">Get Started for Free</a>
-                    <a href="#features" class="secondary-button">Learn More</a>
+                    <a href="signup.html" class="cta-button">Start Building for Free</a>
+                    <a href="#features" class="secondary-button">Explore Features</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">Beautiful Templates</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">∞</span>
+                        <span class="stat-label">Links & Media</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Mobile Optimized</span>
+                    </div>
                 </div>
             </div>
             <div class="hero-image">
-                <div class="hero-video-container">
-                    <!-- Replace the URL below with your Firebase Storage URL when you have it -->
-                    <video
-                        src="https://firebasestorage.googleapis.com/v0/b/trustpay-d9d40.appspot.com/o/Demo.mp4?alt=media&token=9584365e-1d35-4a80-8239-dae29435c3cc"
-                        class="hero-video"
-                        autoplay
-                        muted
-                        loop
-                        playsinline
-                        preload="auto">
-                    </video>
-                    <!-- Add a play button overlay that disappears when video plays -->
-                    <div class="video-play-button">
-                        <i class="fas fa-play"></i>
-                    </div>
-                    <div class="video-caption">
-                        <h3>See BINK in Action</h3>
+                <div class="template-preview-container">
+                    <div class="phone-frames-wrapper">
+                        <!-- Left Frame (Lower Position) -->
+                        <div class="phone-frame phone-frame-left">
+                            <div class="phone-screen">
+                                <iframe id="template-frame-bottom" class="template-iframe" src="templates/glassmorphism-preview.html"></iframe>
+                            </div>
+                        </div>
+
+                        <!-- Template Info (Between frames) -->
+                        <div class="template-info-display">
+                            <h3 id="template-name">Glassmorphism</h3>
+                            <p id="template-description">Frosted glass effect with soft gradients</p>
+                            <div class="template-navigation">
+                                <button class="template-nav-btn" id="prev-template">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <span class="template-counter">
+                                    <span id="current-template">1</span> / <span id="total-templates">20+</span>
+                                </span>
+                                <button class="template-nav-btn" id="next-template">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right Frame (Higher Position) -->
+                        <div class="phone-frame phone-frame-right">
+                            <div class="phone-screen">
+                                <iframe id="template-frame-top" class="template-iframe" src="templates/glassmorphism-preview.html"></iframe>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -89,70 +138,103 @@
 
         <section id="features" class="features-section">
             <div class="section-header">
-                <h2>Why Choose BINK?</h2>
-                <p>The simplest way to share all your important links</p>
+                <h2>Everything You Need in One Platform</h2>
+                <p>From links to media content and product catalogs - create your complete digital presence</p>
             </div>
             <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <h3>Media Content Hub</h3>
+                    <p>Showcase YouTube videos, image galleries, and music from all platforms. Create a rich multimedia experience for your audience.</p>
+                </div>
+                <div class="feature-card featured">
+                    <div class="feature-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>Product Catalog</h3>
+                    <p>Display your products with beautiful cards and buy buttons. Perfect for creators selling merchandise, courses, or services.</p>
+                </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-palette"></i>
                     </div>
-                    <h3>Beautiful Templates</h3>
-                    <p>Choose from a variety of stunning templates to match your personal brand. Free and premium options available.</p>
+                    <h3>20+ Stunning Templates</h3>
+                    <p>From minimalist to neon, corporate to creative - choose from our expanding collection of professionally designed templates.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-link"></i>
                     </div>
-                    <h3>Manage Your Links</h3>
-                    <p>Add up to 5 links with our Free plan or unlimited links with Premium. Organize all your important content in one place.</p>
+                    <h3>Unlimited Links</h3>
+                    <p>Add unlimited links with Premium or up to 5 with Free. Organize everything from social media to your latest projects.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3>Detailed Analytics</h3>
-                    <p>Track views, clicks, and visitor locations. Premium users get advanced insights to understand audience behavior.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-coins"></i>
-                    </div>
-                    <h3>Flexible Token System</h3>
-                    <p>Purchase tokens to unlock premium templates without a subscription. Get 200 bonus tokens on your first purchase.</p>
+                    <h3>Advanced Analytics</h3>
+                    <p>Track views, clicks, visitor locations, and device types. Get detailed insights to understand your audience better.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h3>Mobile Optimized</h3>
-                    <p>Your bio page looks perfect on any device, from smartphones to desktops, with fully responsive design.</p>
+                    <h3>Mobile-First Design</h3>
+                    <p>Every template is optimized for mobile with touch-friendly interactions and responsive layouts that look perfect everywhere.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3>Flexible Pricing</h3>
+                    <p>Choose between subscription or one-time token purchases. Get 200 bonus tokens on your first purchase.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-user-check"></i>
                     </div>
                     <h3>Creator Program</h3>
-                    <p>Qualified content creators get premium features free for 3 months, plus a verified badge and featured placement.</p>
+                    <p>Qualified creators get premium features free for 3 months, plus verified badges and featured placement.</p>
                 </div>
             </div>
         </section>
 
         <section class="showcase-section">
             <div class="showcase-content">
-                <h2>Create Your Bio Page in Minutes</h2>
-                <p>BINK's intuitive editor makes it easy to build a beautiful, customized bio page that showcases all your content.</p>
-                <ul class="showcase-features">
-                    <li><i class="fas fa-check"></i> Simple drag-and-drop bio editor</li>
-                    <li><i class="fas fa-check"></i> Free templates: Classic and Glassmorphism</li>
-                    <li><i class="fas fa-check"></i> Premium templates: Purple Card, Neon Card, Black Landing</li>
-                    <li><i class="fas fa-check"></i> Real-time preview of your bio page</li>
-                    <li><i class="fas fa-check"></i> One-click copy of your bio link</li>
-                    <li><i class="fas fa-check"></i> Social media icons integration</li>
-                    <li><i class="fas fa-check"></i> Profile customization options</li>
-                    <li><i class="fas fa-check"></i> Visitor location tracking</li>
-                </ul>
-                <a href="signup.html" class="cta-button">Create Your Bio Page</a>
+                <h2>Build Your Complete Digital Presence</h2>
+                <p>BINK's powerful editor gives you everything you need to create a professional bio page that stands out from the crowd.</p>
+
+                <div class="showcase-categories">
+                    <div class="category">
+                        <h4><i class="fas fa-palette"></i> Template Categories</h4>
+                        <div class="category-tags">
+                            <span class="tag">Minimalist</span>
+                            <span class="tag">Neon & Cyberpunk</span>
+                            <span class="tag">Corporate</span>
+                            <span class="tag">Creative Artist</span>
+                            <span class="tag">Magazine Style</span>
+                            <span class="tag">Tech & Gaming</span>
+                        </div>
+                    </div>
+
+                    <div class="category">
+                        <h4><i class="fas fa-tools"></i> Editor Features</h4>
+                        <ul class="showcase-features">
+                            <li><i class="fas fa-check"></i> Intuitive tabbed interface</li>
+                            <li><i class="fas fa-check"></i> Real-time preview</li>
+                            <li><i class="fas fa-check"></i> Drag-and-drop media upload</li>
+                            <li><i class="fas fa-check"></i> Social media integration</li>
+                            <li><i class="fas fa-check"></i> Product catalog builder</li>
+                            <li><i class="fas fa-check"></i> Mobile-optimized editing</li>
+                        </ul>
+                    </div>
+                </div>
+
+
+
+                <a href="signup.html" class="cta-button">Start Creating Now</a>
             </div>
             <div class="showcase-image">
                 <img src="./demo.png" alt="BINK Editor Interface">
@@ -177,12 +259,14 @@
                     </div>
                     <div class="pricing-features">
                         <ul>
-                            <li><i class="fas fa-check"></i> Up to 5 links</li>
+                            <li><i class="fas fa-check"></i> Up to 3 links</li>
                             <li><i class="fas fa-check"></i> Basic analytics</li>
-                            <li><i class="fas fa-check"></i> Free templates (Classic, Glassmorphism)</li>
+                            <li><i class="fas fa-check"></i> 2 free templates (Classic, Glassmorphism)</li>
                             <li><i class="fas fa-check"></i> Buy tokens for premium templates</li>
                             <li><i class="fas fa-check"></i> 200 bonus tokens on first purchase</li>
                             <li><i class="fas fa-check"></i> Single bio link</li>
+                            <li><i class="fas fa-times text-muted"></i> Media content (Premium only)</li>
+                            <li><i class="fas fa-times text-muted"></i> Product catalog (Premium only)</li>
                         </ul>
                     </div>
                     <div class="pricing-footer">
@@ -207,11 +291,13 @@
                     <div class="pricing-features">
                         <ul>
                             <li><i class="fas fa-check"></i> <strong>Unlimited</strong> links</li>
+                            <li><i class="fas fa-check"></i> <strong>Media content hub</strong> (YouTube, images, music)</li>
+                            <li><i class="fas fa-check"></i> <strong>Product catalog</strong> with buy buttons</li>
+                            <li><i class="fas fa-check"></i> Access to all 20+ premium templates</li>
                             <li><i class="fas fa-check"></i> Advanced analytics with location data</li>
-                            <li><i class="fas fa-check"></i> Access to all premium templates</li>
-                            <li><i class="fas fa-check"></i> No need to purchase tokens</li>
                             <li><i class="fas fa-check"></i> No BINK branding</li>
                             <li><i class="fas fa-check"></i> Priority support</li>
+                            <li><i class="fas fa-check"></i> No need to purchase tokens</li>
                         </ul>
                     </div>
                     <div class="pricing-footer">
@@ -241,6 +327,7 @@
                             <li><i class="fas fa-check"></i> 200 bonus tokens on first purchase</li>
                             <li><i class="fas fa-check"></i> No subscription required</li>
                             <li><i class="fas fa-check"></i> Keep templates forever</li>
+                            <li><i class="fas fa-times text-muted"></i> Media & catalog features not included</li>
                         </ul>
                     </div>
                     <div class="pricing-footer">
@@ -258,6 +345,8 @@
                     <div class="pricing-features">
                         <ul>
                             <li><i class="fas fa-check"></i> All Premium features included</li>
+                            <li><i class="fas fa-check"></i> Full media content & catalog access</li>
+                            <li><i class="fas fa-check"></i> All 20+ premium templates</li>
                             <li><i class="fas fa-check"></i> Verified creator badge</li>
                             <li><i class="fas fa-check"></i> Featured in creator directory</li>
                             <li><i class="fas fa-info-circle"></i> <strong>Requirements:</strong></li>
@@ -352,7 +441,16 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Free users get access to Classic and Glassmorphism templates. Premium templates include Purple Card, Neon Card, Black Landing, and more. Free users can purchase premium templates using tokens.</p>
+                        <p>We offer 20+ professionally designed templates across multiple categories: Minimalist (Classic, Glassmorphism), Neon & Cyberpunk (Neon Card, Tech Wave), Corporate, Creative Artist, Magazine Style, and more. Free users get 2 templates, while Premium users access all templates.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is the Media & Catalog feature?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Premium users can add YouTube videos, image galleries, music from all platforms, and create product catalogs with buy buttons. This turns your bio page into a complete multimedia showcase and online store.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -370,7 +468,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Free users get basic analytics (views, clicks, click rates). Premium users get advanced analytics including visitor locations, devices, referrers, and more detailed insights about your audience.</p>
+                        <p>Free users get basic analytics (views, clicks, click rates). Premium users get advanced analytics including visitor locations, device types, referrers, time-based insights, and detailed performance metrics for all content types including media and catalog items.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -387,11 +485,35 @@
 
         <section class="cta-section">
             <div class="cta-content">
-                <h2>Create Your Bio Page Today</h2>
-                <p>Join creators and professionals who use BINK to share their content with a single link</p>
+                <h2>Ready to Build Your Complete Digital Presence?</h2>
+                <p>Join thousands of creators, influencers, and businesses using BINK to showcase their content, media, and products in one beautiful link</p>
+
+                <div class="cta-features">
+                    <div class="cta-feature">
+                        <i class="fas fa-rocket"></i>
+                        <span>Launch in minutes</span>
+                    </div>
+                    <div class="cta-feature">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Mobile-optimized</span>
+                    </div>
+                    <div class="cta-feature">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Track performance</span>
+                    </div>
+                    <div class="cta-feature">
+                        <i class="fas fa-palette"></i>
+                        <span>20+ templates</span>
+                    </div>
+                </div>
+
                 <div class="cta-buttons">
-                    <a href="signup.html" class="cta-button">Get Started for Free</a>
-                    <a href="login.html" class="secondary-button">Log In</a>
+                    <a href="signup.html" class="cta-button">Start Building for Free</a>
+                    <a href="login.html" class="secondary-button">Already have an account?</a>
+                </div>
+
+                <div class="cta-note">
+                    <p><i class="fas fa-info-circle"></i> No credit card required • Free forever plan available</p>
                 </div>
             </div>
         </section>
