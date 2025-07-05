@@ -41,6 +41,65 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+.action-btn:disabled {
+    background: #6B7280;
+    color: #9CA3AF;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Link Limit Display */
+.link-limit-display {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 12px;
+}
+
+.link-limit-display .limit-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #3B82F6;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.link-limit-display .limit-reached {
+    background: #FEE2E2;
+    color: #DC2626;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: auto;
+}
+
+.link-limit-display .upgrade-message {
+    margin: 8px 0 0 0;
+    color: #6B7280;
+    font-size: 0.85rem;
+}
+
+/* Locked Tab Styles */
+.nav-tab.locked-tab {
+    opacity: 0.6;
+    position: relative;
+}
+
+.nav-tab.locked-tab:hover {
+    background: rgba(255, 255, 255, 0.1);
+    cursor: not-allowed;
+}
+
+.nav-tab .tab-lock-icon {
+    font-size: 0.8rem;
+    margin-left: 4px;
+    opacity: 0.7;
+}
+
 /* Navigation Tabs */
 .editor-navigation {
     margin-bottom: 30px;

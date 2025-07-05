@@ -220,6 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Template Preview System
 function initializeTemplatePreview() {
+    console.log('Initializing template preview system...');
     const templates = [
         {
             name: 'Glassmorphism',
@@ -269,13 +270,20 @@ function initializeTemplatePreview() {
     const templateName = document.getElementById('template-name');
     const templateDescription = document.getElementById('template-description');
 
+    console.log('Template elements found:', {
+        frame: !!templateFrameSingle,
+        name: !!templateName,
+        description: !!templateDescription
+    });
+
     // Check if elements exist
     if (!templateFrameSingle || !templateName || !templateDescription) {
         console.log('Template preview elements not found');
         return;
     }
 
-    // Set total templates
+    // Set total templates (if element exists)
+    const totalTemplatesSpan = document.querySelector('.total-templates');
     if (totalTemplatesSpan) {
         totalTemplatesSpan.textContent = templates.length;
     }
@@ -299,6 +307,18 @@ function initializeTemplatePreview() {
         templateDescription.textContent = template.description;
     }
 
+    // Function to switch to next template
+    function nextTemplate() {
+        currentTemplateIndex = (currentTemplateIndex + 1) % templates.length;
+        console.log('Auto-switching to template:', currentTemplateIndex, templates[currentTemplateIndex].name);
+        loadTemplate(currentTemplateIndex);
+    }
+
     // Load initial template
     loadTemplate(currentTemplateIndex);
+
+    // Auto-switch templates every 3 seconds
+    console.log('Setting up auto-switch interval...');
+    setInterval(nextTemplate, 3000);
+    console.log('Template preview system initialized successfully!');
 }

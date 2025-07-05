@@ -177,6 +177,9 @@ function loadUserProfile(userId) {
                 profilePicInitials.style.display = 'flex';
             }
 
+            // Update UI based on subscription status
+            updateUIForSubscriptionStatus();
+
             // Update preview link
             updatePreviewLink(currentUserData.username);
 
@@ -256,6 +259,7 @@ function loadUserLinks(userId) {
 
         if (querySnapshot.empty) {
             linksContainer.innerHTML = '<div class="links-placeholder">No links yet. Add your first link!</div>';
+            updateLinkLimitDisplay();
             return;
         }
 
@@ -270,6 +274,9 @@ function loadUserLinks(userId) {
             // Add link to UI
             addLinkToUI(doc.id, linkData);
         });
+
+        // Update link limit display after loading links
+        updateLinkLimitDisplay();
     }).catch((error) => {
         console.error("Error loading links:", error);
         linksContainer.innerHTML = '<div class="links-placeholder">Error loading links. Please try again.</div>';
@@ -328,6 +335,86 @@ function addLinkToUI(linkId, linkData) {
     linksContainer.appendChild(linkItem);
 }
 
+// Update link limit display for free users
+function updateLinkLimitDisplay() {
+    const isPremiumUser = checkPremiumStatus(currentUserData);
+    const linkCount = userLinks.length;
+
+    // Remove existing limit display
+    const existingLimitDisplay = document.querySelector('.link-limit-display');
+    if (existingLimitDisplay) {
+        existingLimitDisplay.remove();
+    }
+
+    if (!isPremiumUser) {
+        const limitDisplay = document.createElement('div');
+        limitDisplay.className = 'link-limit-display';
+        limitDisplay.innerHTML = `
+            <div class="limit-info">
+                <i class="fas fa-info-circle"></i>
+                <span>Free Plan: ${linkCount}/3 links used</span>
+                ${linkCount >= 3 ? '<span class="limit-reached">Limit reached</span>' : ''}
+            </div>
+            ${linkCount >= 3 ? '<p class="upgrade-message">Upgrade to Premium for unlimited links</p>' : ''}
+        `;
+
+        // Insert before the links container
+        const linksSection = document.querySelector('#links');
+        const linksHeader = linksSection.querySelector('.tab-header');
+        linksHeader.appendChild(limitDisplay);
+
+        // Disable add link button if limit reached
+        if (addLinkButton) {
+            if (linkCount >= 3) {
+                addLinkButton.disabled = true;
+                addLinkButton.innerHTML = '<i class="fas fa-lock"></i> Link Limit Reached';
+                addLinkButton.title = 'Upgrade to Premium for unlimited links';
+            } else {
+                addLinkButton.disabled = false;
+                addLinkButton.innerHTML = '<i class="fas fa-plus"></i> Add New Link';
+                addLinkButton.title = '';
+            }
+        }
+    } else {
+        // Premium user - ensure add button is enabled
+        if (addLinkButton) {
+            addLinkButton.disabled = false;
+            addLinkButton.innerHTML = '<i class="fas fa-plus"></i> Add New Link';
+            addLinkButton.title = '';
+        }
+    }
+}
+
+// Update UI based on subscription status
+function updateUIForSubscriptionStatus() {
+    const isPremiumUser = checkPremiumStatus(currentUserData);
+    const mediaTab = document.querySelector('[data-tab="media"]');
+
+    if (!isPremiumUser && mediaTab) {
+        // Add visual indicator that media tab is locked
+        mediaTab.classList.add('locked-tab');
+
+        // Add lock icon if not already present
+        const existingIcon = mediaTab.querySelector('.fa-lock');
+        if (!existingIcon) {
+            const lockIcon = document.createElement('i');
+            lockIcon.className = 'fas fa-lock tab-lock-icon';
+            mediaTab.appendChild(lockIcon);
+        }
+
+        // Update tab title
+        mediaTab.title = 'Premium Feature - Upgrade to access Media & Catalog';
+    } else if (isPremiumUser && mediaTab) {
+        // Remove lock indicators for premium users
+        mediaTab.classList.remove('locked-tab');
+        const lockIcon = mediaTab.querySelector('.tab-lock-icon');
+        if (lockIcon) {
+            lockIcon.remove();
+        }
+        mediaTab.title = '';
+    }
+}
+
 // Get platform icon
 function getPlatformIcon(platform) {
     const icons = {
@@ -382,6 +469,15 @@ function formatBioLinkForDisplay(linkData, username) {
 
 // Open link editor modal
 function openLinkEditor(linkId = null) {
+    // Check if adding new link and user is free with 3+ links
+    if (!linkId && !checkPremiumStatus(currentUserData)) {
+        const currentLinkCount = userLinks.length;
+        if (currentLinkCount >= 3) {
+            showMessage("Free users can only have 3 links. Upgrade to Premium for unlimited links.", true);
+            return;
+        }
+    }
+
     // Reset form
     linkForm.reset();
 
