@@ -265,17 +265,12 @@ function initializeTemplatePreview() {
 
     let currentTemplateIndex = 0;
 
-    const templateFrameTop = document.getElementById('template-frame-top');
-    const templateFrameBottom = document.getElementById('template-frame-bottom');
+    const templateFrameSingle = document.getElementById('template-frame-single');
     const templateName = document.getElementById('template-name');
     const templateDescription = document.getElementById('template-description');
-    const currentTemplateSpan = document.getElementById('current-template');
-    const totalTemplatesSpan = document.getElementById('total-templates');
-    const prevButton = document.getElementById('prev-template');
-    const nextButton = document.getElementById('next-template');
 
     // Check if elements exist
-    if (!templateFrameTop || !templateFrameBottom || !templateName || !templateDescription) {
+    if (!templateFrameSingle || !templateName || !templateDescription) {
         console.log('Template preview elements not found');
         return;
     }
@@ -291,64 +286,18 @@ function initializeTemplatePreview() {
 
         console.log('Loading template:', template.name, 'from path:', templatePath);
 
-        // Update both frames with the same template
-        templateFrameTop.src = templatePath;
-        templateFrameBottom.src = templatePath;
+        // Update single frame with the template
+        templateFrameSingle.src = templatePath;
 
-        // Add load event listeners to debug
-        templateFrameTop.onload = function() {
-            console.log('Top frame loaded successfully');
-        };
-
-        templateFrameBottom.onload = function() {
-            console.log('Bottom frame loaded successfully');
-            // Try to scroll to media section after load
-            try {
-                const bottomDoc = templateFrameBottom.contentDocument || templateFrameBottom.contentWindow.document;
-                const mediaSection = bottomDoc.querySelector('.media-section, #media, [class*="media"]');
-                if (mediaSection) {
-                    mediaSection.scrollIntoView();
-                    console.log('Scrolled to media section');
-                } else {
-                    // If no media section found, scroll to approximate position
-                    templateFrameBottom.contentWindow.scrollTo(0, 400);
-                    console.log('Scrolled to approximate media position');
-                }
-            } catch (e) {
-                console.log('Could not scroll bottom frame:', e);
-            }
+        // Add load event listener to debug
+        templateFrameSingle.onload = function() {
+            console.log('Template frame loaded successfully');
         };
 
         // Update template info
         templateName.textContent = template.name;
         templateDescription.textContent = template.description;
-
-        if (currentTemplateSpan) {
-            currentTemplateSpan.textContent = index + 1;
-        }
     }
-
-    function nextTemplate() {
-        currentTemplateIndex = (currentTemplateIndex + 1) % templates.length;
-        loadTemplate(currentTemplateIndex);
-    }
-
-    function prevTemplate() {
-        currentTemplateIndex = (currentTemplateIndex - 1 + templates.length) % templates.length;
-        loadTemplate(currentTemplateIndex);
-    }
-
-    // Event listeners
-    if (nextButton) {
-        nextButton.addEventListener('click', nextTemplate);
-    }
-
-    if (prevButton) {
-        prevButton.addEventListener('click', prevTemplate);
-    }
-
-    // Auto-rotate templates every 5 seconds
-    setInterval(nextTemplate, 5000);
 
     // Load initial template
     loadTemplate(currentTemplateIndex);
