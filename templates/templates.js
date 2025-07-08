@@ -1126,6 +1126,7 @@ window.BINK.templates.templates['blacklanding'] = {
                         </div>
                     `).join('')}
                 </div>
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
                 <div class="blacklanding-footer">
                     Powered by <a href="index.html" target="_blank">BINK</a>
@@ -1180,6 +1181,7 @@ window.BINK.templates.templates['gradientflow'] = {
                             </div>
                         `).join('')}
                     </div>
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                     ${window.BINK.templates.renderMediaContent(data.media || {})}
                     <div class="gradientflow-socials">
                         ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
@@ -1240,6 +1242,7 @@ window.BINK.templates.templates['darkelegance'] = {
                             </div>
                         `).join('')}
                     </div>
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                     ${window.BINK.templates.renderMediaContent(data.media || {})}
                     <div class="darkelegance-socials">
                         ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
@@ -1302,6 +1305,7 @@ window.BINK.templates.templates['neonglow'] = {
                             </div>
                         `).join('')}
                     </div>
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                     ${window.BINK.templates.renderMediaContent(data.media || {})}
                     <div class="neonglow-socials">
                         ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
@@ -1362,6 +1366,7 @@ window.BINK.templates.templates['minimalzen'] = {
                             </div>
                         `).join('')}
                     </div>
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                     ${window.BINK.templates.renderMediaContent(data.media || {})}
                     <div class="minimalzen-socials">
                         ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
@@ -1424,6 +1429,7 @@ window.BINK.templates.templates['techwave'] = {
                             </div>
                         `).join('')}
                     </div>
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                     ${window.BINK.templates.renderMediaContent(data.media || {})}
                     <div class="techwave-socials">
                         ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
@@ -1492,6 +1498,7 @@ window.BINK.templates.templates['splitscreen'] = {
                             </div>
                         `).join('')}
                     </div>
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                     ${window.BINK.templates.renderMediaContent(data.media || {})}
                     <div class="splitscreen-footer">
                         Powered by <a href="index.html" target="_blank">BINK</a>
@@ -1569,6 +1576,7 @@ window.BINK.templates.templates['magazine'] = {
                     </div>
                 </div>
 
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                 <div class="magazine-footer">
@@ -1625,6 +1633,7 @@ window.BINK.templates.templates['retrowave'] = {
                             </div>
                         `).join('')}
                     </div>
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                     ${window.BINK.templates.renderMediaContent(data.media || {})}
                     <div class="retrowave-socials">
                         ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
@@ -1685,6 +1694,7 @@ window.BINK.templates.templates['nature'] = {
                             </div>
                         `).join('')}
                     </div>
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                     ${window.BINK.templates.renderMediaContent(data.media || {})}
                     <div class="nature-socials">
                         ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
@@ -1760,6 +1770,7 @@ window.BINK.templates.templates['portfolio'] = {
                     </div>
                 </div>
 
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                 <div class="portfolio-footer">
@@ -1816,6 +1827,7 @@ window.BINK.templates.templates['corporate'] = {
                         `).join('')}
                     </div>
 
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                     ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                     <div class="corporate-socials">
@@ -1879,6 +1891,7 @@ window.BINK.templates.templates['creative'] = {
                         `).join('')}
                     </div>
 
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                     ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                     <div class="creative-socials">
@@ -1936,6 +1949,7 @@ window.BINK.templates.templates['gradientcard'] = {
                         </div>
                     `).join('')}
                 </div>
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
                 <div class="gradientcard-socials">
                     ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
@@ -1991,6 +2005,7 @@ window.BINK.templates.templates['neonminimal'] = {
                     `).join('')}
                 </div>
 
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                 <div class="neonminimal-socials">
@@ -2045,6 +2060,7 @@ window.BINK.templates.templates['softpastel'] = {
                         </div>
                     `).join('')}
                 </div>
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
                 <div class="softpastel-socials">
                     ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
@@ -2103,6 +2119,7 @@ window.BINK.templates.templates['coverstory'] = {
                         `).join('')}
                     </div>
 
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                     ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                     <div class="coverstory-socials">
@@ -2158,6 +2175,7 @@ window.BINK.templates.templates['auroraglow'] = {
                         </div>
                     `).join('')}
                 </div>
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
                 <div class="auroraglow-socials">
                     ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
@@ -2215,6 +2233,7 @@ window.BINK.templates.templates['herobanner'] = {
                         `).join('')}
                     </div>
 
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                     ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                     <div class="herobanner-socials">
@@ -2278,6 +2297,7 @@ window.BINK.templates.templates['cyberpunk'] = {
                     `).join('')}
                 </div>
 
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                 <div class="cyberpunk-socials">
@@ -2346,6 +2366,7 @@ window.BINK.templates.templates['oceanwaves'] = {
                     `).join('')}
                 </div>
 
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                 <div class="oceanwaves-socials">
@@ -2414,6 +2435,7 @@ window.BINK.templates.templates['vintagepolaroid'] = {
                     `).join('')}
                 </div>
 
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                 <div class="vintagepolaroid-socials">
@@ -2502,6 +2524,7 @@ window.BINK.templates.templates['neongaming'] = {
                     `).join('')}
                 </div>
 
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                 <div class="neongaming-socials">
@@ -2510,6 +2533,452 @@ window.BINK.templates.templates['neongaming'] = {
 
                 <div class="neongaming-footer">
                     <span class="neongaming-glitch-text">POWERED BY</span> <a href="index.html" target="_blank">BINK</a>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+};
+
+// Storefront Template (Premium Only) - E-commerce focused layout
+window.BINK.templates.templates['storefront'] = {
+    id: 'storefront',
+    name: 'Storefront',
+    description: 'E-commerce focused template with product showcase and minimal bio.',
+    css: 'templates/storefront.css',
+    isPremium: true,
+    premiumOnly: true,
+    category: 'seller',
+    render: function(data) {
+        return `
+        <div class="storefront-bio-bg">
+            <div class="storefront-container">
+                <!-- Header with BINK branding -->
+                <div class="storefront-header">
+                    <div class="storefront-header-actions">
+                        <div class="storefront-join-link">
+                            <a href="index.html" class="storefront-join-btn">
+                                <i class="fas fa-user-plus"></i> Join BINK
+                            </a>
+                        </div>
+                        <div class="storefront-share">
+                            <button class="storefront-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Compact profile section -->
+                    <div class="storefront-profile-bar">
+                        <div class="storefront-avatar-container">
+                            <img src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face'}" alt="Profile" class="storefront-avatar">
+                        </div>
+                        <div class="storefront-profile-info">
+                            <h1 class="storefront-username">${data.displayName || data.username}</h1>
+                            <p class="storefront-bio">${data.bio || 'Welcome to my store!'}</p>
+                        </div>
+                        <div class="storefront-store-badge">
+                            <i class="fas fa-store"></i>
+                            <span>Store</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main content area - Products first -->
+                <div class="storefront-main">
+                    <!-- Featured Products Section -->
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
+
+                    <!-- Links section (compact) -->
+                    ${data.links && data.links.length > 0 ? `
+                    <div class="storefront-links-section">
+                        <h3 class="storefront-section-title">
+                            <i class="fas fa-link"></i> Quick Links
+                        </h3>
+                        <div class="storefront-links-grid">
+                            ${data.links.map(link => `
+                                <div class="storefront-link-container">
+                                    <a class="storefront-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
+                                        <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
+                                        <span>${link.title}</span>
+                                    </a>
+                                    <button class="storefront-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
+                                        <i class="fas fa-share-alt"></i>
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <!-- Media section (if any) -->
+                    ${window.BINK.templates.renderMediaContent(data.media || {})}
+
+                    <!-- Social links -->
+                    ${Object.keys(data.socialLinks || {}).length > 0 ? `
+                    <div class="storefront-socials">
+                        <h4>Follow Us</h4>
+                        <div class="storefront-social-icons">
+                            ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
+                                <a href="${url}" target="_blank" class="storefront-social-icon">
+                                    <i class="${window.BINK.templates.getPlatformIcon(platform)}"></i>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+
+                <!-- Footer -->
+                <div class="storefront-footer">
+                    <p>Powered by <a href="index.html" target="_blank">BINK</a> • Create your own store</p>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+};
+
+// Marketplace Template (Premium Only) - Colorful marketplace-style storefront
+window.BINK.templates.templates['marketplace'] = {
+    id: 'marketplace',
+    name: 'Marketplace',
+    description: 'Vibrant marketplace-style template with colorful product displays.',
+    css: 'templates/marketplace.css',
+    isPremium: true,
+    premiumOnly: true,
+    category: 'seller',
+    render: function(data) {
+        return `
+        <div class="marketplace-bio-bg">
+            <div class="marketplace-container">
+                <!-- Header with BINK branding -->
+                <div class="marketplace-header">
+                    <div class="marketplace-header-actions">
+                        <div class="marketplace-join-link">
+                            <a href="index.html" class="marketplace-join-btn">
+                                <i class="fas fa-user-plus"></i> Join BINK
+                            </a>
+                        </div>
+                        <div class="marketplace-share">
+                            <button class="marketplace-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Profile banner -->
+                    <div class="marketplace-profile-banner">
+                        <div class="marketplace-avatar-container">
+                            <img src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face'}" alt="Profile" class="marketplace-avatar">
+                            <div class="marketplace-verified-badge">
+                                <i class="fas fa-check"></i>
+                            </div>
+                        </div>
+                        <div class="marketplace-profile-info">
+                            <h1 class="marketplace-username">${data.displayName || data.username}</h1>
+                            <p class="marketplace-bio">${data.bio || 'Welcome to my marketplace!'}</p>
+                            <div class="marketplace-stats">
+                                <div class="marketplace-stat">
+                                    <span class="marketplace-stat-number">${(data.catalog && data.catalog.length) || '6'}</span>
+                                    <span class="marketplace-stat-label">Products</span>
+                                </div>
+                                <div class="marketplace-stat">
+                                    <span class="marketplace-stat-number">4.9</span>
+                                    <span class="marketplace-stat-label">Rating</span>
+                                </div>
+                                <div class="marketplace-stat">
+                                    <span class="marketplace-stat-number">150+</span>
+                                    <span class="marketplace-stat-label">Sales</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="marketplace-shop-badge">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span>Marketplace</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main content area -->
+                <div class="marketplace-main">
+                    <!-- Products Section -->
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
+
+                    <!-- Links section -->
+                    ${data.links && data.links.length > 0 ? `
+                    <div class="marketplace-links-section">
+                        <h3 class="marketplace-section-title">
+                            <i class="fas fa-external-link-alt"></i> External Links
+                        </h3>
+                        <div class="marketplace-links-grid">
+                            ${data.links.map(link => `
+                                <div class="marketplace-link-container">
+                                    <a class="marketplace-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
+                                        <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
+                                        <span>${link.title}</span>
+                                        <i class="fas fa-arrow-right marketplace-link-arrow"></i>
+                                    </a>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <!-- Media section -->
+                    ${window.BINK.templates.renderMediaContent(data.media || {})}
+
+                    <!-- Social links -->
+                    ${Object.keys(data.socialLinks || {}).length > 0 ? `
+                    <div class="marketplace-socials">
+                        <h4>Connect With Us</h4>
+                        <div class="marketplace-social-icons">
+                            ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
+                                <a href="${url}" target="_blank" class="marketplace-social-icon">
+                                    <i class="${window.BINK.templates.getPlatformIcon(platform)}"></i>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+
+                <!-- Footer -->
+                <div class="marketplace-footer">
+                    <p>Powered by <a href="index.html" target="_blank">BINK</a> • Start your marketplace today</p>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+};
+
+// Boutique Template (Premium Only) - Luxury boutique-style storefront
+window.BINK.templates.templates['boutique'] = {
+    id: 'boutique',
+    name: 'Boutique',
+    description: 'Elegant luxury boutique template with sophisticated design.',
+    css: 'templates/boutique.css',
+    isPremium: true,
+    premiumOnly: true,
+    category: 'seller',
+    render: function(data) {
+        return `
+        <div class="boutique-bio-bg">
+            <div class="boutique-container">
+                <!-- Header with BINK branding -->
+                <div class="boutique-header">
+                    <div class="boutique-header-actions">
+                        <div class="boutique-join-link">
+                            <a href="index.html" class="boutique-join-btn">
+                                <i class="fas fa-user-plus"></i> Join BINK
+                            </a>
+                        </div>
+                        <div class="boutique-share">
+                            <button class="boutique-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Elegant profile section -->
+                    <div class="boutique-profile-section">
+                        <div class="boutique-profile-content">
+                            <div class="boutique-avatar-container">
+                                <img src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face'}" alt="Profile" class="boutique-avatar">
+                            </div>
+                            <div class="boutique-profile-text">
+                                <h1 class="boutique-username">${data.displayName || data.username}</h1>
+                                <p class="boutique-bio">${data.bio || 'Curated luxury collections'}</p>
+                                <div class="boutique-luxury-badge">
+                                    <i class="fas fa-gem"></i>
+                                    <span>Luxury Boutique</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main content area -->
+                <div class="boutique-main">
+                    <!-- Collections Section -->
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
+
+                    <!-- Links section -->
+                    ${data.links && data.links.length > 0 ? `
+                    <div class="boutique-links-section">
+                        <h3 class="boutique-section-title">Exclusive Access</h3>
+                        <div class="boutique-links-grid">
+                            ${data.links.map(link => `
+                                <div class="boutique-link-container">
+                                    <a class="boutique-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
+                                        <div class="boutique-link-icon">
+                                            <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
+                                        </div>
+                                        <div class="boutique-link-content">
+                                            <span class="boutique-link-title">${link.title}</span>
+                                            <span class="boutique-link-subtitle">Exclusive access</span>
+                                        </div>
+                                        <i class="fas fa-chevron-right boutique-link-arrow"></i>
+                                    </a>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <!-- Media section -->
+                    ${window.BINK.templates.renderMediaContent(data.media || {})}
+
+                    <!-- Social links -->
+                    ${Object.keys(data.socialLinks || {}).length > 0 ? `
+                    <div class="boutique-socials">
+                        <h4>Follow Our Journey</h4>
+                        <div class="boutique-social-icons">
+                            ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
+                                <a href="${url}" target="_blank" class="boutique-social-icon">
+                                    <i class="${window.BINK.templates.getPlatformIcon(platform)}"></i>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+
+                <!-- Footer -->
+                <div class="boutique-footer">
+                    <p>Powered by <a href="index.html" target="_blank">BINK</a> • Elevate your brand</p>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+};
+
+// Digital Store Template (Premium Only) - Digital products storefront layout
+window.BINK.templates.templates['digitalstore'] = {
+    id: 'digitalstore',
+    name: 'Digital Store',
+    description: 'Modern storefront template for selling digital products, courses, and downloads.',
+    css: 'templates/digitalstore.css',
+    isPremium: true,
+    premiumOnly: true,
+    category: 'seller',
+    render: function(data) {
+        return `
+        <div class="digitalstore-bio-bg">
+            <div class="digitalstore-container">
+                <!-- Header with BINK branding -->
+                <div class="digitalstore-header">
+                    <div class="digitalstore-header-actions">
+                        <div class="digitalstore-join-link">
+                            <a href="index.html" class="digitalstore-join-btn">
+                                <i class="fas fa-user-plus"></i> Join BINK
+                            </a>
+                        </div>
+                        <div class="digitalstore-share">
+                            <button class="digitalstore-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Store banner -->
+                    <div class="digitalstore-banner">
+                        <div class="digitalstore-banner-content">
+                            <div class="digitalstore-profile-section">
+                                <div class="digitalstore-avatar-container">
+                                    <img src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face'}" alt="Store Owner" class="digitalstore-avatar">
+                                    <div class="digitalstore-verified-badge">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </div>
+                                <div class="digitalstore-profile-info">
+                                    <h1 class="digitalstore-store-name">${data.displayName || data.username}</h1>
+                                    <p class="digitalstore-store-tagline">${data.bio || 'Premium digital products & downloads'}</p>
+                                </div>
+                            </div>
+                            <div class="digitalstore-badges">
+                                <div class="digitalstore-badge digitalstore-badge-digital">
+                                    <i class="fas fa-download"></i>
+                                    <span>Digital Store</span>
+                                </div>
+                                <div class="digitalstore-badge digitalstore-badge-instant">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>Instant Download</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="digitalstore-store-stats">
+                            <div class="digitalstore-stat">
+                                <span class="digitalstore-stat-number">${(data.catalog && data.catalog.length) || '12'}</span>
+                                <span class="digitalstore-stat-label">Products</span>
+                            </div>
+                            <div class="digitalstore-stat">
+                                <span class="digitalstore-stat-number">5K+</span>
+                                <span class="digitalstore-stat-label">Downloads</span>
+                            </div>
+                            <div class="digitalstore-stat">
+                                <span class="digitalstore-stat-number">4.9★</span>
+                                <span class="digitalstore-stat-label">Rating</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main content area -->
+                <div class="digitalstore-main">
+                    <!-- Digital Products Section -->
+                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
+
+                    <!-- Links section (External Stores) -->
+                    ${data.links && data.links.length > 0 ? `
+                    <div class="digitalstore-links-section">
+                        <h3 class="digitalstore-section-title">
+                            <i class="fas fa-external-link-alt"></i> More Stores & Platforms
+                        </h3>
+                        <div class="digitalstore-links-grid">
+                            ${data.links.map(link => `
+                                <div class="digitalstore-link-card">
+                                    <a class="digitalstore-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
+                                        <div class="digitalstore-link-icon">
+                                            <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
+                                        </div>
+                                        <div class="digitalstore-link-content">
+                                            <h4 class="digitalstore-link-title">${link.title}</h4>
+                                            <p class="digitalstore-link-description">Shop on external platform</p>
+                                        </div>
+                                        <div class="digitalstore-link-arrow">
+                                            <i class="fas fa-arrow-right"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <!-- Media section (Product previews) -->
+                    ${window.BINK.templates.renderMediaContent(data.media || {})}
+
+                    <!-- Social links -->
+                    ${Object.keys(data.socialLinks || {}).length > 0 ? `
+                    <div class="digitalstore-social-section">
+                        <h4>Follow for Updates</h4>
+                        <div class="digitalstore-social-icons">
+                            ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
+                                <a href="${url}" target="_blank" class="digitalstore-social-icon">
+                                    <i class="${window.BINK.templates.getPlatformIcon(platform)}"></i>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+
+                <!-- Footer -->
+                <div class="digitalstore-footer">
+                    <p>Powered by <a href="index.html" target="_blank">BINK</a> • Start your digital store</p>
                 </div>
             </div>
         </div>
@@ -2563,6 +3032,7 @@ window.BINK.templates.templates['zenminimal'] = {
                     `).join('')}
                 </div>
 
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
                 ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                 <div class="zenminimal-socials">
