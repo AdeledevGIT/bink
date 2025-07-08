@@ -760,6 +760,23 @@ function checkPremiumStatus(userData) {
     return isPremium;
 }
 
+// Check if user has access to a specific template
+function checkTemplateAccess(templateId) {
+    const template = window.BINK?.templates?.getTemplateById(templateId);
+    if (!template) return false;
+
+    // Free templates are always accessible
+    if (!template.isPremium) return true;
+
+    // Check if user has premium access
+    const isPremiumUser = checkPremiumStatus(currentUserData);
+    if (isPremiumUser) return true;
+
+    // Check if user has purchased this specific template
+    const usedTemplates = currentUserData?.usedTemplates || [];
+    return usedTemplates.includes(templateId);
+}
+
 // Revert user to free tier when premium expires (legacy function - now uses PremiumEnforcement)
 function revertToFreeTier(userData) {
     if (!currentUser) return;
@@ -2223,9 +2240,9 @@ if (saveSocialLinksButton) {
     saveSocialLinksButton.addEventListener('click', handleSocialLinksSubmit);
 }
 
-// Initialize templates carousel
+// Initialize template gallery and other components
 document.addEventListener('DOMContentLoaded', () => {
-    initTemplatesCarousel();
+    initializeTemplateGallery();
     initTemplateLabels();
     initializeTabNavigation();
     initializeCharacterCounter();
@@ -2279,7 +2296,7 @@ function initializeTabNavigation() {
             // Special handling for templates tab
             if (targetTab === 'templates') {
                 setTimeout(() => {
-                    initTemplatesCarousel();
+                    initializeTemplateGallery();
                 }, 100);
             }
         });
@@ -3294,6 +3311,392 @@ function updateProfilePictureSectionForTemplate(templateId) {
     window.profilePicInitials = initialsDiv;
 }
 
+// Template Navigation System - DISABLED (replaced with template gallery)
+function initializeTemplatePreview() {
+    console.log('Template preview system disabled - using template gallery instead');
+    return; // Exit early - template gallery is used instead
 
+    // Template data - same as landing.js
+    const templates = [
+        { name: "Glassmorphism", description: "Modern glassmorphism design", file: "glassmorphism-preview.html" },
+        { name: "Neon Card", description: "Vibrant neon-themed design", file: "neoncard-preview.html" },
+        { name: "Classic", description: "Clean and simple layout", file: "classic-preview.html" },
+        { name: "Purple Card", description: "Elegant purple gradient", file: "purplecard-preview.html" },
+        { name: "Landing Profile", description: "Professional landing style", file: "landingprofile-preview.html" },
+        { name: "Black Landing", description: "Sleek dark theme", file: "blacklanding-preview.html" },
+        { name: "Gradient Flow", description: "Dynamic gradient design", file: "gradientflow-preview.html" },
+        { name: "Dark Elegance", description: "Sophisticated dark theme", file: "darkelegance-preview.html" },
+        { name: "Neon Glow", description: "Electric neon aesthetics", file: "neonglow-preview.html" },
+        { name: "Minimal Zen", description: "Peaceful minimalist design", file: "minimalzen-preview.html" },
+        { name: "Tech Wave", description: "Futuristic tech-inspired", file: "techwave-preview.html" },
+        { name: "Split Screen", description: "Modern split-screen layout", file: "splitscreen-preview.html" },
+        { name: "Magazine", description: "Editorial magazine style", file: "magazine-preview.html" },
+        { name: "Retro Wave", description: "80s retro synthwave", file: "retrowave-preview.html" },
+        { name: "Nature", description: "Organic nature-inspired", file: "nature-preview.html" },
+        { name: "Portfolio", description: "Creative portfolio showcase", file: "portfolio-preview.html" },
+        { name: "Corporate Professional", description: "Business-focused design", file: "corporate-preview.html" },
+        { name: "Creative Artist", description: "Artistic expression theme", file: "creative-preview.html" },
+        { name: "Gradient Card", description: "Colorful gradient card", file: "gradientcard-preview.html" },
+        { name: "Neon Minimal", description: "Minimal neon accents", file: "neonminimal-preview.html" },
+        { name: "Soft Pastel", description: "Gentle pastel colors", file: "softpastel-preview.html" },
+        { name: "Cover Story", description: "Magazine cover style", file: "coverstory-preview.html" },
+        { name: "Aurora Glow", description: "Northern lights inspired", file: "auroraglow-preview.html" },
+        { name: "Hero Banner", description: "Bold hero section design", file: "herobanner-preview.html" },
+        { name: "Cyberpunk", description: "Futuristic cyberpunk theme", file: "cyberpunk-preview.html" },
+        { name: "Ocean Waves", description: "Calming ocean theme", file: "oceanwaves-preview.html" },
+        { name: "Vintage Polaroid", description: "Retro polaroid style", file: "vintagepolaroid-preview.html" },
+        { name: "Neon Gaming", description: "Gaming-inspired neon", file: "neongaming-preview.html" },
+        { name: "Zen Minimal", description: "Ultra-minimal zen design", file: "zenminimal-preview.html" }
+    ];
 
+    let currentTemplateIndex = 0;
+    let autoSwitchInterval;
 
+    const templateFrameSingle = document.getElementById('template-frame-single');
+    const templateName = document.getElementById('template-name');
+    const templateDescription = document.getElementById('template-description');
+    const currentTemplateIndexSpan = document.getElementById('current-template-index');
+    const totalTemplatesSpan = document.getElementById('total-templates');
+    const prevTemplateBtn = document.getElementById('prev-template-btn');
+    const nextTemplateBtn = document.getElementById('next-template-btn');
+
+    console.log('Template elements found:', {
+        frame: !!templateFrameSingle,
+        name: !!templateName,
+        description: !!templateDescription,
+        currentIndex: !!currentTemplateIndexSpan,
+        totalTemplates: !!totalTemplatesSpan,
+        prevBtn: !!prevTemplateBtn,
+        nextBtn: !!nextTemplateBtn
+    });
+
+    // Check if elements exist
+    if (!templateFrameSingle || !templateName || !templateDescription) {
+        console.log('Template preview elements not found');
+        return;
+    }
+
+    // Set total templates
+    if (totalTemplatesSpan) {
+        totalTemplatesSpan.textContent = templates.length;
+    }
+
+    function loadTemplate(index) {
+        const template = templates[index];
+        const templatePath = `templates/${template.file}`;
+
+        console.log('Loading template:', template.name, 'from path:', templatePath);
+
+        // Update single frame with the template
+        templateFrameSingle.src = templatePath;
+
+        // Add load event listener to debug
+        templateFrameSingle.onload = function() {
+            console.log('Template frame loaded successfully');
+        };
+
+        // Update template info
+        templateName.textContent = template.name;
+        templateDescription.textContent = template.description;
+
+        // Update counter
+        if (currentTemplateIndexSpan) {
+            currentTemplateIndexSpan.textContent = index + 1;
+        }
+    }
+
+    // Function to switch to next template
+    function nextTemplate() {
+        currentTemplateIndex = (currentTemplateIndex + 1) % templates.length;
+        console.log('Switching to next template:', currentTemplateIndex, templates[currentTemplateIndex].name);
+        loadTemplate(currentTemplateIndex);
+    }
+
+    // Function to switch to previous template
+    function prevTemplate() {
+        currentTemplateIndex = (currentTemplateIndex - 1 + templates.length) % templates.length;
+        console.log('Switching to previous template:', currentTemplateIndex, templates[currentTemplateIndex].name);
+        loadTemplate(currentTemplateIndex);
+    }
+
+    // Start auto-switching
+    function startAutoSwitch() {
+        if (autoSwitchInterval) {
+            clearInterval(autoSwitchInterval);
+        }
+        autoSwitchInterval = setInterval(nextTemplate, 3000);
+        console.log('Auto-switch started');
+    }
+
+    // Stop auto-switching
+    function stopAutoSwitch() {
+        if (autoSwitchInterval) {
+            clearInterval(autoSwitchInterval);
+            autoSwitchInterval = null;
+        }
+        console.log('Auto-switch stopped');
+    }
+
+    // Event listeners
+    if (nextTemplateBtn) {
+        nextTemplateBtn.addEventListener('click', () => {
+            stopAutoSwitch();
+            nextTemplate();
+            setTimeout(startAutoSwitch, 5000); // Resume auto-switch after 5 seconds
+        });
+    }
+
+    if (prevTemplateBtn) {
+        prevTemplateBtn.addEventListener('click', () => {
+            stopAutoSwitch();
+            prevTemplate();
+            setTimeout(startAutoSwitch, 5000); // Resume auto-switch after 5 seconds
+        });
+    }
+
+    if (useSelectedTemplateBtn) {
+        useSelectedTemplateBtn.addEventListener('click', () => {
+            const selectedTemplate = templates[currentTemplateIndex];
+            console.log('Using template:', selectedTemplate.name);
+
+            // Store selected template in localStorage or handle template selection
+            localStorage.setItem('selectedTemplate', JSON.stringify(selectedTemplate));
+
+            // Show success message
+            showMessage('Template selected: ' + selectedTemplate.name, 'success');
+
+            // You can add additional logic here to apply the template
+        });
+    }
+
+    // Load initial template
+    loadTemplate(currentTemplateIndex);
+
+    // Start auto-switching
+    startAutoSwitch();
+
+    console.log('Template preview system initialized successfully!');
+}
+
+// Initialize template gallery
+function initializeTemplateGallery() {
+    console.log('Initializing template gallery...');
+
+    // Check if templates are available
+    if (!window.BINK || !window.BINK.templates || !window.BINK.templates.templates) {
+        console.error('Templates not loaded yet, retrying in 1 second...');
+        setTimeout(initializeTemplateGallery, 1000);
+        return;
+    }
+
+    // Initialize category filters first
+    initializeCategoryFilters();
+
+    // Initialize gallery with all templates
+    displayTemplatesByCategory('all');
+
+    console.log('Template gallery initialized successfully');
+}
+
+// Initialize category filter buttons
+function initializeCategoryFilters() {
+    const categoryFiltersContainer = document.getElementById('category-filters');
+    if (!categoryFiltersContainer) {
+        console.error('Category filters container not found');
+        return;
+    }
+
+    // Clear existing filters
+    categoryFiltersContainer.innerHTML = '';
+
+    // Get all categories
+    const categories = window.BINK.templates.getAllCategories();
+
+    categories.forEach(categoryId => {
+        const categoryInfo = window.BINK.templates.getCategoryInfo(categoryId);
+        const filterButton = createCategoryFilterButton(categoryId, categoryInfo);
+        categoryFiltersContainer.appendChild(filterButton);
+    });
+
+    console.log('Category filters initialized');
+}
+
+// Create category filter button
+function createCategoryFilterButton(categoryId, categoryInfo) {
+    const button = document.createElement('button');
+    button.className = `category-filter-btn ${categoryId === 'all' ? 'active' : ''}`;
+    button.dataset.category = categoryId;
+
+    button.innerHTML = `
+        <i class="${categoryInfo.icon}"></i>
+        <span class="category-name">${categoryInfo.name}</span>
+        <span class="category-count" id="count-${categoryId}">0</span>
+    `;
+
+    // Add click event listener
+    button.addEventListener('click', () => {
+        selectCategory(categoryId);
+    });
+
+    return button;
+}
+
+// Select and display templates by category
+function selectCategory(categoryId) {
+    // Update active filter button
+    document.querySelectorAll('.category-filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`[data-category="${categoryId}"]`).classList.add('active');
+
+    // Display templates for selected category
+    displayTemplatesByCategory(categoryId);
+}
+
+// Display templates by category
+function displayTemplatesByCategory(categoryId) {
+    const templateGallery = document.getElementById('template-gallery');
+    if (!templateGallery) {
+        console.error('Template gallery container not found');
+        return;
+    }
+
+    // Clear existing content
+    templateGallery.innerHTML = '';
+
+    // Get templates for the selected category
+    const templates = window.BINK.templates.getTemplatesByCategory(categoryId);
+
+    console.log(`Displaying ${templates.length} templates for category: ${categoryId}`);
+
+    // Create template gallery items
+    templates.forEach(template => {
+        const galleryItem = createTemplateGalleryItem(template);
+        templateGallery.appendChild(galleryItem);
+    });
+
+    // Update category counts
+    updateCategoryCounts();
+}
+
+// Update template counts for each category
+function updateCategoryCounts() {
+    const categories = window.BINK.templates.getAllCategories();
+
+    categories.forEach(categoryId => {
+        const templates = window.BINK.templates.getTemplatesByCategory(categoryId);
+        const countElement = document.getElementById(`count-${categoryId}`);
+        if (countElement) {
+            countElement.textContent = templates.length;
+        }
+    });
+}
+
+// Create individual template gallery item
+function createTemplateGalleryItem(template) {
+    try {
+        const item = document.createElement('div');
+        item.className = 'template-gallery-item';
+        item.dataset.templateId = template.id;
+
+        // Determine preview file path
+        const previewPath = `templates/${template.id}-preview.html`;
+
+        // Create template label
+        const labelClass = template.isPremium ? 'premium' : 'free';
+        const labelText = template.isPremium ? `Premium (${template.tokenPrice || 100} Tokens)` : 'Free';
+
+        item.innerHTML = `
+            <div class="template-label ${labelClass}">${labelText}</div>
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <iframe class="template-iframe" src="${previewPath}" loading="lazy"></iframe>
+                </div>
+            </div>
+            <div class="template-info">
+                <div class="template-title">${template.name || 'Unnamed Template'}</div>
+                <div class="template-description">${template.description || 'No description available'}</div>
+            </div>
+        `;
+
+        // Add click event listener
+        item.addEventListener('click', () => {
+            selectTemplateFromGallery(template.id);
+        });
+
+        console.log('Created gallery item for template:', template.name);
+        return item;
+    } catch (error) {
+        console.error('Error creating template gallery item:', error, template);
+        return null;
+    }
+}
+
+// Handle template selection from gallery
+function selectTemplateFromGallery(templateId) {
+    try {
+        console.log('Selecting template from gallery:', templateId);
+
+        // Remove selection from all items
+        document.querySelectorAll('.template-gallery-item').forEach(item => {
+            item.classList.remove('selected');
+        });
+
+        // Add selection to clicked item
+        const selectedItem = document.querySelector(`[data-template-id="${templateId}"]`);
+        if (selectedItem) {
+            selectedItem.classList.add('selected');
+        } else {
+            console.warn('Selected template item not found:', templateId);
+        }
+
+        // Immediately apply the template selection
+        handleTemplateSelection(templateId);
+
+        console.log('Template selected and applied:', templateId);
+    } catch (error) {
+        console.error('Error selecting template:', error);
+    }
+}
+
+// Handle template selection and save
+function handleTemplateSelection(templateId) {
+    if (!currentUser) {
+        showMessage('Please log in to select a template.', true);
+        return;
+    }
+
+    const template = window.BINK?.templates?.getTemplateById(templateId);
+    if (!template) {
+        showMessage('Template not found.', true);
+        return;
+    }
+
+    // Check if template is premium and user has access
+    if (template.isPremium) {
+        const isPremiumUser = checkPremiumStatus(currentUserData);
+        const usedTemplates = currentUserData?.usedTemplates || [];
+        const hasUsedTemplate = usedTemplates.includes(templateId);
+
+        if (!isPremiumUser && !hasUsedTemplate) {
+            // Show premium template modal
+            if (window.BINK?.templates?.showPremiumTemplateModal) {
+                window.BINK.templates.showPremiumTemplateModal(templateId);
+            } else {
+                showMessage(`This is a premium template. Please upgrade to access ${template.name}.`, true);
+            }
+            return;
+        }
+    }
+
+    // Save template selection
+    saveTemplateSelection(templateId);
+}
+
+// Initialize template gallery when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize template gallery instead of carousel
+    setTimeout(() => {
+        initializeTemplateGallery();
+    }, 500);
+});

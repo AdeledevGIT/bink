@@ -25,9 +25,15 @@ function initSidebar() {
 
     // Create sidebar if it doesn't exist
     if (!document.getElementById('sidebar')) {
-        // Create container if it doesn't exist
+        // Check page type to determine layout approach
+        const isBioEditorPage = document.body.classList.contains('bio-editor-page');
+        const hasSpecialLayout = isBioEditorPage; // Can extend this for other special pages
         let container = document.querySelector('.dashboard-container');
-        if (!container) {
+
+        // Only create dashboard container if:
+        // 1. It doesn't already exist
+        // 2. Page doesn't have a special layout
+        if (!container && !hasSpecialLayout) {
             container = document.createElement('div');
             container.className = 'dashboard-container';
 
@@ -124,8 +130,13 @@ function initSidebar() {
             </ul>
         `;
 
-        // Add sidebar to container
-        container.prepend(sidebar);
+        // Add sidebar to appropriate location based on page layout
+        if (container) {
+            container.prepend(sidebar);
+        } else if (hasSpecialLayout) {
+            // For pages with special layouts (like bio editor), insert sidebar directly into body
+            document.body.appendChild(sidebar);
+        }
     }
 
     // Set active link based on current page
@@ -164,11 +175,14 @@ function setupSidebarEventListeners() {
 
     // Function to toggle sidebar
     function toggleSidebar() {
-        if (window.innerWidth <= 768) {
-            // Mobile behavior
+        // Check if we're on the bio editor page
+        const isBioEditorPage = body.classList.contains('bio-editor-page');
+
+        if (window.innerWidth <= 768 || isBioEditorPage) {
+            // Mobile behavior or bio editor page behavior
             body.classList.toggle('sidebar-active');
         } else {
-            // Desktop behavior
+            // Desktop behavior (for other pages)
             body.classList.toggle('sidebar-collapsed');
         }
     }
@@ -185,11 +199,12 @@ function setupSidebarEventListeners() {
         });
     }
 
-    // Close sidebar when clicking on a link (mobile)
+    // Close sidebar when clicking on a link (mobile or bio editor page)
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
+            const isBioEditorPage = body.classList.contains('bio-editor-page');
+            if (window.innerWidth <= 768 || isBioEditorPage) {
                 body.classList.remove('sidebar-active');
             }
         });
@@ -197,7 +212,9 @@ function setupSidebarEventListeners() {
 
     // Set initial sidebar state based on screen size
     window.addEventListener('resize', () => {
-        if (window.innerWidth <= 768) {
+        const isBioEditorPage = body.classList.contains('bio-editor-page');
+
+        if (window.innerWidth <= 768 || isBioEditorPage) {
             body.classList.remove('sidebar-collapsed');
         } else {
             body.classList.remove('sidebar-active');

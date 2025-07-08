@@ -3,7 +3,7 @@
 /* Main layout */
 .dashboard-container {
     padding: 2rem 0;
-    padding-top: 100px; /* Adjusted padding to account for fixed header */
+    padding-top: 90px; /* Reduced from 100px to better match header height */
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
@@ -253,7 +253,7 @@
 
     .dashboard-container {
         grid-template-columns: 1fr;
-        padding-top: 90px; /* Slightly less padding on mobile */
+        padding-top: 80px; /* Reduced for mobile to match smaller header */
     }
 
     .dashboard-sidebar {

@@ -17,7 +17,7 @@
     <!-- Font Awesome for social icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
-<body>
+<body class="bio-editor-page">
     <header class="page-header">
         <div class="logo-container-header">
             <a href="dashboard.html">
@@ -31,8 +31,8 @@
         </div>
     </header>
 
-    <div class="dashboard-container">
-        <main class="dashboard-main">
+    <div class="bio-editor-container">
+        <div class="bio-editor-content">
             <!-- Navigation Tabs -->
             <div class="editor-navigation">
                 <div class="nav-tabs">
@@ -65,279 +65,19 @@
                 <div class="tab-content active" id="templates">
                     <div class="tab-header">
                         <h3>Choose Your Template</h3>
-                        <p>Select a template that best represents your style • Scroll horizontally to see more</p>
+                        <p>Select a template that best represents your style • Filter by category or browse all</p>
                     </div>
-                    <div class="templates-grid">
-                        <div class="templates-scroll">
-                        <!-- NeonCard -->
-                        <div class="template-card">
-                            <div id="neoncard-label"></div>
-                            <iframe src="templates/neoncard-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Neon Card</div>
-                                <button class="template-select-btn" data-template="neoncard">Preview</button>
-                            </div>
+
+                    <!-- Category Filter -->
+                    <div class="category-filter-container">
+                        <div class="category-filters" id="category-filters">
+                            <!-- Category buttons will be loaded dynamically -->
                         </div>
-                        <!-- Glassmorphism -->
-                        <div class="template-card">
-                            <div id="glassmorphism-label"></div>
-                            <iframe src="templates/glassmorphism-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Glassmorphism</div>
-                                <button class="template-select-btn" data-template="glassmorphism">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Classic (optional) -->
-                        <div class="template-card">
-                            <div id="classic-label"></div>
-                            <iframe src="templates/classic-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Classic</div>
-                                <button class="template-select-btn" data-template="classic">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Purple Card -->
-                        <div class="template-card">
-                            <div id="purplecard-label"></div>
-                            <iframe src="templates/purplecard-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Purple Card</div>
-                                <button class="template-select-btn" data-template="purplecard">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Landing Profile -->
-                        <div class="template-card">
-                            <div id="landingprofile-label"></div>
-                            <iframe src="templates/landingprofile-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Landing Profile</div>
-                                <button class="template-select-btn" data-template="landingprofile">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Black Landing -->
-                        <div class="template-card">
-                            <div id="blacklanding-label"></div>
-                            <iframe src="templates/blacklanding-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Black Landing</div>
-                                <button class="template-select-btn" data-template="blacklanding">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Gradient Flow -->
-                        <div class="template-card">
-                            <div id="gradientflow-label"></div>
-                            <iframe src="templates/gradientflow-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Gradient Flow</div>
-                                <button class="template-select-btn" data-template="gradientflow">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Dark Elegance -->
-                        <div class="template-card">
-                            <div id="darkelegance-label"></div>
-                            <iframe src="templates/darkelegance-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Dark Elegance</div>
-                                <button class="template-select-btn" data-template="darkelegance">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Neon Glow -->
-                        <div class="template-card">
-                            <div id="neonglow-label"></div>
-                            <iframe src="templates/neonglow-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Neon Glow</div>
-                                <button class="template-select-btn" data-template="neonglow">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Minimal Zen -->
-                        <div class="template-card">
-                            <div id="minimalzen-label"></div>
-                            <iframe src="templates/minimalzen-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Minimal Zen</div>
-                                <button class="template-select-btn" data-template="minimalzen">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Tech Wave -->
-                        <div class="template-card">
-                            <div id="techwave-label"></div>
-                            <iframe src="templates/techwave-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Tech Wave</div>
-                                <button class="template-select-btn" data-template="techwave">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Split Screen -->
-                        <div class="template-card">
-                            <div id="splitscreen-label"></div>
-                            <iframe src="templates/splitscreen-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Split Screen</div>
-                                <button class="template-select-btn" data-template="splitscreen">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Magazine -->
-                        <div class="template-card">
-                            <div id="magazine-label"></div>
-                            <iframe src="templates/magazine-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Magazine</div>
-                                <button class="template-select-btn" data-template="magazine">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Retro Wave -->
-                        <div class="template-card">
-                            <div id="retrowave-label"></div>
-                            <iframe src="templates/retrowave-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Retro Wave</div>
-                                <button class="template-select-btn" data-template="retrowave">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Nature -->
-                        <div class="template-card">
-                            <div id="nature-label"></div>
-                            <iframe src="templates/nature-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Nature</div>
-                                <button class="template-select-btn" data-template="nature">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Portfolio -->
-                        <div class="template-card">
-                            <div id="portfolio-label"></div>
-                            <iframe src="templates/portfolio-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Portfolio</div>
-                                <button class="template-select-btn" data-template="portfolio">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Corporate Professional -->
-                        <div class="template-card">
-                            <div id="corporate-label"></div>
-                            <iframe src="templates/corporate-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Corporate Professional</div>
-                                <button class="template-select-btn" data-template="corporate">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Creative Artist -->
-                        <div class="template-card">
-                            <div id="creative-label"></div>
-                            <iframe src="templates/creative-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Creative Artist</div>
-                                <button class="template-select-btn" data-template="creative">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Gradient Card -->
-                        <div class="template-card">
-                            <div id="gradientcard-label"></div>
-                            <iframe src="templates/gradientcard-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Gradient Card</div>
-                                <button class="template-select-btn" data-template="gradientcard">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Neon Minimal -->
-                        <div class="template-card">
-                            <div id="neonminimal-label"></div>
-                            <iframe src="templates/neonminimal-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Neon Minimal</div>
-                                <button class="template-select-btn" data-template="neonminimal">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Soft Pastel -->
-                        <div class="template-card">
-                            <div id="softpastel-label"></div>
-                            <iframe src="templates/softpastel-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Soft Pastel</div>
-                                <button class="template-select-btn" data-template="softpastel">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Cover Story -->
-                        <div class="template-card">
-                            <div id="coverstory-label"></div>
-                            <iframe src="templates/coverstory-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Cover Story</div>
-                                <button class="template-select-btn" data-template="coverstory">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Aurora Glow -->
-                        <div class="template-card">
-                            <div id="auroraglow-label"></div>
-                            <iframe src="templates/auroraglow-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Aurora Glow</div>
-                                <button class="template-select-btn" data-template="auroraglow">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Hero Banner -->
-                        <div class="template-card">
-                            <div id="herobanner-label"></div>
-                            <iframe src="templates/herobanner-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Hero Banner</div>
-                                <button class="template-select-btn" data-template="herobanner">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Cyberpunk -->
-                        <div class="template-card">
-                            <div id="cyberpunk-label"></div>
-                            <iframe src="templates/cyberpunk-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Cyberpunk</div>
-                                <button class="template-select-btn" data-template="cyberpunk">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Ocean Waves -->
-                        <div class="template-card">
-                            <div id="oceanwaves-label"></div>
-                            <iframe src="templates/oceanwaves-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Ocean Waves</div>
-                                <button class="template-select-btn" data-template="oceanwaves">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Vintage Polaroid -->
-                        <div class="template-card">
-                            <div id="vintagepolaroid-label"></div>
-                            <iframe src="templates/vintagepolaroid-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Vintage Polaroid</div>
-                                <button class="template-select-btn" data-template="vintagepolaroid">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Neon Gaming -->
-                        <div class="template-card">
-                            <div id="neongaming-label"></div>
-                            <iframe src="templates/neongaming-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Neon Gaming</div>
-                                <button class="template-select-btn" data-template="neongaming">Preview</button>
-                            </div>
-                        </div>
-                        <!-- Zen Minimal -->
-                        <div class="template-card">
-                            <div id="zenminimal-label"></div>
-                            <iframe src="templates/zenminimal-preview.html" class="template-preview"></iframe>
-                            <div class="template-info">
-                                <div class="template-title">Zen Minimal</div>
-                                <button class="template-select-btn" data-template="zenminimal">Preview</button>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="templates-controls">
-                            <button class="template-control prev">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="template-control next">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
+                    </div>
+
+                    <div class="template-gallery-container">
+                        <div class="template-gallery-scroll" id="template-gallery">
+                            <!-- Templates will be loaded dynamically here -->
                         </div>
                     </div>
                 </div>
@@ -582,23 +322,24 @@
                     </div>
             </div>
 
-            <!-- Live Preview Sidebar -->
-            <div class="preview-sidebar">
-                <div class="preview-header">
-                    <h4>Live Preview</h4>
-                </div>
-                <div class="preview-container">
-                    <div class="preview-frame-container">
-                        <iframe id="preview-frame" src="about:blank" title="Bio Page Preview"></iframe>
-                    </div>
-                </div>
-                <div class="preview-actions">
-                    <button id="use-template-button" class="action-btn primary-btn">
-                        <i class="fas fa-check"></i> Use Selected Template
-                    </button>
+        </div>
+
+        <!-- Live Preview Sidebar -->
+        <div class="preview-sidebar">
+            <div class="preview-header">
+                <h4>Live Preview</h4>
+            </div>
+            <div class="preview-container">
+                <div class="preview-frame-container">
+                    <iframe id="preview-frame" src="about:blank" title="Bio Page Preview"></iframe>
                 </div>
             </div>
-        </main>
+            <div class="preview-actions">
+                <button id="use-template-button" class="action-btn primary-btn">
+                    <i class="fas fa-check"></i> Use Selected Template
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Success/Error Messages -->
@@ -891,3 +632,4 @@
     <script src="bio-editor.js"></script>
 </body>
 </html>
+

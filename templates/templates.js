@@ -2,6 +2,35 @@ window.BINK = window.BINK || {};
 window.BINK.templates = window.BINK.templates || {};
 window.BINK.templates.templates = window.BINK.templates.templates || {};
 
+// Template categories based on user types
+window.BINK.templates.categories = {
+    'all': {
+        name: 'All Templates',
+        description: 'Browse all available templates',
+        icon: 'fas fa-th-large'
+    },
+    'creator': {
+        name: 'Content Creator',
+        description: 'Perfect for influencers, YouTubers, and social media creators',
+        icon: 'fas fa-video'
+    },
+    'business': {
+        name: 'Professional',
+        description: 'Ideal for business professionals, executives, and corporate use',
+        icon: 'fas fa-briefcase'
+    },
+    'seller': {
+        name: 'Online Seller',
+        description: 'Great for e-commerce, product showcases, and online stores',
+        icon: 'fas fa-shopping-cart'
+    },
+    'artist': {
+        name: 'Creative Artist',
+        description: 'Designed for artists, designers, photographers, and creatives',
+        icon: 'fas fa-palette'
+    }
+};
+
 // Helper for icons
 window.BINK.templates.getPlatformIcon = function(platform) {
     const icons = {
@@ -383,6 +412,7 @@ window.BINK.templates.templates['classic'] = {
     description: 'Simple, clean, and timeless.',
     css: 'bio.css',
     isPremium: false,
+    category: 'creator',
     render: function(data) {
         return `
         <div class="bio-page">
@@ -443,6 +473,7 @@ window.BINK.templates.templates['neoncard'] = {
     description: 'A modern, animated neon-styled bio page with sleek design.',
     css: 'templates/neoncard.css',
     isPremium: false,
+    category: 'creator',
     render: function(data) {
         // data: { displayName, username, bio, profilePicUrl, links, socialLinks }
         return `
@@ -503,6 +534,7 @@ window.BINK.templates.templates['glassmorphism'] = {
     description: 'Frosted glass effect with soft gradients.',
     css: 'templates/glassmorphism.css',
     isPremium: false,
+    category: 'creator',
     render: function(data) {
         return `
         <div class="glass-bio-bg">
@@ -560,6 +592,7 @@ window.BINK.templates.templates['purplecard'] = {
     css: 'templates/purplecard.css',
     isPremium: true,
     tokenPrice: 150,
+    category: 'creator',
     render: function(data) {
         return `
         <div class="purplecard-bio-bg">
@@ -617,6 +650,7 @@ window.BINK.templates.templates['landingprofile'] = {
     css: 'templates/landingprofile.css',
     isPremium: true,
     tokenPrice: 120,
+    category: 'creator',
     render: function(data) {
         return `
         <div class="landing-bio-bg">
@@ -1051,6 +1085,7 @@ window.BINK.templates.templates['blacklanding'] = {
     css: 'templates/blacklanding.css',
     isPremium: true,
     tokenPrice: 180,
+    category: 'business',
     render: function(data) {
         return `
         <div class="blacklanding-bio-bg">
@@ -1109,6 +1144,7 @@ window.BINK.templates.templates['gradientflow'] = {
     css: 'templates/gradientflow.css',
     isPremium: true,
     tokenPrice: 120,
+    category: 'creator',
     render: function(data) {
         return `
         <div class="gradientflow-bio-bg">
@@ -1168,6 +1204,7 @@ window.BINK.templates.templates['darkelegance'] = {
     css: 'templates/darkelegance.css',
     isPremium: true,
     tokenPrice: 180,
+    category: 'business',
     render: function(data) {
         return `
         <div class="darkelegance-bio-bg">
@@ -1227,6 +1264,7 @@ window.BINK.templates.templates['neonglow'] = {
     css: 'templates/neonglow.css',
     isPremium: true,
     tokenPrice: 200,
+    category: 'creator',
     render: function(data) {
         return `
         <div class="neonglow-bio-bg">
@@ -1288,6 +1326,7 @@ window.BINK.templates.templates['minimalzen'] = {
     css: 'templates/minimalzen.css',
     isPremium: true,
     tokenPrice: 150,
+    category: 'business',
     render: function(data) {
         return `
         <div class="minimalzen-bio-bg">
@@ -1347,6 +1386,7 @@ window.BINK.templates.templates['techwave'] = {
     css: 'templates/techwave.css',
     isPremium: true,
     tokenPrice: 180,
+    category: 'creator',
     render: function(data) {
         return `
         <div class="techwave-bio-bg">
@@ -1408,6 +1448,7 @@ window.BINK.templates.templates['splitscreen'] = {
     css: 'templates/splitscreen.css',
     isPremium: true,
     tokenPrice: 170,
+    category: 'seller',
     render: function(data) {
         return `
         <div class="splitscreen-bio-bg">
@@ -1470,6 +1511,7 @@ window.BINK.templates.templates['magazine'] = {
     css: 'templates/magazine.css',
     isPremium: true,
     tokenPrice: 160,
+    category: 'business',
     render: function(data) {
         return `
         <div class="magazine-bio-bg">
@@ -1546,6 +1588,7 @@ window.BINK.templates.templates['retrowave'] = {
     css: 'templates/retrowave.css',
     isPremium: true,
     tokenPrice: 190,
+    category: 'creator',
     render: function(data) {
         return `
         <div class="retrowave-bio-bg">
@@ -1606,6 +1649,7 @@ window.BINK.templates.templates['nature'] = {
     css: 'templates/nature.css',
     isPremium: true,
     tokenPrice: 140,
+    category: 'artist',
     render: function(data) {
         return `
         <div class="nature-bio-bg">
@@ -1665,6 +1709,7 @@ window.BINK.templates.templates['portfolio'] = {
     css: 'templates/portfolio.css',
     isPremium: true,
     tokenPrice: 175,
+    category: 'seller',
     render: function(data) {
         return `
         <div class="portfolio-bio-bg">
@@ -1734,6 +1779,7 @@ window.BINK.templates.templates['corporate'] = {
     css: 'templates/corporate.css',
     isPremium: true,
     tokenPrice: 150,
+    category: 'business',
     render: function(data) {
         return `
         <div class="corporate-bio-page">
@@ -1796,6 +1842,7 @@ window.BINK.templates.templates['creative'] = {
     css: 'templates/creative.css',
     isPremium: true,
     tokenPrice: 180,
+    category: 'artist',
     render: function(data) {
         return `
         <div class="creative-bio-page">
@@ -1858,6 +1905,7 @@ window.BINK.templates.templates['gradientcard'] = {
     css: 'templates/gradientcard.css',
     isPremium: true,
     tokenPrice: 140,
+    category: 'seller',
     render: function(data) {
         return `
         <div class="gradientcard-bio-bg">
@@ -1909,6 +1957,7 @@ window.BINK.templates.templates['neonminimal'] = {
     css: 'templates/neonminimal.css',
     isPremium: true,
     tokenPrice: 150,
+    category: 'creator',
     render: function(data) {
         return `
         <div class="neonminimal-bio-bg">
@@ -1965,6 +2014,7 @@ window.BINK.templates.templates['softpastel'] = {
     css: 'templates/softpastel.css',
     isPremium: true,
     tokenPrice: 160,
+    category: 'artist',
     render: function(data) {
         return `
         <div class="softpastel-bio-bg">
@@ -2016,6 +2066,7 @@ window.BINK.templates.templates['coverstory'] = {
     css: 'templates/coverstory.css',
     isPremium: true,
     tokenPrice: 130,
+    category: 'business',
     render: function(data) {
         const profileImageUrl = data.profilePicUrl || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=280&fit=crop&crop=face';
         return `
@@ -2076,6 +2127,7 @@ window.BINK.templates.templates['auroraglow'] = {
     css: 'templates/auroraglow.css',
     isPremium: true,
     tokenPrice: 200,
+    category: 'creator',
     render: function(data) {
         return `
         <div class="auroraglow-bio-bg">
@@ -2127,6 +2179,7 @@ window.BINK.templates.templates['herobanner'] = {
     css: 'templates/herobanner.css',
     isPremium: true,
     tokenPrice: 160,
+    category: 'business',
     render: function(data) {
         return `
         <div class="herobanner-bio-bg">
@@ -2186,6 +2239,7 @@ window.BINK.templates.templates['cyberpunk'] = {
     css: 'templates/cyberpunk.css',
     isPremium: true,
     tokenPrice: 200,
+    category: 'creator',
     render: function(data) {
         return `
         <div class="cyberpunk-bio-bg">
@@ -2247,6 +2301,7 @@ window.BINK.templates.templates['oceanwaves'] = {
     css: 'templates/oceanwaves.css',
     isPremium: true,
     tokenPrice: 180,
+    category: 'artist',
     render: function(data) {
         return `
         <div class="oceanwaves-bio-bg">
@@ -2314,6 +2369,7 @@ window.BINK.templates.templates['vintagepolaroid'] = {
     css: 'templates/vintagepolaroid.css',
     isPremium: true,
     tokenPrice: 160,
+    category: 'artist',
     render: function(data) {
         return `
         <div class="vintagepolaroid-bio-bg">
@@ -2381,6 +2437,7 @@ window.BINK.templates.templates['neongaming'] = {
     css: 'templates/neongaming.css',
     isPremium: true,
     tokenPrice: 220,
+    category: 'creator',
     render: function(data) {
         return `
         <div class="neongaming-bio-bg">
@@ -2468,6 +2525,7 @@ window.BINK.templates.templates['zenminimal'] = {
     css: 'templates/zenminimal.css',
     isPremium: true,
     tokenPrice: 140,
+    category: 'business',
     render: function(data) {
         return `
         <div class="zenminimal-bio-bg">
@@ -2518,4 +2576,20 @@ window.BINK.templates.templates['zenminimal'] = {
         </div>
         `;
     }
+};
+
+// Category helper functions
+window.BINK.templates.getTemplatesByCategory = function(category) {
+    if (category === 'all') {
+        return Object.values(this.templates);
+    }
+    return Object.values(this.templates).filter(template => template.category === category);
+};
+
+window.BINK.templates.getCategoryInfo = function(category) {
+    return this.categories[category] || this.categories['all'];
+};
+
+window.BINK.templates.getAllCategories = function() {
+    return Object.keys(this.categories);
 };
