@@ -648,55 +648,27 @@ window.BINK.templates.templates['landingprofile'] = {
     name: 'Landing Profile',
     description: 'Banner, profile at top left, username in front, share buttons, and sections as described.',
     css: 'templates/landingprofile.css',
+    js: 'templates/landingprofile.js',
     isPremium: true,
     tokenPrice: 120,
     category: 'creator',
     render: function(data) {
-        return `
-        <div class="landing-bio-bg">
-            <div class="landing-header-actions">
-                <div class="landing-join-link">
-                    <a href="index.html" class="landing-join-btn"><i class="fas fa-user-plus"></i>Join BINK</a>
-                </div>
-                <div class="landing-share">
-                    <button class="landing-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="landing-banner">
-                <div class="landing-profile-row">
-                    <div class="landing-profile-pic-username">
-                        <img class="landing-profile-pic" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
-                        <div class="landing-username-inline">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="landing-main">
-                <div class="landing-section-title">ABOUT ${(data.displayName || data.username) ? window.BINK.templates.formatUsername(data.displayName || data.username) : ''}</div>
-                <div class="landing-bio">${data.bio || ''}</div>
-                <div class="landing-section-title" style="margin-top:32px;">VISIT OUR PAGES</div>
-                <div class="landing-links-list">
-                    ${(data.links || []).map(link => `
-                        <div class="landing-link-row">
-                            <a class="landing-link-title" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
-                                <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
-                                ${link.title}
-                            </a>
-                            <button class="landing-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
-                        </div>
-                    `).join('')}
-                </div>
-                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
-                ${window.BINK.templates.renderMediaContent(data.media || {})}
-                <div class="landing-footer">
-                    Powered by <a href="index.html" target="_blank">BINK</a>
-                </div>
-            </div>
-        </div>
-        `;
+        // Load the standalone JavaScript if not already loaded
+        if (!window.LandingProfile) {
+            const script = document.createElement('script');
+            script.src = 'templates/landingprofile.js';
+            script.onload = function() {
+                // Re-render after script loads
+                const bioRoot = document.getElementById('bio-root');
+                if (bioRoot) {
+                    bioRoot.innerHTML = window.LandingProfile.render(data);
+                }
+            };
+            document.head.appendChild(script);
+            return '<div>Loading...</div>';
+        }
+
+        return window.LandingProfile.render(data);
     }
 };
 
@@ -1083,57 +1055,27 @@ window.BINK.templates.templates['blacklanding'] = {
     name: 'Black Landing',
     description: 'Dark landing page, username inline, centered about section.',
     css: 'templates/blacklanding.css',
+    js: 'templates/blacklanding.js',
     isPremium: true,
     tokenPrice: 180,
     category: 'business',
     render: function(data) {
-        return `
-        <div class="blacklanding-bio-bg">
-            <div class="blacklanding-header-actions">
-                <div class="blacklanding-join-link">
-                    <a href="index.html" class="blacklanding-join-btn"><i class="fas fa-user-plus"></i>Join BINK</a>
-                </div>
-                <div class="blacklanding-share">
-                    <button class="blacklanding-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="blacklanding-banner">
-                <div class="blacklanding-profile-row-inline">
-                    <div class="blacklanding-profile-pic-username">
-                        <img class="blacklanding-profile-pic" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
-                        <div class="blacklanding-username-inline">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="blacklanding-main">
-                <div class="blacklanding-about-section">
-                    <div class="blacklanding-section-title">ABOUT ${(data.displayName || data.username) ? window.BINK.templates.formatUsername(data.displayName || data.username) : ''}</div>
-                    <div class="blacklanding-bio">${data.bio || ''}</div>
-                </div>
-                <div class="blacklanding-section-title" style="margin-top:32px;">VISIT OUR PAGES</div>
-                <div class="blacklanding-links-list">
-                    ${(data.links || []).map(link => `
-                        <div class="blacklanding-link-row">
-                            <a class="blacklanding-link-title" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
-                                <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
-                                ${link.title}
-                            </a>
-                            <button class="blacklanding-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
-                        </div>
-                    `).join('')}
-                </div>
-                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
-                ${window.BINK.templates.renderMediaContent(data.media || {})}
-                <div class="blacklanding-footer">
-                    Powered by <a href="index.html" target="_blank">BINK</a>
-                </div>
-            </div>
-        </div>
-        `;
+        // Load the standalone JavaScript if not already loaded
+        if (!window.BlackLanding) {
+            const script = document.createElement('script');
+            script.src = 'templates/blacklanding.js';
+            script.onload = function() {
+                // Re-render after script loads
+                const bioRoot = document.getElementById('bio-root');
+                if (bioRoot) {
+                    bioRoot.innerHTML = window.BlackLanding.render(data);
+                }
+            };
+            document.head.appendChild(script);
+            return '<div>Loading...</div>';
+        }
+
+        return window.BlackLanding.render(data);
     }
 };
 

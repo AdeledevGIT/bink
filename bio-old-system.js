@@ -223,14 +223,6 @@ function renderTemplate(userData) {
         document.head.appendChild(link);
     }
 
-    // Load template JavaScript if it exists and not already loaded
-    if (templateObj.js && !document.getElementById('template-js-' + templateId)) {
-        const script = document.createElement('script');
-        script.src = templateObj.js;
-        script.id = 'template-js-' + templateId;
-        document.head.appendChild(script);
-    }
-
     // Gather links and socialLinks
     // We'll load links after userData is set, so pass empty for now
     bioRoot.innerHTML = templateObj.render({

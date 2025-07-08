@@ -6,100 +6,92 @@
     <style>body{margin:0;}</style>
 </head>
 <body>
-    <div class="landing-bio-bg">
-        <div class="landing-header-actions">
-            <div class="landing-join-link">
-                <a href="index.html" class="landing-join-btn"><i class="fas fa-user-plus"></i>Join BINK</a>
-            </div>
-            <div class="landing-share">
-                <button class="landing-share-btn">
-                    <i class="fas fa-share-alt"></i>
-                </button>
-            </div>
-        </div>
-        <div class="landing-banner">
-            <div class="landing-profile-row landing-profile-row-inline">
-                <div class="landing-profile-pic-username">
-                    <img class="landing-profile-pic" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face" alt="Profile">
-                    <span class="landing-username-inline">lisatravel</span>
-                </div>
-            </div>
-        </div>
-        <div class="landing-main">
-            <div class="landing-section-title">ABOUT LISATRAVEL</div>
-            <div class="landing-bio">Travel blogger & adventure seeker sharing hidden gems and travel tips from around the world</div>
-            <div class="landing-section-title" style="margin-top:32px;">VISIT OUR PAGES</div>
-            <div class="landing-links-list">
-                <div class="landing-link-row">
-                    <a class="landing-link-title" href="#">
-                        <i class="fas fa-globe"></i>
-                        My Website
-                    </a>
-                    <button class="landing-link-share-btn">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                </div>
-                <div class="landing-link-row">
-                    <a class="landing-link-title" href="#">
-                        <i class="fab fa-instagram"></i>
-                        Instagram
-                    </a>
-                    <button class="landing-link-share-btn">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                </div>
-            </div>
+    <div id="landing-profile-container"></div>
 
-            <!-- Media Content Section -->
-            <div class="media-section">
-                <h3 class="media-section-title">
-                    <i class="fas fa-images"></i> Gallery
-                </h3>
-                <div class="media-grid images-grid">
-                    <div class="media-item image-item">
-                        <div class="image-container">
-                            <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=300&h=200&fit=crop" alt="Travel Photo 1" loading="lazy">
-                        </div>
-                        <div class="media-info">
-                            <h4 class="media-title">Bali Adventure</h4>
-                            <p class="media-description">Exploring the beautiful temples and landscapes of Bali</p>
-                        </div>
-                    </div>
-                    <div class="media-item image-item">
-                        <div class="image-container">
-                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop" alt="Travel Photo 2" loading="lazy">
-                        </div>
-                        <div class="media-info">
-                            <h4 class="media-title">Mountain Hiking</h4>
-                            <p class="media-description">Breathtaking views from the mountain peaks</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <script src="landingprofile.js"></script>
+    <script>
+        // Sample data for preview
+        const sampleData = {
+            username: 'lisatravel',
+            displayName: 'lisatravel',
+            bio: 'Travel blogger & adventure seeker sharing hidden gems and travel tips from around the world',
+            profilePicUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face',
+            links: [
+                {
+                    id: 'link1',
+                    title: 'My Website',
+                    url: '#',
+                    platform: 'website'
+                },
+                {
+                    id: 'link2',
+                    title: 'Instagram',
+                    url: '#',
+                    platform: 'instagram'
+                },
+                {
+                    id: 'link3',
+                    title: 'YouTube Channel',
+                    url: '#',
+                    platform: 'youtube'
+                }
+            ],
+            catalog: [
+                {
+                    title: 'Travel Guide Book',
+                    description: 'Complete guide to hidden gems around the world',
+                    price: '$29.99',
+                    imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300&h=200&fit=crop',
+                    buyLink: '#'
+                },
+                {
+                    title: 'Photography Presets',
+                    description: 'Professional travel photography presets',
+                    price: '$19.99',
+                    imageUrl: 'https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81?w=300&h=200&fit=crop',
+                    buyLink: '#'
+                }
+            ],
+            media: {
+                images: [
+                    {
+                        title: 'Sunset in Bali',
+                        description: 'Beautiful sunset captured in Bali',
+                        url: 'https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=400&h=300&fit=crop'
+                    },
+                    {
+                        title: 'Mountain Adventure',
+                        description: 'Hiking in the Swiss Alps',
+                        url: 'https://images.unsplash.com/photo-1464822759844-d150baec0494?w=400&h=300&fit=crop'
+                    }
+                ],
+                youtube: [
+                    {
+                        title: 'Top 10 Hidden Gems in Bali',
+                        description: 'Discover the most beautiful secret spots in Bali that most tourists never see',
+                        url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                        thumbnail: 'https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=400&h=225&fit=crop'
+                    },
+                    {
+                        title: 'Budget Travel Tips for Europe',
+                        description: 'How to travel Europe on $50 a day - complete guide',
+                        url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                        thumbnail: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=225&fit=crop'
+                    }
+                ],
+                music: [
+                    {
+                        title: 'Travel Vibes Playlist',
+                        artist: 'Lisa Travel',
+                        platform: 'spotify',
+                        url: '#'
+                    }
+                ]
+            }
+        };
 
-            <div class="media-section">
-                <h3 class="media-section-title">
-                    <i class="fas fa-music"></i> Music
-                </h3>
-                <div class="media-grid music-grid">
-                    <div class="media-item music-item">
-                        <div class="music-player" onclick="window.open('https://open.spotify.com/track/4iV5W9uYEdYUVa79Axb7Rh', '_blank')">
-                            <div class="music-platform-icon spotify">
-                                <i class="fab fa-spotify"></i>
-                            </div>
-                            <div class="music-info">
-                                <h4 class="music-title">Travel Soundtrack</h4>
-                                <p class="music-artist">by Emma Traveler</p>
-                                <p class="music-platform">Spotify</p>
-                            </div>
-                            <div class="play-button">
-                                <i class="fas fa-play"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        // Render the template
+        document.getElementById('landing-profile-container').innerHTML = window.LandingProfile.render(sampleData);
+    </script>
 </body>
 </html>

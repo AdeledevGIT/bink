@@ -7,115 +7,99 @@
     <style>body{margin:0;}</style>
 </head>
 <body>
-    <div class="blacklanding-bio-bg">
-        <div class="blacklanding-header-actions">
-            <div class="blacklanding-join-link">
-                <a href="index.html" class="blacklanding-join-btn"><i class="fas fa-user-plus"></i>Join BINK</a>
-            </div>
-            <div class="blacklanding-share">
-                <button class="blacklanding-share-btn">
-                    <i class="fas fa-share-alt"></i>
-                </button>
-            </div>
-        </div>
-        <div class="blacklanding-banner">
-            <div class="blacklanding-profile-row-inline">
-                <div class="blacklanding-profile-pic-username">
-                    <img class="blacklanding-profile-pic" src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face" alt="Profile">
-                    <div class="blacklanding-username-inline">jakefitness</div>
-                </div>
-            </div>
-        </div>
-        <div class="blacklanding-main">
-            <div class="blacklanding-about-section">
-                <div class="blacklanding-section-title">ABOUT JAKEFITNESS</div>
-                <div class="blacklanding-bio">Personal trainer & fitness coach helping people achieve their health goals through sustainable lifestyle changes</div>
-            </div>
-            <div class="blacklanding-section-title" style="margin-top:32px;">VISIT OUR PAGES</div>
-            <div class="blacklanding-links-list">
-                <div class="blacklanding-link-row">
-                    <a class="blacklanding-link-title" href="https://jakefitness.com" target="_blank">
-                        <i class="fas fa-globe"></i>
-                        Website
-                    </a>
-                    <button class="blacklanding-link-share-btn">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                </div>
-                <div class="blacklanding-link-row">
-                    <a class="blacklanding-link-title" href="https://instagram.com/jakefitness" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                        Instagram
-                    </a>
-                    <button class="blacklanding-link-share-btn">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                </div>
-                <div class="blacklanding-link-row">
-                    <a class="blacklanding-link-title" href="https://youtube.com/jakefitness" target="_blank">
-                        <i class="fab fa-youtube"></i>
-                        YouTube Channel
-                    </a>
-                    <button class="blacklanding-link-share-btn">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                </div>
-            </div>
+    <div id="blacklanding-container"></div>
 
-            <!-- Media Content Section -->
-            <div class="media-section">
-                <h3 class="media-section-title">
-                    <i class="fas fa-images"></i> Gallery
-                </h3>
-                <div class="media-grid images-grid">
-                    <div class="media-item image-item">
-                        <div class="image-container">
-                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop" alt="Fitness Work 1" loading="lazy">
-                        </div>
-                        <div class="media-info">
-                            <h4 class="media-title">Workout Sessions</h4>
-                            <p class="media-description">High-intensity training and fitness programs</p>
-                        </div>
-                    </div>
-                    <div class="media-item image-item">
-                        <div class="image-container">
-                            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=300&h=200&fit=crop" alt="Fitness Work 2" loading="lazy">
-                        </div>
-                        <div class="media-info">
-                            <h4 class="media-title">Nutrition Guide</h4>
-                            <p class="media-description">Healthy meal plans and nutrition advice</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <script src="blacklanding.js"></script>
+    <script>
+        // Sample data for preview
+        const sampleData = {
+            username: 'alexmusic',
+            displayName: 'alexmusic',
+            bio: 'Electronic music producer and DJ creating beats that move souls and bodies on the dance floor',
+            profilePicUrl: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face',
+            links: [
+                {
+                    id: 'link1',
+                    title: 'Spotify',
+                    url: '#',
+                    platform: 'spotify'
+                },
+                {
+                    id: 'link2',
+                    title: 'SoundCloud',
+                    url: '#',
+                    platform: 'soundcloud'
+                },
+                {
+                    id: 'link3',
+                    title: 'YouTube Music',
+                    url: '#',
+                    platform: 'youtube-music'
+                }
+            ],
+            catalog: [
+                {
+                    title: 'Electronic Beats Vol. 1',
+                    description: 'High-energy electronic music pack for DJs',
+                    price: '$24.99',
+                    imageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=200&fit=crop',
+                    buyLink: '#'
+                },
+                {
+                    title: 'Mixing Masterclass',
+                    description: 'Learn professional DJ mixing techniques',
+                    price: '$49.99',
+                    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop',
+                    buyLink: '#'
+                }
+            ],
+            media: {
+                youtube: [
+                    {
+                        title: 'Live DJ Set - Summer Vibes',
+                        description: 'One hour of non-stop electronic beats perfect for summer parties',
+                        url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                        thumbnail: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=225&fit=crop'
+                    },
+                    {
+                        title: 'Behind the Beats - Studio Session',
+                        description: 'Watch me create a new track from scratch in my home studio',
+                        url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                        thumbnail: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=225&fit=crop'
+                    }
+                ],
+                images: [
+                    {
+                        title: 'Studio Setup',
+                        description: 'My home studio where the magic happens',
+                        url: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400&h=300&fit=crop'
+                    },
+                    {
+                        title: 'Live Performance',
+                        description: 'Performing at the underground club',
+                        url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop'
+                    }
+                ],
+                music: [
+                    {
+                        title: 'Midnight Groove',
+                        artist: 'Alex Music',
+                        platform: 'spotify',
+                        url: '#'
+                    },
+                    {
+                        title: 'Electric Dreams',
+                        artist: 'Alex Music',
+                        platform: 'soundcloud',
+                        url: '#'
+                    }
+                ]
+            }
+        };
 
-            <div class="media-section">
-                <h3 class="media-section-title">
-                    <i class="fas fa-music"></i> Music
-                </h3>
-                <div class="media-grid music-grid">
-                    <div class="media-item music-item">
-                        <div class="music-player" onclick="window.open('https://open.spotify.com/track/4iV5W9uYEdYUVa79Axb7Rh', '_blank')">
-                            <div class="music-platform-icon spotify">
-                                <i class="fab fa-spotify"></i>
-                            </div>
-                            <div class="music-info">
-                                <h4 class="music-title">Workout Playlist</h4>
-                                <p class="music-artist">by Jake Fitness</p>
-                                <p class="music-platform">Spotify</p>
-                            </div>
-                            <div class="play-button">
-                                <i class="fas fa-play"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        // Render the template
+        document.getElementById('blacklanding-container').innerHTML = window.BlackLanding.render(sampleData);
+    </script>
 
-            <div class="blacklanding-footer">
-                Powered by <a href="index.html" target="_blank">BINK</a>
-            </div>
-        </div>
-    </div>
 </body>
 </html>
