@@ -1079,64 +1079,33 @@ window.BINK.templates.templates['blacklanding'] = {
     }
 };
 
-// Gradient Flow Template (Premium)
+// Gradient Flow Template (Premium) - Standalone
 window.BINK.templates.templates['gradientflow'] = {
     id: 'gradientflow',
     name: 'Gradient Flow',
     description: 'A modern template with flowing gradient backgrounds.',
     css: 'templates/gradientflow.css',
+    js: 'templates/gradientflow.js',
     isPremium: true,
     tokenPrice: 120,
     category: 'creator',
     render: function(data) {
-        return `
-        <div class="gradientflow-bio-bg">
-            <div class="gradientflow-container">
-                <div class="gradientflow-card">
-                    <div class="gradientflow-header-actions">
-                        <div class="gradientflow-join-link">
-                            <a href="index.html" class="gradientflow-join-btn"><i class="fas fa-user-plus"></i>Join BINK</a>
-                        </div>
-                        <div class="gradientflow-share">
-                            <button class="gradientflow-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="gradientflow-profile">
-                        <div class="gradientflow-avatar-container">
-                            <img class="gradientflow-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
-                        </div>
-                        <div class="gradientflow-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
-                        <div class="gradientflow-bio">${data.bio || ''}</div>
-                    </div>
-                    <div class="gradientflow-links">
-                        ${(data.links || []).map(link => `
-                            <div class="gradientflow-link-container">
-                                <a class="gradientflow-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
-                                    <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
-                                    ${link.title}
-                                </a>
-                                <button class="gradientflow-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
-                                    <i class="fas fa-share-alt"></i>
-                                </button>
-                            </div>
-                        `).join('')}
-                    </div>
-                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
-                    ${window.BINK.templates.renderMediaContent(data.media || {})}
-                    <div class="gradientflow-socials">
-                        ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
-                            <a href="${url}" target="_blank"><i class="${window.BINK.templates.getPlatformIcon(platform)}"></i></a>
-                        `).join('')}
-                    </div>
-                    <div class="gradientflow-footer">
-                        Powered by <a href="index.html" target="_blank">BINK</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        `;
+        // Load the standalone JavaScript if not already loaded
+        if (typeof window.GradientFlow === 'undefined') {
+            const script = document.createElement('script');
+            script.src = 'templates/gradientflow.js';
+            document.head.appendChild(script);
+
+            // Wait for script to load then render
+            return new Promise((resolve) => {
+                script.onload = () => {
+                    resolve(window.GradientFlow.render(data));
+                };
+            });
+        }
+
+        // Use standalone render function
+        return window.GradientFlow.render(data);
     }
 };
 
@@ -1146,58 +1115,27 @@ window.BINK.templates.templates['darkelegance'] = {
     name: 'Dark Elegance',
     description: 'A sophisticated dark template with gold accents.',
     css: 'templates/darkelegance.css',
+    js: 'templates/darkelegance.js',
     isPremium: true,
     tokenPrice: 180,
     category: 'business',
     render: function(data) {
-        return `
-        <div class="darkelegance-bio-bg">
-            <div class="darkelegance-container">
-                <div class="darkelegance-card">
-                    <div class="darkelegance-header-actions">
-                        <div class="darkelegance-join-link">
-                            <a href="index.html" class="darkelegance-join-btn"><i class="fas fa-user-plus"></i>Join BINK</a>
-                        </div>
-                        <div class="darkelegance-share">
-                            <button class="darkelegance-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="darkelegance-profile">
-                        <div class="darkelegance-avatar-container">
-                            <img class="darkelegance-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
-                        </div>
-                        <div class="darkelegance-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
-                        <div class="darkelegance-bio">${data.bio || ''}</div>
-                    </div>
-                    <div class="darkelegance-links">
-                        ${(data.links || []).map(link => `
-                            <div class="darkelegance-link-container">
-                                <a class="darkelegance-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
-                                    <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
-                                    ${link.title}
-                                </a>
-                                <button class="darkelegance-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
-                                    <i class="fas fa-share-alt"></i>
-                                </button>
-                            </div>
-                        `).join('')}
-                    </div>
-                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
-                    ${window.BINK.templates.renderMediaContent(data.media || {})}
-                    <div class="darkelegance-socials">
-                        ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
-                            <a href="${url}" target="_blank"><i class="${window.BINK.templates.getPlatformIcon(platform)}"></i></a>
-                        `).join('')}
-                    </div>
-                    <div class="darkelegance-footer">
-                        Powered by <a href="index.html" target="_blank">BINK</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        `;
+        // Load the standalone JavaScript if not already loaded
+        if (!window.DarkElegance) {
+            const script = document.createElement('script');
+            script.src = 'templates/darkelegance.js';
+            script.onload = function() {
+                // Re-render after script loads
+                const bioRoot = document.getElementById('bio-root');
+                if (bioRoot) {
+                    bioRoot.innerHTML = window.DarkElegance.render(data);
+                }
+            };
+            document.head.appendChild(script);
+            return '<div>Loading...</div>';
+        }
+
+        return window.DarkElegance.render(data);
     }
 };
 
@@ -1270,58 +1208,27 @@ window.BINK.templates.templates['minimalzen'] = {
     name: 'Minimal Zen',
     description: 'A clean, minimalist template with subtle animations.',
     css: 'templates/minimalzen.css',
+    js: 'templates/minimalzen.js',
     isPremium: true,
     tokenPrice: 150,
     category: 'business',
     render: function(data) {
-        return `
-        <div class="minimalzen-bio-bg">
-            <div class="minimalzen-container">
-                <div class="minimalzen-card">
-                    <div class="minimalzen-header-actions">
-                        <div class="minimalzen-join-link">
-                            <a href="index.html" class="minimalzen-join-btn"><i class="fas fa-user-plus"></i>Join BINK</a>
-                        </div>
-                        <div class="minimalzen-share">
-                            <button class="minimalzen-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="minimalzen-profile">
-                        <div class="minimalzen-avatar-container">
-                            <img class="minimalzen-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
-                        </div>
-                        <div class="minimalzen-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
-                        <div class="minimalzen-bio">${data.bio || ''}</div>
-                    </div>
-                    <div class="minimalzen-links">
-                        ${(data.links || []).map(link => `
-                            <div class="minimalzen-link-container">
-                                <a class="minimalzen-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
-                                    <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
-                                    ${link.title}
-                                </a>
-                                <button class="minimalzen-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
-                                    <i class="fas fa-share-alt"></i>
-                                </button>
-                            </div>
-                        `).join('')}
-                    </div>
-                    ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
-                    ${window.BINK.templates.renderMediaContent(data.media || {})}
-                    <div class="minimalzen-socials">
-                        ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
-                            <a href="${url}" target="_blank"><i class="${window.BINK.templates.getPlatformIcon(platform)}"></i></a>
-                        `).join('')}
-                    </div>
-                    <div class="minimalzen-footer">
-                        Powered by <a href="index.html" target="_blank">BINK</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        `;
+        // Load the standalone JavaScript if not already loaded
+        if (!window.MinimalZen) {
+            const script = document.createElement('script');
+            script.src = 'templates/minimalzen.js';
+            script.onload = function() {
+                // Re-render after script loads
+                const bioRoot = document.getElementById('bio-root');
+                if (bioRoot) {
+                    bioRoot.innerHTML = window.MinimalZen.render(data);
+                }
+            };
+            document.head.appendChild(script);
+            return '<div>Loading...</div>';
+        }
+
+        return window.MinimalZen.render(data);
     }
 };
 

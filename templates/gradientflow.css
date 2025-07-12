@@ -1,15 +1,34 @@
-/* Gradient Flow Template - Premium */
+/* Gradient Flow Template - Standalone Premium Template */
+/* Complete standalone implementation with no shared dependencies */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
 .gradientflow-bio-bg {
     min-height: 100vh;
+    width: 100vw;
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
-    animation: gradient-bg 15s ease infinite;
+    animation: gradientflow-gradient-bg 15s ease infinite;
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
 
-@keyframes gradient-bg {
+@keyframes gradientflow-gradient-bg {
     0% {
         background-position: 0% 50%;
     }
@@ -40,6 +59,7 @@
     align-items: center;
     position: relative;
     z-index: 1;
+    width: 100%;
 }
 
 .gradientflow-card {
@@ -53,10 +73,10 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     position: relative;
     overflow: hidden;
-    animation: card-float 6s ease-in-out infinite;
+    animation: gradientflow-card-float 6s ease-in-out infinite;
 }
 
-@keyframes card-float {
+@keyframes gradientflow-card-float {
     0%, 100% {
         transform: translateY(0);
     }
@@ -65,11 +85,74 @@
     }
 }
 
+/* Header Actions */
+.gradientflow-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 10;
+}
+
+.gradientflow-join-link {
+    flex: 1;
+}
+
+.gradientflow-join-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gradientflow-join-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.gradientflow-share {
+    display: flex;
+    align-items: center;
+}
+
+.gradientflow-share-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    font-size: 1rem;
+}
+
+.gradientflow-share-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile Section */
 .gradientflow-profile {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 30px;
+    text-align: center;
 }
 
 .gradientflow-avatar-container {
@@ -100,29 +183,11 @@
     border-radius: 50%;
     background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
-    animation: gradient-bg 15s ease infinite, rotate-border 8s linear infinite;
+    animation: gradientflow-gradient-bg 15s ease infinite, gradientflow-rotate-border 8s linear infinite;
     z-index: -1;
 }
 
-.gradientflow-avatar-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(5px);
-    z-index: -1;
-    margin: 3px;
-}
-
-.gradientflow-avatar:hover {
-    transform: scale(1.05);
-}
-
-@keyframes rotate-border {
+@keyframes gradientflow-rotate-border {
     0% {
         transform: rotate(0deg);
     }
@@ -131,18 +196,17 @@
     }
 }
 
+.gradientflow-avatar:hover {
+    transform: scale(1.05);
+}
+
 .gradientflow-username {
-    font-size: 2rem;
-    font-weight: 700;
     color: #fff;
-    margin-bottom: 10px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 12px;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 300% 300%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient-bg 15s ease infinite;
+    letter-spacing: -0.5px;
 }
 
 .gradientflow-bio {
@@ -152,8 +216,10 @@
     margin-bottom: 10px;
     line-height: 1.6;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
 }
 
+/* Links Section */
 .gradientflow-links {
     display: flex;
     flex-direction: column;
@@ -167,8 +233,19 @@
     align-items: center;
     width: 100%;
     gap: 10px;
-    animation: fade-in 0.5s ease forwards;
+    animation: gradientflow-fade-in 0.5s ease forwards;
     opacity: 0;
+}
+
+@keyframes gradientflow-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .gradientflow-link {
@@ -190,31 +267,7 @@
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     flex: 1;
-}
-
-.gradientflow-link-share-btn {
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    flex-shrink: 0;
-}
-
-.gradientflow-link-share-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-3px) scale(1.1);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    text-align: left;
 }
 
 .gradientflow-link::before {
@@ -245,254 +298,135 @@
 .gradientflow-link i {
     font-size: 1.3rem;
     transition: transform 0.3s ease;
+    min-width: 20px;
 }
 
 .gradientflow-link:hover i {
     transform: rotate(10deg) scale(1.2);
 }
 
-.gradientflow-links .gradientflow-link-container:nth-child(1) { animation-delay: 0.1s; }
-.gradientflow-links .gradientflow-link-container:nth-child(2) { animation-delay: 0.2s; }
-.gradientflow-links .gradientflow-link-container:nth-child(3) { animation-delay: 0.3s; }
-.gradientflow-links .gradientflow-link-container:nth-child(4) { animation-delay: 0.4s; }
-.gradientflow-links .gradientflow-link-container:nth-child(5) { animation-delay: 0.5s; }
-
-@keyframes fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.gradientflow-socials {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.gradientflow-socials a {
-    color: #fff;
-    font-size: 1.4rem;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
-    animation: float-icon 3s ease-in-out infinite;
-}
-
-.gradientflow-socials a:nth-child(2) {
-    animation-delay: 0.5s;
-}
-
-.gradientflow-socials a:nth-child(3) {
-    animation-delay: 1s;
-}
-
-.gradientflow-socials a:nth-child(4) {
-    animation-delay: 1.5s;
-}
-
-.gradientflow-socials a::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradient-bg 15s ease infinite;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: -1;
-}
-
-.gradientflow-socials a:hover {
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.gradientflow-socials a:hover::before {
-    opacity: 1;
-}
-
-@keyframes float-icon {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-5px);
-    }
-}
-
-.gradientflow-footer {
-    margin-top: 30px;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.9rem;
-}
-
-.gradientflow-footer a {
-    color: #fff;
-    font-weight: 700;
-    text-decoration: none;
-    position: relative;
-}
-
-.gradientflow-footer a::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: #fff;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s ease;
-}
-
-.gradientflow-footer a:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
-}
-
-.gradientflow-header-actions {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 10;
-}
-
-.gradientflow-join-link {
-    position: relative;
-    z-index: 10;
-}
-
-.gradientflow-join-btn {
+.gradientflow-link-share-btn {
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
-    border-radius: 30px;
-    padding: 8px 15px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.gradientflow-join-btn i {
-    margin-right: 8px;
-}
-
-.gradientflow-join-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-}
-
-.gradientflow-share {
-    position: relative;
-    z-index: 10;
-}
-
-.gradientflow-share-btn {
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 16px 12px;
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1rem;
+    flex-shrink: 0;
 }
 
-.gradientflow-share-btn:hover {
+.gradientflow-link-share-btn:hover {
     background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-3px) scale(1.1);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Gradient Flow Media Styles */
-.gradientflow-container .media-section {
+/* Social Links */
+.gradientflow-socials {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
     margin: 25px 0;
-    padding: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 16px;
+    flex-wrap: wrap;
+}
+
+.gradientflow-social-icon {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.gradientflow-container .media-section:first-child {
-    border-top: none;
-    margin-top: 0;
-}
-
-.gradientflow-container .media-section-title {
     color: #fff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 15px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    text-align: center;
     justify-content: center;
-    font-family: 'Poppins', Arial, sans-serif;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
-.gradientflow-container .media-section-title i {
+.gradientflow-social-icon:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+.gradientflow-footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+.gradientflow-footer a {
     color: rgba(255, 255, 255, 0.9);
-    font-size: 1rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
 }
 
-.gradientflow-container .media-grid {
-    display: grid;
+.gradientflow-footer a:hover {
+    color: #fff;
+}
+
+/* Catalog Section */
+.gradientflow-catalog-section {
+    width: 100%;
+    margin: 30px 0;
+    padding: 0;
+}
+
+.gradientflow-catalog-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+    text-align: center;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.gradientflow-catalog-title i {
+    margin-right: 8px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.gradientflow-catalog-grid {
+    display: flex;
     gap: 15px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 0;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }
 
-.gradientflow-container .videos-grid {
-    grid-template-columns: 1fr;
+.gradientflow-catalog-grid::-webkit-scrollbar {
+    height: 6px;
 }
 
-.gradientflow-container .images-grid {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+.gradientflow-catalog-grid::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-.gradientflow-container .music-grid {
-    grid-template-columns: 1fr;
+.gradientflow-catalog-grid::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
 }
 
-.gradientflow-container .media-item {
+.gradientflow-catalog-item {
+    flex: 0 0 200px;
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -503,185 +437,606 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.gradientflow-container .media-item:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
+.gradientflow-catalog-item:hover {
+    transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
-/* Video Items */
-.gradientflow-container .video-item {
-    padding: 15px;
-}
-
-.gradientflow-container .video-thumbnail {
-    width: 100%;
-    height: 180px;
-    border-radius: 8px;
-    overflow: hidden;
+.gradientflow-catalog-image-container {
     position: relative;
-    margin-bottom: 12px;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
 }
 
-.gradientflow-container .video-thumbnail img {
+.gradientflow-catalog-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.gradientflow-container .video-play-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-}
-
-.gradientflow-container .video-play-overlay:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%) scale(1.1);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Image Items */
-.gradientflow-container .image-item {
-    /* Removed aspect-ratio to allow space for titles/descriptions */
-}
-
-.gradientflow-container .image-container {
-    width: 100%;
-    height: 200px;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 15px;
-    border-radius: 12px;
-}
-
-.gradientflow-container .image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    cursor: pointer;
     transition: transform 0.3s ease;
 }
 
-.gradientflow-container .image-container:hover img {
+.gradientflow-catalog-item:hover .gradientflow-catalog-image {
     transform: scale(1.05);
 }
 
-/* Music Items */
-.gradientflow-container .media-container .music-item,
-.gradientflow-container .music-item {
+.gradientflow-catalog-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.gradientflow-catalog-info {
     padding: 15px;
 }
 
-.gradientflow-container .media-container .music-player,
-.gradientflow-container .music-player {
-    display: flex;
+.gradientflow-catalog-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.gradientflow-catalog-description {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 12px 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.gradientflow-catalog-buy-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
     align-items: center;
-    gap: 15px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    cursor: pointer;
+    gap: 6px;
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gradientflow-catalog-buy-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Media Sections */
+.gradientflow-media-section {
+    width: 100%;
+    margin: 30px 0;
+    padding: 0;
+}
+
+.gradientflow-media-section-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+    text-align: center;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.gradientflow-media-section-title i {
+    margin-right: 8px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.gradientflow-media-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.gradientflow-youtube-grid {
+    grid-template-columns: 1fr;
+}
+
+.gradientflow-images-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.gradientflow-music-grid {
+    grid-template-columns: 1fr;
+}
+
+/* YouTube Styles */
+.gradientflow-youtube-item {
+    background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    margin-bottom: 15px;
 }
 
-.gradientflow-container .media-container .music-player:hover,
-.gradientflow-container .music-player:hover {
-    background: rgba(255, 255, 255, 0.2);
+.gradientflow-youtube-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
 }
 
-.gradientflow-container .music-platform-icon {
+.gradientflow-youtube-thumbnail-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    overflow: hidden;
+}
+
+.gradientflow-youtube-thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gradientflow-youtube-item:hover .gradientflow-youtube-thumbnail {
+    transform: scale(1.05);
+}
+
+.gradientflow-youtube-play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gradientflow-youtube-play-overlay i {
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.gradientflow-youtube-item:hover .gradientflow-youtube-play-overlay {
+    opacity: 1;
+}
+
+.gradientflow-youtube-content-container {
+    padding: 15px;
+}
+
+.gradientflow-youtube-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.gradientflow-youtube-description {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Image Styles */
+.gradientflow-image-item {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gradientflow-image-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.gradientflow-image-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 75%; /* 4:3 aspect ratio */
+    overflow: hidden;
+}
+
+.gradientflow-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.gradientflow-image-item:hover .gradientflow-image-container img {
+    transform: scale(1.05);
+}
+
+.gradientflow-media-info {
+    padding: 15px;
+}
+
+.gradientflow-media-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.gradientflow-media-description {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Music Styles - With Container */
+.gradientflow-music-item {
+    flex: 1 1 100%;
+    min-height: 100px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gradientflow-music-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.gradientflow-music-player {
+    display: flex;
+    align-items: center;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.gradientflow-music-player:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.gradientflow-music-platform-icon {
     width: 45px;
     height: 45px;
-    border-radius: 12px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
+    margin-right: 16px;
+    background: linear-gradient(135deg, #ee7752, #e73c7e);
     color: white;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 1.3rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    flex-shrink: 0;
 }
 
-.gradientflow-container .music-info {
+.gradientflow-music-platform-icon.spotify {
+    background: linear-gradient(135deg, #1DB954, #1AA34A);
+}
+
+.gradientflow-music-platform-icon.apple-music {
+    background: linear-gradient(135deg, #FA57C1, #B166CC);
+}
+
+.gradientflow-music-platform-icon.youtube-music {
+    background: linear-gradient(135deg, #FF0000, #CC0000);
+}
+
+.gradientflow-music-platform-icon.soundcloud {
+    background: linear-gradient(135deg, #FF7700, #FF3300);
+}
+
+.gradientflow-music-info {
     flex: 1;
+    margin-right: 16px;
+    min-width: 0;
+    overflow: hidden;
 }
 
-.gradientflow-container .music-title {
-    color: #fff;
-    font-size: 0.95rem;
+.gradientflow-music-title {
+    font-size: 1.05rem;
     font-weight: 600;
-    margin: 0 0 4px 0;
-    font-family: 'Poppins', Arial, sans-serif;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.gradientflow-container .music-artist {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.85rem;
-    margin: 0;
-    font-family: 'Poppins', Arial, sans-serif;
-}
-
-.gradientflow-container .play-button {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
     color: #fff;
+    margin: 0 0 6px 0;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.gradientflow-music-artist {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 4px 0;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.gradientflow-music-platform {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.gradientflow-play-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ee7752, #e73c7e);
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+}
+
+.gradientflow-music-player:hover .gradientflow-play-button {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .gradientflow-card {
+        padding: 30px 20px;
+    }
+
+    .gradientflow-avatar {
+        width: 90px;
+        height: 90px;
+    }
+
+    .gradientflow-username {
+        font-size: 1.5rem;
+    }
+
+    .gradientflow-bio {
+        font-size: 1rem;
+    }
+
+    .gradientflow-link {
+        font-size: 1rem;
+        padding: 14px 16px;
+    }
+
+    .gradientflow-music-player {
+        padding: 15px 16px;
+    }
+
+    .gradientflow-music-platform-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+        margin-right: 12px;
+    }
+
+    .gradientflow-music-title {
+        font-size: 1rem;
+    }
+
+    .gradientflow-music-artist {
+        font-size: 0.85rem;
+    }
+
+    .gradientflow-play-button {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+}
+
+/* Music Player Modal Styles */
+.gradientflow-music-player-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    backdrop-filter: blur(5px);
+}
+
+.gradientflow-music-player-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.gradientflow-music-player-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.gradientflow-music-player-header h3 {
+    margin: 0;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+.gradientflow-close-music-player {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gradientflow-close-music-player:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.gradientflow-music-player-body {
+    padding: 20px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.gradientflow-music-loading {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.gradientflow-music-loading i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #667eea;
+}
+
+.gradientflow-music-loading p {
+    margin: 0;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+.gradientflow-music-player-footer {
+    padding: 15px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.gradientflow-open-external-btn {
+    background: rgba(255, 255, 255, 0.9);
+    color: #667eea;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.gradientflow-container .play-button:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+.gradientflow-open-external-btn:hover {
+    background: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
-/* Media Info */
-.gradientflow-container .media-info {
-    padding: 12px 15px;
-}
+/* Mobile responsive for music player modal */
+@media (max-width: 480px) {
+    .gradientflow-music-player-content {
+        width: 95%;
+        margin: 20px;
+    }
 
-.gradientflow-container .media-title {
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0 0 8px 0;
-    font-family: 'Poppins', Arial, sans-serif;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
+    .gradientflow-music-player-header {
+        padding: 15px;
+    }
 
-.gradientflow-container .media-description {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 0.9rem;
-    line-height: 1.4;
-    margin: 0;
-    font-family: 'Poppins', Arial, sans-serif;
+    .gradientflow-music-player-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .gradientflow-music-player-body {
+        padding: 15px;
+    }
+
+    .gradientflow-music-player-footer {
+        padding: 12px 15px;
+    }
 }

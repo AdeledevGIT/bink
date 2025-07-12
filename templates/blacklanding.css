@@ -352,6 +352,40 @@
     background: #fff;
     color: #18181b;
 }
+
+/* Social Links */
+.blacklanding-socials {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.blacklanding-social-icon {
+    width: 44px;
+    height: 44px;
+    background: #27272a;
+    border: 1px solid #3f3f46;
+    color: #a78bfa;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.blacklanding-social-icon:hover {
+    background: #a78bfa;
+    border-color: #a78bfa;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(167, 139, 250, 0.3);
+}
+
 .blacklanding-footer {
     margin-top: 32px;
     text-align: center;
@@ -721,6 +755,8 @@
 .blacklanding-music-item {
     flex: 1 1 100%;
     min-height: 100px;
+    max-width: 100%;
+    width: 100%;
     background: #27272a;
     border: 1px solid #3f3f46;
     border-radius: 12px;
@@ -728,6 +764,7 @@
     transition: all 0.3s ease;
     margin-bottom: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 .blacklanding-music-item:hover {
@@ -744,6 +781,8 @@
     transition: background-color 0.3s ease;
     height: 100%;
     width: 100%;
+    box-sizing: border-box;
+    position: relative;
 }
 
 .blacklanding-music-player:hover {
@@ -757,18 +796,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 16px;
     background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
     color: white;
     font-size: 1.3rem;
     box-shadow: 0 2px 8px rgba(167, 139, 250, 0.25);
     flex-shrink: 0;
+    margin-right: 16px;
 }
 
 .blacklanding-music-info {
     flex: 1;
-    margin-right: 16px;
     min-width: 0;
+    overflow: hidden;
+    margin-right: 16px;
+    max-width: calc(100% - 45px - 36px - 48px);
 }
 
 .blacklanding-music-title {
@@ -816,6 +857,8 @@
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(167, 139, 250, 0.3);
     flex-shrink: 0;
+    position: relative;
+    z-index: 1;
 }
 
 .blacklanding-music-player:hover .blacklanding-play-button {
@@ -846,5 +889,186 @@
     .blacklanding-username-inline {
         font-size: 1.05rem;
         padding: 6px 10px;
+    }
+
+    /* Mobile music adjustments */
+    .blacklanding-music-player {
+        padding: 15px 16px;
+    }
+
+    .blacklanding-music-platform-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+        margin-right: 12px;
+    }
+
+    .blacklanding-music-info {
+        margin-right: 12px;
+        max-width: calc(100% - 40px - 32px - 40px);
+    }
+
+    .blacklanding-music-title {
+        font-size: 1rem;
+    }
+
+    .blacklanding-music-artist {
+        font-size: 0.85rem;
+    }
+
+    .blacklanding-play-button {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+}
+
+/* Music Player Modal Styles */
+.blacklanding-music-player-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    backdrop-filter: blur(5px);
+}
+
+.blacklanding-music-player-content {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.blacklanding-music-player-header {
+    padding: 20px;
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #222;
+}
+
+.blacklanding-music-player-header h3 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+.blacklanding-close-music-player {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #444;
+    font-size: 1.2rem;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blacklanding-close-music-player:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #666;
+}
+
+.blacklanding-music-player-body {
+    padding: 20px;
+    position: relative;
+    background: #1a1a1a;
+}
+
+.blacklanding-music-loading {
+    text-align: center;
+    padding: 40px 20px;
+    color: #ccc;
+}
+
+.blacklanding-music-loading i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.blacklanding-music-loading p {
+    margin: 0;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+.blacklanding-music-player-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #333;
+    background: #222;
+    text-align: center;
+}
+
+.blacklanding-open-external-btn {
+    background: #fff;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.blacklanding-open-external-btn:hover {
+    background: #f0f0f0;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+/* Mobile responsive for music player modal */
+@media (max-width: 480px) {
+    .blacklanding-music-player-content {
+        width: 95%;
+        margin: 20px;
+    }
+
+    .blacklanding-music-player-header {
+        padding: 15px;
+    }
+
+    .blacklanding-music-player-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .blacklanding-music-player-body {
+        padding: 15px;
+    }
+
+    .blacklanding-music-player-footer {
+        padding: 12px 15px;
     }
 }

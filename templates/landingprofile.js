@@ -163,10 +163,19 @@ window.LandingProfile.openImageModal = function(imageUrl, title) {
     window.open(imageUrl, '_blank');
 };
 
-// Play music preview (placeholder function)
-window.LandingProfile.playMusicPreview = function(platform, url, title) {
-    // Simple implementation - open music link
-    window.open(url, '_blank');
+// Play music preview with embedded player
+window.LandingProfile.playMusicPreview = function(platform, url, title, event) {
+    // Always use the global playMusicPreview function if available (bio.html)
+    if (window.playMusicPreview) {
+        // Set the event.currentTarget for the global function to work properly
+        if (event && event.currentTarget) {
+            window.event = event;
+        }
+        window.playMusicPreview(platform, url, title);
+    } else {
+        // Fallback: create our own embedded player (for preview pages)
+        window.LandingProfile.createEmbeddedMusicPlayer(platform, url, title, event.currentTarget);
+    }
 };
 
 // Play YouTube video
@@ -182,6 +191,184 @@ window.LandingProfile.getYouTubeThumbnail = function(url) {
         return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
     }
     return 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=225&fit=crop'; // Fallback image
+};
+
+// Create embedded music player for Landing Profile template
+window.LandingProfile.createEmbeddedMusicPlayer = function(platform, url, title, clickedElement) {
+    // Close any existing music player
+    window.LandingProfile.closeExistingMusicPlayer();
+
+    // Show loading state
+    const playButton = clickedElement.querySelector('.play-button i');
+    if (playButton) {
+        playButton.className = 'fas fa-spinner fa-spin';
+    }
+
+    // Get embed URL based on platform
+    const embedUrl = window.LandingProfile.getEmbedUrl(platform, url);
+
+    if (!embedUrl) {
+        // If no embed URL available, fall back to opening external link
+        setTimeout(() => {
+            window.open(url, '_blank');
+            if (playButton) {
+                playButton.className = 'fas fa-external-link-alt';
+            }
+        }, 500);
+        return;
+    }
+
+    // Create music player modal
+    const playerModal = document.createElement('div');
+    playerModal.className = 'landing-music-player-modal';
+    playerModal.innerHTML = `
+        <div class="landing-music-player-content">
+            <div class="landing-music-player-header">
+                <h3>${title}</h3>
+                <button class="landing-close-music-player" onclick="window.LandingProfile.closeMusicPlayer()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="landing-music-player-body">
+                <div class="landing-music-loading" id="landing-music-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading music player...</p>
+                </div>
+                <iframe
+                    src="${embedUrl}"
+                    width="100%"
+                    height="152"
+                    frameborder="0"
+                    allowtransparency="true"
+                    allow="encrypted-media"
+                    onload="window.LandingProfile.hideMusicLoading()"
+                    onerror="window.LandingProfile.showMusicError()">
+                </iframe>
+            </div>
+            <div class="landing-music-player-footer">
+                <button class="landing-open-external-btn" onclick="window.open('${url}', '_blank')">
+                    <i class="fas fa-external-link-alt"></i>
+                    Open in ${window.LandingProfile.getPlatformDisplayName(platform)}
+                </button>
+            </div>
+        </div>
+    `;
+
+    // Add to page
+    document.body.appendChild(playerModal);
+
+    // Reset play button icon
+    setTimeout(() => {
+        if (playButton) {
+            playButton.className = 'fas fa-pause';
+        }
+    }, 500);
+
+    // Add click outside to close
+    playerModal.addEventListener('click', (e) => {
+        if (e.target === playerModal) {
+            window.LandingProfile.closeMusicPlayer();
+        }
+    });
+};
+
+// Get embed URL for different platforms
+window.LandingProfile.getEmbedUrl = function(platform, url) {
+    switch (platform) {
+        case 'spotify':
+            if (url.includes('spotify.com/track/')) {
+                const trackId = url.split('/track/')[1].split('?')[0];
+                return `https://open.spotify.com/embed/track/${trackId}`;
+            } else if (url.includes('spotify.com/album/')) {
+                const albumId = url.split('/album/')[1].split('?')[0];
+                return `https://open.spotify.com/embed/album/${albumId}`;
+            } else if (url.includes('spotify.com/playlist/')) {
+                const playlistId = url.split('/playlist/')[1].split('?')[0];
+                return `https://open.spotify.com/embed/playlist/${playlistId}`;
+            }
+            break;
+
+        case 'soundcloud':
+            return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true`;
+
+        case 'youtube-music':
+        case 'youtube':
+            const videoId = window.LandingProfile.getYouTubeVideoId(url);
+            if (videoId) {
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+            break;
+
+        case 'bandcamp':
+            if (url.includes('/track/')) {
+                return `${url.replace('/track/', '/EmbeddedPlayer/track=')}`;
+            } else if (url.includes('/album/')) {
+                return `${url.replace('/album/', '/EmbeddedPlayer/album=')}`;
+            }
+            break;
+
+        case 'apple-music':
+            if (url.includes('music.apple.com')) {
+                return url.replace('music.apple.com', 'embed.music.apple.com');
+            }
+            break;
+
+        case 'audiomack':
+            if (url.includes('audiomack.com/song/')) {
+                return url.replace('audiomack.com/song/', 'audiomack.com/embed/song/');
+            }
+            break;
+
+        case 'tidal':
+            if (url.includes('tidal.com/track/')) {
+                const trackId = url.split('/track/')[1].split('?')[0];
+                return `https://embed.tidal.com/tracks/${trackId}`;
+            }
+            break;
+
+        default:
+            return null;
+    }
+    return null;
+};
+
+// Close existing music player
+window.LandingProfile.closeExistingMusicPlayer = function() {
+    const existingPlayer = document.querySelector('.landing-music-player-modal');
+    if (existingPlayer) {
+        existingPlayer.remove();
+    }
+
+    // Reset all play buttons
+    const playButtons = document.querySelectorAll('.play-button i');
+    playButtons.forEach(btn => {
+        if (btn.className.includes('pause') || btn.className.includes('spinner')) {
+            btn.className = 'fas fa-play';
+        }
+    });
+};
+
+// Close music player
+window.LandingProfile.closeMusicPlayer = function() {
+    window.LandingProfile.closeExistingMusicPlayer();
+};
+
+// Helper functions for music player loading states
+window.LandingProfile.hideMusicLoading = function() {
+    const loadingElement = document.getElementById('landing-music-loading');
+    if (loadingElement) {
+        loadingElement.style.display = 'none';
+    }
+};
+
+window.LandingProfile.showMusicError = function() {
+    const loadingElement = document.getElementById('landing-music-loading');
+    if (loadingElement) {
+        loadingElement.innerHTML = `
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Unable to load music player</p>
+        `;
+    }
 };
 
 // Render catalog content
@@ -283,7 +470,7 @@ window.LandingProfile.renderMediaContent = function(media) {
                 <div class="media-grid music-grid">
                     ${media.music.map(music => `
                         <div class="media-item music-item">
-                            <div class="music-player" onclick="window.LandingProfile.playMusicPreview('${music.platform}', '${music.url}', '${music.title}')">
+                            <div class="music-player" onclick="window.LandingProfile.playMusicPreview('${music.platform}', '${music.url}', '${music.title}', event)">
                                 <div class="music-platform-icon ${music.platform}">
                                     <i class="${window.LandingProfile.getMusicPlatformIcon(music.platform)}"></i>
                                 </div>
@@ -347,10 +534,27 @@ window.LandingProfile.render = function(data) {
         </div>
         ${window.LandingProfile.renderCatalogContent(data.catalog || [])}
         ${window.LandingProfile.renderMediaContent(data.media || {})}
+        ${window.LandingProfile.renderSocialLinks(data.socialLinks || {})}
         <div class="landing-footer">
             Powered by <a href="index.html" target="_blank">BINK</a>
         </div>
     </div>
 </div>
+    `;
+};
+
+// Render social links
+window.LandingProfile.renderSocialLinks = function(socialLinks) {
+    if (!socialLinks || typeof socialLinks !== 'object' || Object.keys(socialLinks).length === 0) return '';
+
+    return `
+        <div class="landing-socials">
+            ${Object.entries(socialLinks).map(([platform, url]) => {
+                if (!url) return '';
+                return `<a href="${url}" target="_blank" class="landing-social-icon">
+                    <i class="${window.LandingProfile.getPlatformIcon(platform)}"></i>
+                </a>`;
+            }).join('')}
+        </div>
     `;
 };

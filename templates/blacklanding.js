@@ -163,10 +163,19 @@ window.BlackLanding.openImageModal = function(imageUrl, title) {
     window.open(imageUrl, '_blank');
 };
 
-// Play music preview (placeholder function)
-window.BlackLanding.playMusicPreview = function(platform, url, title) {
-    // Simple implementation - open music link
-    window.open(url, '_blank');
+// Play music preview with embedded player
+window.BlackLanding.playMusicPreview = function(platform, url, title, event) {
+    // Always use the global playMusicPreview function if available (bio.html)
+    if (window.playMusicPreview) {
+        // Set the event.currentTarget for the global function to work properly
+        if (event && event.currentTarget) {
+            window.event = event;
+        }
+        window.playMusicPreview(platform, url, title);
+    } else {
+        // Fallback: create our own embedded player (for preview pages)
+        window.BlackLanding.createEmbeddedMusicPlayer(platform, url, title, event.currentTarget);
+    }
 };
 
 // Play YouTube video
@@ -182,6 +191,184 @@ window.BlackLanding.getYouTubeThumbnail = function(url) {
         return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
     }
     return 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=225&fit=crop'; // Fallback image
+};
+
+// Create embedded music player for Black Landing template
+window.BlackLanding.createEmbeddedMusicPlayer = function(platform, url, title, clickedElement) {
+    // Close any existing music player
+    window.BlackLanding.closeExistingMusicPlayer();
+
+    // Show loading state
+    const playButton = clickedElement.querySelector('.blacklanding-play-button i');
+    if (playButton) {
+        playButton.className = 'fas fa-spinner fa-spin';
+    }
+
+    // Get embed URL based on platform
+    const embedUrl = window.BlackLanding.getEmbedUrl(platform, url);
+
+    if (!embedUrl) {
+        // If no embed URL available, fall back to opening external link
+        setTimeout(() => {
+            window.open(url, '_blank');
+            if (playButton) {
+                playButton.className = 'fas fa-external-link-alt';
+            }
+        }, 500);
+        return;
+    }
+
+    // Create music player modal
+    const playerModal = document.createElement('div');
+    playerModal.className = 'blacklanding-music-player-modal';
+    playerModal.innerHTML = `
+        <div class="blacklanding-music-player-content">
+            <div class="blacklanding-music-player-header">
+                <h3>${title}</h3>
+                <button class="blacklanding-close-music-player" onclick="window.BlackLanding.closeMusicPlayer()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="blacklanding-music-player-body">
+                <div class="blacklanding-music-loading" id="blacklanding-music-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading music player...</p>
+                </div>
+                <iframe
+                    src="${embedUrl}"
+                    width="100%"
+                    height="152"
+                    frameborder="0"
+                    allowtransparency="true"
+                    allow="encrypted-media"
+                    onload="window.BlackLanding.hideMusicLoading()"
+                    onerror="window.BlackLanding.showMusicError()">
+                </iframe>
+            </div>
+            <div class="blacklanding-music-player-footer">
+                <button class="blacklanding-open-external-btn" onclick="window.open('${url}', '_blank')">
+                    <i class="fas fa-external-link-alt"></i>
+                    Open in ${window.BlackLanding.getPlatformDisplayName(platform)}
+                </button>
+            </div>
+        </div>
+    `;
+
+    // Add to page
+    document.body.appendChild(playerModal);
+
+    // Reset play button icon
+    setTimeout(() => {
+        if (playButton) {
+            playButton.className = 'fas fa-pause';
+        }
+    }, 500);
+
+    // Add click outside to close
+    playerModal.addEventListener('click', (e) => {
+        if (e.target === playerModal) {
+            window.BlackLanding.closeMusicPlayer();
+        }
+    });
+};
+
+// Get embed URL for different platforms
+window.BlackLanding.getEmbedUrl = function(platform, url) {
+    switch (platform) {
+        case 'spotify':
+            if (url.includes('spotify.com/track/')) {
+                const trackId = url.split('/track/')[1].split('?')[0];
+                return `https://open.spotify.com/embed/track/${trackId}`;
+            } else if (url.includes('spotify.com/album/')) {
+                const albumId = url.split('/album/')[1].split('?')[0];
+                return `https://open.spotify.com/embed/album/${albumId}`;
+            } else if (url.includes('spotify.com/playlist/')) {
+                const playlistId = url.split('/playlist/')[1].split('?')[0];
+                return `https://open.spotify.com/embed/playlist/${playlistId}`;
+            }
+            break;
+
+        case 'soundcloud':
+            return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true`;
+
+        case 'youtube-music':
+        case 'youtube':
+            const videoId = window.BlackLanding.getYouTubeVideoId(url);
+            if (videoId) {
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+            break;
+
+        case 'bandcamp':
+            if (url.includes('/track/')) {
+                return `${url.replace('/track/', '/EmbeddedPlayer/track=')}`;
+            } else if (url.includes('/album/')) {
+                return `${url.replace('/album/', '/EmbeddedPlayer/album=')}`;
+            }
+            break;
+
+        case 'apple-music':
+            if (url.includes('music.apple.com')) {
+                return url.replace('music.apple.com', 'embed.music.apple.com');
+            }
+            break;
+
+        case 'audiomack':
+            if (url.includes('audiomack.com/song/')) {
+                return url.replace('audiomack.com/song/', 'audiomack.com/embed/song/');
+            }
+            break;
+
+        case 'tidal':
+            if (url.includes('tidal.com/track/')) {
+                const trackId = url.split('/track/')[1].split('?')[0];
+                return `https://embed.tidal.com/tracks/${trackId}`;
+            }
+            break;
+
+        default:
+            return null;
+    }
+    return null;
+};
+
+// Close existing music player
+window.BlackLanding.closeExistingMusicPlayer = function() {
+    const existingPlayer = document.querySelector('.blacklanding-music-player-modal');
+    if (existingPlayer) {
+        existingPlayer.remove();
+    }
+
+    // Reset all play buttons
+    const playButtons = document.querySelectorAll('.blacklanding-play-button i');
+    playButtons.forEach(btn => {
+        if (btn.className.includes('pause') || btn.className.includes('spinner')) {
+            btn.className = 'fas fa-play';
+        }
+    });
+};
+
+// Close music player
+window.BlackLanding.closeMusicPlayer = function() {
+    window.BlackLanding.closeExistingMusicPlayer();
+};
+
+// Helper functions for music player loading states
+window.BlackLanding.hideMusicLoading = function() {
+    const loadingElement = document.getElementById('blacklanding-music-loading');
+    if (loadingElement) {
+        loadingElement.style.display = 'none';
+    }
+};
+
+window.BlackLanding.showMusicError = function() {
+    const loadingElement = document.getElementById('blacklanding-music-loading');
+    if (loadingElement) {
+        loadingElement.innerHTML = `
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Unable to load music player</p>
+        `;
+    }
 };
 
 // Render catalog content
@@ -283,7 +470,7 @@ window.BlackLanding.renderMediaContent = function(media) {
                 <div class="blacklanding-media-grid blacklanding-music-grid">
                     ${media.music.map(music => `
                         <div class="blacklanding-music-item">
-                            <div class="blacklanding-music-player" onclick="window.BlackLanding.playMusicPreview('${music.platform}', '${music.url}', '${music.title}')">
+                            <div class="blacklanding-music-player" onclick="window.BlackLanding.playMusicPreview('${music.platform}', '${music.url}', '${music.title}', event)">
                                 <div class="blacklanding-music-platform-icon ${music.platform}">
                                     <i class="${window.BlackLanding.getMusicPlatformIcon(music.platform)}"></i>
                                 </div>
@@ -349,10 +536,27 @@ window.BlackLanding.render = function(data) {
                 </div>
                 ${window.BlackLanding.renderCatalogContent(data.catalog || [])}
                 ${window.BlackLanding.renderMediaContent(data.media || {})}
+                ${window.BlackLanding.renderSocialLinks(data.socialLinks || {})}
                 <div class="blacklanding-footer">
                     Powered by <a href="index.html" target="_blank">BINK</a>
                 </div>
             </div>
         </div>
         `;
+};
+
+// Render social links
+window.BlackLanding.renderSocialLinks = function(socialLinks) {
+    if (!socialLinks || typeof socialLinks !== 'object' || Object.keys(socialLinks).length === 0) return '';
+
+    return `
+        <div class="blacklanding-socials">
+            ${Object.entries(socialLinks).map(([platform, url]) => {
+                if (!url) return '';
+                return `<a href="${url}" target="_blank" class="blacklanding-social-icon">
+                    <i class="${window.BlackLanding.getPlatformIcon(platform)}"></i>
+                </a>`;
+            }).join('')}
+        </div>
+    `;
 };

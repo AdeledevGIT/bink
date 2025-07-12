@@ -392,21 +392,16 @@
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Minimal Zen Media Styles */
-.minimalzen-container .media-section {
-    margin: 30px 0;
-    padding: 25px 0;
-    border-top: 1px solid #f0f0f0;
+/* Media Section Styles */
+.minimalzen-media-section {
+    margin-top: 30px;
+    padding: 25px;
     background: #fafafa;
     border-radius: 12px;
+    border: 1px solid #f0f0f0;
 }
 
-.minimalzen-container .media-section:first-child {
-    border-top: none;
-    margin-top: 0;
-}
-
-.minimalzen-container .media-section-title {
+.minimalzen-section-title {
     color: #333;
     font-size: 1rem;
     font-weight: 500;
@@ -416,34 +411,34 @@
     gap: 8px;
     text-align: center;
     justify-content: center;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.minimalzen-container .media-section-title i {
+.minimalzen-section-title i {
     color: #888;
     font-size: 0.9rem;
 }
 
-.minimalzen-container .media-grid {
+.minimalzen-media-grid {
     display: grid;
     gap: 20px;
 }
 
-.minimalzen-container .videos-grid {
+.minimalzen-videos-grid {
     grid-template-columns: 1fr;
 }
 
-.minimalzen-container .images-grid {
+.minimalzen-images-grid {
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
 }
 
-.minimalzen-container .music-grid {
+.minimalzen-music-grid {
     grid-template-columns: 1fr;
 }
 
-.minimalzen-container .media-item {
+.minimalzen-media-item {
     background: #fff;
     border: 1px solid #f0f0f0;
     border-radius: 12px;
@@ -452,176 +447,597 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.minimalzen-container .media-item:hover {
+.minimalzen-media-item:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     border-color: #e0e0e0;
 }
 
 /* Video Items */
-.minimalzen-container .video-item {
+.minimalzen-video-item {
     padding: 0;
 }
 
-.minimalzen-container .video-thumbnail {
+.minimalzen-video-container {
     width: 100%;
     height: 200px;
     position: relative;
     overflow: hidden;
-}
-
-.minimalzen-container .video-thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.minimalzen-container .video-play-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #333;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.minimalzen-container .video-play-overlay:hover {
-    background: #fff;
-    transform: translate(-50%, -50%) scale(1.1);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-}
-
-/* Image Items */
-.minimalzen-container .image-item {
-    /* Removed aspect-ratio to allow space for titles/descriptions */
-}
-
-.minimalzen-container .image-container {
-    width: 100%;
-    height: 200px;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 15px;
     border-radius: 12px;
 }
 
-.minimalzen-container .image-container img {
+.minimalzen-video-container iframe {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+    border: none;
+    border-radius: 12px;
 }
 
-.minimalzen-container .image-container:hover img {
-    transform: scale(1.05);
+/* Enhanced Gallery Section */
+.minimalzen-images-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
 }
 
-/* Music Items */
-.minimalzen-container .media-container .music-item,
-.minimalzen-container .music-item {
-    padding: 20px;
-}
-
-.minimalzen-container .media-container .music-player,
-.minimalzen-container .music-player {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 20px;
-    background: #ffffff;
+.minimalzen-image-item {
+    position: relative;
     border-radius: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 1px solid #f0f0f0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.minimalzen-container .media-container .music-player:hover,
-.minimalzen-container .music-player:hover {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
-}
-
-.minimalzen-container .music-platform-icon {
-    width: 45px;
-    height: 45px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    color: white;
-    background: #333;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.minimalzen-container .music-info {
-    flex: 1;
-}
-
-.minimalzen-container .music-title {
-    color: #333;
-    font-size: 0.95rem;
-    font-weight: 500;
-    margin: 0 0 4px 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-.minimalzen-container .music-artist {
-    color: #888;
-    font-size: 0.85rem;
-    margin: 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-.minimalzen-container .play-button {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background: #f8f8f8;
-    border: 1px solid #f0f0f0;
-    color: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.minimalzen-container .play-button:hover {
+    overflow: hidden;
     background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.minimalzen-image-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.minimalzen-image-container {
+    width: 100%;
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+}
+
+.minimalzen-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    filter: brightness(1) saturate(1);
+}
+
+.minimalzen-image-item:hover .minimalzen-image-container img {
+    transform: scale(1.08);
+    filter: brightness(1.1) saturate(1.2);
+}
+
+.minimalzen-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+}
+
+.minimalzen-image-item:hover .minimalzen-image-overlay {
+    opacity: 1;
+}
+
+.minimalzen-image-overlay-content {
+    color: white;
+    text-align: left;
+}
+
+.minimalzen-image-overlay-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+}
+
+.minimalzen-image-overlay-desc {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin: 0;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+}
+
+/* Enhanced Music Section */
+.minimalzen-music-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.minimalzen-music-item {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 1px solid #e9ecef;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.minimalzen-music-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    border-color: #dee2e6;
+}
+
+.minimalzen-music-player {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    gap: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.minimalzen-music-artwork {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.minimalzen-music-item:hover .minimalzen-music-artwork {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.minimalzen-music-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.minimalzen-music-title {
+    color: #2d3748;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.minimalzen-music-artist {
+    color: #718096;
+    font-size: 0.9rem;
+    margin: 0 0 6px 0;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.minimalzen-music-platform {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f7fafc;
+    color: #4a5568;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid #e2e8f0;
+}
+
+.minimalzen-music-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.minimalzen-play-button {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    font-size: 1rem;
+}
+
+.minimalzen-play-button:hover {
     transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.minimalzen-music-duration {
+    color: #a0aec0;
+    font-size: 0.85rem;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+    font-weight: 500;
+}
+
+/* Embedded Music Player */
+.minimalzen-music-container {
+    width: 100%;
+    height: 152px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-top: 12px;
+    background: #f8f9fa;
+}
+
+.minimalzen-music-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
 }
 
 /* Media Info */
-.minimalzen-container .media-info {
+.minimalzen-media-info {
     padding: 15px 20px;
 }
 
-.minimalzen-container .media-title {
+.minimalzen-media-title {
     color: #333;
     font-size: 1.1rem;
     font-weight: 600;
     margin: 0 0 8px 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
 }
 
-.minimalzen-container .media-description {
+.minimalzen-media-description {
     color: #666;
     font-size: 0.9rem;
     line-height: 1.4;
     margin: 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+}
+
+/* Catalog Section Styles */
+.minimalzen-catalog-section {
+    margin-top: 30px;
+    padding: 25px;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 1px solid #f0f0f0;
+}
+
+.minimalzen-catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.minimalzen-catalog-item {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.minimalzen-catalog-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    border-color: #e0e0e0;
+}
+
+.minimalzen-catalog-image {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+
+.minimalzen-catalog-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.minimalzen-catalog-item:hover .minimalzen-catalog-image img {
+    transform: scale(1.05);
+}
+
+.minimalzen-catalog-info {
+    padding: 20px;
+}
+
+.minimalzen-catalog-title {
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+}
+
+.minimalzen-catalog-description {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0 0 15px 0;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+}
+
+.minimalzen-catalog-price {
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+}
+
+.minimalzen-catalog-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.minimalzen-catalog-btn:hover {
+    background: #555;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design for Gallery and Music */
+@media (max-width: 768px) {
+    .minimalzen-images-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .minimalzen-image-container {
+        height: 180px;
+    }
+
+    .minimalzen-music-player {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .minimalzen-music-artwork {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .minimalzen-music-title {
+        font-size: 1rem;
+    }
+
+    .minimalzen-music-artist {
+        font-size: 0.85rem;
+    }
+
+    .minimalzen-play-button {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+
+    .minimalzen-music-controls {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+    }
+
+    .minimalzen-music-duration {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .minimalzen-images-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .minimalzen-image-container {
+        height: 200px;
+    }
+
+    .minimalzen-media-section {
+        padding: 20px;
+        margin-top: 25px;
+    }
+
+    .minimalzen-section-title {
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+    }
+
+    .minimalzen-music-player {
+        padding: 14px;
+        gap: 10px;
+    }
+
+    .minimalzen-music-info {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .minimalzen-music-platform {
+        font-size: 0.75rem;
+        padding: 3px 8px;
+    }
+}
+
+/* Music Player Modal Styles */
+.minimalzen-music-player-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    backdrop-filter: blur(5px);
+}
+
+.minimalzen-music-player-content {
+    background: #fff;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.minimalzen-music-player-header {
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fafafa;
+}
+
+.minimalzen-music-player-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+}
+
+.minimalzen-close-music-player {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #666;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.minimalzen-close-music-player:hover {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.minimalzen-music-player-body {
+    padding: 20px;
+    position: relative;
+}
+
+.minimalzen-music-loading {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.minimalzen-music-loading i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.minimalzen-music-loading p {
+    margin: 0;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+}
+
+.minimalzen-music-player-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #f0f0f0;
+    background: #fafafa;
+    text-align: center;
+}
+
+.minimalzen-open-external-btn {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.minimalzen-open-external-btn:hover {
+    background: #555;
+    transform: translateY(-1px);
+}
+
+/* Mobile responsive for music player modal */
+@media (max-width: 480px) {
+    .minimalzen-music-player-content {
+        width: 95%;
+        margin: 20px;
+    }
+
+    .minimalzen-music-player-header {
+        padding: 15px;
+    }
+
+    .minimalzen-music-player-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .minimalzen-music-player-body {
+        padding: 15px;
+    }
+
+    .minimalzen-music-player-footer {
+        padding: 12px 15px;
+    }
 }
