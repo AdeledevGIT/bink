@@ -10,9 +10,29 @@ if (typeof firebase !== 'undefined' && firebase.analytics) {
     console.log("Firebase Analytics initialized");
 }
 
-// Get username from URL
+// Get username from URL - support both clean URLs and query parameters
+function getUsernameFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let username = urlParams.get('u');
+
+    // If no username in query params, try to get it from the path
+    if (!username) {
+        const path = window.location.pathname;
+        // Remove leading slash and get the first segment
+        const pathSegments = path.split('/').filter(segment => segment.length > 0);
+
+        // Check if this looks like a username (not a known page)
+        const knownPages = ['dashboard.html', 'bio.html', 'login.html', 'signup.html', 'index.html', 'onboarding.html', 'tasks.html', 'articles.html', 'payment-callback.html', 'api', 'templates', 'images'];
+        if (pathSegments.length === 1 && !knownPages.includes(pathSegments[0]) && !pathSegments[0].includes('.')) {
+            username = pathSegments[0];
+        }
+    }
+
+    return username;
+}
+
+const username = getUsernameFromUrl();
 const urlParams = new URLSearchParams(window.location.search);
-const username = urlParams.get('u');
 const templateOverride = urlParams.get('t');
 const isPreview = urlParams.get('preview') === 'true';
 
@@ -164,15 +184,6 @@ async function loadUserProfile() {
 
 // Function to update profile information
 function updateProfileInfo(userData) {
-    // Enforce template access for premium templates (unless in preview mode)
-    if (!templateOverride && window.PremiumEnforcement && userData.template && userData.template !== 'classic') {
-        const hasAccess = window.PremiumEnforcement.enforceTemplateAccess(userData, userData.template);
-        if (!hasAccess) {
-            // Template access was reverted, the page will reload automatically
-            return;
-        }
-    }
-
     // Use override if present, but make it optional
     // If templateOverride is provided, use it (for preview purposes)
     // Otherwise, use the user's stored template from their profile
@@ -221,14 +232,6 @@ function renderTemplate(userData) {
         link.href = templateObj.css;
         link.id = 'template-css-' + templateId;
         document.head.appendChild(link);
-    }
-
-    // Load template JavaScript if it exists and not already loaded
-    if (templateObj.js && !document.getElementById('template-js-' + templateId)) {
-        const script = document.createElement('script');
-        script.src = templateObj.js;
-        script.id = 'template-js-' + templateId;
-        document.head.appendChild(script);
     }
 
     // Gather links and socialLinks
@@ -312,31 +315,25 @@ async function loadUserLinks(userId, templateObj = null, userData = null) {
             links.push({ ...doc.data(), id: doc.id });
         });
 
-        // Limit links for free users
-        const isPremiumUser = checkPremiumStatus(userData);
-        const displayLinks = isPremiumUser ? links : links.slice(0, 3);
-
         if (templateObj && userData) {
-            // Re-render the template with links and media (hide media for free users)
-            const mediaData = isPremiumUser ? (userData.media || {}) : {};
-
+            // Re-render the template with links and media
             bioRoot.innerHTML = templateObj.render({
                 displayName: userData.displayName || userData.username,
                 username: userData.username,
                 bio: userData.bio,
                 profilePicUrl: userData.profilePicUrl,
-                links: displayLinks,
+                links: links,
                 socialLinks: userData.socialLinks || {},
-                media: mediaData
+                media: userData.media || {}
             });
         } else {
             // Classic fallback
             const linksContainer = document.getElementById('links-container');
-            if (displayLinks.length === 0) {
+            if (links.length === 0) {
                 linksContainer.innerHTML = '<div class="link-placeholder">No links available</div>';
             } else {
                 linksContainer.innerHTML = '';
-                displayLinks.forEach(linkData => {
+                links.forEach(linkData => {
                     const linkElement = document.createElement('a');
                     linkElement.href = "javascript:void(0);"; // Use JavaScript handler instead of direct link
                     linkElement.className = 'bio-link';
@@ -388,8 +385,8 @@ async function loadUserLinks(userId, templateObj = null, userData = null) {
 // Function to load user media
 async function loadUserMedia(userId, templateObj = null, userData = null) {
     try {
-        // Check if user is premium - only load media for premium users
-        const isPremiumUser = checkPremiumStatus(userData);
+        const mediaRef = db.collection('users').doc(userId).collection('media');
+        const querySnapshot = await mediaRef.get();
 
         const media = {
             youtube: [],
@@ -397,18 +394,13 @@ async function loadUserMedia(userId, templateObj = null, userData = null) {
             music: []
         };
 
-        if (isPremiumUser) {
-            const mediaRef = db.collection('users').doc(userId).collection('media');
-            const querySnapshot = await mediaRef.get();
-
-            querySnapshot.forEach((doc) => {
-                const mediaData = { ...doc.data(), id: doc.id };
-                const type = mediaData.type;
-                if (media[type]) {
-                    media[type].push(mediaData);
-                }
-            });
-        }
+        querySnapshot.forEach((doc) => {
+            const mediaData = { ...doc.data(), id: doc.id };
+            const type = mediaData.type;
+            if (media[type]) {
+                media[type].push(mediaData);
+            }
+        });
 
         if (templateObj && userData) {
             // For templates, add media to userData and re-render
@@ -422,30 +414,22 @@ async function loadUserMedia(userId, templateObj = null, userData = null) {
                 links.push({ ...doc.data(), id: doc.id });
             });
 
-            // Limit links for free users
-            const displayLinks = isPremiumUser ? links : links.slice(0, 3);
-
             // Re-render template with media data
             bioRoot.innerHTML = templateObj.render({
                 displayName: userData.displayName || userData.username,
                 username: userData.username,
                 bio: userData.bio,
                 profilePicUrl: userData.profilePicUrl,
-                links: displayLinks,
+                links: links,
                 socialLinks: userData.socialLinks || {},
                 media: media,
                 catalog: userData.catalog || []
             });
         } else {
-            // Classic template - render media in media container (only for premium users)
+            // Classic template - render media in media container
             const mediaContainer = document.getElementById('media-container');
             if (mediaContainer) {
-                if (isPremiumUser) {
-                    renderMediaContent(media, mediaContainer);
-                } else {
-                    // Hide media container for free users
-                    mediaContainer.style.display = 'none';
-                }
+                renderMediaContent(media, mediaContainer);
             }
         }
     } catch (error) {
@@ -460,19 +444,13 @@ async function loadUserMedia(userId, templateObj = null, userData = null) {
 // Function to load user catalog
 async function loadUserCatalog(userId, templateObj = null, userData = null) {
     try {
-        // Check if user is premium - only load catalog for premium users
-        const isPremiumUser = checkPremiumStatus(userData);
+        const catalogRef = db.collection('users').doc(userId).collection('catalog');
+        const querySnapshot = await catalogRef.orderBy('createdAt', 'desc').get();
 
         const catalog = [];
-
-        if (isPremiumUser) {
-            const catalogRef = db.collection('users').doc(userId).collection('catalog');
-            const querySnapshot = await catalogRef.orderBy('createdAt', 'desc').get();
-
-            querySnapshot.forEach((doc) => {
-                catalog.push({ ...doc.data(), id: doc.id });
-            });
-        }
+        querySnapshot.forEach((doc) => {
+            catalog.push({ ...doc.data(), id: doc.id });
+        });
 
         if (templateObj && userData) {
             // For templates, add catalog to userData and re-render
@@ -486,27 +464,20 @@ async function loadUserCatalog(userId, templateObj = null, userData = null) {
                 links.push({ ...doc.data(), id: doc.id });
             });
 
-            // Limit links for free users
-            const displayLinks = isPremiumUser ? links : links.slice(0, 3);
-
+            const mediaRef = db.collection('users').doc(userId).collection('media');
+            const mediaSnapshot = await mediaRef.get();
             const media = {
                 youtube: [],
                 images: [],
                 music: []
             };
-
-            // Only load media for premium users
-            if (isPremiumUser) {
-                const mediaRef = db.collection('users').doc(userId).collection('media');
-                const mediaSnapshot = await mediaRef.get();
-                mediaSnapshot.forEach((doc) => {
-                    const mediaData = { ...doc.data(), id: doc.id };
-                    const type = mediaData.type;
-                    if (media[type]) {
-                        media[type].push(mediaData);
-                    }
-                });
-            }
+            mediaSnapshot.forEach((doc) => {
+                const mediaData = { ...doc.data(), id: doc.id };
+                const type = mediaData.type;
+                if (media[type]) {
+                    media[type].push(mediaData);
+                }
+            });
 
             // Re-render template with catalog data
             bioRoot.innerHTML = templateObj.render({
@@ -514,21 +485,16 @@ async function loadUserCatalog(userId, templateObj = null, userData = null) {
                 username: userData.username,
                 bio: userData.bio,
                 profilePicUrl: userData.profilePicUrl,
-                links: displayLinks,
+                links: links,
                 socialLinks: userData.socialLinks || {},
                 media: media,
                 catalog: catalog
             });
         } else {
-            // Classic template - render catalog in catalog container (only for premium users)
+            // Classic template - render catalog in catalog container
             const catalogContainer = document.getElementById('catalog-container');
             if (catalogContainer) {
-                if (isPremiumUser) {
-                    renderCatalogContent(catalog, catalogContainer);
-                } else {
-                    // Hide catalog container for free users
-                    catalogContainer.style.display = 'none';
-                }
+                renderCatalogContent(catalog, catalogContainer);
             }
         }
     } catch (error) {
