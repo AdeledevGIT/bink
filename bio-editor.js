@@ -2418,7 +2418,14 @@ templateButtons.forEach(button => {
         updatePreviewFrameWithTemplate(templateId);
 
         // Show message
-        showMessage(`Template "${template.name}" is now in preview. Click "Use This Template" to apply it.`);
+        showMessage(`Template "${template.name}" is now in preview. Click "Use Selected Template" to apply it.`);
+
+        // Clear any existing feedback and add new visual feedback to the use template button
+        clearTemplateSelectionFeedback();
+        const useTemplateButton = document.getElementById('use-template-button');
+        if (useTemplateButton) {
+            useTemplateButton.classList.add('template-selected');
+        }
     });
 });
 
@@ -2460,8 +2467,11 @@ if (useTemplateButton) {
             // If user has purchased the template, they can still use it even after premium expires
         }
 
-        // Save the template selection to the database
-        saveTemplateSelection(templateId);
+        // Apply the template selection (this will save to database and update the bio page)
+        handleTemplateSelection(templateId);
+
+        // Remove the visual feedback class
+        useTemplateButton.classList.remove('template-selected');
 
         // Show success message
         showMessage(`Template "${template.name}" has been applied to your bio page!`);
@@ -2495,6 +2505,14 @@ document.addEventListener('DOMContentLoaded', () => {
         loadSocialLinks();
     }
 });
+
+// Clear template selection visual feedback
+function clearTemplateSelectionFeedback() {
+    const useTemplateButton = document.getElementById('use-template-button');
+    if (useTemplateButton) {
+        useTemplateButton.classList.remove('template-selected');
+    }
+}
 
 // Highlight selected template in the picker
 function highlightSelectedTemplate(templateId) {
@@ -3632,10 +3650,10 @@ function createTemplateGalleryItem(template) {
     }
 }
 
-// Handle template selection from gallery
+// Handle template selection from gallery (preview only)
 function selectTemplateFromGallery(templateId) {
     try {
-        console.log('Selecting template from gallery:', templateId);
+        console.log('Selecting template from gallery for preview:', templateId);
 
         // Remove selection from all items
         document.querySelectorAll('.template-gallery-item').forEach(item => {
@@ -3650,12 +3668,32 @@ function selectTemplateFromGallery(templateId) {
             console.warn('Selected template item not found:', templateId);
         }
 
-        // Immediately apply the template selection
-        handleTemplateSelection(templateId);
+        // Get the template object
+        const template = window.BINK.templates.getTemplateById(templateId);
+        if (!template) {
+            showMessage('Template not found.', true);
+            return;
+        }
 
-        console.log('Template selected and applied:', templateId);
+        // Update the preview with the selected template
+        updatePreviewFrameWithTemplate(templateId);
+
+        // Highlight the selected template
+        highlightSelectedTemplate(templateId);
+
+        // Show message that template is in preview
+        showMessage(`Template "${template.name}" is now in preview. Click "Use Selected Template" to apply it.`);
+
+        // Clear any existing feedback and add new visual feedback to the use template button
+        clearTemplateSelectionFeedback();
+        const useTemplateButton = document.getElementById('use-template-button');
+        if (useTemplateButton) {
+            useTemplateButton.classList.add('template-selected');
+        }
+
+        console.log('Template selected for preview:', templateId);
     } catch (error) {
-        console.error('Error selecting template:', error);
+        console.error('Error selecting template for preview:', error);
     }
 }
 
@@ -3689,8 +3727,8 @@ function handleTemplateSelection(templateId) {
         }
     }
 
-    // Save template selection
-    saveTemplateSelection(templateId);
+    // Apply the template (save to database and update bio page)
+    selectTemplate(templateId);
 }
 
 // Initialize template gallery when DOM is loaded
