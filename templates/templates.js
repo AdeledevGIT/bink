@@ -1372,61 +1372,56 @@ window.BINK.templates.templates['magazine'] = {
         return `
         <div class="magazine-bio-bg">
             <div class="magazine-container">
-                <div class="magazine-header-actions">
-                    <div class="magazine-join-link">
-                        <a href="index.html" class="magazine-join-btn"><i class="fas fa-user-plus"></i>Join BINK</a>
-                    </div>
-                    <div class="magazine-share">
-                        <button class="magazine-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
-                            <i class="fas fa-share-alt"></i>
-                        </button>
+                <div class="magazine-header">
+                    <h1 class="magazine-title">PROFILE</h1>
+                    <div class="magazine-date">EDITION 2024</div>
+                    <div class="magazine-header-actions">
+                        <div class="magazine-join-link">
+                            <a href="index.html" class="magazine-join-btn"><i class="fas fa-user-plus"></i>Join BINK</a>
+                        </div>
+                        <div class="magazine-share">
+                            <button class="magazine-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
+                                <i class="fas fa-share-alt"></i>
+                                Share
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="magazine-profile-section">
-                    <div class="magazine-profile-header">
+                <div class="magazine-content">
+                    <div class="magazine-sidebar">
                         <div class="magazine-avatar-container">
                             <img class="magazine-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
                         </div>
-                        <div class="magazine-profile-info">
-                            <div class="magazine-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
-                            <div class="magazine-socials">
-                                ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
-                                    <a href="${url}" target="_blank"><i class="${window.BINK.templates.getPlatformIcon(platform)}"></i></a>
-                                `).join('')}
-                            </div>
+                        <div class="magazine-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
+                        <div class="magazine-bio">${data.bio || ''}</div>
+                        <div class="magazine-socials">
+                            ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
+                                <a href="${url}" target="_blank"><i class="${window.BINK.templates.getPlatformIcon(platform)}"></i></a>
+                            `).join('')}
                         </div>
                     </div>
 
-                    <div class="magazine-bio-section">
-                        <div class="magazine-section-label">About</div>
-                        <div class="magazine-bio">${data.bio || ''}</div>
-                    </div>
-                </div>
-
-                <div class="magazine-links-section">
-                    <div class="magazine-section-label">Featured Links</div>
-                    <div class="magazine-links">
+                    <div class="magazine-main">
+                        <div class="magazine-section-title">Featured Links</div>
                         ${(data.links || []).map(link => `
                             <div class="magazine-link-container">
                                 <a class="magazine-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
                                     <div class="magazine-link-icon">
                                         <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
                                     </div>
-                                    <div class="magazine-link-content">
-                                        <div class="magazine-link-title">${link.title}</div>
-                                    </div>
+                                    <div class="magazine-link-title">${link.title}</div>
                                 </a>
                                 <button class="magazine-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
                                     <i class="fas fa-share-alt"></i>
                                 </button>
                             </div>
                         `).join('')}
+
+                        ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
+                        ${window.BINK.templates.renderMediaContent(data.media || {})}
                     </div>
                 </div>
-
-                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
-                ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                 <div class="magazine-footer">
                     Powered by <a href="index.html" target="_blank">BINK</a>
