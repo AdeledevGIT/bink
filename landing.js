@@ -1,6 +1,95 @@
 // Landing Page JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Premium Scroll Animations
+    function initScrollAnimations() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+
+                    if (entry.target.classList.contains('animate-fade-up')) {
+                        entry.target.classList.add('animate-fade-up');
+                    } else if (entry.target.classList.contains('animate-fade-left')) {
+                        entry.target.classList.add('animate-fade-left');
+                    } else if (entry.target.classList.contains('animate-fade-right')) {
+                        entry.target.classList.add('animate-fade-right');
+                    } else if (entry.target.classList.contains('animate-scale')) {
+                        entry.target.classList.add('animate-scale');
+                    }
+
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Add animation classes to elements
+        const sections = document.querySelectorAll('section');
+        sections.forEach((section, index) => {
+            section.classList.add('animate-on-scroll');
+            if (index % 2 === 0) {
+                section.classList.add('animate-fade-up');
+            } else {
+                section.classList.add('animate-fade-up');
+            }
+            observer.observe(section);
+        });
+
+        // Animate feature cards
+        const featureCards = document.querySelectorAll('.feature-card');
+        featureCards.forEach((card, index) => {
+            card.classList.add('animate-on-scroll', 'animate-scale');
+            card.style.animationDelay = `${index * 0.1}s`;
+            observer.observe(card);
+        });
+
+        // Animate pricing cards
+        const pricingCards = document.querySelectorAll('.pricing-card');
+        pricingCards.forEach((card, index) => {
+            card.classList.add('animate-on-scroll', 'animate-fade-up');
+            card.style.animationDelay = `${index * 0.2}s`;
+            observer.observe(card);
+        });
+
+        // Animate testimonial cards
+        const testimonialCards = document.querySelectorAll('.testimonial-card');
+        testimonialCards.forEach((card, index) => {
+            card.classList.add('animate-on-scroll', 'animate-fade-up');
+            card.style.animationDelay = `${index * 0.15}s`;
+            observer.observe(card);
+        });
+    }
+
+    // Enhanced Header Scroll Effect
+    function initHeaderEffects() {
+        const header = document.querySelector('.landing-header');
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY > 100) {
+                header.style.background = 'rgba(31, 41, 55, 0.95)';
+                header.style.backdropFilter = 'blur(20px)';
+                header.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.05)';
+            } else {
+                header.style.background = 'rgba(31, 41, 55, 0.8)';
+                header.style.backdropFilter = 'blur(20px)';
+                header.style.boxShadow = '0 4px 24px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.05)';
+            }
+
+            lastScrollY = currentScrollY;
+        });
+    }
+
+    // Initialize all premium effects
+    initScrollAnimations();
+    initHeaderEffects();
     // Promo Handler Functionality
     // Check if promo elements exist
     const upgradeButton = document.getElementById('upgrade-button');

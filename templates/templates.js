@@ -1555,67 +1555,127 @@ window.BINK.templates.templates['nature'] = {
     }
 };
 
-// Portfolio Template (Premium) - Redesigned with prominent links
+// Portfolio Template (Premium) - Redesigned to match preview exactly
 window.BINK.templates.templates['portfolio'] = {
     id: 'portfolio',
     name: 'Portfolio',
     description: 'A professional portfolio layout with prominent links.',
     css: 'templates/portfolio.css',
+    js: 'templates/portfolio.js',
     isPremium: true,
     tokenPrice: 175,
     category: 'seller',
     render: function(data) {
+        // Load the standalone JavaScript if not already loaded
+        if (!window.Portfolio) {
+            const script = document.createElement('script');
+            script.src = 'templates/portfolio.js';
+            script.onload = function() {
+                // Re-render after script loads
+                const bioRoot = document.getElementById('bio-root');
+                if (bioRoot) {
+                    bioRoot.innerHTML = window.BINK.templates.templates['portfolio'].render(data);
+                }
+            };
+            document.head.appendChild(script);
+            return '<div>Loading...</div>';
+        }
+
         return `
         <div class="portfolio-bio-bg">
             <div class="portfolio-container">
-                <div class="portfolio-header-actions">
-                    <div class="portfolio-join-link">
-                        <a href="index.html" class="portfolio-join-btn"><i class="fas fa-user-plus"></i>Join BINK</a>
-                    </div>
-                    <div class="portfolio-share">
-                        <button class="portfolio-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
-                            <i class="fas fa-share-alt"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="portfolio-profile-section">
-                    <div class="portfolio-avatar-container">
-                        <img class="portfolio-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
-                    </div>
-                    <div class="portfolio-profile-info">
-                        <div class="portfolio-username">@${data.displayName || data.username}</div>
-                        <div class="portfolio-bio">${data.bio || ''}</div>
-                        <div class="portfolio-socials">
-                            ${Object.entries(data.socialLinks || {}).map(([platform, url]) => `
-                                <a href="${url}" target="_blank"><i class="${window.BINK.templates.getPlatformIcon(platform)}"></i></a>
-                            `).join('')}
+                <div class="portfolio-header">
+                    <a href="#" class="portfolio-logo">PORTFOLIO</a>
+                    <div class="portfolio-header-actions">
+                        <div class="portfolio-join-link">
+                            <a href="index.html" class="portfolio-join-btn"><i class="fas fa-user-plus"></i>Join BINK</a>
+                        </div>
+                        <div class="portfolio-share">
+                            <button class="portfolio-share-btn" onclick="window.BINK.templates.shareProfile(event, '${data.username}')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="portfolio-links-section">
-                    <h2 class="portfolio-section-title">My Links</h2>
-                    <div class="portfolio-links-grid">
-                        ${(data.links || []).map(link => `
-                            <div class="portfolio-link-wrapper">
-                                <a class="portfolio-link-card" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
-                                    <div class="portfolio-link-icon">
-                                        <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
-                                    </div>
-                                    <div class="portfolio-link-title">${link.title}</div>
-                                    <div class="portfolio-link-visit">Visit <i class="fas fa-arrow-right"></i></div>
-                                </a>
-                                <button class="portfolio-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
-                                    <i class="fas fa-share-alt"></i>
-                                </button>
+                <div class="portfolio-main">
+                    <div class="portfolio-sidebar">
+                        <div class="portfolio-profile">
+                            <div class="portfolio-avatar-container">
+                                <img class="portfolio-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
                             </div>
-                        `).join('')}
+                            <div class="portfolio-username">${data.displayName || data.username || 'benarchitect'}</div>
+                            <div class="portfolio-bio">${data.bio || 'Architectural designer & urban planner creating sustainable spaces that inspire and connect communities'}</div>
+                            <div class="portfolio-socials">
+                                ${Object.entries(data.socialLinks || {}).length > 0 ?
+                                    Object.entries(data.socialLinks).map(([platform, url]) => `
+                                        <a href="${url}" target="_blank"><i class="${window.BINK.templates.getPlatformIcon(platform)}"></i></a>
+                                    `).join('') :
+                                    `<a href="#"><i class="fab fa-facebook"></i></a>
+                                     <a href="#"><i class="fab fa-linkedin"></i></a>
+                                     <a href="#"><i class="fab fa-instagram"></i></a>
+                                     <a href="#"><i class="fab fa-youtube"></i></a>`
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-content">
+                        <div class="portfolio-section-title">Featured Projects</div>
+
+                        <div class="portfolio-links-grid">
+                            ${(data.links && data.links.length > 0) ?
+                                data.links.map(link => `
+                                    <div class="portfolio-link-wrapper">
+                                        <a href="${link.url}" class="portfolio-link-card" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
+                                            <div class="portfolio-link-image" style="background-color: #f5f5f5;">
+                                            </div>
+                                            <div class="portfolio-link-content">
+                                                <div class="portfolio-link-title">${link.title}</div>
+                                                <div class="portfolio-link-description">${link.description || 'Click to visit this link'}</div>
+                                                <div class="portfolio-link-button">Visit Site</div>
+                                            </div>
+                                        </a>
+                                        <button class="portfolio-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
+                                            <i class="fas fa-share-alt"></i>
+                                        </button>
+                                    </div>
+                                `).join('') :
+                                `<div class="portfolio-link-wrapper">
+                                    <a href="#" class="portfolio-link-card">
+                                        <div class="portfolio-link-image" style="background-color: #f5f5f5;">
+                                        </div>
+                                        <div class="portfolio-link-content">
+                                            <div class="portfolio-link-title">My Website</div>
+                                            <div class="portfolio-link-description">Personal website showcasing my work and services</div>
+                                            <div class="portfolio-link-button">Visit Site</div>
+                                        </div>
+                                    </a>
+                                    <button class="portfolio-link-share-btn">
+                                        <i class="fas fa-share-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="portfolio-link-wrapper">
+                                    <a href="#" class="portfolio-link-card">
+                                        <div class="portfolio-link-image" style="background-color: #f0f8ff;">
+                                        </div>
+                                        <div class="portfolio-link-content">
+                                            <div class="portfolio-link-title">Portfolio</div>
+                                            <div class="portfolio-link-description">View my complete portfolio of architectural projects</div>
+                                            <div class="portfolio-link-button">View Portfolio</div>
+                                        </div>
+                                    </a>
+                                    <button class="portfolio-link-share-btn">
+                                        <i class="fas fa-share-alt"></i>
+                                    </button>
+                                </div>`
+                            }
+                        </div>
+
+                        ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
+                        ${window.Portfolio.renderMediaContent(data.media || {})}
                     </div>
                 </div>
-
-                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
-                ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                 <div class="portfolio-footer">
                     Powered by <a href="index.html" target="_blank">BINK</a>

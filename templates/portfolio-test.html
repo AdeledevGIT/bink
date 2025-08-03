@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/png" href="../logo1.png">
+    <link rel="stylesheet" href="portfolio.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>body{margin:0;}</style>
+    <script src="templates.js"></script>
+    <script src="portfolio.js"></script>
+</head>
+<body>
+    <div id="test-root"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample data to test the template
+            const testData = {
+                username: 'benarchitect',
+                displayName: 'benarchitect',
+                bio: 'Architectural designer & urban planner creating sustainable spaces that inspire and connect communities',
+                profilePicUrl: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face',
+                socialLinks: {
+                    facebook: '#',
+                    linkedin: '#',
+                    instagram: '#',
+                    youtube: '#'
+                },
+                links: [
+                    {
+                        id: '1',
+                        title: 'My Website',
+                        description: 'Personal website showcasing my work and services',
+                        url: '#'
+                    },
+                    {
+                        id: '2',
+                        title: 'Portfolio',
+                        description: 'View my complete portfolio of architectural projects',
+                        url: '#'
+                    }
+                ],
+                media: {
+                    images: [
+                        {
+                            title: 'Modern Office Complex',
+                            description: 'Sustainable office building with innovative design',
+                            url: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=300&h=200&fit=crop'
+                        },
+                        {
+                            title: 'Residential Complex',
+                            description: 'Modern living spaces with green architecture',
+                            url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&h=200&fit=crop'
+                        }
+                    ],
+                    music: [
+                        {
+                            title: 'Design Inspiration',
+                            artist: 'Ben Architect',
+                            platform: 'spotify',
+                            url: 'https://open.spotify.com/track/4iV5W9uYEdYUVa79Axb7Rh'
+                        }
+                    ]
+                },
+                catalog: []
+            };
+
+            // Initialize BINK templates namespace if not exists
+            if (!window.BINK) {
+                window.BINK = { templates: { templates: {} } };
+            }
+
+            // Add required helper functions for testing
+            window.BINK.templates.shareProfile = function(event, username) {
+                console.log('Share profile:', username);
+            };
+
+            window.BINK.templates.trackLinkClick = function(event, linkId) {
+                console.log('Track link click:', linkId);
+            };
+
+            window.BINK.templates.shareLink = function(event, url, title) {
+                console.log('Share link:', title, url);
+            };
+
+            window.BINK.templates.getPlatformIcon = function(platform) {
+                const icons = {
+                    'facebook': 'fab fa-facebook',
+                    'linkedin': 'fab fa-linkedin',
+                    'instagram': 'fab fa-instagram',
+                    'youtube': 'fab fa-youtube',
+                    'twitter': 'fab fa-twitter',
+                    'website': 'fas fa-globe'
+                };
+                return icons[platform] || 'fas fa-link';
+            };
+
+            window.BINK.templates.renderCatalogContent = function(catalog) {
+                return ''; // Empty for this test
+            };
+
+            // Test the Portfolio template
+            try {
+                const portfolioTemplate = window.BINK.templates.templates['portfolio'];
+                if (portfolioTemplate) {
+                    console.log('Portfolio template found, rendering...');
+                    const rendered = portfolioTemplate.render(testData);
+                    document.getElementById('test-root').innerHTML = rendered;
+                    console.log('Portfolio template rendered successfully!');
+                } else {
+                    console.error('Portfolio template not found');
+                    document.getElementById('test-root').innerHTML = '<div>Portfolio template not found</div>';
+                }
+            } catch (error) {
+                console.error('Error rendering Portfolio template:', error);
+                document.getElementById('test-root').innerHTML = '<div>Error: ' + error.message + '</div>';
+            }
+        });
+    </script>
+</body>
+</html>
