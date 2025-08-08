@@ -89,8 +89,8 @@
     margin-bottom: 28px;
 }
 .glass-avatar {
-    width: 100px;
-    height: 100px;
+    width: 140px !important;
+    height: 140px !important;
     border-radius: 50%;
     border: 3px solid #fff;
     box-shadow: 0 0 18px #fff, 0 0 0 6px rgba(255,255,255,0.2);

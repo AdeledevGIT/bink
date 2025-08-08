@@ -1,19 +1,40 @@
 /* Aurora Glow Template - Dynamic aurora background with glowing elements */
-* {
+.auroraglow-bio-bg * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #0a0a0f;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    position: relative;
+/* Override bio.css body styles specifically for Aurora Glow template */
+html body:has(.auroraglow-bio-bg),
+html body .auroraglow-bio-bg,
+html body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    background: #0a0a0f !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    position: relative !important;
+    overflow-x: hidden !important;
+}
+
+/* Hide bio-page elements when Aurora Glow template is active */
+.auroraglow-bio-bg ~ .bio-page,
+body:has(.auroraglow-bio-bg) .bio-page,
+.bio-page {
+    display: none !important;
+}
+
+/* Ensure bio-root doesn't interfere */
+#bio-root {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
 }
 
 body::before {
@@ -23,7 +44,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: 
+    background:
         radial-gradient(ellipse at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
         radial-gradient(ellipse at 80% 20%, rgba(255, 118, 117, 0.3) 0%, transparent 50%),
         radial-gradient(ellipse at 40% 80%, rgba(255, 204, 112, 0.3) 0%, transparent 50%);
@@ -75,9 +96,9 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, 
-        rgba(120, 119, 198, 0.1) 0%, 
-        rgba(255, 118, 117, 0.1) 50%, 
+    background: linear-gradient(45deg,
+        rgba(120, 119, 198, 0.1) 0%,
+        rgba(255, 118, 117, 0.1) 50%,
         rgba(255, 204, 112, 0.1) 100%);
     border-radius: 24px;
     z-index: -1;
@@ -137,21 +158,30 @@ body::before {
 }
 
 .auroraglow-profile {
-    text-align: center;
-    margin-bottom: 32px;
-    position: relative;
-    z-index: 2;
+    text-align: center !important;
+    margin-bottom: 32px !important;
+    position: relative !important;
+    z-index: 2 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
 }
 
 .auroraglow-avatar-container {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 20px;
+    position: relative !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-bottom: 20px !important;
+    width: 140px !important;
+    height: 140px !important;
 }
 
 .auroraglow-avatar {
-    width: 100px;
-    height: 100px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     border: 3px solid rgba(255, 255, 255, 0.3);
     object-fit: cover;
@@ -185,19 +215,23 @@ body::before {
 }
 
 .auroraglow-username {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 8px;
-    text-shadow: 0 0 20px rgba(120, 119, 198, 0.5);
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: white !important;
+    margin-bottom: 8px !important;
+    text-shadow: 0 0 20px rgba(120, 119, 198, 0.5) !important;
+    text-align: center !important;
+    width: 100% !important;
 }
 
 .auroraglow-bio {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    max-width: 280px;
-    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+    max-width: 280px !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    width: 100% !important;
 }
 
 .auroraglow-links {
@@ -234,9 +268,9 @@ body::before {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, 
-        transparent, 
-        rgba(120, 119, 198, 0.3), 
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(120, 119, 198, 0.3),
         transparent);
     transition: left 0.6s ease;
 }
@@ -394,12 +428,35 @@ body::before {
     gap: 15px;
 }
 
+.auroraglow-container .youtube-grid {
+    grid-template-columns: 1fr;
+}
+
+.auroraglow-container .youtube-embed-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25% !important; /* 16:9 */
+    margin-bottom: 12px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.auroraglow-container .youtube-embed-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
 .auroraglow-container .videos-grid {
     grid-template-columns: 1fr;
 }
 
 .auroraglow-container .images-grid {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: 1fr;
 }
 
 .auroraglow-container .music-grid {
@@ -487,7 +544,7 @@ body::before {
 
 /* Image Items */
 .auroraglow-container .image-item {
-    /* Removed aspect-ratio to allow space for titles/descriptions */
+    position: relative;
 }
 
 .auroraglow-container .image-container {
@@ -701,33 +758,251 @@ body::before {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+
+/* Aurora Glow Catalog Styles */
+.auroraglow-container .catalog-section {
+    margin: 25px 0;
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(10, 10, 15, 0.6);
+    border-radius: 16px;
+    position: relative;
+}
+
+.auroraglow-container .catalog-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg,
+        rgba(120, 119, 198, 0.05) 0%,
+        rgba(255, 118, 117, 0.05) 50%,
+        rgba(255, 204, 112, 0.05) 100%);
+    border-radius: 16px;
+    z-index: -1;
+    animation: glow-shift 6s ease-in-out infinite;
+}
+
+.auroraglow-container .catalog-title {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-shadow: 0 0 20px rgba(120, 119, 198, 0.5);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    position: relative;
+    z-index: 2;
+}
+
+.auroraglow-container .catalog-title i {
+    color: rgba(120, 119, 198, 1);
+    text-shadow: 0 0 8px rgba(120, 119, 198, 0.5);
+}
+
+.auroraglow-container .catalog-grid {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 0;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(120, 119, 198, 0.6) transparent;
+}
+
+.auroraglow-container .catalog-grid::-webkit-scrollbar {
+    height: 6px;
+}
+
+.auroraglow-container .catalog-grid::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.auroraglow-container .catalog-grid::-webkit-scrollbar-thumb {
+    background: rgba(120, 119, 198, 0.6);
+    border-radius: 3px;
+}
+
+.auroraglow-container .catalog-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    backdrop-filter: blur(10px);
+    flex: 0 0 220px;
+    min-height: 280px;
+}
+
+.auroraglow-container .catalog-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(120, 119, 198, 0.3),
+        transparent);
+    transition: left 0.6s ease;
+}
+
+.auroraglow-container .catalog-item:hover::before {
+    left: 100%;
+}
+
+.auroraglow-container .catalog-item:hover {
+    border-color: rgba(120, 119, 198, 0.5);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(120, 119, 198, 0.2);
+}
+
+.auroraglow-container .catalog-item-image {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.auroraglow-container .catalog-item:hover .catalog-item-image {
+    transform: scale(1.05);
+}
+
+.auroraglow-container .catalog-item-content {
+    padding: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.auroraglow-container .catalog-item-title {
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    text-shadow: 0 0 20px rgba(120, 119, 198, 0.5);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.2;
+}
+
+.auroraglow-container .catalog-item-description {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.8rem;
+    line-height: 1.3;
+    margin: 0 0 12px 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.auroraglow-container .catalog-item-price {
+    color: rgba(255, 204, 112, 0.9);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    text-shadow: 0 0 10px rgba(255, 204, 112, 0.3);
+}
+
+.auroraglow-container .catalog-buy-btn {
+    background: linear-gradient(135deg, rgba(120, 119, 198, 0.8), rgba(255, 118, 117, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    overflow: hidden;
+}
+
+.auroraglow-container .catalog-buy-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent);
+    transition: left 0.6s ease;
+}
+
+.auroraglow-container .catalog-buy-btn:hover::before {
+    left: 100%;
+}
+
+.auroraglow-container .catalog-buy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(120, 119, 198, 0.4);
+}
+
+.auroraglow-container .catalog-buy-btn i {
+    transition: transform 0.3s ease;
+}
+
+.auroraglow-container .catalog-buy-btn:hover i {
+    transform: scale(1.2);
+}
+
 /* Mobile Responsive */
 @media (max-width: 480px) {
     .auroraglow-container {
         padding: 20px;
         margin: 0;
     }
-    
+
     .auroraglow-avatar {
         width: 85px;
         height: 85px;
     }
-    
+
     .auroraglow-username {
         font-size: 1.3rem;
     }
-    
+
     .auroraglow-bio {
         font-size: 0.9rem;
     }
-    
+
     .auroraglow-link {
         padding: 14px 16px;
     }
-    
+
     .auroraglow-socials a {
         width: 40px;
         height: 40px;
         font-size: 1rem;
+    }
+
+    /* Mobile catalog styles */
+    .auroraglow-container .catalog-item {
+        flex: 0 0 180px;
+        min-height: 250px;
+    }
+
+    .auroraglow-container .catalog-item-image {
+        height: 120px;
+    }
+
+    .auroraglow-container .catalog-item-content {
+        padding: 12px;
+    }
+
+    .auroraglow-container .catalog-grid {
+        gap: 12px;
     }
 }

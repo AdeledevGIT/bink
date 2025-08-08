@@ -1,15 +1,42 @@
 /* Ocean Waves Template - Serene ocean-inspired design */
-* {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap');
+
+.oceanwaves-bio-bg * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    overflow-x: hidden;
+/* Override bio.css body styles specifically for Ocean Waves template */
+html body:has(.oceanwaves-bio-bg),
+html body .oceanwaves-bio-bg,
+html body {
+    font-family: 'Poppins', sans-serif !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    position: relative !important;
+    overflow-x: hidden !important;
+}
+
+/* Hide bio-page elements when Ocean Waves template is active */
+.oceanwaves-bio-bg ~ .bio-page,
+body:has(.oceanwaves-bio-bg) .bio-page,
+.bio-page {
+    display: none !important;
+}
+
+/* Ensure bio-root doesn't interfere */
+#bio-root {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
 }
 
 .oceanwaves-bio-bg {
@@ -385,10 +412,14 @@ body {
 }
 
 .oceanwaves-container .images-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: 1fr;
 }
 
 .oceanwaves-container .music-grid {
+    grid-template-columns: 1fr;
+}
+
+.oceanwaves-container .video-grid {
     grid-template-columns: 1fr;
 }
 
@@ -560,4 +591,265 @@ body {
         height: 45px;
         font-size: 1.1rem;
     }
+
+    .oceanwaves-container .catalog-item {
+        flex: 0 0 200px;
+        min-height: 280px;
+    }
+
+    .oceanwaves-container .catalog-item-image {
+        height: 120px;
+    }
+
+    .oceanwaves-container .catalog-item-content {
+        padding: 15px;
+    }
+
+    .oceanwaves-container .catalog-section {
+        padding: 20px;
+        margin: 20px 0;
+    }
+
+    .oceanwaves-container .video-thumbnail {
+        height: 150px;
+    }
+}
+
+/* Ocean Waves Video Styles */
+.oceanwaves-container .video-item {
+    padding: 0;
+}
+
+.oceanwaves-container .video-thumbnail {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 20px 20px 0 0;
+}
+
+.oceanwaves-container .video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.oceanwaves-container .video-thumbnail:hover img {
+    transform: scale(1.05);
+}
+
+.oceanwaves-container .video-play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.oceanwaves-container .video-thumbnail:hover .video-play-overlay {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.oceanwaves-container .video-play-button {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #ff4757;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.oceanwaves-container .video-thumbnail:hover .video-play-button {
+    transform: scale(1.1);
+    background: white;
+}
+
+.oceanwaves-container .video-duration {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Ocean Waves Catalog Styles */
+.oceanwaves-container .catalog-section {
+    margin: 30px 0;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.oceanwaves-container .catalog-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
+    z-index: -1;
+}
+
+.oceanwaves-container .catalog-title {
+    color: white;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 2;
+}
+
+.oceanwaves-container .catalog-grid {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 15px 0;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(79, 172, 254, 0.6) transparent;
+}
+
+.oceanwaves-container .catalog-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.oceanwaves-container .catalog-grid::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.oceanwaves-container .catalog-grid::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    border-radius: 10px;
+}
+
+.oceanwaves-container .catalog-item {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    position: relative;
+    flex: 0 0 240px;
+    min-height: 320px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.oceanwaves-container .catalog-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.oceanwaves-container .catalog-item:hover::before {
+    opacity: 1;
+}
+
+.oceanwaves-container .catalog-item:hover {
+    transform: translateY(-8px) scale(1.03);
+    border-color: rgba(79, 172, 254, 0.6);
+    box-shadow: 0 15px 40px rgba(79, 172, 254, 0.2);
+}
+
+.oceanwaves-container .catalog-item-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.oceanwaves-container .catalog-item:hover .catalog-item-image {
+    transform: scale(1.08);
+}
+
+.oceanwaves-container .catalog-item-content {
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.oceanwaves-container .catalog-item-title {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.oceanwaves-container .catalog-item-description {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    opacity: 0.9;
+}
+
+.oceanwaves-container .catalog-item-price {
+    color: #4facfe;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-shadow: 0 1px 5px rgba(79, 172, 254, 0.3);
+}
+
+.oceanwaves-container .catalog-buy-btn {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+.oceanwaves-container .catalog-buy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+}
+
+.oceanwaves-container .catalog-buy-btn i {
+    font-size: 0.9rem;
 }

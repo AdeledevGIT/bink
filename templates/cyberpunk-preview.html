@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="cyberpunk.css">
+    <link rel="stylesheet" href="catalog-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>body{margin:0;}</style>
@@ -17,7 +21,7 @@
                     <i class="fas fa-share-alt"></i>
                 </button>
             </div>
-            
+
             <div class="cyberpunk-profile">
                 <div class="cyberpunk-avatar-container">
                     <img class="cyberpunk-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Profile">
@@ -27,7 +31,7 @@
                 <div class="cyberpunk-title">CYBER SECURITY SPECIALIST</div>
                 <div class="cyberpunk-bio">Digital guardian navigating the neon-lit corridors of cyberspace, protecting data in the age of artificial intelligence</div>
             </div>
-            
+
             <div class="cyberpunk-links">
                 <div class="cyberpunk-link-container">
                     <a class="cyberpunk-link" href="#">
@@ -39,7 +43,7 @@
                         <i class="fas fa-share-alt"></i>
                     </button>
                 </div>
-                
+
                 <div class="cyberpunk-link-container">
                     <a class="cyberpunk-link" href="#">
                         <i class="fab fa-github"></i>
@@ -50,7 +54,7 @@
                         <i class="fas fa-share-alt"></i>
                     </button>
                 </div>
-                
+
                 <div class="cyberpunk-link-container">
                     <a class="cyberpunk-link" href="#">
                         <i class="fas fa-brain"></i>
@@ -61,7 +65,7 @@
                         <i class="fas fa-share-alt"></i>
                     </button>
                 </div>
-                
+
                 <div class="cyberpunk-link-container">
                     <a class="cyberpunk-link" href="#">
                         <i class="fas fa-terminal"></i>
@@ -74,28 +78,116 @@
                 </div>
             </div>
 
-            <!-- Media Content Section -->
-            <div class="media-section">
-                <h3 class="media-section-title">
-                    <i class="fas fa-images"></i> DIGITAL GALLERY
-                </h3>
-                <div class="media-grid images-grid">
-                    <div class="media-item image-item">
-                        <div class="image-container">
-                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=200&fit=crop" alt="Cyber Art 1" loading="lazy">
-                        </div>
-                        <div class="media-info">
-                            <h4 class="media-title">Neural Networks</h4>
-                            <p class="media-description">AI visualization and neural network architectures</p>
+            <!-- Catalog Section -->
+            <div class="catalog-section">
+                <h3 class="catalog-title">CYBER PRODUCTS</h3>
+                <div class="catalog-grid">
+                    <div class="catalog-item">
+                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=200&h=200&fit=crop" alt="Cyber Security Course" class="catalog-item-image">
+                        <div class="catalog-item-content">
+                            <h4 class="catalog-item-title">Advanced Cyber Security</h4>
+                            <p class="catalog-item-description">Master the art of digital protection and ethical hacking</p>
+                            <div class="catalog-item-price">$199.00</div>
+                            <a href="#" target="_blank" class="catalog-buy-btn">
+                                <i class="fas fa-shopping-cart"></i> Buy Now
+                            </a>
                         </div>
                     </div>
-                    <div class="media-item image-item">
-                        <div class="image-container">
-                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop" alt="Cyber Art 2" loading="lazy">
+                    <div class="catalog-item">
+                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=200&h=200&fit=crop" alt="AI Tools" class="catalog-item-image">
+                        <div class="catalog-item-content">
+                            <h4 class="catalog-item-title">AI Security Tools</h4>
+                            <p class="catalog-item-description">Cutting-edge artificial intelligence security suite</p>
+                            <div class="catalog-item-price">$299.00</div>
+                            <a href="#" target="_blank" class="catalog-buy-btn">
+                                <i class="fas fa-shopping-cart"></i> Buy Now
+                            </a>
                         </div>
-                        <div class="media-info">
-                            <h4 class="media-title">Quantum Computing</h4>
-                            <p class="media-description">Exploring quantum algorithms and cryptography</p>
+                    </div>
+                    <div class="catalog-item">
+                        <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=200&h=200&fit=crop" alt="Consultation" class="catalog-item-image">
+                        <div class="catalog-item-content">
+                            <h4 class="catalog-item-title">Security Consultation</h4>
+                            <p class="catalog-item-description">One-on-one cybersecurity assessment and strategy</p>
+                            <div class="catalog-item-price">$149.00</div>
+                            <a href="#" target="_blank" class="catalog-buy-btn">
+                                <i class="fas fa-shopping-cart"></i> Buy Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Digital Gallery - Matrix Style -->
+            <div class="media-section">
+                <h3 class="media-section-title">
+                    <i class="fas fa-images"></i> Digital Gallery
+                </h3>
+                <div class="images-grid">
+                    <!-- Featured Image -->
+                    <div class="gallery-featured">
+                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=200&fit=crop" alt="Neon Cityscape" class="featured-image" loading="lazy">
+                        <div class="featured-info">
+                            <h4 class="featured-title">Neon Cityscape</h4>
+                            <p class="featured-description">Futuristic city lights in the digital realm</p>
+                        </div>
+                    </div>
+
+                    <!-- Matrix Grid -->
+                    <div class="gallery-matrix">
+                        <div class="matrix-cell">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop" alt="Digital Matrix" loading="lazy">
+                            <div class="matrix-overlay">
+                                <div class="matrix-info">
+                                    <h4 class="matrix-title">Digital Matrix</h4>
+                                    <p class="matrix-description">Abstract digital patterns and code streams</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="matrix-cell">
+                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=300&h=300&fit=crop" alt="Cyber Interface" loading="lazy">
+                            <div class="matrix-overlay">
+                                <div class="matrix-info">
+                                    <h4 class="matrix-title">Cyber Interface</h4>
+                                    <p class="matrix-description">Advanced holographic user interface design</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="matrix-cell">
+                            <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=300&h=300&fit=crop" alt="Neural Network" loading="lazy">
+                            <div class="matrix-overlay">
+                                <div class="matrix-info">
+                                    <h4 class="matrix-title">Neural Network</h4>
+                                    <p class="matrix-description">AI consciousness visualization patterns</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="matrix-cell">
+                            <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?w=300&h=300&fit=crop" alt="Data Stream" loading="lazy">
+                            <div class="matrix-overlay">
+                                <div class="matrix-info">
+                                    <h4 class="matrix-title">Data Stream</h4>
+                                    <p class="matrix-description">Information flow through quantum channels</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="matrix-cell">
+                            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=300&h=300&fit=crop" alt="AI Core" loading="lazy">
+                            <div class="matrix-overlay">
+                                <div class="matrix-info">
+                                    <h4 class="matrix-title">AI Core</h4>
+                                    <p class="matrix-description">Central processing unit of artificial intelligence</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="matrix-cell">
+                            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=300&h=300&fit=crop" alt="Quantum Field" loading="lazy">
+                            <div class="matrix-overlay">
+                                <div class="matrix-info">
+                                    <h4 class="matrix-title">Quantum Field</h4>
+                                    <p class="matrix-description">Quantum computing visualization and algorithms</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

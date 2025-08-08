@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/png" href="../logo1.png">
+    <link rel="stylesheet" href="gradientcard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>body{margin:0;}</style>
+    <script src="templates.js"></script>
+    <script src="gradientcard.js"></script>
+</head>
+<body>
+    <div id="test-root"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample data to test the template
+            const testData = {
+                username: 'alexdesigner',
+                displayName: 'alexdesigner',
+                bio: 'UI/UX Designer creating beautiful digital experiences with modern design principles',
+                profilePicUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+                socialLinks: {
+                    twitter: '#',
+                    instagram: '#',
+                    linkedin: '#',
+                    github: '#'
+                },
+                links: [
+                    {
+                        id: '1',
+                        title: 'My Portfolio',
+                        platform: 'website',
+                        url: '#'
+                    },
+                    {
+                        id: '2',
+                        title: 'Behance',
+                        platform: 'behance',
+                        url: '#'
+                    },
+                    {
+                        id: '3',
+                        title: 'Dribbble',
+                        platform: 'dribbble',
+                        url: '#'
+                    }
+                ],
+                media: {
+                    images: [
+                        {
+                            title: 'Modern UI Design',
+                            description: 'Clean and modern user interface design for mobile applications',
+                            url: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=300&h=200&fit=crop'
+                        },
+                        {
+                            title: 'Brand Identity',
+                            description: 'Complete brand identity design including logo and visual guidelines',
+                            url: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=300&h=200&fit=crop'
+                        }
+                    ],
+                    youtube: [
+                        {
+                            title: 'Design Process Tutorial',
+                            description: 'Step-by-step guide to my design process and workflow',
+                            url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+                        }
+                    ],
+                    music: [
+                        {
+                            title: 'Creative Flow',
+                            artist: 'Alex Designer',
+                            platform: 'spotify',
+                            url: 'https://open.spotify.com/track/4iV5W9uYEdYUVa79Axb7Rh'
+                        },
+                        {
+                            title: 'Inspiration',
+                            artist: 'Alex Designer',
+                            platform: 'apple-music',
+                            url: 'https://music.apple.com/us/album/inspiration/1234567890'
+                        }
+                    ]
+                },
+                catalog: []
+            };
+
+            // Initialize BINK templates namespace if not exists
+            if (!window.BINK) {
+                window.BINK = { templates: { templates: {} } };
+            }
+
+            // Add required helper functions for testing
+            window.BINK.templates.shareProfile = function(event, username) {
+                console.log('Share profile:', username);
+            };
+
+            window.BINK.templates.trackLinkClick = function(event, linkId) {
+                console.log('Track link click:', linkId);
+            };
+
+            window.BINK.templates.shareLink = function(event, url, title) {
+                console.log('Share link:', title, url);
+            };
+
+            window.BINK.templates.getPlatformIcon = function(platform) {
+                const icons = {
+                    'website': 'fas fa-globe',
+                    'behance': 'fab fa-behance',
+                    'dribbble': 'fab fa-dribbble',
+                    'facebook': 'fab fa-facebook',
+                    'twitter': 'fab fa-twitter',
+                    'instagram': 'fab fa-instagram',
+                    'linkedin': 'fab fa-linkedin',
+                    'github': 'fab fa-github',
+                    'youtube': 'fab fa-youtube'
+                };
+                return icons[platform] || 'fas fa-link';
+            };
+
+            window.BINK.templates.renderCatalogContent = function(catalog) {
+                return ''; // Empty for this test
+            };
+
+            // Test the Gradient Card template
+            try {
+                const gradientCardTemplate = window.BINK.templates.templates['gradientcard'];
+                if (gradientCardTemplate) {
+                    console.log('Gradient Card template found, rendering...');
+                    const rendered = gradientCardTemplate.render(testData);
+                    document.getElementById('test-root').innerHTML = rendered;
+                    console.log('Gradient Card template rendered successfully!');
+                } else {
+                    console.error('Gradient Card template not found');
+                    document.getElementById('test-root').innerHTML = '<div>Gradient Card template not found</div>';
+                }
+            } catch (error) {
+                console.error('Error rendering Gradient Card template:', error);
+                document.getElementById('test-root').innerHTML = '<div>Error: ' + error.message + '</div>';
+            }
+        });
+    </script>
+</body>
+</html>

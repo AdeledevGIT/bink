@@ -1,5 +1,4 @@
-/* Gradient Flow Template - Standalone Premium Template */
-/* Complete standalone implementation with no shared dependencies */
+
 
 * {
     margin: 0;
@@ -146,7 +145,6 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Profile Section */
 .gradientflow-profile {
     display: flex;
     flex-direction: column;
@@ -162,8 +160,8 @@ body {
 }
 
 .gradientflow-avatar {
-    width: 110px;
-    height: 110px;
+    width: 140px !important;
+    height: 140px !important;
     border-radius: 50%;
     border: 3px solid #fff;
     object-fit: cover;

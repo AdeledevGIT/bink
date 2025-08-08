@@ -1,19 +1,58 @@
 /* Soft Pastel Template - Pastel colors with soft rounded elements */
-* {
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+.softpastel-bio-bg * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: linear-gradient(135deg, #ffeef8 0%, #f0f4ff 50%, #fff0f8 100%);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    position: relative;
+/* Override bio.css body styles specifically for Soft Pastel template */
+html body:has(.softpastel-bio-bg),
+html body .softpastel-bio-bg,
+html body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    background: linear-gradient(135deg, #ffeef8 0%, #f0f4ff 50%, #fff0f8 100%) !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    position: relative !important;
+    overflow-x: hidden !important;
+}
+
+/* Force override with higher specificity */
+html body[style*="background"],
+html body[class],
+html body[id] {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    background: linear-gradient(135deg, #ffeef8 0%, #f0f4ff 50%, #fff0f8 100%) !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    position: relative !important;
+    overflow-x: hidden !important;
+}
+
+/* Hide bio-page elements when Soft Pastel template is active */
+.softpastel-bio-bg ~ .bio-page,
+body:has(.softpastel-bio-bg) .bio-page,
+.bio-page {
+    display: none !important;
+}
+
+/* Ensure bio-root doesn't interfere */
+#bio-root {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
 }
 
 body::before {
@@ -28,26 +67,43 @@ body::before {
 }
 
 .softpastel-bio-bg {
-    width: 100vw;
-    max-width: 100vw;
-    min-height: 100vh;
-    position: relative;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    min-height: 100vh !important;
+    position: relative !important;
 }
 
 .softpastel-container {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(20px);
-    border-radius: 0;
-    padding: 0;
-    box-shadow: none;
-    border: none;
-    position: relative;
-    overflow: hidden;
-    width: 100vw;
-    min-height: 100vh;
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(20px) !important;
+    border-radius: 20px !important;
+    padding: 40px 30px !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    width: 720px !important;
+    max-width: 720px !important;
+    min-height: 100vh !important;
+    box-sizing: border-box !important;
+    margin: 20px auto !important;
 }
 
 .softpastel-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ffc1e3, #c1a3ff, #a3c1ff, #ffc1e3);
+    background-size: 300% 100%;
+    animation: gradient-shift 3s ease-in-out infinite;
+    border-radius: 20px 20px 0 0;
+    z-index: 3;
+}
+
+.softpastel-container::after {
     content: '';
     position: absolute;
     top: -50%;
@@ -57,6 +113,12 @@ body::before {
     background: conic-gradient(from 0deg, transparent, rgba(255, 193, 227, 0.1), transparent);
     animation: rotate 20s linear infinite;
     pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 
 @keyframes rotate {
@@ -110,21 +172,30 @@ body::before {
 }
 
 .softpastel-profile {
-    text-align: center;
-    margin-bottom: 32px;
-    position: relative;
-    z-index: 2;
+    text-align: center !important;
+    margin-bottom: 32px !important;
+    position: relative !important;
+    z-index: 2 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
 }
 
 .softpastel-avatar-container {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 20px;
+    position: relative !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-bottom: 20px !important;
+    width: 140px !important;
+    height: 140px !important;
 }
 
 .softpastel-avatar {
-    width: 100px;
-    height: 100px;
+    width: 140px !important;
+    height: 140px !important;
     border-radius: 50%;
     border: 4px solid white;
     box-shadow: 0 8px 32px rgba(255, 193, 227, 0.3);
@@ -153,18 +224,22 @@ body::before {
 }
 
 .softpastel-username {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #6b46c1;
-    margin-bottom: 8px;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: #6b46c1 !important;
+    margin-bottom: 8px !important;
+    text-align: center !important;
+    width: 100% !important;
 }
 
 .softpastel-bio {
-    color: #8b5cf6;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    max-width: 280px;
-    margin: 0 auto;
+    color: #8b5cf6 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+    max-width: 280px !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    width: 100% !important;
 }
 
 .softpastel-links {
@@ -300,33 +375,52 @@ body::before {
 /* Mobile Responsive */
 @media (max-width: 480px) {
     .softpastel-container {
-        padding: 28px;
-        margin: 10px;
-        border-radius: 28px;
+        width: 95% !important;
+        padding: 24px !important;
+        margin: 10px !important;
+        border-radius: 28px !important;
     }
-    
+
     .softpastel-avatar {
-        width: 85px;
-        height: 85px;
+        width: 120px !important;
+        height: 120px !important;
     }
-    
+
     .softpastel-username {
         font-size: 1.3rem;
     }
-    
+
     .softpastel-bio {
         font-size: 0.9rem;
     }
-    
+
     .softpastel-link {
         padding: 14px 18px;
         border-radius: 18px;
     }
-    
+
     .softpastel-socials a {
         width: 42px;
         height: 42px;
         font-size: 1rem;
+    }
+
+    .softpastel-container .catalog-item {
+        flex: 0 0 200px;
+        min-height: 280px;
+    }
+
+    .softpastel-container .catalog-item-image {
+        height: 120px;
+    }
+
+    .softpastel-container .catalog-item-content {
+        padding: 15px;
+    }
+
+    .softpastel-container .catalog-section {
+        padding: 20px 15px;
+        margin: 20px 0;
     }
 }
 
@@ -372,6 +466,34 @@ body::before {
 .softpastel-container .media-grid {
     display: grid;
     gap: 15px;
+}
+
+
+/* YouTube Embed Fix for Soft Pastel
+   The global reset (.softpastel-bio-bg *) zeroed padding, which removed
+   the aspect-ratio padding from .youtube-embed-container defined in bio.css.
+   Restore it here and scope to Soft Pastel to ensure YouTube iframes render. */
+.softpastel-container .youtube-grid {
+    grid-template-columns: 1fr;
+}
+
+.softpastel-container .youtube-embed-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25% !important; /* 16:9 */
+    margin-bottom: 12px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.softpastel-container .youtube-embed-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
 }
 
 .softpastel-container .videos-grid {
@@ -638,4 +760,173 @@ body::before {
     line-height: 1.4;
     margin: 0;
     font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Soft Pastel Catalog Styles */
+.softpastel-container .catalog-section {
+    margin: 30px 0;
+    padding: 25px 20px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 25px;
+    border: 2px solid rgba(255, 193, 227, 0.3);
+    backdrop-filter: blur(15px);
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.softpastel-container .catalog-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 193, 227, 0.1), transparent);
+    transition: left 0.8s ease;
+}
+
+.softpastel-container .catalog-section:hover::before {
+    left: 100%;
+}
+
+.softpastel-container .catalog-title {
+    color: #d946ef;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 0 2px 4px rgba(217, 70, 239, 0.2);
+    position: relative;
+    z-index: 2;
+}
+
+.softpastel-container .catalog-grid {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 15px 0;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 193, 227, 0.6) transparent;
+}
+
+.softpastel-container .catalog-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.softpastel-container .catalog-grid::-webkit-scrollbar-track {
+    background: rgba(255, 193, 227, 0.1);
+    border-radius: 10px;
+}
+
+.softpastel-container .catalog-grid::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #ffc1e3, #d946ef);
+    border-radius: 10px;
+}
+
+.softpastel-container .catalog-item {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 193, 227, 0.4);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    position: relative;
+    flex: 0 0 240px;
+    min-height: 320px;
+    box-shadow: 0 8px 25px rgba(255, 193, 227, 0.3);
+}
+
+.softpastel-container .catalog-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 193, 227, 0.1), rgba(217, 70, 239, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.softpastel-container .catalog-item:hover::before {
+    opacity: 1;
+}
+
+.softpastel-container .catalog-item:hover {
+    transform: translateY(-8px) scale(1.03);
+    border-color: #d946ef;
+    box-shadow: 0 15px 40px rgba(217, 70, 239, 0.4);
+}
+
+.softpastel-container .catalog-item-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.softpastel-container .catalog-item:hover .catalog-item-image {
+    transform: scale(1.08);
+}
+
+.softpastel-container .catalog-item-content {
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.softpastel-container .catalog-item-title {
+    color: #d946ef;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    text-shadow: 0 1px 2px rgba(217, 70, 239, 0.1);
+}
+
+.softpastel-container .catalog-item-description {
+    color: #8b5cf6;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    opacity: 0.9;
+}
+
+.softpastel-container .catalog-item-price {
+    color: #d946ef;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-shadow: 0 1px 2px rgba(217, 70, 239, 0.2);
+}
+
+.softpastel-container .catalog-buy-btn {
+    background: linear-gradient(135deg, #ffc1e3, #d946ef);
+    color: white;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 193, 227, 0.4);
+}
+
+.softpastel-container .catalog-buy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(217, 70, 239, 0.5);
+    background: linear-gradient(135deg, #d946ef, #ffc1e3);
+}
+
+.softpastel-container .catalog-buy-btn i {
+    font-size: 0.9rem;
 }

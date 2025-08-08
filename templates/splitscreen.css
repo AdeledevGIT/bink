@@ -67,8 +67,8 @@
 }
 
 .splitscreen-avatar {
-    width: 150px;
-    height: 150px;
+    width: 140px !important;
+    height: 140px !important;
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid #fff;

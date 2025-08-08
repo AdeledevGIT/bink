@@ -113,8 +113,8 @@
 }
 
 .techwave-avatar {
-    width: 110px;
-    height: 110px;
+    width: 140px !important;
+    height: 140px !important;
     border-radius: 50%;
     border: 3px solid #64ffda;
     object-fit: cover;

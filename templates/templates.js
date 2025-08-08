@@ -236,7 +236,7 @@ window.BINK.templates.renderMediaContent = function(media) {
                                 </iframe>
                             </div>
                             <div class="media-info">
-                                <h4 class="media-title">${video.title}</h4>
+                                <h4 class="media-title">${video.title || 'Untitled Video'}</h4>
                                 ${video.description ? `<p class="media-description">${video.description}</p>` : ''}
                             </div>
                         </div>
@@ -305,9 +305,10 @@ window.BINK.templates.renderMediaContent = function(media) {
 
 // Helper functions for media
 window.BINK.templates.getYouTubeVideoId = function(url) {
+    if (!url || typeof url !== 'string') return 'dQw4w9WgXcQ'; // fallback video ID
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
+    return (match && match[2] && match[2].length === 11) ? match[2] : 'dQw4w9WgXcQ'; // fallback video ID
 };
 
 window.BINK.templates.getMusicPlatformIcon = function(platform) {
@@ -1709,7 +1710,9 @@ window.BINK.templates.templates['corporate'] = {
                 </div>
 
                 <div class="corporate-header">
-                    ${getAvatarHTML(data, 'corporate-avatar', 'corporate-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
+                    <div class="corporate-avatar-container">
+                        <img class="corporate-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                    </div>
                     <div class="corporate-name">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="corporate-title">Professional</div>
                     <div class="corporate-bio">${data.bio || ''}</div>
@@ -1773,7 +1776,9 @@ window.BINK.templates.templates['creative'] = {
                 </div>
 
                 <div class="creative-header">
-                    ${getAvatarHTML(data, 'creative-avatar', 'creative-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
+                    <div class="creative-avatar-container">
+                        <img class="creative-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                    </div>
                     <div class="creative-name">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="creative-title">Creative Artist</div>
                     <div class="creative-bio">${data.bio || ''}</div>
@@ -1814,16 +1819,32 @@ window.BINK.templates.templates['creative'] = {
     }
 };
 
-// Gradient Card Template (Premium)
+// Gradient Card Template (Premium) - Redesigned to match preview exactly
 window.BINK.templates.templates['gradientcard'] = {
     id: 'gradientcard',
     name: 'Gradient Card',
     description: 'Modern gradient background with card-style layout and smooth animations.',
     css: 'templates/gradientcard.css',
+    js: 'templates/gradientcard.js',
     isPremium: true,
     tokenPrice: 140,
     category: 'seller',
     render: function(data) {
+        // Load the standalone JavaScript if not already loaded
+        if (!window.GradientCard) {
+            const script = document.createElement('script');
+            script.src = 'templates/gradientcard.js';
+            script.onload = function() {
+                // Re-render after script loads
+                const bioRoot = document.getElementById('bio-root');
+                if (bioRoot) {
+                    bioRoot.innerHTML = window.BINK.templates.templates['gradientcard'].render(data);
+                }
+            };
+            document.head.appendChild(script);
+            return '<div>Loading...</div>';
+        }
+
         return `
         <div class="gradientcard-bio-bg">
             <div class="gradientcard-container">
@@ -1836,27 +1857,58 @@ window.BINK.templates.templates['gradientcard'] = {
                     </button>
                 </div>
                 <div class="gradientcard-profile">
-                    ${getAvatarHTML(data, 'gradientcard-avatar', 'gradientcard-avatar-container', '#667eea', '4px solid #fff', '0 8px 32px #667eea')}
-                    <div class="gradientcard-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
-                    <div class="gradientcard-bio">${data.bio || ''}</div>
+                    <div class="gradientcard-avatar-container">
+                        <img class="gradientcard-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                    </div>
+                    <div class="gradientcard-username">${data.displayName || data.username || 'alexdesigner'}</div>
+                    <div class="gradientcard-bio">${data.bio || 'UI/UX Designer creating beautiful digital experiences with modern design principles'}</div>
                 </div>
                 <div class="gradientcard-links">
-                    ${(data.links || []).map(link => `
-                        <div class="gradientcard-link-container">
-                            <a class="gradientcard-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
-                                <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
-                                <span>${link.title}</span>
+                    ${(data.links && data.links.length > 0) ?
+                        data.links.map(link => `
+                            <div class="gradientcard-link-container">
+                                <a class="gradientcard-link" href="${link.url}" onclick="window.BINK.templates.trackLinkClick(event, '${link.id}')" target="_blank">
+                                    <i class="${window.BINK.templates.getPlatformIcon(link.platform)}"></i>
+                                    <span>${link.title}</span>
+                                </a>
+                                <button class="gradientcard-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
+                        `).join('') :
+                        `<div class="gradientcard-link-container">
+                            <a class="gradientcard-link" href="#">
+                                <i class="fas fa-globe"></i>
+                                <span>My Portfolio</span>
                             </a>
-                            <button class="gradientcard-link-share-btn" onclick="window.BINK.templates.shareLink(event, '${link.url}', '${link.title}')">
+                            <button class="gradientcard-link-share-btn">
                                 <i class="fas fa-share-alt"></i>
                             </button>
                         </div>
-                    `).join('')}
+                        <div class="gradientcard-link-container">
+                            <a class="gradientcard-link" href="#">
+                                <i class="fab fa-behance"></i>
+                                <span>Behance</span>
+                            </a>
+                            <button class="gradientcard-link-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <div class="gradientcard-link-container">
+                            <a class="gradientcard-link" href="#">
+                                <i class="fab fa-dribbble"></i>
+                                <span>Dribbble</span>
+                            </a>
+                            <button class="gradientcard-link-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>`
+                    }
                 </div>
                 ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
-                ${window.BINK.templates.renderMediaContent(data.media || {})}
+                ${window.GradientCard.renderMediaContent(data.media || {})}
                 <div class="gradientcard-socials">
-                    ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
+                    ${window.GradientCard.renderSocialLinks(data.socialLinks)}
                 </div>
                 <div class="gradientcard-footer">
                     Powered by <a href="index.html" target="_blank">BINK</a>
@@ -1890,7 +1942,9 @@ window.BINK.templates.templates['neonminimal'] = {
                 </div>
 
                 <div class="neonminimal-profile">
-                    ${getAvatarHTML(data, 'neonminimal-avatar', 'neonminimal-avatar-container', '#e0e7ef', '3px solid #e0e7ef', '0 5px 15px rgba(0,0,0,0.08)')}
+                    <div class="neonminimal-avatar-container">
+                        <img class="neonminimal-avatar" src="${data.profilePicUrl || 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&h=150&fit=crop&crop=face'}" alt="Profile">
+                    </div>
                     <div class="neonminimal-username">${window.BINK.templates.formatUsername(data.displayName || data.username)}</div>
                     <div class="neonminimal-bio">${data.bio || ''}</div>
                 </div>
@@ -1964,11 +2018,11 @@ window.BINK.templates.templates['softpastel'] = {
                         </div>
                     `).join('')}
                 </div>
-                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
-                ${window.BINK.templates.renderMediaContent(data.media || {})}
                 <div class="softpastel-socials">
                     ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
                 </div>
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
+                ${window.BINK.templates.renderMediaContent(data.media || {})}
                 <div class="softpastel-footer">
                     Powered by <a href="index.html" target="_blank">BINK</a>
                 </div>
@@ -2079,11 +2133,11 @@ window.BINK.templates.templates['auroraglow'] = {
                         </div>
                     `).join('')}
                 </div>
-                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
-                ${window.BINK.templates.renderMediaContent(data.media || {})}
                 <div class="auroraglow-socials">
                     ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
                 </div>
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
+                ${window.BINK.templates.renderMediaContent(data.media || {})}
                 <div class="auroraglow-footer">
                     Powered by <a href="index.html" target="_blank">BINK</a>
                 </div>
@@ -2091,6 +2145,134 @@ window.BINK.templates.templates['auroraglow'] = {
         </div>
         `;
     }
+};
+
+// Hero Banner Media Content Renderer with Custom Gallery
+window.BINK.templates.renderHeroBannerMediaContent = function(media) {
+    if (!media || typeof media !== 'object') media = {};
+
+    let mediaHTML = '';
+
+    // Custom Gallery Section with redesigned layout
+    const images = media.images && media.images.length > 0 ? media.images : [
+        {
+            url: 'https://images.unsplash.com/photo-1493612276216-ee3925520721?w=600&h=400&fit=crop',
+            title: 'Mountain Majesty',
+            description: 'Captured during golden hour in the Swiss Alps',
+            tags: ['Landscape', 'Nature']
+        },
+        {
+            url: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=300&h=300&fit=crop',
+            title: 'Urban Portrait',
+            description: 'Street photography with natural lighting',
+            tags: ['Portrait']
+        },
+        {
+            url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop',
+            title: 'Forest Light',
+            description: 'Morning light filtering through ancient trees',
+            tags: ['Nature']
+        },
+        {
+            url: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop',
+            title: 'Abstract Waves',
+            description: 'Creative long exposure water photography',
+            tags: ['Abstract']
+        },
+        {
+            url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=300&h=300&fit=crop',
+            title: 'Wild Encounter',
+            description: 'Wildlife photography in natural habitat',
+            tags: ['Wildlife']
+        }
+    ];
+
+    mediaHTML += `
+        <div class="media-section gallery-section">
+            <h3 class="media-section-title">
+                <i class="fas fa-images"></i> Photography Gallery
+            </h3>
+            <div class="gallery-grid">
+                ${images.map((image, index) => `
+                    <div class="gallery-item ${index === 0 ? 'gallery-large' : ''}">
+                        <div class="gallery-image-container">
+                            <img src="${image.url}" alt="${image.title}" loading="lazy">
+                            <div class="gallery-overlay">
+                                <div class="gallery-overlay-content">
+                                    <h4 class="gallery-title">${image.title}</h4>
+                                    <p class="gallery-description">${image.description}</p>
+                                    <div class="gallery-tags">
+                                        ${(image.tags || []).map(tag => `<span class="gallery-tag">${tag}</span>`).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+
+    // Music section
+    if (media.music && media.music.length > 0) {
+        mediaHTML += `
+            <div class="media-section">
+                <h3 class="media-section-title">
+                    <i class="fas fa-music"></i> Music
+                </h3>
+                <div class="media-grid music-grid">
+                    ${media.music.map(music => `
+                        <div class="media-item music-item">
+                            <div class="music-player" onclick="window.open('${music.url}', '_blank')">
+                                <div class="music-platform-icon ${music.platform}">
+                                    <i class="${window.BINK.templates.getMusicPlatformIcon(music.platform)}"></i>
+                                </div>
+                                <div class="music-info">
+                                    <h4 class="music-title">${music.title}</h4>
+                                    <p class="music-artist">${music.artist}</p>
+                                    <p class="music-platform">${window.BINK.templates.getPlatformDisplayName(music.platform)}</p>
+                                </div>
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    // YouTube section
+    if (media.youtube && media.youtube.length > 0) {
+        mediaHTML += `
+            <div class="media-section">
+                <h3 class="media-section-title">
+                    <i class="fab fa-youtube"></i> YouTube
+                </h3>
+                <div class="media-grid youtube-grid">
+                    ${media.youtube.map(video => `
+                        <div class="media-item youtube-item">
+                            <div class="youtube-embed-container">
+                                <iframe
+                                    src="https://www.youtube.com/embed/${window.BINK.templates.getYouTubeVideoId(video.url)}"
+                                    frameborder="0"
+                                    allowfullscreen
+                                    loading="lazy">
+                                </iframe>
+                            </div>
+                            <div class="media-info">
+                                <h4 class="media-title">${video.title || 'Untitled Video'}</h4>
+                                ${video.description ? `<p class="media-description">${video.description}</p>` : ''}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    return mediaHTML;
 };
 
 // Hero Banner Template (Premium)
@@ -2137,8 +2319,8 @@ window.BINK.templates.templates['herobanner'] = {
                         `).join('')}
                     </div>
 
+                    ${window.BINK.templates.renderHeroBannerMediaContent(data.media || {})}
                     ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
-                    ${window.BINK.templates.renderMediaContent(data.media || {})}
 
                     <div class="herobanner-socials">
                         ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
@@ -2152,6 +2334,148 @@ window.BINK.templates.templates['herobanner'] = {
         </div>
         `;
     }
+};
+
+// Cyberpunk Gallery Renderer - Matrix Style
+window.BINK.templates.renderCyberpunkGallery = function(images) {
+    if (!images || images.length === 0) {
+        // Default sample images
+        images = [
+            {
+                url: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop',
+                title: 'Neon Cityscape',
+                description: 'Futuristic city lights in the digital realm'
+            },
+            {
+                url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop',
+                title: 'Digital Matrix',
+                description: 'Abstract digital patterns and code streams'
+            },
+            {
+                url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=300&h=300&fit=crop',
+                title: 'Cyber Interface',
+                description: 'Advanced holographic user interface design'
+            },
+            {
+                url: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=300&h=300&fit=crop',
+                title: 'Neural Network',
+                description: 'AI consciousness visualization patterns'
+            },
+            {
+                url: 'https://images.unsplash.com/photo-1493612276216-ee3925520721?w=300&h=300&fit=crop',
+                title: 'Data Stream',
+                description: 'Information flow through quantum channels'
+            }
+        ];
+    }
+
+    const featuredImage = images[0];
+    const matrixImages = images.slice(1, 7); // Take up to 6 images for matrix
+
+    return `
+        <div class="media-section">
+            <h3 class="media-section-title">
+                <i class="fas fa-images"></i> Digital Gallery
+            </h3>
+            <div class="images-grid">
+                <!-- Featured Image -->
+                <div class="gallery-featured">
+                    <img src="${featuredImage.url}" alt="${featuredImage.title}" class="featured-image" loading="lazy">
+                    <div class="featured-info">
+                        <h4 class="featured-title">${featuredImage.title}</h4>
+                        <p class="featured-description">${featuredImage.description}</p>
+                    </div>
+                </div>
+
+                <!-- Matrix Grid -->
+                <div class="gallery-matrix">
+                    ${matrixImages.map((image, index) => `
+                        <div class="matrix-cell">
+                            <img src="${image.url}" alt="${image.title}" loading="lazy">
+                            <div class="matrix-overlay">
+                                <div class="matrix-info">
+                                    <h4 class="matrix-title">${image.title}</h4>
+                                    <p class="matrix-description">${image.description}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+};
+
+// Cyberpunk Media Content Renderer
+window.BINK.templates.renderCyberpunkMediaContent = function(media) {
+    if (!media || typeof media !== 'object') media = {};
+
+    let mediaHTML = '';
+
+    // Custom Gallery Section
+    const images = media.images && media.images.length > 0 ? media.images : null;
+    mediaHTML += window.BINK.templates.renderCyberpunkGallery(images);
+
+    // Music section
+    if (media.music && media.music.length > 0) {
+        mediaHTML += `
+            <div class="media-section">
+                <h3 class="media-section-title">
+                    <i class="fas fa-music"></i> Audio Tracks
+                </h3>
+                <div class="media-grid music-grid">
+                    ${media.music.map(music => `
+                        <div class="media-item music-item">
+                            <div class="music-player" onclick="window.open('${music.url}', '_blank')">
+                                <div class="music-platform-icon ${music.platform}">
+                                    <i class="${window.BINK.templates.getMusicPlatformIcon(music.platform)}"></i>
+                                </div>
+                                <div class="music-info">
+                                    <h4 class="music-title">${music.title}</h4>
+                                    <p class="music-artist">${music.artist}</p>
+                                    <p class="music-platform">${window.BINK.templates.getPlatformDisplayName(music.platform)}</p>
+                                </div>
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    // YouTube section
+    if (media.youtube && media.youtube.length > 0) {
+        mediaHTML += `
+            <div class="media-section">
+                <h3 class="media-section-title">
+                    <i class="fab fa-youtube"></i> YouTube
+                </h3>
+                <div class="media-grid youtube-grid">
+                    ${media.youtube.map(video => `
+                        <div class="media-item youtube-item">
+                            <div class="youtube-embed-container">
+                                <iframe
+                                    src="https://www.youtube.com/embed/${window.BINK.templates.getYouTubeVideoId(video.url)}"
+                                    frameborder="0"
+                                    allowfullscreen
+                                    loading="lazy">
+                                </iframe>
+                            </div>
+                            <div class="media-info">
+                                <h4 class="media-title">${video.title || 'Untitled Video'}</h4>
+                                ${video.description ? `<p class="media-description">${video.description}</p>` : ''}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    return mediaHTML;
 };
 
 // Cyberpunk Template (Premium)
@@ -2201,12 +2525,12 @@ window.BINK.templates.templates['cyberpunk'] = {
                     `).join('')}
                 </div>
 
-                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
-                ${window.BINK.templates.renderMediaContent(data.media || {})}
-
                 <div class="cyberpunk-socials">
                     ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
                 </div>
+
+                ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
+                ${window.BINK.templates.renderCyberpunkMediaContent(data.media || {})}
 
                 <div class="cyberpunk-footer">
                     <span class="cyberpunk-glitch">POWERED BY</span> <a href="index.html" target="_blank">BINK</a>
@@ -2271,7 +2595,7 @@ window.BINK.templates.templates['oceanwaves'] = {
                 </div>
 
                 ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
-                ${window.BINK.templates.renderMediaContent(data.media || {})}
+                ${window.BINK.templates.renderOceanWavesMediaContent(data.media || {})}
 
                 <div class="oceanwaves-socials">
                     ${window.BINK.templates.renderSocialLinks(data.socialLinks)}
@@ -2284,6 +2608,131 @@ window.BINK.templates.templates['oceanwaves'] = {
         </div>
         `;
     }
+};
+
+// Ocean Waves Media Content Renderer
+window.BINK.templates.renderOceanWavesMediaContent = function(media) {
+    if (!media || typeof media !== 'object') media = {};
+
+    let mediaHTML = '';
+
+    // Images section (user content or sample)
+    const images = media.images && media.images.length > 0 ? media.images : [
+        {
+            url: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=300&h=200&fit=crop',
+            title: 'Sunset Waves',
+            description: 'Golden hour waves crashing against the shore'
+        },
+        {
+            url: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=300&h=200&fit=crop',
+            title: 'Deep Blue',
+            description: 'The mysterious depths of the ocean'
+        }
+    ];
+
+    mediaHTML += `
+        <div class="media-section">
+            <h3 class="media-section-title">
+                <i class="fas fa-images"></i> Ocean Gallery
+            </h3>
+            <div class="media-grid images-grid">
+                ${images.map(image => `
+                    <div class="media-item image-item">
+                        <div class="image-container">
+                            <img src="${image.url}" alt="${image.title}" loading="lazy">
+                        </div>
+                        <div class="media-info">
+                            <h4 class="media-title">${image.title}</h4>
+                            <p class="media-description">${image.description}</p>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+
+    // Music section (user content or sample)
+    const music = media.music && media.music.length > 0 ? media.music : [
+        {
+            title: 'Ocean Meditation',
+            artist: 'Nature Sounds',
+            platform: 'spotify',
+            url: 'https://open.spotify.com/track/4iV5W9uYEdYUVa79Axb7Rh'
+        }
+    ];
+
+    mediaHTML += `
+        <div class="media-section">
+            <h3 class="media-section-title">
+                <i class="fas fa-music"></i> Ocean Sounds
+            </h3>
+            <div class="media-grid music-grid">
+                ${music.map(track => `
+                    <div class="media-item music-item">
+                        <div class="music-player" onclick="window.open('${track.url}', '_blank')">
+                            <div class="music-platform-icon ${track.platform}">
+                                <i class="fab fa-${track.platform}"></i>
+                            </div>
+                            <div class="music-info">
+                                <h4 class="music-title">${track.title}</h4>
+                                <p class="music-artist">by ${track.artist}</p>
+                                <p class="music-platform">${window.BINK.templates.getPlatformDisplayName(track.platform)}</p>
+                            </div>
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+
+    // YouTube section (user content or sample)
+    const youtube = media.youtube && media.youtube.length > 0 ? media.youtube : [
+        {
+            title: 'Relaxing Ocean Waves',
+            description: '4K footage of peaceful ocean waves for meditation',
+            url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            thumbnail: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=300&h=200&fit=crop',
+            duration: '5:42'
+        },
+        {
+            title: 'Underwater Paradise',
+            description: 'Explore the vibrant underwater world',
+            url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            thumbnail: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=300&h=200&fit=crop',
+            duration: '8:15'
+        }
+    ];
+
+    mediaHTML += `
+        <div class="media-section">
+            <h3 class="media-section-title">
+                <i class="fab fa-youtube"></i> YouTube
+            </h3>
+            <div class="media-grid youtube-grid">
+                ${youtube.map(video => `
+                    <div class="media-item youtube-item">
+                        <div class="youtube-embed-container">
+                            <iframe
+                                src="https://www.youtube.com/embed/${window.BINK.templates.getYouTubeVideoId(video.url)}"
+                                frameborder="0"
+                                allowfullscreen
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                        <div class="media-info">
+                            <h4 class="media-title">${video.title || 'Untitled Video'}</h4>
+                            ${video.description ? `<p class="media-description">${video.description}</p>` : ''}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+
+    return mediaHTML;
 };
 
 // Vintage Polaroid Template (Premium)

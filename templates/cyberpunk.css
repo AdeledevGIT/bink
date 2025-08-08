@@ -1,20 +1,49 @@
 /* Cyberpunk Template - Futuristic neon-lit design */
-* {
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+.cyberpunk-bio-bg * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Rajdhani', 'Orbitron', monospace;
-    background: #0a0a0a;
-    min-height: 100vh;
-    overflow-x: hidden;
+/* Override bio.css body styles specifically for Cyberpunk template */
+html body:has(.cyberpunk-bio-bg),
+html body .cyberpunk-bio-bg,
+html body {
+    font-family: 'Rajdhani', 'Orbitron', monospace !important;
+    background: #0a0a0a !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    position: relative !important;
+    overflow-x: hidden !important;
+}
+
+/* Hide bio-page elements when Cyberpunk template is active */
+.cyberpunk-bio-bg ~ .bio-page,
+body:has(.cyberpunk-bio-bg) .bio-page,
+.bio-page {
+    display: none !important;
+}
+
+/* Ensure bio-root doesn't interfere */
+#bio-root {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
 }
 
 .cyberpunk-bio-bg {
+    width: 100vw;
+    max-width: 100vw;
     min-height: 100vh;
-    background: 
+    background:
         linear-gradient(45deg, #0a0a0a 0%, #1a0a1a 25%, #0a1a1a 50%, #1a1a0a 75%, #0a0a0a 100%),
         radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 70%, rgba(255, 0, 255, 0.1) 0%, transparent 50%);
@@ -40,8 +69,10 @@ body {
 }
 
 .cyberpunk-container {
-    max-width: 480px;
-    margin: 0 auto;
+    width: 100vw;
+    max-width: 100vw;
+    min-height: 100vh;
+    margin: 0;
     padding: 32px;
     position: relative;
     z-index: 1;
@@ -49,10 +80,11 @@ body {
     backdrop-filter: blur(20px);
     border: 2px solid transparent;
     background-clip: padding-box;
-    border-radius: 20px;
-    box-shadow: 
+    border-radius: 0;
+    box-shadow:
         0 0 50px rgba(0, 255, 255, 0.2),
         inset 0 0 50px rgba(255, 0, 255, 0.1);
+    box-sizing: border-box;
 }
 
 .cyberpunk-container::before {
@@ -63,7 +95,7 @@ body {
     right: -2px;
     bottom: -2px;
     background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00, #00ffff);
-    border-radius: 22px;
+    border-radius: 0;
     z-index: -1;
     animation: border-glow 3s linear infinite;
 }
@@ -415,49 +447,181 @@ body {
     gap: 20px;
 }
 
+/* Cyberpunk Gallery - Matrix Style Design */
 .cyberpunk-container .images-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cyberpunk-container .gallery-matrix {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.cyberpunk-container .matrix-cell {
+    aspect-ratio: 1;
+    position: relative;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.cyberpunk-container .matrix-cell::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg,
+        rgba(0, 255, 255, 0.1) 0%,
+        rgba(255, 0, 255, 0.1) 50%,
+        rgba(255, 255, 0, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.cyberpunk-container .matrix-cell:hover::before {
+    opacity: 1;
+}
+
+.cyberpunk-container .matrix-cell:hover {
+    border-color: #00ffff;
+    box-shadow:
+        0 0 20px rgba(0, 255, 255, 0.5),
+        inset 0 0 20px rgba(0, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.cyberpunk-container .matrix-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.8) contrast(1.2) saturate(1.1);
+    transition: all 0.4s ease;
+}
+
+.cyberpunk-container .matrix-cell:hover img {
+    filter: brightness(1) contrast(1.3) saturate(1.3);
+    transform: scale(1.1);
+}
+
+.cyberpunk-container .matrix-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 0.6) 50%,
+        transparent 100%
+    );
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 10px;
+    z-index: 2;
+}
+
+.cyberpunk-container .matrix-info {
+    color: white;
+    text-align: left;
+}
+
+.cyberpunk-container .matrix-title {
+    color: #00ffff;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    text-shadow: 0 0 8px #00ffff;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+}
+
+.cyberpunk-container .matrix-description {
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.7rem;
+    margin: 0;
+    line-height: 1.3;
+    opacity: 0.9;
+}
+
+.cyberpunk-container .gallery-featured {
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid #ff00ff;
+    border-radius: 0;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+}
+
+.cyberpunk-container .gallery-featured::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+    z-index: -1;
+    animation: border-glow 2s linear infinite;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+}
+
+.cyberpunk-container .featured-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    filter: brightness(0.9) contrast(1.2);
+    transition: all 0.4s ease;
+}
+
+.cyberpunk-container .gallery-featured:hover .featured-image {
+    filter: brightness(1.1) contrast(1.3);
+    transform: scale(1.02);
+}
+
+.cyberpunk-container .featured-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+    padding: 20px;
+    color: white;
+}
+
+.cyberpunk-container .featured-title {
+    color: #00ffff;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+    text-shadow: 0 0 10px #00ffff;
+    letter-spacing: 1px;
+}
+
+.cyberpunk-container .featured-description {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.4;
 }
 
 .cyberpunk-container .music-grid {
     grid-template-columns: 1fr;
-}
-
-.cyberpunk-container .media-item {
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid rgba(0, 255, 255, 0.2);
-    border-radius: 15px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    position: relative;
-    backdrop-filter: blur(10px);
-}
-
-.cyberpunk-container .media-item:hover {
-    border-color: #00ffff;
-    box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-    transform: translateY(-5px);
-}
-
-.cyberpunk-container .image-container {
-    width: 100%;
-    height: 180px;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 15px;
-}
-
-.cyberpunk-container .image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    filter: brightness(0.9) contrast(1.1);
-}
-
-.cyberpunk-container .image-container:hover img {
-    transform: scale(1.05);
 }
 
 .cyberpunk-container .music-item {
@@ -568,7 +732,7 @@ body {
 @media (max-width: 480px) {
     .cyberpunk-container {
         padding: 24px;
-        margin: 10px;
+        margin: 0;
     }
 
     .cyberpunk-container .media-section {
@@ -592,5 +756,350 @@ body {
         width: 45px;
         height: 45px;
         font-size: 1.1rem;
+    }
+
+    /* Mobile Gallery Styles */
+    .cyberpunk-container .gallery-matrix {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+
+    .cyberpunk-container .matrix-cell {
+        aspect-ratio: 1;
+        min-height: 120px;
+    }
+
+    .cyberpunk-container .matrix-overlay {
+        padding: 8px;
+    }
+
+    .cyberpunk-container .matrix-title {
+        font-size: 0.7rem;
+        margin: 0 0 3px 0;
+    }
+
+    .cyberpunk-container .matrix-description {
+        font-size: 0.6rem;
+        line-height: 1.2;
+    }
+
+    .cyberpunk-container .featured-image {
+        height: 150px;
+    }
+
+    .cyberpunk-container .featured-info {
+        padding: 12px;
+    }
+
+    .cyberpunk-container .featured-title {
+        font-size: 1rem;
+    }
+
+    .cyberpunk-container .featured-description {
+        font-size: 0.8rem;
+    }
+
+    .cyberpunk-container .images-grid {
+        gap: 12px;
+    }
+
+    .cyberpunk-container .catalog-item {
+        flex: 0 0 200px;
+        min-height: 280px;
+    }
+
+    .cyberpunk-container .catalog-item-image {
+        height: 120px;
+    }
+
+    .cyberpunk-container .catalog-item-content {
+        padding: 15px;
+    }
+
+    .cyberpunk-container .catalog-section {
+        padding: 20px 15px;
+        margin: 20px 0;
+    }
+}
+
+/* Cyberpunk Catalog Styles */
+.cyberpunk-container .catalog-section {
+    margin: 30px 0;
+    padding: 25px 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #00ffff;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+        0 0 20px rgba(0, 255, 255, 0.3),
+        inset 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+.cyberpunk-container .catalog-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+    transition: left 0.8s ease;
+}
+
+.cyberpunk-container .catalog-section:hover::before {
+    left: 100%;
+}
+
+.cyberpunk-container .catalog-title {
+    color: #00ffff;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+    position: relative;
+    z-index: 2;
+    letter-spacing: 2px;
+}
+
+.cyberpunk-container .catalog-grid {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 15px 0;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 255, 255, 0.6) transparent;
+}
+
+.cyberpunk-container .catalog-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.cyberpunk-container .catalog-grid::-webkit-scrollbar-track {
+    background: rgba(0, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.cyberpunk-container .catalog-grid::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #00ffff, #ff0080);
+    border-radius: 10px;
+}
+
+.cyberpunk-container .catalog-item {
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid #ff0080;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    position: relative;
+    flex: 0 0 240px;
+    min-height: 320px;
+    box-shadow:
+        0 8px 25px rgba(255, 0, 128, 0.3),
+        inset 0 0 20px rgba(255, 0, 128, 0.1);
+}
+
+.cyberpunk-container .catalog-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 128, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.cyberpunk-container .catalog-item:hover::before {
+    opacity: 1;
+}
+
+.cyberpunk-container .catalog-item:hover {
+    transform: translateY(-8px) scale(1.03);
+    border-color: #00ffff;
+    box-shadow:
+        0 15px 40px rgba(0, 255, 255, 0.4),
+        inset 0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+.cyberpunk-container .catalog-item-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    position: relative;
+    z-index: 2;
+    filter: brightness(0.8) contrast(1.2);
+}
+
+.cyberpunk-container .catalog-item:hover .catalog-item-image {
+    transform: scale(1.08);
+    filter: brightness(1) contrast(1.3);
+}
+
+.cyberpunk-container .catalog-item-content {
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.cyberpunk-container .catalog-item-title {
+    color: #00ffff;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    letter-spacing: 1px;
+}
+
+.cyberpunk-container .catalog-item-description {
+    color: rgba(255, 255, 255, 0.8);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    opacity: 0.9;
+}
+
+.cyberpunk-container .catalog-item-price {
+    color: #ff0080;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px rgba(255, 0, 128, 0.5);
+    letter-spacing: 1px;
+}
+
+.cyberpunk-container .catalog-buy-btn {
+    background: linear-gradient(135deg, #00ffff, #ff0080);
+    color: #000;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.cyberpunk-container .catalog-buy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 0, 128, 0.5);
+    background: linear-gradient(135deg, #ff0080, #00ffff);
+}
+
+.cyberpunk-container .catalog-buy-btn i {
+    font-size: 0.9rem;
+}
+
+/* YouTube Section Styles */
+.cyberpunk-container .youtube-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.cyberpunk-container .youtube-item {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.cyberpunk-container .youtube-item::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00, #00ffff);
+    border-radius: 17px;
+    z-index: -1;
+    opacity: 0.3;
+    animation: border-glow 3s linear infinite;
+}
+
+.cyberpunk-container .youtube-item:hover::before {
+    opacity: 0.8;
+}
+
+.cyberpunk-container .youtube-item:hover {
+    border-color: #00ffff;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+    transform: translateY(-5px);
+}
+
+.cyberpunk-container .youtube-embed-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    overflow: hidden;
+}
+
+.cyberpunk-container .youtube-embed-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.cyberpunk-container .youtube-item .media-info {
+    padding: 16px 20px;
+}
+
+.cyberpunk-container .youtube-item .media-title {
+    color: #00ffff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    font-family: 'Orbitron', monospace;
+    text-shadow: 0 0 10px #00ffff;
+    letter-spacing: 1px;
+}
+
+.cyberpunk-container .youtube-item .media-description {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+/* Mobile YouTube Styles */
+@media (max-width: 480px) {
+    .cyberpunk-container .youtube-item .media-info {
+        padding: 12px 16px;
+    }
+
+    .cyberpunk-container .youtube-item .media-title {
+        font-size: 1rem;
+    }
+
+    .cyberpunk-container .youtube-item .media-description {
+        font-size: 0.85rem;
     }
 }
