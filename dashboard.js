@@ -296,12 +296,22 @@ function updatePremiumUI() {
     const premiumThemeOption = document.getElementById('premiumThemeOption');
 
     if (userProfile && userProfile.isPremium) {
-        premiumThemeOption.style.display = 'flex';
+        // Only update if the element exists
+        if (premiumThemeOption) {
+            premiumThemeOption.style.display = 'flex';
+        }
 
         // If theme is custom, show custom options
         if (bioPageData && bioPageData.theme === 'custom') {
-            document.getElementById('themeCustom').checked = true;
-            document.getElementById('customThemeOptions').style.display = 'block';
+            const themeCustomEl = document.getElementById('themeCustom');
+            const customThemeOptionsEl = document.getElementById('customThemeOptions');
+
+            if (themeCustomEl) {
+                themeCustomEl.checked = true;
+            }
+            if (customThemeOptionsEl) {
+                customThemeOptionsEl.style.display = 'block';
+            }
         }
     }
 }
