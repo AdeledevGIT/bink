@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Verification - BINK</title>
-    <!-- Favicon configuration for better browser compatibility -->
+    <title>Email Action Handler - BINK</title>
     <link rel="icon" type="image/png" sizes="32x32" href="/logo1.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/logo1.png">
     <link rel="shortcut icon" href="/logo1.png">
     <link rel="apple-touch-icon" href="/logo1.png">
-    <!-- Fallback favicon from GitHub Pages -->
-    <link rel="icon" type="image/png" href="https://adeledevgit.github.io/bink/logo1.png">
     <link rel="stylesheet" href="style.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .verification-handler-container {
+        .action-handler-container {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -25,7 +22,7 @@
             padding-top: 30px;
         }
 
-        .verification-status-card {
+        .action-status-card {
             background-color: var(--card-background);
             padding: 40px 50px;
             border-radius: 16px;
@@ -38,7 +35,7 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .verification-status-card::before {
+        .action-status-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -164,23 +161,6 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        @media (max-width: 768px) {
-            .verification-status-card {
-                padding: 30px 25px;
-                margin: 15px;
-            }
-
-            .status-title {
-                font-size: 1.8rem;
-            }
-
-            .status-icon {
-                width: 70px;
-                height: 70px;
-                font-size: 2rem;
-            }
-        }
     </style>
 </head>
 <body>
@@ -192,16 +172,16 @@
         </div>
     </header>
 
-    <div class="verification-handler-container">
-        <div class="verification-status-card">
+    <div class="action-handler-container">
+        <div class="action-status-card">
             <!-- Loading State -->
             <div id="loading-state">
                 <div class="status-icon loading">
                     <div class="loading-spinner"></div>
                 </div>
-                <h1 class="status-title">Verifying Your Email</h1>
+                <h1 class="status-title">Processing Email Action</h1>
                 <p class="status-message">
-                    Please wait while we verify your email address...
+                    Please wait while we process your email verification...
                 </p>
             </div>
 
@@ -226,7 +206,7 @@
                 </div>
                 <h1 class="status-title error">Verification Failed</h1>
                 <p class="status-message" id="error-message">
-                    We couldn't verify your email address. The link may have expired or already been used.
+                    We couldn't process your email verification. The link may have expired or already been used.
                 </p>
                 <a href="verify-email.html" class="action-button">
                     Request New Verification Email
@@ -248,59 +228,84 @@
     <script src="firebase-config.js"></script>
     <script src="email-verification.js"></script>
     <script>
-        // Handle email verification when page loads
+        // Handle email action when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            handleEmailVerification();
+            handleEmailAction();
         });
 
-        async function handleEmailVerification() {
+        async function handleEmailAction() {
             try {
                 // Get URL parameters
                 const urlParams = new URLSearchParams(window.location.search);
                 const mode = urlParams.get('mode');
-                const oobCode = urlParams.get('oobCode');
+                const actionCode = urlParams.get('oobCode');
+                const continueUrl = urlParams.get('continueUrl');
 
-                // Check if this is an email verification request
-                if (mode === 'verifyEmail' && oobCode) {
-                    // Apply the verification code
-                    await auth.applyActionCode(oobCode);
-                    console.log('✅ Email verification code applied successfully');
+                console.log('Email action mode:', mode);
+                console.log('Action code:', actionCode ? 'Present' : 'Missing');
 
-                    // Get current user and update verification status
-                    const user = auth.currentUser;
-                    if (user) {
-                        await user.reload();
+                if (!mode || !actionCode) {
+                    showErrorState('Invalid email action link. Please request a new verification email.');
+                    return;
+                }
 
-                        // Update database verification status
-                        if (window.BINK && window.BINK.emailVerification) {
-                            await window.BINK.emailVerification.updateUserVerificationStatus(user.uid, true);
-                        }
-
-                        // Show success state
-                        showSuccessState();
-
-                        // Auto-redirect after 3 seconds
-                        setTimeout(() => {
-                            window.location.href = 'onboarding.html';
-                        }, 3000);
-                    } else {
-                        showErrorState('No user session found. Please log in and try again.');
-                    }
+                if (mode === 'verifyEmail') {
+                    await handleEmailVerification(actionCode);
+                } else if (mode === 'resetPassword') {
+                    // Handle password reset if needed in the future
+                    showErrorState('Password reset is not handled on this page.');
                 } else {
-                    showErrorState('Invalid verification link. Please request a new verification email.');
+                    showErrorState('Unknown email action type.');
                 }
 
             } catch (error) {
-                console.error('Error handling email verification:', error);
+                console.error('Error handling email action:', error);
+                showErrorState('An error occurred while processing your email action.');
+            }
+        }
 
-                // Handle specific Firebase errors
-                if (error.code === 'auth/invalid-action-code') {
-                    showErrorState('This verification link has expired or already been used. Please request a new one.');
-                } else if (error.code === 'auth/expired-action-code') {
-                    showErrorState('This verification link has expired. Please request a new verification email.');
-                } else {
-                    showErrorState('Verification failed. Please try again or request a new verification email.');
+        async function handleEmailVerification(actionCode) {
+            try {
+                // Apply the email verification code
+                await auth.applyActionCode(actionCode);
+                console.log('✅ Email verification code applied successfully');
+
+                // Get the current user and update their verification status
+                const user = auth.currentUser;
+                if (user) {
+                    await user.reload();
+                    
+                    // Update database verification status
+                    if (window.BINK && window.BINK.emailVerification) {
+                        await window.BINK.emailVerification.updateUserVerificationStatus(user.uid, true);
+                    }
+                    
+                    console.log('✅ User verification status updated');
                 }
+
+                // Show success state
+                showSuccessState();
+
+                // Auto-redirect after 3 seconds
+                setTimeout(() => {
+                    window.location.href = 'onboarding.html';
+                }, 3000);
+
+            } catch (error) {
+                console.error('❌ Email verification failed:', error);
+                
+                let errorMessage = 'Email verification failed. ';
+                if (error.code === 'auth/expired-action-code') {
+                    errorMessage += 'The verification link has expired. Please request a new one.';
+                } else if (error.code === 'auth/invalid-action-code') {
+                    errorMessage += 'The verification link is invalid or has already been used.';
+                } else if (error.code === 'auth/user-disabled') {
+                    errorMessage += 'Your account has been disabled.';
+                } else {
+                    errorMessage += error.message;
+                }
+                
+                showErrorState(errorMessage);
             }
         }
 
