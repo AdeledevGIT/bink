@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="pricing.css">
     <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="trial-overlay.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -120,6 +121,42 @@
                     </div>
                     <div class="pricing-footer">
                         <button id="free-plan-button" class="pricing-button current-plan">Current Plan</button>
+                    </div>
+                </div>
+
+                <!-- 14-Day Free Trial Card -->
+                <div class="pricing-card trial-card" id="trial-pricing-card" style="display: none;">
+                    <div class="pricing-badge trial-badge">
+                        <i class="fas fa-gift"></i> FREE TRIAL
+                    </div>
+                    <div class="pricing-header">
+                        <h3>14-Day Premium Trial</h3>
+                        <div class="pricing-price">
+                            <span class="price">₦0</span>
+                            <span class="period">for 14 days</span>
+                        </div>
+                        <div class="pricing-save trial-save">Then ₦2,500/month</div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> <strong>All Premium Features</strong></li>
+                            <li><i class="fas fa-check"></i> <strong>Unlimited</strong> links</li>
+                            <li><i class="fas fa-check"></i> Advanced analytics</li>
+                            <li><i class="fas fa-check"></i> Custom bio page</li>
+                            <li><i class="fas fa-check"></i> No BINK branding</li>
+                            <li><i class="fas fa-check"></i> Custom themes</li>
+                            <li><i class="fas fa-check"></i> Priority support</li>
+                            <li><i class="fas fa-times trial-note"></i> No credit card required</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <button id="start-trial-button" class="pricing-button trial-button">
+                            <i class="fas fa-rocket"></i>
+                            Start Free Trial
+                        </button>
+                        <div class="trial-disclaimer">
+                            <small><i class="fas fa-info-circle"></i> Automatically ends after 14 days</small>
+                        </div>
                     </div>
                 </div>
 
@@ -342,6 +379,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
 
     <script src="firebase-config.js"></script>
+    <script src="trial-overlay.js"></script>
     <script src="sidebar.js"></script>
     <script src="pricing.js"></script>
 </body>

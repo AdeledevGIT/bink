@@ -16,27 +16,44 @@ window.PremiumEnforcement = {
     checkPremiumStatus: function(userData, userId = null) {
         if (!userData) return false;
 
-        // Check subscription tier
+        // Check subscription tier (including trial)
         const hasSubscription = userData.subscriptionTier === 'premium' ||
                                userData.subscriptionTier === 'creator' ||
+                               userData.subscriptionTier === 'trial' ||
                                userData.isPremium;
 
-        // Check if premium has expired using subscriptionExpiration
-        if (userData.subscriptionExpiration && hasSubscription) {
-            const expirationDate = userData.subscriptionExpiration.toDate ?
-                                  userData.subscriptionExpiration.toDate() :
-                                  new Date(userData.subscriptionExpiration);
-            const now = new Date();
+        // Check if premium has expired using subscriptionExpiration or trialExpiration
+        if (hasSubscription) {
+            let expirationDate = null;
 
-            if (expirationDate < now) {
-                console.log("Premium subscription has expired, auto-downgrading to free");
+            // Check trial expiration first
+            if (userData.subscriptionTier === 'trial' && userData.trialExpiration) {
+                expirationDate = userData.trialExpiration.toDate ?
+                               userData.trialExpiration.toDate() :
+                               new Date(userData.trialExpiration);
+            } else if (userData.subscriptionExpiration) {
+                expirationDate = userData.subscriptionExpiration.toDate ?
+                               userData.subscriptionExpiration.toDate() :
+                               new Date(userData.subscriptionExpiration);
+            }
 
-                // Auto-downgrade if enabled and we have user ID
-                if (PREMIUM_ENFORCEMENT.autoDowngradeEnabled && userId) {
-                    this.autoDowngradeExpiredSubscription(userId, userData);
+            if (expirationDate) {
+                const now = new Date();
+
+                if (expirationDate < now) {
+                    console.log("Premium subscription/trial has expired, auto-downgrading to free");
+
+                    // Auto-downgrade if enabled and we have user ID
+                    if (PREMIUM_ENFORCEMENT.autoDowngradeEnabled && userId) {
+                        if (userData.subscriptionTier === 'trial') {
+                            this.autoDowngradeExpiredTrial(userId, userData);
+                        } else {
+                            this.autoDowngradeExpiredSubscription(userId, userData);
+                        }
+                    }
+
+                    return false;
                 }
-
-                return false;
             }
         }
 
@@ -269,6 +286,47 @@ window.PremiumEnforcement = {
         console.log("Premium enforcement initialized for editor page");
     },
 
+    // Auto-downgrade expired trial
+    autoDowngradeExpiredTrial: function(userId, userData) {
+        console.log("Auto-downgrading expired trial for user:", userId);
+
+        const db = window.firebase.firestore();
+
+        // Check if user is currently using a premium template
+        const currentTemplate = userData.template || 'classic';
+        const usedTemplates = userData.usedTemplates || [];
+        const hasUsedCurrentTemplate = usedTemplates.includes(currentTemplate);
+
+        let updateData = {
+            subscriptionTier: 'free',
+            isPremium: false,
+            trialActive: false,
+            trialExpired: true,
+            trialEndedAt: window.firebase.firestore.FieldValue.serverTimestamp(),
+            updatedAt: window.firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        // If user is using a premium template they haven't purchased, revert to classic
+        if (currentTemplate !== 'classic' && !hasUsedCurrentTemplate) {
+            updateData.template = 'classic';
+            console.log(`Reverting template from ${currentTemplate} to classic due to expired trial`);
+        }
+
+        // Update user document
+        db.collection('users').doc(userId).update(updateData)
+            .then(() => {
+                console.log("Trial auto-downgrade completed for user:", userId);
+
+                // Show notification if on dashboard
+                if (typeof showNotification === 'function') {
+                    showNotification("Your free trial has ended. Upgrade to premium to continue enjoying all features!", "info");
+                }
+            })
+            .catch((error) => {
+                console.error("Error auto-downgrading expired trial:", error);
+            });
+    },
+
     // Start periodic subscription checking for current user
     startPeriodicSubscriptionCheck: function(userId) {
         if (!userId || !window.firebase || !window.firebase.firestore) {
@@ -287,8 +345,8 @@ window.PremiumEnforcement = {
                         // Check if subscription has expired and auto-downgrade
                         const isValid = this.checkPremiumStatus(userData, userId);
 
-                        if (!isValid && (userData.subscriptionTier === 'premium' || userData.subscriptionTier === 'creator')) {
-                            console.log("Periodic check detected expired subscription");
+                        if (!isValid && (userData.subscriptionTier === 'premium' || userData.subscriptionTier === 'creator' || userData.subscriptionTier === 'trial')) {
+                            console.log("Periodic check detected expired subscription/trial");
                         }
                     }
                 })
@@ -315,9 +373,9 @@ window.PremiumEnforcement = {
 
         const db = window.firebase.firestore();
 
-        // Query users with premium or creator subscriptions
+        // Query users with premium, creator, or trial subscriptions
         db.collection('users')
-            .where('subscriptionTier', 'in', ['premium', 'creator'])
+            .where('subscriptionTier', 'in', ['premium', 'creator', 'trial'])
             .get()
             .then(snapshot => {
                 const now = new Date();
@@ -332,15 +390,24 @@ window.PremiumEnforcement = {
                         return;
                     }
 
-                    // Check if subscription has expired
-                    if (userData.subscriptionExpiration) {
-                        const expiryDate = userData.subscriptionExpiration.toDate();
+                    // Check if subscription or trial has expired
+                    let expiryDate = null;
 
-                        if (expiryDate < now) {
-                            console.log(`Found expired subscription for user ${userId}`);
+                    if (userData.subscriptionTier === 'trial' && userData.trialExpiration) {
+                        expiryDate = userData.trialExpiration.toDate();
+                    } else if (userData.subscriptionExpiration) {
+                        expiryDate = userData.subscriptionExpiration.toDate();
+                    }
+
+                    if (expiryDate && expiryDate < now) {
+                        console.log(`Found expired ${userData.subscriptionTier} for user ${userId}`);
+
+                        if (userData.subscriptionTier === 'trial') {
+                            this.autoDowngradeExpiredTrial(userId, userData);
+                        } else {
                             this.autoDowngradeExpiredSubscription(userId, userData);
-                            expiredCount++;
                         }
+                        expiredCount++;
                     }
                 });
 

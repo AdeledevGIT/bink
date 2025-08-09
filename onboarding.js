@@ -133,6 +133,21 @@ async function loadUserData() {
             if (welcomeMessage) {
                 welcomeMessage.textContent = `Welcome to BINK, ${currentUserData.username}!`;
             }
+
+            // Check if user is eligible for trial and show overlay
+            // Wait a moment for all scripts to load, then check
+            setTimeout(async () => {
+                console.log('🔄 Initial trial overlay check...');
+                await ensureTrialFields();
+                checkAndShowTrialOverlay();
+            }, 1000);
+
+            // Also set a backup timer in case the first call fails
+            setTimeout(async () => {
+                console.log('🔄 Backup trial overlay check...');
+                await ensureTrialFields();
+                checkAndShowTrialOverlay();
+            }, 3000);
             
             if (currentUserData.displayName && displayName) {
                 displayName.value = currentUserData.displayName;
@@ -3431,8 +3446,272 @@ function copyPreviewLink() {
     }
 }
 
+// Handle trial claim from lock overlay
+async function claimTrialFromLock(source) {
+    console.log(`🎯 Trial claim initiated from ${source} lock overlay`);
+
+    if (!currentUser) {
+        console.error('❌ No user authenticated');
+        alert('Please log in to claim your free trial.');
+        return;
+    }
+
+    if (!window.TrialManager) {
+        console.error('❌ TrialManager not available');
+        alert('Trial system not available. Please try again later.');
+        return;
+    }
+
+    // Ensure user has trial fields
+    await ensureTrialFields();
+
+    // Check if user is eligible
+    if (!window.TrialManager.isEligibleForTrial(currentUserData)) {
+        console.log('❌ User not eligible for trial');
+
+        if (window.TrialManager.hasActiveTrial(currentUserData)) {
+            alert('You already have an active trial!');
+        } else if (currentUserData.trialClaimed) {
+            alert('You have already claimed your free trial. Upgrade to premium for continued access.');
+            showPricingModal();
+        } else {
+            alert('You are not eligible for a free trial at this time.');
+        }
+        return;
+    }
+
+    // Get the trial button for this source
+    const trialButton = document.getElementById(`${source}-trial-btn`);
+    if (trialButton) {
+        trialButton.disabled = true;
+        trialButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Starting Trial...';
+    }
+
+    try {
+        const success = await window.TrialManager.startTrial(currentUser.uid);
+
+        if (success) {
+            console.log('✅ Trial started successfully');
+
+            // Show success message
+            showSuccess('🎉 Trial activated! You now have 14 days of premium access!');
+
+            // Update current user data
+            currentUserData.trialActive = true;
+            currentUserData.trialClaimed = true;
+            currentUserData.isPremium = true;
+            currentUserData.subscriptionTier = 'trial';
+
+            // Hide the lock overlays and refresh the UI
+            setTimeout(() => {
+                const mediaLock = document.getElementById('media-lock-overlay');
+                const catalogLock = document.getElementById('catalog-lock-overlay');
+
+                if (mediaLock) mediaLock.style.display = 'none';
+                if (catalogLock) catalogLock.style.display = 'none';
+
+                // Re-enforce section locks (should now show unlocked)
+                if (typeof enforceSectionLocks === 'function') {
+                    enforceSectionLocks(currentUserData);
+                }
+
+                // Show a congratulations message
+                showTrialActivatedMessage();
+
+            }, 1000);
+
+        } else {
+            throw new Error('Failed to start trial');
+        }
+
+    } catch (error) {
+        console.error('❌ Error starting trial:', error);
+        showError('Failed to start trial. Please try again.');
+
+        // Re-enable button
+        if (trialButton) {
+            trialButton.disabled = false;
+            trialButton.innerHTML = '<i class="fas fa-gift"></i> Claim 14-Day Free Trial';
+        }
+    }
+}
+
+// Show trial activated message
+function showTrialActivatedMessage() {
+    // Create a temporary success overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'trial-success-overlay';
+    overlay.innerHTML = `
+        <div class="trial-success-content">
+            <div class="trial-success-icon">
+                <i class="fas fa-crown"></i>
+            </div>
+            <h2>🎉 Premium Trial Activated!</h2>
+            <p>You now have <strong>14 days</strong> of full premium access!</p>
+            <p>Enjoy unlimited media uploads, product catalog, and all premium features.</p>
+            <button class="btn btn-primary" onclick="closeTrialSuccessMessage()">
+                <i class="fas fa-rocket"></i>
+                Start Exploring Premium Features
+            </button>
+        </div>
+    `;
+
+    // Add styles
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        z-index: 10001;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 0.3s ease;
+    `;
+
+    const content = overlay.querySelector('.trial-success-content');
+    content.style.cssText = `
+        background: linear-gradient(135deg, var(--card-background) 0%, rgba(16, 185, 129, 0.05) 100%);
+        border: 2px solid #10B981;
+        border-radius: 20px;
+        padding: 2rem;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        animation: slideInUp 0.4s ease-out;
+    `;
+
+    const icon = overlay.querySelector('.trial-success-icon');
+    icon.style.cssText = `
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #10B981, #059669);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 2rem;
+        color: white;
+        box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+    `;
+
+    document.body.appendChild(overlay);
+
+    // Auto-close after 5 seconds
+    setTimeout(() => {
+        closeTrialSuccessMessage();
+    }, 5000);
+}
+
+// Close trial success message
+function closeTrialSuccessMessage() {
+    const overlay = document.querySelector('.trial-success-overlay');
+    if (overlay) {
+        overlay.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            overlay.remove();
+        }, 300);
+    }
+}
+
+// Ensure user has all required trial fields
+async function ensureTrialFields() {
+    if (!currentUser || !currentUserData) return;
+
+    // Check if user is missing trial fields (for existing users)
+    if (currentUserData.trialClaimed === undefined) {
+        console.log('🔧 Adding missing trial fields to user...');
+        try {
+            await db.collection('users').doc(currentUser.uid).update({
+                trialClaimed: false,
+                trialActive: false,
+                trialStartDate: null,
+                trialExpiration: null,
+                trialExpired: false,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            // Reload user data
+            const userDoc = await db.collection('users').doc(currentUser.uid).get();
+            if (userDoc.exists) {
+                currentUserData = userDoc.data();
+                console.log('✅ Trial fields added successfully');
+            }
+        } catch (error) {
+            console.error('❌ Error adding trial fields:', error);
+        }
+    }
+}
+
+// Check and show trial overlay for eligible users
+function checkAndShowTrialOverlay() {
+    console.log('🔍 Checking trial overlay conditions...');
+    console.log('Session dismissed:', sessionStorage.getItem('trialOverlayDismissed'));
+    console.log('Current user data:', currentUserData);
+    console.log('TrialManager available:', !!window.TrialManager);
+
+    // Don't show if already dismissed in this session
+    if (sessionStorage.getItem('trialOverlayDismissed') === 'true') {
+        console.log('❌ Trial overlay dismissed in session');
+        return;
+    }
+
+    // Don't show if user data not loaded
+    if (!currentUserData) {
+        console.log('❌ No user data available');
+        return;
+    }
+
+    // Don't show if user has already completed onboarding (they should see it on dashboard instead)
+    if (currentUserData.onboardingCompleted) {
+        console.log('❌ User has completed onboarding, trial overlay should show on dashboard instead');
+        return;
+    }
+
+    // Don't show if TrialManager not available
+    if (!window.TrialManager) {
+        console.log('❌ TrialManager not available');
+        return;
+    }
+
+    console.log('User subscription tier:', currentUserData.subscriptionTier);
+    console.log('Trial claimed:', currentUserData.trialClaimed);
+    console.log('Trial active:', currentUserData.trialActive);
+    console.log('Is premium:', currentUserData.isPremium);
+
+    // Check if user is eligible for trial
+    if (window.TrialManager.isEligibleForTrial(currentUserData)) {
+        console.log('✅ User is eligible for trial, showing overlay');
+        window.TrialManager.showTrialOverlay(currentUserData, 'onboarding');
+    } else if (window.TrialManager.hasActiveTrial(currentUserData)) {
+        // Show trial status if user has active trial
+        console.log('✅ User has active trial, showing status');
+        window.TrialManager.showTrialOverlay(currentUserData, 'onboarding');
+    } else {
+        console.log('❌ User not eligible for trial');
+        console.log('Eligibility check result:', window.TrialManager.isEligibleForTrial(currentUserData));
+        console.log('Active trial check result:', window.TrialManager.hasActiveTrial(currentUserData));
+    }
+}
+
 // Initialize onboarding when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeOnboarding();
     setupMobileEnhancements();
+});
+
+// Additional check when window is fully loaded
+window.addEventListener('load', function() {
+    console.log('🔄 Window fully loaded, checking trial overlay...');
+    setTimeout(async () => {
+        if (currentUserData) {
+            await ensureTrialFields();
+            checkAndShowTrialOverlay();
+        }
+    }, 2000);
 });

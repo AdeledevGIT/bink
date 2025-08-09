@@ -169,6 +169,15 @@ if (signupForm) {
                                     onboardingCompleted: false, // New users need to complete onboarding
                                     emailVerified: false, // Email verification required
                                     emailVerifiedAt: null, // Will be set when verified
+                                    // Trial-related fields
+                                    trialClaimed: false, // User hasn't claimed their free trial yet
+                                    trialActive: false, // No active trial
+                                    trialStartDate: null, // Will be set when trial starts
+                                    trialExpiration: null, // Will be set when trial starts
+                                    trialExpired: false, // Trial hasn't expired yet
+                                    // Premium status
+                                    isPremium: false, // Not premium by default
+                                    tokens: 0, // Default token balance
                                     // Add other default fields if needed
                                 })
                                 .then(async () => {

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trial System Test - BINK</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="trial-overlay.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        
+        .test-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .test-button:hover {
+            background: var(--accent-color);
+        }
+        
+        .user-info {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
+        .status-eligible {
+            background: #10B981;
+            color: white;
+        }
+        
+        .status-active {
+            background: #F59E0B;
+            color: white;
+        }
+        
+        .status-expired {
+            background: #EF4444;
+            color: white;
+        }
+        
+        .status-ineligible {
+            background: #6B7280;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="./logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <span>Trial System Test</span>
+        </div>
+    </header>
+
+    <div class="test-container">
+        <h1>🧪 14-Day Premium Trial System Test</h1>
+        <p>This page allows you to test the trial overlay system with different user scenarios.</p>
+        
+        <div class="user-info" id="userInfo">
+            <strong>Current User:</strong> <span id="currentUserEmail">Not logged in</span>
+            <div id="userStatus"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>Trial Status Tests</h3>
+            <button class="test-button" onclick="showEligibleTrialOverlay()">
+                Show Trial Offer (Eligible User)
+            </button>
+            <button class="test-button" onclick="showActiveTrialOverlay()">
+                Show Active Trial Status
+            </button>
+            <button class="test-button" onclick="showUpgradePromptOverlay()">
+                Show Upgrade Prompt
+            </button>
+            <button class="test-button" onclick="hideTrialOverlay()">
+                Hide Overlay
+            </button>
+        </div>
+        
+        <div class="test-section">
+            <h3>Trial Management</h3>
+            <button class="test-button" onclick="startUserTrial()">
+                Start Trial for Current User
+            </button>
+            <button class="test-button" onclick="endUserTrial()">
+                End Trial for Current User
+            </button>
+            <button class="test-button" onclick="resetTrialStatus()">
+                Reset Trial Status (Make Eligible)
+            </button>
+        </div>
+        
+        <div class="test-section">
+            <h3>User Data</h3>
+            <button class="test-button" onclick="loadUserData()">
+                Refresh User Data
+            </button>
+            <button class="test-button" onclick="clearSessionDismissal()">
+                Clear Session Dismissal
+            </button>
+            <pre id="userData" style="background: rgba(0,0,0,0.1); padding: 1rem; border-radius: 8px; font-size: 0.85rem; max-height: 300px; overflow-y: auto;"></pre>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    
+    <script src="firebase-config.js"></script>
+    <script src="trial-overlay.js"></script>
+    
+    <script>
+        let currentUser = null;
+        let currentUserData = null;
+        
+        // Initialize auth state listener
+        auth.onAuthStateChanged(async (user) => {
+            currentUser = user;
+            if (user) {
+                document.getElementById('currentUserEmail').textContent = user.email;
+                await loadUserData();
+            } else {
+                document.getElementById('currentUserEmail').textContent = 'Not logged in';
+                document.getElementById('userStatus').innerHTML = '<span class="status-indicator status-ineligible">Not Authenticated</span>';
+                document.getElementById('userData').textContent = 'Please log in to test the trial system.';
+            }
+        });
+        
+        // Load user data from Firestore
+        async function loadUserData() {
+            if (!currentUser) return;
+            
+            try {
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                if (userDoc.exists) {
+                    currentUserData = userDoc.data();
+                    updateUserStatus();
+                    document.getElementById('userData').textContent = JSON.stringify(currentUserData, null, 2);
+                } else {
+                    document.getElementById('userData').textContent = 'User document not found in Firestore.';
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                document.getElementById('userData').textContent = 'Error loading user data: ' + error.message;
+            }
+        }
+        
+        // Update user status display
+        function updateUserStatus() {
+            if (!currentUserData || !window.TrialManager) return;
+            
+            const statusDiv = document.getElementById('userStatus');
+            let statusHTML = '';
+            
+            if (window.TrialManager.isEligibleForTrial(currentUserData)) {
+                statusHTML = '<span class="status-indicator status-eligible">Eligible for Trial</span>';
+            } else if (window.TrialManager.hasActiveTrial(currentUserData)) {
+                const daysRemaining = window.TrialManager.getTrialDaysRemaining(currentUserData);
+                statusHTML = `<span class="status-indicator status-active">Active Trial (${daysRemaining} days left)</span>`;
+            } else if (currentUserData.trialExpired) {
+                statusHTML = '<span class="status-indicator status-expired">Trial Expired</span>';
+            } else {
+                statusHTML = '<span class="status-indicator status-ineligible">Not Eligible</span>';
+            }
+            
+            statusDiv.innerHTML = statusHTML;
+        }
+        
+        // Test functions
+        function showEligibleTrialOverlay() {
+            const mockUserData = {
+                subscriptionTier: 'free',
+                trialClaimed: false,
+                trialActive: false,
+                isPremium: false
+            };
+            window.TrialManager.showTrialOverlay(mockUserData, 'test');
+        }
+        
+        function showActiveTrialOverlay() {
+            const trialEndDate = new Date();
+            trialEndDate.setDate(trialEndDate.getDate() + 7); // 7 days remaining
+            
+            const mockUserData = {
+                subscriptionTier: 'trial',
+                trialClaimed: true,
+                trialActive: true,
+                trialExpiration: { toDate: () => trialEndDate },
+                isPremium: true
+            };
+            window.TrialManager.showTrialOverlay(mockUserData, 'test');
+        }
+        
+        function showUpgradePromptOverlay() {
+            const mockUserData = {
+                subscriptionTier: 'free',
+                trialClaimed: true,
+                trialActive: false,
+                trialExpired: true,
+                isPremium: false
+            };
+            window.TrialManager.showTrialOverlay(mockUserData, 'test');
+        }
+        
+        function hideTrialOverlay() {
+            window.TrialManager.hideTrialOverlay();
+        }
+        
+        async function startUserTrial() {
+            if (!currentUser) {
+                alert('Please log in first');
+                return;
+            }
+            
+            const success = await window.TrialManager.startTrial(currentUser.uid);
+            if (success) {
+                alert('Trial started successfully!');
+                await loadUserData();
+            } else {
+                alert('Failed to start trial');
+            }
+        }
+        
+        async function endUserTrial() {
+            if (!currentUser || !currentUserData) {
+                alert('Please log in first');
+                return;
+            }
+            
+            const success = await window.TrialManager.endTrial(currentUser.uid, currentUserData);
+            if (success) {
+                alert('Trial ended successfully!');
+                await loadUserData();
+            } else {
+                alert('Failed to end trial');
+            }
+        }
+        
+        async function resetTrialStatus() {
+            if (!currentUser) {
+                alert('Please log in first');
+                return;
+            }
+            
+            try {
+                await db.collection('users').doc(currentUser.uid).update({
+                    trialClaimed: false,
+                    trialActive: false,
+                    trialExpired: false,
+                    trialStartDate: null,
+                    trialExpiration: null,
+                    trialEndedAt: null,
+                    subscriptionTier: 'free',
+                    isPremium: false,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                alert('Trial status reset successfully!');
+                await loadUserData();
+            } catch (error) {
+                console.error('Error resetting trial status:', error);
+                alert('Failed to reset trial status: ' + error.message);
+            }
+        }
+        
+        function clearSessionDismissal() {
+            sessionStorage.removeItem('trialOverlayDismissed');
+            alert('Session dismissal cleared!');
+        }
+    </script>
+</body>
+</html>

@@ -191,6 +191,11 @@ async function initDashboard() {
         // Set up event listeners
         setupEventListeners();
 
+        // Check and show trial overlay for eligible users
+        setTimeout(() => {
+            checkAndShowTrialOverlay();
+        }, 3000); // Show after 3 seconds to let dashboard load
+
     } catch (error) {
         console.error("Error initializing dashboard:", error);
     }
@@ -1706,6 +1711,29 @@ function checkAndHandleSubscriptionStatus(userData) {
                 console.error("Error downgrading subscription:", error);
             });
         }
+    }
+}
+
+// Check and show trial overlay for eligible users
+function checkAndShowTrialOverlay() {
+    // Don't show if already dismissed in this session
+    if (sessionStorage.getItem('trialOverlayDismissed') === 'true') {
+        return;
+    }
+
+    // Don't show if user data not loaded or TrialManager not available
+    if (!userProfile || !window.TrialManager) {
+        return;
+    }
+
+    // Check if user is eligible for trial
+    if (window.TrialManager.isEligibleForTrial(userProfile)) {
+        console.log('User is eligible for trial, showing overlay');
+        window.TrialManager.showTrialOverlay(userProfile, 'dashboard');
+    } else if (window.TrialManager.hasActiveTrial(userProfile)) {
+        // Show trial status if user has active trial
+        console.log('User has active trial, showing status');
+        window.TrialManager.showTrialOverlay(userProfile, 'dashboard');
     }
 }
 

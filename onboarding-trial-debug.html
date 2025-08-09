@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding Trial Debug - BINK</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="trial-overlay.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        .debug-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .debug-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        
+        .debug-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .debug-button:hover {
+            background: var(--accent-color);
+        }
+        
+        .debug-info {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .status-good { color: #10B981; }
+        .status-bad { color: #EF4444; }
+        .status-warning { color: #F59E0B; }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="dashboard.html">
+                <img src="./logo.png" alt="BINK Logo">
+            </a>
+        </div>
+        <div class="header-user-info">
+            <span>Onboarding Trial Debug</span>
+        </div>
+    </header>
+
+    <div class="debug-container">
+        <h1>🔧 Onboarding Trial System Debug</h1>
+        <p>This page helps debug why the trial overlay might not be showing on the onboarding page.</p>
+        
+        <div class="debug-section">
+            <h3>Authentication Status</h3>
+            <div id="authStatus" class="debug-info">Checking...</div>
+        </div>
+        
+        <div class="debug-section">
+            <h3>Script Loading Status</h3>
+            <div id="scriptStatus" class="debug-info">Checking...</div>
+        </div>
+        
+        <div class="debug-section">
+            <h3>User Data</h3>
+            <div id="userData" class="debug-info">Loading...</div>
+        </div>
+        
+        <div class="debug-section">
+            <h3>Trial Eligibility Check</h3>
+            <div id="eligibilityCheck" class="debug-info">Checking...</div>
+        </div>
+        
+        <div class="debug-section">
+            <h3>Session Storage</h3>
+            <div id="sessionStorage" class="debug-info">Checking...</div>
+        </div>
+        
+        <div class="debug-section">
+            <h3>Manual Tests</h3>
+            <button class="debug-button" onclick="testTrialOverlay()">Test Trial Overlay</button>
+            <button class="debug-button" onclick="clearSessionDismissal()">Clear Session Dismissal</button>
+            <button class="debug-button" onclick="addTrialFields()">Add Trial Fields to User</button>
+            <button class="debug-button" onclick="resetTrialStatus()">Reset Trial Status</button>
+            <button class="debug-button" onclick="refreshData()">Refresh All Data</button>
+        </div>
+        
+        <div class="debug-section">
+            <h3>Console Logs</h3>
+            <div id="consoleLogs" class="debug-info" style="max-height: 300px; overflow-y: auto;">
+                Console logs will appear here...
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    
+    <script src="firebase-config.js"></script>
+    <script src="trial-overlay.js"></script>
+    
+    <script>
+        let currentUser = null;
+        let currentUserData = null;
+        let logs = [];
+        
+        // Override console.log to capture logs
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            logs.push(args.join(' '));
+            updateConsoleLogs();
+        };
+        
+        function updateConsoleLogs() {
+            const logsDiv = document.getElementById('consoleLogs');
+            logsDiv.innerHTML = logs.slice(-20).map(log => `<div>${log}</div>`).join('');
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+        }
+        
+        // Initialize debug checks
+        auth.onAuthStateChanged(async (user) => {
+            currentUser = user;
+            await runAllChecks();
+        });
+        
+        async function runAllChecks() {
+            checkAuthStatus();
+            checkScriptStatus();
+            await checkUserData();
+            checkEligibility();
+            checkSessionStorage();
+        }
+        
+        function checkAuthStatus() {
+            const authDiv = document.getElementById('authStatus');
+            if (currentUser) {
+                authDiv.innerHTML = `<span class="status-good">✅ Authenticated</span><br>
+                    User ID: ${currentUser.uid}<br>
+                    Email: ${currentUser.email}`;
+            } else {
+                authDiv.innerHTML = `<span class="status-bad">❌ Not authenticated</span><br>
+                    Please log in to test the trial system.`;
+            }
+        }
+        
+        function checkScriptStatus() {
+            const scriptDiv = document.getElementById('scriptStatus');
+            let status = '';
+            
+            status += `Firebase Auth: <span class="${typeof auth !== 'undefined' ? 'status-good' : 'status-bad'}">${typeof auth !== 'undefined' ? '✅' : '❌'}</span><br>`;
+            status += `Firebase Firestore: <span class="${typeof db !== 'undefined' ? 'status-good' : 'status-bad'}">${typeof db !== 'undefined' ? '✅' : '❌'}</span><br>`;
+            status += `TrialManager: <span class="${typeof window.TrialManager !== 'undefined' ? 'status-good' : 'status-bad'}">${typeof window.TrialManager !== 'undefined' ? '✅' : '❌'}</span><br>`;
+            
+            if (window.TrialManager) {
+                status += `TrialManager.isEligibleForTrial: <span class="${typeof window.TrialManager.isEligibleForTrial === 'function' ? 'status-good' : 'status-bad'}">${typeof window.TrialManager.isEligibleForTrial === 'function' ? '✅' : '❌'}</span><br>`;
+                status += `TrialManager.showTrialOverlay: <span class="${typeof window.TrialManager.showTrialOverlay === 'function' ? 'status-good' : 'status-bad'}">${typeof window.TrialManager.showTrialOverlay === 'function' ? '✅' : '❌'}</span><br>`;
+            }
+            
+            scriptDiv.innerHTML = status;
+        }
+        
+        async function checkUserData() {
+            const userDiv = document.getElementById('userData');
+            
+            if (!currentUser) {
+                userDiv.innerHTML = '<span class="status-bad">❌ No user authenticated</span>';
+                return;
+            }
+            
+            try {
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                if (userDoc.exists) {
+                    currentUserData = userDoc.data();
+                    userDiv.innerHTML = `<span class="status-good">✅ User data loaded</span><br>
+                        Subscription Tier: ${currentUserData.subscriptionTier || 'undefined'}<br>
+                        Trial Claimed: ${currentUserData.trialClaimed}<br>
+                        Trial Active: ${currentUserData.trialActive}<br>
+                        Trial Expired: ${currentUserData.trialExpired}<br>
+                        Is Premium: ${currentUserData.isPremium}<br>
+                        <details><summary>Full Data</summary><pre>${JSON.stringify(currentUserData, null, 2)}</pre></details>`;
+                } else {
+                    userDiv.innerHTML = '<span class="status-bad">❌ User document not found</span>';
+                }
+            } catch (error) {
+                userDiv.innerHTML = `<span class="status-bad">❌ Error loading user data: ${error.message}</span>`;
+            }
+        }
+        
+        function checkEligibility() {
+            const eligDiv = document.getElementById('eligibilityCheck');
+            
+            if (!currentUserData || !window.TrialManager) {
+                eligDiv.innerHTML = '<span class="status-warning">⚠️ Cannot check - missing data or TrialManager</span>';
+                return;
+            }
+            
+            const isEligible = window.TrialManager.isEligibleForTrial(currentUserData);
+            const hasActiveTrial = window.TrialManager.hasActiveTrial(currentUserData);
+            
+            let status = `Is Eligible for Trial: <span class="${isEligible ? 'status-good' : 'status-bad'}">${isEligible ? '✅ Yes' : '❌ No'}</span><br>`;
+            status += `Has Active Trial: <span class="${hasActiveTrial ? 'status-good' : 'status-bad'}">${hasActiveTrial ? '✅ Yes' : '❌ No'}</span><br>`;
+            
+            if (hasActiveTrial) {
+                const daysRemaining = window.TrialManager.getTrialDaysRemaining(currentUserData);
+                status += `Days Remaining: ${daysRemaining}<br>`;
+            }
+            
+            eligDiv.innerHTML = status;
+        }
+        
+        function checkSessionStorage() {
+            const sessionDiv = document.getElementById('sessionStorage');
+            const dismissed = sessionStorage.getItem('trialOverlayDismissed');
+            
+            sessionDiv.innerHTML = `Trial Overlay Dismissed: <span class="${dismissed === 'true' ? 'status-warning' : 'status-good'}">${dismissed || 'false'}</span>`;
+        }
+        
+        // Manual test functions
+        function testTrialOverlay() {
+            if (!window.TrialManager || !currentUserData) {
+                alert('TrialManager or user data not available');
+                return;
+            }
+            
+            console.log('🧪 Manual trial overlay test');
+            window.TrialManager.showTrialOverlay(currentUserData, 'debug');
+        }
+        
+        function clearSessionDismissal() {
+            sessionStorage.removeItem('trialOverlayDismissed');
+            checkSessionStorage();
+            console.log('🧹 Session dismissal cleared');
+        }
+        
+        async function addTrialFields() {
+            if (!currentUser) {
+                alert('Please log in first');
+                return;
+            }
+            
+            try {
+                await db.collection('users').doc(currentUser.uid).update({
+                    trialClaimed: false,
+                    trialActive: false,
+                    trialStartDate: null,
+                    trialExpiration: null,
+                    trialExpired: false,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                console.log('✅ Trial fields added');
+                await checkUserData();
+                checkEligibility();
+            } catch (error) {
+                console.error('❌ Error adding trial fields:', error);
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        async function resetTrialStatus() {
+            if (!currentUser) {
+                alert('Please log in first');
+                return;
+            }
+            
+            try {
+                await db.collection('users').doc(currentUser.uid).update({
+                    trialClaimed: false,
+                    trialActive: false,
+                    trialExpired: false,
+                    trialStartDate: null,
+                    trialExpiration: null,
+                    trialEndedAt: null,
+                    subscriptionTier: 'free',
+                    isPremium: false,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                console.log('🔄 Trial status reset');
+                await runAllChecks();
+            } catch (error) {
+                console.error('❌ Error resetting trial:', error);
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        async function refreshData() {
+            console.log('🔄 Refreshing all data...');
+            await runAllChecks();
+        }
+        
+        // Auto-refresh every 5 seconds
+        setInterval(() => {
+            if (currentUser) {
+                runAllChecks();
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

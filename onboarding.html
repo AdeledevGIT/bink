@@ -10,6 +10,7 @@
     <link rel="apple-touch-icon" href="./logo1.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="onboarding.css">
+    <link rel="stylesheet" href="trial-overlay.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
@@ -175,7 +176,13 @@
                                 <i class="fas fa-lock"></i>
                                 <h3>Premium Feature</h3>
                                 <p>Media and Catalog are available for Pro users only.</p>
-                                <button class="btn btn-primary" onclick="showPricingModal()">Upgrade to Pro</button>
+                                <div class="lock-actions">
+                                    <button class="btn btn-trial" id="media-trial-btn" onclick="claimTrialFromLock('media')">
+                                        <i class="fas fa-gift"></i>
+                                        Claim 14-Day Free Trial
+                                    </button>
+                                    <button class="btn btn-primary" onclick="showPricingModal()">Upgrade to Pro</button>
+                                </div>
                             </div>
                         </div>
                         <div class="media-manager">
@@ -261,7 +268,13 @@
                                 <i class="fas fa-lock"></i>
                                 <h3>Premium Feature</h3>
                                 <p>Media and Catalog are available for Pro users only.</p>
-                                <button class="btn btn-primary" onclick="showPricingModal()">Upgrade to Pro</button>
+                                <div class="lock-actions">
+                                    <button class="btn btn-trial" id="catalog-trial-btn" onclick="claimTrialFromLock('catalog')">
+                                        <i class="fas fa-gift"></i>
+                                        Claim 14-Day Free Trial
+                                    </button>
+                                    <button class="btn btn-primary" onclick="showPricingModal()">Upgrade to Pro</button>
+                                </div>
                             </div>
                         </div>
                         <div class="catalog-manager">
@@ -734,6 +747,7 @@
 
     <script src="firebase-config.js"></script>
     <script src="email-verification.js"></script>
+    <script src="trial-overlay.js"></script>
     <script src="templates/templates.js"></script>
     <script src="onboarding.js"></script>
 </body>

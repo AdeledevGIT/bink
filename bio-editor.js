@@ -3744,6 +3744,166 @@ function handleTemplateSelection(templateId) {
     selectTemplate(templateId);
 }
 
+// Handle trial claim from bio editor lock overlay
+async function claimTrialFromBioEditor(source) {
+    console.log(`🎯 Trial claim initiated from bio editor ${source} lock`);
+
+    if (!currentUser) {
+        console.error('❌ No user authenticated');
+        showNotification('Please log in to claim your free trial.', 'error');
+        return;
+    }
+
+    if (!window.TrialManager) {
+        console.error('❌ TrialManager not available');
+        showNotification('Trial system not available. Please try again later.', 'error');
+        return;
+    }
+
+    // Get current user data
+    let userData = currentUserData;
+    if (!userData) {
+        try {
+            const userDoc = await db.collection('users').doc(currentUser.uid).get();
+            if (userDoc.exists) {
+                userData = userDoc.data();
+            } else {
+                showNotification('User data not found.', 'error');
+                return;
+            }
+        } catch (error) {
+            console.error('Error loading user data:', error);
+            showNotification('Failed to load user data.', 'error');
+            return;
+        }
+    }
+
+    // Ensure user has trial fields
+    if (userData.trialClaimed === undefined) {
+        try {
+            await db.collection('users').doc(currentUser.uid).update({
+                trialClaimed: false,
+                trialActive: false,
+                trialStartDate: null,
+                trialExpiration: null,
+                trialExpired: false,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            // Reload user data
+            const userDoc = await db.collection('users').doc(currentUser.uid).get();
+            if (userDoc.exists) {
+                userData = userDoc.data();
+            }
+        } catch (error) {
+            console.error('Error adding trial fields:', error);
+        }
+    }
+
+    // Check if user is eligible
+    if (!window.TrialManager.isEligibleForTrial(userData)) {
+        console.log('❌ User not eligible for trial');
+
+        if (window.TrialManager.hasActiveTrial(userData)) {
+            showNotification('You already have an active trial!', 'info');
+        } else if (userData.trialClaimed) {
+            showNotification('You have already claimed your free trial. Upgrade to premium for continued access.', 'info');
+            setTimeout(() => {
+                window.location.href = 'pricing.html';
+            }, 2000);
+        } else {
+            showNotification('You are not eligible for a free trial at this time.', 'error');
+        }
+        return;
+    }
+
+    // Get the trial button for this source
+    const trialButton = document.getElementById(`bio-${source}-trial-btn`);
+    if (trialButton) {
+        trialButton.disabled = true;
+        trialButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Starting Trial...';
+    }
+
+    try {
+        const success = await window.TrialManager.startTrial(currentUser.uid);
+
+        if (success) {
+            console.log('✅ Trial started successfully');
+
+            // Show success notification
+            showNotification('🎉 Trial activated! You now have 14 days of premium access!', 'success');
+
+            // Update current user data
+            currentUserData = {
+                ...userData,
+                trialActive: true,
+                trialClaimed: true,
+                isPremium: true,
+                subscriptionTier: 'trial'
+            };
+
+            // Hide the lock messages and refresh the UI
+            setTimeout(() => {
+                const mediaLock = document.getElementById('media-lock-message');
+                const catalogLock = document.getElementById('catalog-lock-message');
+
+                if (mediaLock) mediaLock.style.display = 'none';
+                if (catalogLock) catalogLock.style.display = 'none';
+
+                // Re-enforce section locks (should now show unlocked)
+                if (typeof enforceSectionLocks === 'function') {
+                    enforceSectionLocks(currentUserData);
+                }
+
+                // Update premium status indicators
+                updatePremiumStatusIndicators(currentUserData);
+
+                // Show success message
+                showTrialActivatedNotification();
+
+            }, 1000);
+
+        } else {
+            throw new Error('Failed to start trial');
+        }
+
+    } catch (error) {
+        console.error('❌ Error starting trial:', error);
+        showNotification('Failed to start trial. Please try again.', 'error');
+
+        // Re-enable button
+        if (trialButton) {
+            trialButton.disabled = false;
+            trialButton.innerHTML = '<i class="fas fa-gift"></i> Claim 14-Day Free Trial';
+        }
+    }
+}
+
+// Show trial activated notification
+function showTrialActivatedNotification() {
+    showNotification('🎉 Premium trial activated! Enjoy 14 days of full access to all premium features.', 'success');
+
+    // Show additional info after a moment
+    setTimeout(() => {
+        showNotification('💡 You can now upload media, create product catalogs, and access all premium templates!', 'info');
+    }, 3000);
+}
+
+// Update premium status indicators
+function updatePremiumStatusIndicators(userData) {
+    // Update any premium badges or indicators in the UI
+    const premiumBadges = document.querySelectorAll('.premium-badge, .pro-badge');
+    premiumBadges.forEach(badge => {
+        if (userData.isPremium) {
+            badge.style.display = 'inline-block';
+            if (userData.subscriptionTier === 'trial') {
+                badge.textContent = 'TRIAL';
+                badge.style.background = 'linear-gradient(135deg, #10B981, #059669)';
+            }
+        }
+    });
+}
+
 // Initialize template gallery when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize template gallery instead of carousel

@@ -68,6 +68,9 @@ function loadUserSubscription(userId) {
 
             // Update UI based on subscription
             updateSubscriptionUI(currentUserData.subscriptionTier || 'free');
+
+            // Check and show trial card if eligible
+            checkAndShowTrialCard();
         } else {
             console.log("No such user document!");
             showError("Could not load user data.");
@@ -121,6 +124,16 @@ function updateSubscriptionUI(subscriptionTier) {
                 premiumLifetimeButton.textContent = 'Current Plan';
                 premiumLifetimeButton.classList.remove('premium-button');
                 premiumLifetimeButton.classList.add('current-plan');
+            }
+            break;
+        case 'trial':
+            // For trial users, show they have premium access but encourage upgrade
+            const trialButton = document.getElementById('start-trial-button');
+            if (trialButton) {
+                const daysRemaining = window.TrialManager ?
+                    window.TrialManager.getTrialDaysRemaining(currentUserData) : 0;
+                trialButton.innerHTML = `<i class="fas fa-crown"></i> Trial Active (${daysRemaining} days left)`;
+                trialButton.classList.add('current-plan');
             }
             break;
         case 'creator':
@@ -686,6 +699,111 @@ function init() {
     // Check for token purchase
     checkForTokenPurchase();
 }
+
+// Trial Card Functionality
+function checkAndShowTrialCard() {
+    const trialCard = document.getElementById('trial-pricing-card');
+    const startTrialButton = document.getElementById('start-trial-button');
+
+    if (!trialCard || !currentUserData || !window.TrialManager) {
+        return;
+    }
+
+    // Show trial card if user is eligible
+    if (window.TrialManager.isEligibleForTrial(currentUserData)) {
+        trialCard.style.display = 'block';
+
+        // Set up trial button click handler
+        if (startTrialButton && !startTrialButton.hasAttribute('data-handler-attached')) {
+            startTrialButton.setAttribute('data-handler-attached', 'true');
+            startTrialButton.addEventListener('click', handleStartTrial);
+        }
+    } else if (window.TrialManager.hasActiveTrial(currentUserData)) {
+        // Show trial card with different content for active trial users
+        showActiveTrialCard();
+    } else {
+        // Hide trial card for ineligible users
+        trialCard.style.display = 'none';
+    }
+}
+
+function showActiveTrialCard() {
+    const trialCard = document.getElementById('trial-pricing-card');
+    const startTrialButton = document.getElementById('start-trial-button');
+
+    if (!trialCard || !currentUserData || !window.TrialManager) {
+        return;
+    }
+
+    const daysRemaining = window.TrialManager.getTrialDaysRemaining(currentUserData);
+
+    // Update card content for active trial
+    const priceElement = trialCard.querySelector('.price');
+    const periodElement = trialCard.querySelector('.period');
+    const saveElement = trialCard.querySelector('.pricing-save');
+
+    if (priceElement) priceElement.textContent = `${daysRemaining}`;
+    if (periodElement) periodElement.textContent = 'days left';
+    if (saveElement) saveElement.textContent = 'Premium trial active!';
+
+    // Update button
+    if (startTrialButton) {
+        startTrialButton.innerHTML = '<i class="fas fa-crown"></i> Upgrade to Keep Premium';
+        startTrialButton.onclick = () => {
+            // Scroll to premium plans
+            document.querySelector('.pricing-card:not(.trial-card)').scrollIntoView({
+                behavior: 'smooth'
+            });
+        };
+    }
+
+    trialCard.style.display = 'block';
+}
+
+async function handleStartTrial() {
+    const startTrialButton = document.getElementById('start-trial-button');
+
+    if (!currentUser || !startTrialButton) {
+        return;
+    }
+
+    // Disable button and show loading
+    startTrialButton.disabled = true;
+    startTrialButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Starting Trial...';
+
+    try {
+        const success = await window.TrialManager.startTrial(currentUser.uid);
+
+        if (success) {
+            // Show success message
+            showSuccess('🎉 Trial started! You now have 14 days of premium access!');
+
+            // Reload user data to reflect changes
+            setTimeout(() => {
+                loadUserSubscription(currentUser.uid);
+            }, 1000);
+
+            // Redirect to dashboard after a moment
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 2000);
+
+        } else {
+            throw new Error('Failed to start trial');
+        }
+
+    } catch (error) {
+        console.error('Error starting trial:', error);
+        showError('Failed to start trial. Please try again.');
+
+        // Re-enable button
+        startTrialButton.disabled = false;
+        startTrialButton.innerHTML = '<i class="fas fa-rocket"></i> Start Free Trial';
+    }
+}
+
+// Add trial button to the DOM elements at the top
+const startTrialButton = document.getElementById('start-trial-button');
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', init);

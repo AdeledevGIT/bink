@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="bio-editor.css">
     <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="trial-overlay.css">
     <!-- Font Awesome for social icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
@@ -218,7 +219,13 @@
                             <i class="fas fa-lock"></i>
                             <h3>Premium Feature</h3>
                             <p>Media is available for Pro users only.</p>
-                            <a href="pricing.html" class="btn btn-primary">Upgrade to Pro</a>
+                            <div class="lock-actions">
+                                <button class="btn btn-trial" id="bio-media-trial-btn" onclick="claimTrialFromBioEditor('media')">
+                                    <i class="fas fa-gift"></i>
+                                    Claim 14-Day Free Trial
+                                </button>
+                                <a href="pricing.html" class="btn btn-primary">Upgrade to Pro</a>
+                            </div>
                         </div>
                         <div class="media-manager">
                             <!-- Media Type Selector -->
@@ -303,7 +310,13 @@
                             <i class="fas fa-lock"></i>
                             <h3>Premium Feature</h3>
                             <p>Catalog is available for Pro users only.</p>
-                            <a href="pricing.html" class="btn btn-primary">Upgrade to Pro</a>
+                            <div class="lock-actions">
+                                <button class="btn btn-trial" id="bio-catalog-trial-btn" onclick="claimTrialFromBioEditor('catalog')">
+                                    <i class="fas fa-gift"></i>
+                                    Claim 14-Day Free Trial
+                                </button>
+                                <a href="pricing.html" class="btn btn-primary">Upgrade to Pro</a>
+                            </div>
                         </div>
                         <div class="catalog-manager">
                             <div id="products-container" class="products-grid">
@@ -627,6 +640,7 @@
 
     <script src="firebase-config.js"></script>
     <script src="email-verification.js"></script>
+    <script src="trial-overlay.js"></script>
     <script src="templates/templates.js"></script>
     <script src="premium-enforcement.js"></script>
     <script src="sidebar.js"></script>
