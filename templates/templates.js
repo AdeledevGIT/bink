@@ -2671,7 +2671,7 @@ window.BINK.templates.renderOceanWavesMediaContent = function(media) {
                     <div class="media-item music-item">
                         <div class="music-player" onclick="window.open('${track.url}', '_blank')">
                             <div class="music-platform-icon ${track.platform}">
-                                <i class="fab fa-${track.platform}"></i>
+                                <i class="${window.BINK.templates.getMusicPlatformIcon(track.platform)}"></i>
                             </div>
                             <div class="music-info">
                                 <h4 class="music-title">${track.title}</h4>
@@ -2709,18 +2709,17 @@ window.BINK.templates.renderOceanWavesMediaContent = function(media) {
     mediaHTML += `
         <div class="media-section">
             <h3 class="media-section-title">
-                <i class="fab fa-youtube"></i> YouTube
+                <i class="fab fa-youtube"></i> Ocean Videos
             </h3>
-            <div class="media-grid youtube-grid">
+            <div class="media-grid video-grid">
                 ${youtube.map(video => `
-                    <div class="media-item youtube-item">
-                        <div class="youtube-embed-container">
-                            <iframe
-                                src="https://www.youtube.com/embed/${window.BINK.templates.getYouTubeVideoId(video.url)}"
-                                frameborder="0"
-                                allowfullscreen
-                                loading="lazy">
-                            </iframe>
+                    <div class="media-item video-item">
+                        <div class="video-thumbnail" onclick="window.open('${video.url}', '_blank')">
+                            <img src="${video.thumbnail || `https://img.youtube.com/vi/${window.BINK.templates.getYouTubeVideoId(video.url)}/hqdefault.jpg`}" alt="${video.title || 'YouTube video'}" loading="lazy">
+                            <div class="video-play-overlay">
+                                <div class="video-play-button"><i class="fab fa-youtube"></i></div>
+                            </div>
+                            ${video.duration ? `<div class=\"video-duration\">${video.duration}</div>` : ''}
                         </div>
                         <div class="media-info">
                             <h4 class="media-title">${video.title || 'Untitled Video'}</h4>
@@ -2878,7 +2877,11 @@ window.BINK.templates.templates['neongaming'] = {
                 </div>
 
                 ${window.BINK.templates.renderCatalogContent(data.catalog || [])}
-                ${window.BINK.templates.renderMediaContent(data.media || {})}
+                ${window.BINK.templates.renderMediaContent({
+                    images: (data.media && data.media.images) || [],
+                    music: (data.media && data.media.music) || [],
+                    youtube: (data.media && data.media.youtube) || []
+                })}
 
                 <div class="neongaming-socials">
                     ${window.BINK.templates.renderSocialLinks(data.socialLinks)}

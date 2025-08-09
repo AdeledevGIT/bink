@@ -1,4 +1,4 @@
-/* Aurora Glow Template - Dynamic aurora background with glowing elements */
+/* Aurora Glow Template - Ethereal aurora borealis experience */
 .auroraglow-bio-bg * {
     margin: 0;
     padding: 0;
@@ -10,7 +10,7 @@ html body:has(.auroraglow-bio-bg),
 html body .auroraglow-bio-bg,
 html body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-    background: #0a0a0f !important;
+    background: #000510 !important;
     min-height: 100vh !important;
     display: flex !important;
     align-items: center !important;
@@ -37,6 +37,7 @@ body:has(.auroraglow-bio-bg) .bio-page,
     display: block !important;
 }
 
+/* Multi-layered aurora background */
 body::before {
     content: '';
     position: fixed;
@@ -45,25 +46,50 @@ body::before {
     width: 100%;
     height: 100%;
     background:
-        radial-gradient(ellipse at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 20%, rgba(255, 118, 117, 0.3) 0%, transparent 50%),
-        radial-gradient(ellipse at 40% 80%, rgba(255, 204, 112, 0.3) 0%, transparent 50%);
-    animation: aurora 8s ease-in-out infinite alternate;
-    z-index: -1;
+        radial-gradient(ellipse 80% 50% at 20% 0%, rgba(64, 224, 208, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 80% at 70% 70%, rgba(138, 43, 226, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse 100% 60% at 40% 40%, rgba(0, 191, 255, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse 120% 80% at 80% 10%, rgba(255, 20, 147, 0.25) 0%, transparent 50%),
+        radial-gradient(ellipse 90% 70% at 10% 80%, rgba(50, 205, 50, 0.2) 0%, transparent 50%);
+    animation: aurora-flow 12s ease-in-out infinite;
+    z-index: -3;
 }
 
-@keyframes aurora {
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(ellipse 70% 40% at 60% 20%, rgba(255, 105, 180, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 90% at 90% 50%, rgba(72, 209, 204, 0.2) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 50% at 30% 90%, rgba(147, 112, 219, 0.18) 0%, transparent 60%);
+    animation: aurora-flow 15s ease-in-out infinite reverse;
+    z-index: -2;
+}
+
+@keyframes aurora-flow {
     0% {
-        transform: scale(1) rotate(0deg);
-        opacity: 0.7;
+        transform: translateX(-10%) translateY(-5%) scale(1);
+        opacity: 0.6;
+    }
+    25% {
+        transform: translateX(5%) translateY(-10%) scale(1.05);
+        opacity: 0.8;
     }
     50% {
-        transform: scale(1.1) rotate(180deg);
+        transform: translateX(10%) translateY(5%) scale(1.1);
+        opacity: 1;
+    }
+    75% {
+        transform: translateX(-5%) translateY(10%) scale(1.05);
         opacity: 0.9;
     }
     100% {
-        transform: scale(1) rotate(360deg);
-        opacity: 0.7;
+        transform: translateX(-10%) translateY(-5%) scale(1);
+        opacity: 0.6;
     }
 }
 
@@ -75,91 +101,154 @@ body::before {
     z-index: 1;
 }
 
+/* Floating aurora particles */
+.auroraglow-bio-bg::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.4), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(64, 224, 208, 0.6), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255, 105, 180, 0.5), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(138, 43, 226, 0.4), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(255, 255, 255, 0.3), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: aurora-particles 20s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes aurora-particles {
+    0% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+}
+
 .auroraglow-container {
-    background: rgba(15, 15, 25, 0.8);
-    backdrop-filter: blur(20px);
-    border: none;
-    border-radius: 0;
-    padding: 32px;
+    background: rgba(5, 10, 25, 0.15);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 32px;
+    padding: 48px 40px;
     position: relative;
     overflow: hidden;
-    box-shadow: none;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+        0 0 100px rgba(64, 224, 208, 0.1);
     width: 100vw;
-    min-height: 100vh;
+    max-width: 600px;
+    min-height: auto;
+    margin: 20px auto;
     box-sizing: border-box;
 }
 
 .auroraglow-container::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
     background: linear-gradient(45deg,
-        rgba(120, 119, 198, 0.1) 0%,
-        rgba(255, 118, 117, 0.1) 50%,
-        rgba(255, 204, 112, 0.1) 100%);
-    border-radius: 24px;
+        rgba(64, 224, 208, 0.3) 0%,
+        rgba(138, 43, 226, 0.3) 25%,
+        rgba(255, 20, 147, 0.3) 50%,
+        rgba(0, 191, 255, 0.3) 75%,
+        rgba(64, 224, 208, 0.3) 100%);
+    border-radius: 34px;
     z-index: -1;
-    animation: glow-shift 6s ease-in-out infinite;
+    animation: aurora-border 8s linear infinite;
 }
 
-@keyframes glow-shift {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.6; }
+@keyframes aurora-border {
+    0% { opacity: 0.3; transform: rotate(0deg); }
+    50% { opacity: 0.8; transform: rotate(180deg); }
+    100% { opacity: 0.3; transform: rotate(360deg); }
 }
 
 .auroraglow-header-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 28px;
+    margin-bottom: 40px;
     position: relative;
     z-index: 2;
 }
 
 .auroraglow-join-btn {
-    background: linear-gradient(135deg, rgba(120, 119, 198, 0.8), rgba(255, 118, 117, 0.8));
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
+    background: linear-gradient(135deg,
+        rgba(64, 224, 208, 0.2) 0%,
+        rgba(138, 43, 226, 0.2) 100%);
+    border: 1px solid rgba(64, 224, 208, 0.4);
+    color: rgba(255, 255, 255, 0.95);
     text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 0.9rem;
     font-weight: 600;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+}
+
+.auroraglow-join-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(64, 224, 208, 0.3),
+        transparent);
+    transition: left 0.6s ease;
+}
+
+.auroraglow-join-btn:hover::before {
+    left: 100%;
 }
 
 .auroraglow-join-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(120, 119, 198, 0.4);
+    transform: translateY(-3px);
+    box-shadow:
+        0 10px 40px rgba(64, 224, 208, 0.3),
+        0 0 20px rgba(138, 43, 226, 0.2);
+    border-color: rgba(64, 224, 208, 0.8);
 }
 
 .auroraglow-share-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    width: 42px;
-    height: 42px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.8);
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(20px);
+    position: relative;
 }
 
 .auroraglow-share-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.1);
+    background: rgba(255, 105, 180, 0.15);
+    border-color: rgba(255, 105, 180, 0.5);
+    color: white;
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
 }
 
 .auroraglow-profile {
     text-align: center !important;
-    margin-bottom: 32px !important;
+    margin-bottom: 48px !important;
     position: relative !important;
     z-index: 2 !important;
     display: flex !important;
@@ -174,91 +263,149 @@ body::before {
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    margin-bottom: 20px !important;
-    width: 140px !important;
-    height: 140px !important;
+    margin-bottom: 32px !important;
+    width: 160px !important;
+    height: 160px !important;
 }
 
 .auroraglow-avatar {
-    width: 140px;
-    height: 140px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     object-fit: cover;
     position: relative;
-    z-index: 2;
-    box-shadow: 0 0 30px rgba(120, 119, 198, 0.5);
+    z-index: 3;
+    box-shadow:
+        0 0 60px rgba(64, 224, 208, 0.4),
+        0 0 100px rgba(138, 43, 226, 0.2),
+        0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s ease;
+}
+
+.auroraglow-avatar:hover {
+    transform: scale(1.05);
+    box-shadow:
+        0 0 80px rgba(64, 224, 208, 0.6),
+        0 0 120px rgba(138, 43, 226, 0.3),
+        0 12px 48px rgba(0, 0, 0, 0.4);
 }
 
 .auroraglow-avatar-container::before {
     content: '';
     position: absolute;
-    top: -8px;
-    left: -8px;
-    right: -8px;
-    bottom: -8px;
+    top: -12px;
+    left: -12px;
+    right: -12px;
+    bottom: -12px;
     background: conic-gradient(
         from 0deg,
-        rgba(120, 119, 198, 0.8),
-        rgba(255, 118, 117, 0.8),
-        rgba(255, 204, 112, 0.8),
-        rgba(120, 119, 198, 0.8)
+        rgba(64, 224, 208, 0.8) 0deg,
+        rgba(138, 43, 226, 0.8) 90deg,
+        rgba(255, 20, 147, 0.8) 180deg,
+        rgba(0, 191, 255, 0.8) 270deg,
+        rgba(64, 224, 208, 0.8) 360deg
     );
     border-radius: 50%;
     z-index: 1;
-    animation: rotate-glow 4s linear infinite;
+    animation: aurora-rotate 6s linear infinite;
+    filter: blur(2px);
 }
 
-@keyframes rotate-glow {
+.auroraglow-avatar-container::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    background: conic-gradient(
+        from 180deg,
+        rgba(255, 105, 180, 0.6) 0deg,
+        rgba(50, 205, 50, 0.6) 120deg,
+        rgba(255, 20, 147, 0.6) 240deg,
+        rgba(255, 105, 180, 0.6) 360deg
+    );
+    border-radius: 50%;
+    z-index: 2;
+    animation: aurora-rotate 8s linear infinite reverse;
+    filter: blur(1px);
+}
+
+@keyframes aurora-rotate {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
 
 .auroraglow-username {
-    font-size: 1.5rem !important;
-    font-weight: 700 !important;
-    color: white !important;
-    margin-bottom: 8px !important;
-    text-shadow: 0 0 20px rgba(120, 119, 198, 0.5) !important;
+    font-size: 2rem !important;
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    margin-bottom: 16px !important;
+    text-shadow:
+        0 0 30px rgba(64, 224, 208, 0.6),
+        0 0 60px rgba(138, 43, 226, 0.3) !important;
     text-align: center !important;
     width: 100% !important;
+    letter-spacing: 0.5px !important;
+    animation: aurora-text-glow 4s ease-in-out infinite alternate !important;
+}
+
+@keyframes aurora-text-glow {
+    0% {
+        text-shadow:
+            0 0 30px rgba(64, 224, 208, 0.6),
+            0 0 60px rgba(138, 43, 226, 0.3);
+    }
+    50% {
+        text-shadow:
+            0 0 40px rgba(255, 105, 180, 0.7),
+            0 0 80px rgba(0, 191, 255, 0.4);
+    }
+    100% {
+        text-shadow:
+            0 0 35px rgba(50, 205, 50, 0.6),
+            0 0 70px rgba(255, 20, 147, 0.3);
+    }
 }
 
 .auroraglow-bio {
-    color: rgba(255, 255, 255, 0.8) !important;
-    font-size: 0.95rem !important;
-    line-height: 1.6 !important;
-    max-width: 280px !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-size: 1.05rem !important;
+    line-height: 1.7 !important;
+    max-width: 400px !important;
     margin: 0 auto !important;
     text-align: center !important;
     width: 100% !important;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1) !important;
 }
 
 .auroraglow-links {
-    margin-bottom: 28px;
+    margin-bottom: 40px;
     position: relative;
     z-index: 2;
 }
 
 .auroraglow-link-container {
     position: relative;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 }
 
 .auroraglow-link {
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 18px 24px;
     text-decoration: none;
-    color: white;
-    font-weight: 600;
-    transition: all 0.3s ease;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
+    font-size: 1.05rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(30px);
 }
 
 .auroraglow-link::before {
@@ -270,48 +417,78 @@ body::before {
     height: 100%;
     background: linear-gradient(90deg,
         transparent,
-        rgba(120, 119, 198, 0.3),
+        rgba(64, 224, 208, 0.15),
+        rgba(138, 43, 226, 0.15),
         transparent);
-    transition: left 0.6s ease;
+    transition: left 0.8s ease;
 }
 
 .auroraglow-link:hover::before {
     left: 100%;
 }
 
+.auroraglow-link::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(64, 224, 208, 0.1) 0%,
+        rgba(255, 105, 180, 0.1) 50%,
+        rgba(138, 43, 226, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 24px;
+}
+
+.auroraglow-link:hover::after {
+    opacity: 1;
+}
+
 .auroraglow-link:hover {
-    border-color: rgba(120, 119, 198, 0.5);
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(120, 119, 198, 0.2);
+    border-color: rgba(64, 224, 208, 0.4);
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-4px);
+    box-shadow:
+        0 12px 40px rgba(64, 224, 208, 0.2),
+        0 0 60px rgba(138, 43, 226, 0.1);
 }
 
 .auroraglow-link i {
-    margin-right: 14px;
-    font-size: 1.1rem;
-    color: rgba(120, 119, 198, 1);
-    width: 20px;
+    margin-right: 16px;
+    font-size: 1.2rem;
+    color: rgba(64, 224, 208, 0.9);
+    width: 24px;
     text-align: center;
+    transition: all 0.3s ease;
+}
+
+.auroraglow-link:hover i {
+    color: rgba(255, 105, 180, 1);
+    transform: scale(1.1);
 }
 
 .auroraglow-link-share-btn {
     position: absolute;
-    right: 14px;
+    right: 18px;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: white;
-    width: 32px;
-    height: 32px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     opacity: 0;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    backdrop-filter: blur(20px);
 }
 
 .auroraglow-link-container:hover .auroraglow-link-share-btn {
@@ -319,68 +496,102 @@ body::before {
 }
 
 .auroraglow-link-share-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-50%) scale(1.1);
+    background: rgba(255, 105, 180, 0.2);
+    border-color: rgba(255, 105, 180, 0.5);
+    color: white;
+    transform: translateY(-50%) scale(1.15);
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
 }
 
 .auroraglow-socials {
     display: flex;
     justify-content: center;
-    gap: 16px;
-    margin-bottom: 24px;
+    gap: 20px;
+    margin-bottom: 32px;
     position: relative;
     z-index: 2;
 }
 
 .auroraglow-socials a {
-    width: 44px;
-    height: 44px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    border-radius: 12px;
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    transition: all 0.3s ease;
-    font-size: 1.1rem;
-    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 1.3rem;
+    backdrop-filter: blur(30px);
+    position: relative;
+    overflow: hidden;
+}
+
+.auroraglow-socials a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(64, 224, 208, 0.2) 0%,
+        rgba(138, 43, 226, 0.2) 50%,
+        rgba(255, 105, 180, 0.2) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 16px;
+}
+
+.auroraglow-socials a:hover::before {
+    opacity: 1;
 }
 
 .auroraglow-socials a:hover {
-    background: rgba(120, 119, 198, 0.3);
-    border-color: rgba(120, 119, 198, 0.5);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(120, 119, 198, 0.3);
+    border-color: rgba(64, 224, 208, 0.5);
+    color: white;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow:
+        0 15px 40px rgba(64, 224, 208, 0.3),
+        0 0 60px rgba(138, 43, 226, 0.2);
 }
 
 .auroraglow-footer {
     text-align: center;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
     position: relative;
     z-index: 2;
+    margin-top: 20px;
 }
 
 .auroraglow-footer a {
-    color: rgba(120, 119, 198, 1);
+    color: rgba(64, 224, 208, 0.9);
     text-decoration: none;
     font-weight: 600;
+    transition: all 0.3s ease;
 }
 
 .auroraglow-footer a:hover {
-    text-shadow: 0 0 10px rgba(120, 119, 198, 0.5);
+    color: rgba(255, 105, 180, 1);
+    text-shadow:
+        0 0 15px rgba(255, 105, 180, 0.6),
+        0 0 30px rgba(64, 224, 208, 0.3);
 }
 
 /* Aurora Glow Media Styles */
 .auroraglow-container .media-section {
-    margin: 25px 0;
-    padding: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(10, 10, 15, 0.6);
-    border-radius: 16px;
+    margin: 32px 0;
+    padding: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(5, 10, 25, 0.3);
+    border-radius: 24px;
     position: relative;
+    backdrop-filter: blur(40px);
+    overflow: hidden;
 }
 
 .auroraglow-container .media-section::before {
@@ -390,42 +601,62 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg,
-        rgba(120, 119, 198, 0.05) 0%,
-        rgba(255, 118, 117, 0.05) 50%,
-        rgba(255, 204, 112, 0.05) 100%);
-    border-radius: 16px;
+    background: linear-gradient(135deg,
+        rgba(64, 224, 208, 0.05) 0%,
+        rgba(138, 43, 226, 0.05) 25%,
+        rgba(255, 105, 180, 0.05) 50%,
+        rgba(0, 191, 255, 0.05) 75%,
+        rgba(64, 224, 208, 0.05) 100%);
+    border-radius: 24px;
     z-index: -1;
-    animation: glow-shift 6s ease-in-out infinite;
+    animation: aurora-section-glow 10s ease-in-out infinite;
+}
+
+@keyframes aurora-section-glow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
 }
 
 .auroraglow-container .media-section:first-child {
-    border-top: none;
     margin-top: 0;
 }
 
 .auroraglow-container .media-section-title {
-    color: white;
-    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.3rem;
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 24px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    text-shadow: 0 0 20px rgba(120, 119, 198, 0.5);
+    gap: 12px;
+    text-shadow:
+        0 0 30px rgba(64, 224, 208, 0.4),
+        0 0 60px rgba(138, 43, 226, 0.2);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     position: relative;
     z-index: 2;
 }
 
 .auroraglow-container .media-section-title i {
-    color: rgba(120, 119, 198, 1);
-    text-shadow: 0 0 8px rgba(120, 119, 198, 0.5);
+    color: rgba(64, 224, 208, 0.9);
+    text-shadow: 0 0 15px rgba(64, 224, 208, 0.6);
+    animation: aurora-icon-pulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-icon-pulse {
+    0% {
+        color: rgba(64, 224, 208, 0.9);
+        text-shadow: 0 0 15px rgba(64, 224, 208, 0.6);
+    }
+    100% {
+        color: rgba(255, 105, 180, 0.9);
+        text-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
+    }
 }
 
 .auroraglow-container .media-grid {
     display: grid;
-    gap: 15px;
+    gap: 20px;
 }
 
 .auroraglow-container .youtube-grid {
@@ -437,9 +668,11 @@ body::before {
     width: 100%;
     height: 0;
     padding-bottom: 56.25% !important; /* 16:9 */
-    margin-bottom: 12px;
-    border-radius: 12px;
+    margin-bottom: 16px;
+    border-radius: 20px;
     overflow: hidden;
+    border: 1px solid rgba(64, 224, 208, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .auroraglow-container .youtube-embed-container iframe {
@@ -449,6 +682,7 @@ body::before {
     width: 100%;
     height: 100%;
     border: 0;
+    border-radius: 20px;
 }
 
 .auroraglow-container .videos-grid {
@@ -456,7 +690,7 @@ body::before {
 }
 
 .auroraglow-container .images-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .auroraglow-container .music-grid {
@@ -464,13 +698,13 @@ body::before {
 }
 
 .auroraglow-container .media-item {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(30px);
 }
 
 .auroraglow-container .media-item::before {
@@ -482,20 +716,43 @@ body::before {
     height: 100%;
     background: linear-gradient(90deg,
         transparent,
-        rgba(120, 119, 198, 0.3),
+        rgba(64, 224, 208, 0.15),
+        rgba(138, 43, 226, 0.15),
         transparent);
-    transition: left 0.6s ease;
+    transition: left 0.8s ease;
 }
 
 .auroraglow-container .media-item:hover::before {
     left: 100%;
 }
 
+.auroraglow-container .media-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(64, 224, 208, 0.1) 0%,
+        rgba(255, 105, 180, 0.1) 50%,
+        rgba(138, 43, 226, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 20px;
+}
+
+.auroraglow-container .media-item:hover::after {
+    opacity: 1;
+}
+
 .auroraglow-container .media-item:hover {
-    border-color: rgba(120, 119, 198, 0.5);
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(120, 119, 198, 0.2);
+    border-color: rgba(64, 224, 208, 0.4);
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-6px);
+    box-shadow:
+        0 15px 50px rgba(64, 224, 208, 0.2),
+        0 0 80px rgba(138, 43, 226, 0.1);
 }
 
 /* Video Items */
@@ -580,17 +837,17 @@ body::before {
 .auroraglow-container .music-player {
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 15px;
-    background: rgba(30, 30, 30, 0.8);
-    border-radius: 16px;
+    gap: 18px;
+    padding: 20px;
+    background: rgba(5, 10, 25, 0.4);
+    border-radius: 20px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(120, 119, 198, 0.3);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(64, 224, 208, 0.2);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
 }
 
 .auroraglow-container .media-container .music-player::before,
@@ -601,13 +858,14 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg,
-        rgba(120, 119, 198, 0.1),
-        rgba(255, 118, 117, 0.1),
-        rgba(255, 204, 112, 0.1));
+    background: linear-gradient(135deg,
+        rgba(64, 224, 208, 0.1) 0%,
+        rgba(138, 43, 226, 0.1) 50%,
+        rgba(255, 105, 180, 0.1) 100%);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
     pointer-events: none;
+    border-radius: 20px;
 }
 
 .auroraglow-container .media-container .music-player:hover::before,
@@ -617,9 +875,11 @@ body::before {
 
 .auroraglow-container .media-container .music-player:hover,
 .auroraglow-container .music-player:hover {
-    border-color: rgba(120, 119, 198, 0.6);
-    box-shadow: 0 8px 25px rgba(120, 119, 198, 0.3);
-    transform: translateY(-2px);
+    border-color: rgba(64, 224, 208, 0.5);
+    box-shadow:
+        0 12px 40px rgba(64, 224, 208, 0.2),
+        0 0 60px rgba(138, 43, 226, 0.1);
+    transform: translateY(-4px);
 }
 
 .auroraglow-container .media-container .music-platform-icon,
@@ -712,26 +972,34 @@ body::before {
 
 .auroraglow-container .media-container .play-button,
 .auroraglow-container .play-button {
-    width: 35px;
-    height: 35px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba(120, 119, 198, 0.8), rgba(255, 118, 117, 0.8));
+    background: linear-gradient(135deg,
+        rgba(64, 224, 208, 0.8) 0%,
+        rgba(138, 43, 226, 0.8) 100%);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     z-index: 2;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(20px);
     flex-shrink: 0;
+    box-shadow: 0 4px 15px rgba(64, 224, 208, 0.3);
 }
 
 .auroraglow-container .play-button:hover {
-    transform: translateY(-2px) scale(1.1);
-    box-shadow: 0 8px 25px rgba(120, 119, 198, 0.4);
+    transform: translateY(-3px) scale(1.15);
+    box-shadow:
+        0 12px 30px rgba(64, 224, 208, 0.4),
+        0 0 40px rgba(138, 43, 226, 0.3);
+    background: linear-gradient(135deg,
+        rgba(255, 105, 180, 0.9) 0%,
+        rgba(64, 224, 208, 0.9) 100%);
 }
 
 /* Media Info */
@@ -959,36 +1227,51 @@ body::before {
 }
 
 /* Mobile Responsive */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .auroraglow-container {
-        padding: 20px;
-        margin: 0;
+        padding: 32px 24px;
+        margin: 16px;
+        max-width: calc(100vw - 32px);
+    }
+
+    .auroraglow-avatar-container {
+        width: 140px !important;
+        height: 140px !important;
     }
 
     .auroraglow-avatar {
-        width: 85px;
-        height: 85px;
+        width: 140px;
+        height: 140px;
     }
 
     .auroraglow-username {
-        font-size: 1.3rem;
+        font-size: 1.7rem !important;
     }
 
     .auroraglow-bio {
-        font-size: 0.9rem;
+        font-size: 1rem !important;
+        max-width: 100% !important;
     }
 
     .auroraglow-link {
-        padding: 14px 16px;
-    }
-
-    .auroraglow-socials a {
-        width: 40px;
-        height: 40px;
+        padding: 16px 20px;
         font-size: 1rem;
     }
 
-    /* Mobile catalog styles */
+    .auroraglow-socials a {
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+    }
+
+    .auroraglow-container .images-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .auroraglow-container .media-section {
+        padding: 24px 20px;
+    }
+
     .auroraglow-container .catalog-item {
         flex: 0 0 180px;
         min-height: 250px;
@@ -1004,5 +1287,64 @@ body::before {
 
     .auroraglow-container .catalog-grid {
         gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .auroraglow-container {
+        padding: 24px 20px;
+        margin: 12px;
+        border-radius: 24px;
+    }
+
+    .auroraglow-avatar-container {
+        width: 120px !important;
+        height: 120px !important;
+        margin-bottom: 24px !important;
+    }
+
+    .auroraglow-avatar {
+        width: 120px;
+        height: 120px;
+    }
+
+    .auroraglow-username {
+        font-size: 1.5rem !important;
+    }
+
+    .auroraglow-bio {
+        font-size: 0.95rem !important;
+    }
+
+    .auroraglow-link {
+        padding: 14px 18px;
+        font-size: 0.95rem;
+        border-radius: 20px;
+    }
+
+    .auroraglow-socials {
+        gap: 16px;
+    }
+
+    .auroraglow-socials a {
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+        border-radius: 14px;
+    }
+
+    .auroraglow-container .images-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .auroraglow-container .media-section {
+        padding: 20px 16px;
+        margin: 24px 0;
+        border-radius: 20px;
+    }
+
+    .auroraglow-container .media-section-title {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
     }
 }
