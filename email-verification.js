@@ -40,10 +40,23 @@ document.addEventListener('DOMContentLoaded', function() {
 // Initialize the verification page with user data
 async function initializeVerificationPage(user) {
     try {
+        console.log('🔧 Initializing verification page for user:', user.email);
+        console.log('🔧 User UID:', user.uid);
+        console.log('🔧 Email verified:', user.emailVerified);
+        console.log('🔧 Firebase config domain:', auth?.app?.options?.authDomain);
+
         // Display user email
         const emailDisplay = document.getElementById('user-email');
         if (emailDisplay) {
             emailDisplay.textContent = user.email;
+        }
+
+        // Check if signup was rate limited
+        if (sessionStorage.getItem('signupRateLimited') === 'true') {
+            displayError('Email sending was temporarily limited during signup. Please check your inbox, or wait a few minutes before requesting a new verification email.');
+            sessionStorage.removeItem('signupRateLimited');
+            // Start with a longer initial cooldown
+            startResendCooldown(180); // 3 minutes
         }
 
         // Check if user is already verified
@@ -51,6 +64,8 @@ async function initializeVerificationPage(user) {
 
         // Set up automatic verification check
         startVerificationPolling();
+
+
 
     } catch (error) {
         console.error('Error initializing verification page:', error);
@@ -114,17 +129,45 @@ async function sendVerificationEmail(user = null) {
             throw new Error('No user available for verification');
         }
 
-        // Send verification email using Firebase Auth
-        await targetUser.sendEmailVerification({
-            url: window.location.origin + '/onboarding.html', // Redirect URL after verification
-            handleCodeInApp: false
-        });
+        console.log('Attempting to send verification email to:', targetUser.email);
+        console.log('User email verified status:', targetUser.emailVerified);
+        console.log('Current domain:', window.location.origin);
 
-        console.log('Verification email sent to:', targetUser.email);
+        // Send verification email using Firebase Auth (without custom continue URL to avoid auth/invalid-continue-uri)
+        // Firebase will use the default email template and redirect behavior
+        await targetUser.sendEmailVerification();
+
+        console.log('✅ Verification email API call successful for:', targetUser.email);
+        console.log('📧 Email should be sent to:', targetUser.email);
+        console.log('🔗 Verification link will redirect to:', window.location.origin + '/onboarding.html');
+
         return true;
     } catch (error) {
-        console.error('Error sending verification email:', error);
-        throw error;
+        console.error('❌ Error sending verification email:', error);
+        console.error('Error code:', error.code);
+        console.error('Error message:', error.message);
+
+        // Handle specific Firebase errors
+        if (error.code === 'auth/too-many-requests') {
+            throw new Error('Too many verification emails sent. Please wait a few minutes before requesting another one.');
+        } else if (error.code === 'auth/user-disabled') {
+            throw new Error('Your account has been disabled. Please contact support.');
+        } else if (error.code === 'auth/user-not-found') {
+            throw new Error('User account not found. Please try logging in again.');
+        } else if (error.code === 'auth/invalid-continue-uri') {
+            console.error('Invalid continue URI. Trying with simpler configuration...');
+            // Try again with simpler config (no custom URL)
+            try {
+                await targetUser.sendEmailVerification();
+                console.log('✅ Verification email sent with default configuration');
+                return true;
+            } catch (retryError) {
+                console.error('❌ Retry also failed:', retryError);
+                throw new Error(`Failed to send verification email: ${retryError.message}`);
+            }
+        } else {
+            throw new Error(`Failed to send verification email: ${error.message}`);
+        }
     }
 }
 
@@ -151,17 +194,30 @@ async function resendVerificationEmail() {
 
         // Send verification email
         await sendVerificationEmail(user);
-        
+
         // Show success message
         displaySuccess('Verification email sent successfully!');
-        
+
         // Start cooldown
         startResendCooldown();
 
     } catch (error) {
         console.error('Error resending verification email:', error);
-        displayError('Failed to send verification email. Please try again.');
-        
+
+        // Handle rate limiting specifically
+        if (error.message.includes('Too many verification emails')) {
+            displayError('Too many requests detected. Please wait 5-10 minutes before trying again. In the meantime, check your email inbox and spam folder - the verification email may have already been sent.');
+            // Set a longer cooldown for rate limiting
+            startResendCooldown(300); // 5 minutes
+
+            // Show additional help
+            showRateLimitHelp();
+        } else {
+            displayError(error.message || 'Failed to send verification email. Please try again later.');
+            // Start normal cooldown even on error to prevent spam
+            startResendCooldown(120); // 2 minutes
+        }
+
         // Re-enable button
         const resendButton = document.getElementById('resend-button');
         if (resendButton) {
@@ -172,8 +228,8 @@ async function resendVerificationEmail() {
 }
 
 // Start cooldown timer for resend button
-function startResendCooldown() {
-    resendCooldown = 60; // 60 seconds cooldown
+function startResendCooldown(seconds = 60) {
+    resendCooldown = seconds;
     const resendButton = document.getElementById('resend-button');
     const countdownText = document.getElementById('countdown-text');
     const countdownSpan = document.getElementById('countdown');
@@ -181,28 +237,40 @@ function startResendCooldown() {
     if (resendButton) {
         resendButton.style.display = 'none';
     }
-    
+
     if (countdownText) {
         countdownText.style.display = 'block';
     }
 
+    // Clear any existing interval
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+    }
+
     countdownInterval = setInterval(() => {
         resendCooldown--;
-        
+
         if (countdownSpan) {
-            countdownSpan.textContent = resendCooldown;
+            // Show minutes and seconds for longer cooldowns
+            if (resendCooldown >= 60) {
+                const minutes = Math.floor(resendCooldown / 60);
+                const remainingSeconds = resendCooldown % 60;
+                countdownSpan.textContent = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+            } else {
+                countdownSpan.textContent = resendCooldown;
+            }
         }
 
         if (resendCooldown <= 0) {
             clearInterval(countdownInterval);
-            
+
             // Re-enable resend button
             if (resendButton) {
                 resendButton.disabled = false;
                 resendButton.textContent = 'Resend Verification Email';
                 resendButton.style.display = 'inline-block';
             }
-            
+
             if (countdownText) {
                 countdownText.style.display = 'none';
             }
@@ -263,14 +331,51 @@ function displayError(message) {
 function clearMessages() {
     const successElement = document.getElementById('success-message');
     const errorElement = document.getElementById('error-message');
-    
+
     if (successElement) {
         successElement.style.display = 'none';
     }
-    
+
     if (errorElement) {
         errorElement.style.display = 'none';
     }
+}
+
+// Show additional help when rate limited
+function showRateLimitHelp() {
+    // Create or update help message
+    let helpElement = document.getElementById('rate-limit-help');
+    if (!helpElement) {
+        helpElement = document.createElement('div');
+        helpElement.id = 'rate-limit-help';
+        helpElement.style.cssText = `
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        `;
+
+        // Insert after error message
+        const errorElement = document.getElementById('error-message');
+        if (errorElement && errorElement.parentNode) {
+            errorElement.parentNode.insertBefore(helpElement, errorElement.nextSibling);
+        }
+    }
+
+    helpElement.innerHTML = `
+        <strong>🔄 What you can do now:</strong>
+        <ul style="margin: 10px 0 0 20px; padding: 0;">
+            <li>Check your email inbox and spam folder thoroughly</li>
+            <li>Wait 5-10 minutes before requesting another email</li>
+            <li>Try logging out and back in to refresh your session</li>
+            <li>Contact support if you continue having issues</li>
+        </ul>
+    `;
+
+    helpElement.style.display = 'block';
 }
 
 // Check if user needs email verification (utility function for other pages)
@@ -303,6 +408,8 @@ async function requireEmailVerification(user) {
         return false;
     }
 }
+
+
 
 // Export functions for use in other files
 window.BINK = window.BINK || {};

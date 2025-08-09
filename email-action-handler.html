@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Action Handler - BINK</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo1.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/logo1.png">
+    <link rel="shortcut icon" href="/logo1.png">
+    <link rel="apple-touch-icon" href="/logo1.png">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .action-handler-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            padding-top: 30px;
+        }
+
+        .action-status-card {
+            background-color: var(--card-background);
+            padding: 40px 50px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .action-status-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+        }
+
+        .status-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .status-icon.success {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+
+        .status-icon.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .status-icon.loading {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .status-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .status-title.success {
+            background: linear-gradient(to right, #22c55e, #16a34a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .status-title.error {
+            background: linear-gradient(to right, #ef4444, #dc2626);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .status-message {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .action-button {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .secondary-action {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .secondary-action a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .secondary-action a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="index.html">
+                <img src="./logo.png" alt="BINK Logo">
+            </a>
+        </div>
+    </header>
+
+    <div class="action-handler-container">
+        <div class="action-status-card">
+            <!-- Loading State -->
+            <div id="loading-state">
+                <div class="status-icon loading">
+                    <div class="loading-spinner"></div>
+                </div>
+                <h1 class="status-title">Processing Email Action</h1>
+                <p class="status-message">
+                    Please wait while we process your email verification...
+                </p>
+            </div>
+
+            <!-- Success State -->
+            <div id="success-state" style="display: none;">
+                <div class="status-icon success">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h1 class="status-title success">Email Verified Successfully!</h1>
+                <p class="status-message">
+                    Great! Your email has been verified. You can now complete setting up your BINK profile.
+                </p>
+                <a href="onboarding.html" class="action-button">
+                    Continue to Profile Setup
+                </a>
+            </div>
+
+            <!-- Error State -->
+            <div id="error-state" style="display: none;">
+                <div class="status-icon error">
+                    <i class="fas fa-times"></i>
+                </div>
+                <h1 class="status-title error">Verification Failed</h1>
+                <p class="status-message" id="error-message">
+                    We couldn't process your email verification. The link may have expired or already been used.
+                </p>
+                <a href="verify-email.html" class="action-button">
+                    Request New Verification Email
+                </a>
+                <div class="secondary-action">
+                    <a href="login.html">← Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+    <script src="firebase-config.js"></script>
+    <script src="email-verification.js"></script>
+    <script>
+        // Handle email action when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            handleEmailAction();
+        });
+
+        async function handleEmailAction() {
+            try {
+                // Get URL parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                const mode = urlParams.get('mode');
+                const actionCode = urlParams.get('oobCode');
+                const continueUrl = urlParams.get('continueUrl');
+
+                console.log('Email action mode:', mode);
+                console.log('Action code:', actionCode ? 'Present' : 'Missing');
+
+                if (!mode || !actionCode) {
+                    showErrorState('Invalid email action link. Please request a new verification email.');
+                    return;
+                }
+
+                if (mode === 'verifyEmail') {
+                    await handleEmailVerification(actionCode);
+                } else if (mode === 'resetPassword') {
+                    // Handle password reset if needed in the future
+                    showErrorState('Password reset is not handled on this page.');
+                } else {
+                    showErrorState('Unknown email action type.');
+                }
+
+            } catch (error) {
+                console.error('Error handling email action:', error);
+                showErrorState('An error occurred while processing your email action.');
+            }
+        }
+
+        async function handleEmailVerification(actionCode) {
+            try {
+                // Apply the email verification code
+                await auth.applyActionCode(actionCode);
+                console.log('✅ Email verification code applied successfully');
+
+                // Get the current user and update their verification status
+                const user = auth.currentUser;
+                if (user) {
+                    await user.reload();
+                    
+                    // Update database verification status
+                    if (window.BINK && window.BINK.emailVerification) {
+                        await window.BINK.emailVerification.updateUserVerificationStatus(user.uid, true);
+                    }
+                    
+                    console.log('✅ User verification status updated');
+                }
+
+                // Show success state
+                showSuccessState();
+
+                // Auto-redirect after 3 seconds
+                setTimeout(() => {
+                    window.location.href = 'onboarding.html';
+                }, 3000);
+
+            } catch (error) {
+                console.error('❌ Email verification failed:', error);
+                
+                let errorMessage = 'Email verification failed. ';
+                if (error.code === 'auth/expired-action-code') {
+                    errorMessage += 'The verification link has expired. Please request a new one.';
+                } else if (error.code === 'auth/invalid-action-code') {
+                    errorMessage += 'The verification link is invalid or has already been used.';
+                } else if (error.code === 'auth/user-disabled') {
+                    errorMessage += 'Your account has been disabled.';
+                } else {
+                    errorMessage += error.message;
+                }
+                
+                showErrorState(errorMessage);
+            }
+        }
+
+        function showSuccessState() {
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('error-state').style.display = 'none';
+            document.getElementById('success-state').style.display = 'block';
+        }
+
+        function showErrorState(message) {
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('success-state').style.display = 'none';
+            document.getElementById('error-state').style.display = 'block';
+            
+            if (message) {
+                document.getElementById('error-message').textContent = message;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -176,17 +176,23 @@ if (signupForm) {
 
                                     // Step 4: Send email verification
                                     try {
-                                        await user.sendEmailVerification({
-                                            url: window.location.origin + '/onboarding.html',
-                                            handleCodeInApp: false
-                                        });
+                                        // Use default Firebase email verification (no custom continue URL)
+                                        await user.sendEmailVerification();
                                         console.log("Verification email sent");
 
                                         // Redirect to email verification page
                                         window.location.href = 'verify-email.html';
                                     } catch (emailError) {
                                         console.error("Error sending verification email:", emailError);
-                                        // Still redirect to verification page, user can resend
+
+                                        // Handle specific errors during signup
+                                        if (emailError.code === 'auth/too-many-requests') {
+                                            sessionStorage.setItem('signupRateLimited', 'true');
+                                        } else if (emailError.code === 'auth/invalid-continue-uri') {
+                                            sessionStorage.setItem('signupContinueUriError', 'true');
+                                        }
+
+                                        // Always redirect to verification page, user can resend or wait
                                         window.location.href = 'verify-email.html';
                                     }
                                 })
