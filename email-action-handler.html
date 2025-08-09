@@ -161,6 +161,60 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Password Reset Form Styles */
+        .reset-form {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -197,6 +251,34 @@
                 <a href="onboarding.html" class="action-button">
                     Continue to Profile Setup
                 </a>
+            </div>
+
+            <!-- Password Reset Form -->
+            <div id="password-reset-state" style="display: none;">
+                <div class="status-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h1 class="status-title">Reset Your Password</h1>
+                <p class="status-message">
+                    Enter your new password below.
+                </p>
+                <form id="password-reset-form" class="reset-form">
+                    <div class="form-group">
+                        <label for="new-password">New Password</label>
+                        <input type="password" id="new-password" name="new-password" required minlength="6" placeholder="Enter new password">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-new-password">Confirm New Password</label>
+                        <input type="password" id="confirm-new-password" name="confirm-new-password" required minlength="6" placeholder="Confirm new password">
+                    </div>
+                    <button type="submit" class="action-button" id="reset-password-button">
+                        Update Password
+                    </button>
+                    <div class="form-error" id="reset-error-message" style="display: none;"></div>
+                </form>
+                <div class="secondary-action">
+                    <a href="login.html">← Back to Login</a>
+                </div>
             </div>
 
             <!-- Error State -->
@@ -252,8 +334,7 @@
                 if (mode === 'verifyEmail') {
                     await handleEmailVerification(actionCode);
                 } else if (mode === 'resetPassword') {
-                    // Handle password reset if needed in the future
-                    showErrorState('Password reset is not handled on this page.');
+                    await handlePasswordReset(actionCode);
                 } else {
                     showErrorState('Unknown email action type.');
                 }
@@ -309,19 +390,144 @@
             }
         }
 
-        function showSuccessState() {
-            document.getElementById('loading-state').style.display = 'none';
-            document.getElementById('error-state').style.display = 'none';
-            document.getElementById('success-state').style.display = 'block';
+        async function handlePasswordReset(actionCode) {
+            try {
+                // Verify the password reset code first
+                const email = await auth.verifyPasswordResetCode(actionCode);
+                console.log('✅ Password reset code verified for email:', email);
+
+                // Store the action code for later use
+                window.passwordResetCode = actionCode;
+
+                // Show the password reset form
+                showPasswordResetState();
+
+            } catch (error) {
+                console.error('❌ Password reset code verification failed:', error);
+
+                let errorMessage = 'Password reset failed. ';
+                if (error.code === 'auth/expired-action-code') {
+                    errorMessage += 'The reset link has expired. Please request a new password reset.';
+                } else if (error.code === 'auth/invalid-action-code') {
+                    errorMessage += 'The reset link is invalid or has already been used.';
+                } else if (error.code === 'auth/user-disabled') {
+                    errorMessage += 'Your account has been disabled.';
+                } else {
+                    errorMessage += error.message;
+                }
+
+                showErrorState(errorMessage, 'Password Reset Failed', 'login.html', '← Back to Login');
+            }
         }
 
-        function showErrorState(message) {
+        function showSuccessState(title = 'Email Verified Successfully!', message = 'Great! Your email has been verified. You can now complete setting up your BINK profile.', buttonText = 'Continue to Profile Setup', buttonHref = 'onboarding.html') {
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('error-state').style.display = 'none';
+            document.getElementById('password-reset-state').style.display = 'none';
+            document.getElementById('success-state').style.display = 'block';
+
+            // Update content if provided
+            document.querySelector('#success-state .status-title').textContent = title;
+            document.querySelector('#success-state .status-message').textContent = message;
+            document.querySelector('#success-state .action-button').textContent = buttonText;
+            document.querySelector('#success-state .action-button').href = buttonHref;
+        }
+
+        function showPasswordResetState() {
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('error-state').style.display = 'none';
+            document.getElementById('success-state').style.display = 'none';
+            document.getElementById('password-reset-state').style.display = 'block';
+
+            // Set up form submission handler
+            const form = document.getElementById('password-reset-form');
+            if (form && !form.hasAttribute('data-handler-attached')) {
+                form.setAttribute('data-handler-attached', 'true');
+                form.addEventListener('submit', handlePasswordResetSubmission);
+            }
+        }
+
+        function showErrorState(message, title = 'Verification Failed', buttonText = 'Request New Verification Email', buttonHref = 'verify-email.html') {
             document.getElementById('loading-state').style.display = 'none';
             document.getElementById('success-state').style.display = 'none';
+            document.getElementById('password-reset-state').style.display = 'none';
             document.getElementById('error-state').style.display = 'block';
-            
+
+            // Update content
+            if (title) {
+                document.querySelector('#error-state .status-title').textContent = title;
+            }
             if (message) {
                 document.getElementById('error-message').textContent = message;
+            }
+            if (buttonText && buttonHref) {
+                document.querySelector('#error-state .action-button').textContent = buttonText;
+                document.querySelector('#error-state .action-button').href = buttonHref;
+            }
+        }
+
+        async function handlePasswordResetSubmission(e) {
+            e.preventDefault();
+
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-new-password').value;
+            const errorElement = document.getElementById('reset-error-message');
+            const submitButton = document.getElementById('reset-password-button');
+
+            // Clear previous errors
+            errorElement.style.display = 'none';
+            errorElement.textContent = '';
+
+            // Validate passwords
+            if (newPassword !== confirmPassword) {
+                errorElement.textContent = 'Passwords do not match.';
+                errorElement.style.display = 'block';
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                errorElement.textContent = 'Password must be at least 6 characters long.';
+                errorElement.style.display = 'block';
+                return;
+            }
+
+            // Disable submit button and show loading
+            submitButton.disabled = true;
+            submitButton.textContent = 'Updating Password...';
+
+            try {
+                // Confirm the password reset with the new password
+                await auth.confirmPasswordReset(window.passwordResetCode, newPassword);
+                console.log('✅ Password reset successful');
+
+                // Show success state
+                showSuccessState(
+                    'Password Reset Successful!',
+                    'Your password has been updated successfully. You can now log in with your new password.',
+                    'Go to Login',
+                    'login.html'
+                );
+
+            } catch (error) {
+                console.error('❌ Password reset failed:', error);
+
+                let errorMessage = 'Failed to reset password. ';
+                if (error.code === 'auth/weak-password') {
+                    errorMessage += 'Password is too weak. Please choose a stronger password.';
+                } else if (error.code === 'auth/expired-action-code') {
+                    errorMessage += 'The reset link has expired. Please request a new password reset.';
+                } else if (error.code === 'auth/invalid-action-code') {
+                    errorMessage += 'The reset link is invalid or has already been used.';
+                } else {
+                    errorMessage += error.message;
+                }
+
+                errorElement.textContent = errorMessage;
+                errorElement.style.display = 'block';
+
+                // Re-enable submit button
+                submitButton.disabled = false;
+                submitButton.textContent = 'Update Password';
             }
         }
     </script>
