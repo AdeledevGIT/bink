@@ -26,9 +26,29 @@ if (loginForm) {
                     const user = userCredential.user;
                     console.log('Login successful:', user.uid);
 
+                    // Reload user to get latest verification status
+                    await user.reload();
+
+                    // Check email verification first
+                    if (!user.emailVerified) {
+                        console.log('Email not verified, redirecting to verification page');
+                        window.location.href = 'verify-email.html';
+                        return;
+                    }
+
                     // Check if user has completed onboarding
                     try {
                         const userDoc = await db.collection('users').doc(user.uid).get();
+
+                        // Update email verification status in database if needed
+                        if (userDoc.exists && !userDoc.data().emailVerified) {
+                            await db.collection('users').doc(user.uid).update({
+                                emailVerified: true,
+                                emailVerifiedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+                        }
+
                         if (userDoc.exists && userDoc.data().onboardingCompleted) {
                             window.location.href = 'dashboard.html';
                         } else {
@@ -147,11 +167,28 @@ if (signupForm) {
                                     subscriptionTier: 'free', // Default tier
                                     uniqueLinkSlug: username, // Use username as initial slug
                                     onboardingCompleted: false, // New users need to complete onboarding
+                                    emailVerified: false, // Email verification required
+                                    emailVerifiedAt: null, // Will be set when verified
                                     // Add other default fields if needed
                                 })
-                                .then(() => {
+                                .then(async () => {
                                     console.log("User document created in Firestore");
-                                    window.location.href = 'onboarding.html'; // Redirect to onboarding for new users
+
+                                    // Step 4: Send email verification
+                                    try {
+                                        await user.sendEmailVerification({
+                                            url: window.location.origin + '/onboarding.html',
+                                            handleCodeInApp: false
+                                        });
+                                        console.log("Verification email sent");
+
+                                        // Redirect to email verification page
+                                        window.location.href = 'verify-email.html';
+                                    } catch (emailError) {
+                                        console.error("Error sending verification email:", emailError);
+                                        // Still redirect to verification page, user can resend
+                                        window.location.href = 'verify-email.html';
+                                    }
                                 })
                                 .catch((error) => {
                                     console.error("Error creating user document: ", error);

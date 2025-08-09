@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Email - BINK</title>
+    <!-- Favicon configuration for better browser compatibility -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo1.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/logo1.png">
+    <link rel="shortcut icon" href="/logo1.png">
+    <link rel="apple-touch-icon" href="/logo1.png">
+    <!-- Fallback favicon from GitHub Pages -->
+    <link rel="icon" type="image/png" href="https://adeledevgit.github.io/bink/logo1.png">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .verification-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            padding-top: 30px;
+        }
+
+        .verification-card {
+            background-color: var(--card-background);
+            padding: 40px 50px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .verification-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+        }
+
+        .verification-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .verification-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .verification-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .email-display {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-weight: 600;
+            color: var(--primary-color);
+            word-break: break-all;
+        }
+
+        .verification-instructions {
+            text-align: left;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .verification-instructions h4 {
+            margin: 0 0 15px 0;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .verification-instructions ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .verification-instructions li {
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .resend-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .resend-text {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .resend-button {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resend-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .resend-button:disabled {
+            background: linear-gradient(135deg, #6b7280, #9ca3af);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            opacity: 0.7;
+        }
+
+        .countdown-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        .back-to-login {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-to-login a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .back-to-login a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        .success-message {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .verification-card {
+                padding: 30px 25px;
+                margin: 15px;
+            }
+
+            .verification-title {
+                font-size: 1.8rem;
+            }
+
+            .verification-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container-header">
+            <a href="index.html">
+                <img src="./logo.png" alt="BINK Logo">
+            </a>
+        </div>
+    </header>
+
+    <div class="verification-container">
+        <div class="verification-card">
+            <div class="verification-icon">
+                <i class="fas fa-envelope"></i>
+            </div>
+            
+            <h1 class="verification-title">Check Your Email</h1>
+            <p class="verification-subtitle">
+                We've sent a verification link to your email address. Please check your inbox and click the link to verify your account.
+            </p>
+
+            <div class="email-display" id="user-email">
+                Loading...
+            </div>
+
+            <div class="verification-instructions">
+                <h4>What to do next:</h4>
+                <ol>
+                    <li>Check your email inbox (and spam folder)</li>
+                    <li>Look for an email from BINK with the subject "Verify Your Email"</li>
+                    <li>Click the verification link in the email</li>
+                    <li>You'll be automatically redirected to complete your profile setup</li>
+                </ol>
+            </div>
+
+            <div class="success-message" id="success-message">
+                Verification email sent successfully!
+            </div>
+
+            <div class="error-message" id="error-message">
+                Failed to send verification email. Please try again.
+            </div>
+
+            <div class="resend-section">
+                <p class="resend-text">Didn't receive the email?</p>
+                <button class="resend-button" id="resend-button" onclick="resendVerificationEmail()">
+                    Resend Verification Email
+                </button>
+                <div class="countdown-text" id="countdown-text" style="display: none;">
+                    You can request another email in <span id="countdown">60</span> seconds
+                </div>
+            </div>
+
+            <div class="back-to-login">
+                <a href="login.html">← Back to Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase App (Core) - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <!-- Firebase Auth - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore - COMPAT version -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+    <script src="firebase-config.js"></script>
+    <script src="email-verification.js"></script>
+</body>
+</html>

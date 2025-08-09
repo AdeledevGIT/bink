@@ -40,11 +40,31 @@ function checkAuth(redirect = false) {
             return;
         }
 
-        const unsubscribe = auth.onAuthStateChanged((user) => {
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
             unsubscribe(); // Stop listening immediately
-            if (!user && redirect) {
-                window.location.href = 'login.html';
+
+            if (!user) {
+                if (redirect) window.location.href = 'login.html';
+                resolve(null);
+                return;
             }
+
+            // Check email verification for authenticated users
+            if (redirect) {
+                try {
+                    await user.reload();
+                    if (!user.emailVerified) {
+                        console.log('Email not verified, redirecting to verification page');
+                        window.location.href = 'verify-email.html';
+                        resolve(null);
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Error checking email verification:', error);
+                    // Continue with normal flow if verification check fails
+                }
+            }
+
             resolve(user);
         }, (error) => {
             console.error("Auth state check error:", error);

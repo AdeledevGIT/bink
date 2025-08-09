@@ -82,9 +82,26 @@ function initializeOnboarding() {
         return;
     }
 
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged(async (user) => {
         if (user) {
             currentUser = user;
+
+            // Check email verification before allowing onboarding access
+            if (window.BINK && window.BINK.emailVerification) {
+                const isVerified = await window.BINK.emailVerification.requireEmailVerification(user);
+                if (!isVerified) {
+                    return; // User will be redirected to verification page
+                }
+            } else {
+                // Fallback check if email verification module not loaded
+                await user.reload();
+                if (!user.emailVerified) {
+                    console.log('Email not verified, redirecting to verification page');
+                    window.location.href = 'verify-email.html';
+                    return;
+                }
+            }
+
             loadUserData();
         } else {
             console.log('User not authenticated, redirecting to login');

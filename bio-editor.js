@@ -116,8 +116,21 @@ function clearMessages() {
 
 // Check authentication state
 if (auth) {
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged(async (user) => {
         if (user) {
+            // Check email verification before allowing bio editor access
+            try {
+                await user.reload();
+                if (!user.emailVerified) {
+                    console.log('Email not verified, redirecting to verification page');
+                    window.location.href = 'verify-email.html';
+                    return;
+                }
+            } catch (error) {
+                console.error('Error checking email verification:', error);
+                // Continue with normal flow if verification check fails
+            }
+
             currentUser = user;
             console.log('User authenticated:', user.uid);
             loadUserProfile(user.uid);
